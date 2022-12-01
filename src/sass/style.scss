@@ -1,6 +1,17 @@
 @charset "UTF-8";
 
 // Настройка с библиотекой
+@use 'library/my-bootstrap/general/variables' with (
+  $width-container: 100%,
+  $orientation: 'desktop-first',
+  $container: (
+    xxl: (breakpoint: 1400px, max-width: 100%),
+    xl: (breakpoint: 1200px, max-width: 100%),
+    lg: (breakpoint: 992px, max-width: 100%),
+    md: (breakpoint: 768px, max-width: 100%),
+    sm: (breakpoint: 576px, max-width: 100%),
+  )
+);
 
 // Библиотека
 @use "library/my-bootstrap";
@@ -9,7 +20,10 @@
 @use "fonts";
 
 // Блоки
-
+@use "components/page";
+@use "components/search";
+@use "components/top-panel";
+@use "components/result";
 
 // Настройка без библиотеки
 

@@ -1,0 +1,50 @@
+
+<div class="result">
+
+  <div class="result__row result__row--header">
+    <div class="row">
+      <div class="col-1">№</div>
+      <div class="col-5">ФИO</div>
+      <div class="col-2">Дивизион</div>
+      <div class="col-2">Статус</div>
+      <div class="col-2">Опции</div>
+    </div>
+  </div>
+
+  {{#repeat 14}}
+
+  <div class="result__row">
+    <div class="row">
+      <div class="col-1 text-align-center">1</div>
+      <div class="col-5">Смирнов Артём Евгеньевич</div>
+      <div class="col-2 text-align-center">АК ОЗНА</div>
+      <div class="col-2 text-align-center">работает</div>
+      <div class="col-2">
+
+        <div class="result__options">
+          <div class="result__options-user">
+            <button class="result__options-btn" type="button" title="Редактировать">
+              <svg class="result__options-svg" width="30" height="30" aria-hidden="true">
+                <use xlink:href="assets/img/sprite.svg#user_edit-icon"/>
+              </svg>
+            </button>
+            <button class="result__options-btn" type="button" title="Удалить">
+              <svg class="result__options-svg" width="30" height="30" aria-hidden="true">
+                <use xlink:href="assets/img/sprite.svg#user_delete-icon"/>
+              </svg>
+            </button>
+          </div>
+          <button class="result__options-btn result__options-btn--arrow" type="button" title="Подробно">
+            <svg class="result__options-svg result__options-svg--arrow" width="30" height="30" aria-hidden="true">
+              <use xlink:href="assets/img/sprite.svg#downarrow-icon"/>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {{/repeat}}
+
+</div><!--./result-->
