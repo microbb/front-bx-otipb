@@ -1,0 +1,477 @@
+<!doctype html>
+
+<html class="page" lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Заготовка</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="author" content="Abraklion">
+  <meta name="description" content="Описание">
+
+  <link rel="stylesheet" href="assets/css/style.min.css">
+</head>
+
+<body class="page__body">
+
+  <div class="bx-frame" style="display: grid; grid-template-columns: 238px 1fr; grid-template-rows: 200px 1fr; min-height: 100%">
+    <div class="bx-frame__header" style="background-color: #8b9ae3; grid-column: 1 / 3;"></div>
+    <div class="bx-frame__left-bar" style="background-color: #8b9ae3;"></div>
+
+    <!-- Код компонентка -->
+    <div class="bx-frame__content">
+
+      <div class="top-panel">
+        <div class="row f-justify-content-between">
+          <div class="col-auto">
+
+            <form action="" class="search">
+              <label>
+                <input type="text" class="search__input" name="search" placeholder="Поиск">
+              </label>
+              <button type="button" class="search__btn btn btn-primary">Найти</button>
+            </form><!--./search-->
+
+          </div>
+          <div class="col-auto">
+
+            <button type="button" class="top-panel__btn btn btn-primary">Добавить сотрудника</button>
+            <button type="button" class="top-panel__btn btn btn-warning">Заявка на обучение</button>
+            <button type="button" class="top-panel__btn btn btn-success">Фильтр</button>
+
+          </div>
+        </div>
+      </div><!--./top-panel-->
+
+      <div class="result">
+
+        <div class="result__row result__row--header">
+          <div class="row gx-0">
+            <div class="col-1">№</div>
+            <div class="col-2">Дивизион</div>
+            <div class="col-3">ФИO</div>
+            <div class="col-3">Должность</div>
+            <div class="col-2">Статус</div>
+            <div class="col-1">Опции</div>
+          </div>
+        </div>
+
+        <div class="result__body">
+
+          <div class="result__row result__row--active">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 200"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+
+            <div class="result__info">
+
+              <div class="result__info-box">
+                <div class="result__info-title">Удостоверение действующие</div>
+
+                <div class="result__info-row result__info-row--header">
+                  <div class="row gx-0">
+                    <div class="col-5">Программа обучения</div>
+                    <div class="col-3">Номер документа</div>
+                    <div class="col-2">Дата след. аттестации</div>
+                    <div class="col-2">Опции</div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-5 g-justify-items-left">Охрана труда</div>
+                    <div class="col-3" title="Выдан(аттестован): Гусев Максим Маркович">234-423-4335</div>
+                    <div class="col-2">03.12.2022</div>
+                    <div class="col-2">
+                      <button class="result__info-btn" type="button">Редактировать</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-5 g-justify-items-left">Охрана труда</div>
+                    <div class="col-3" title="Выдан(аттестован): Гусев Максим Маркович">234-423-4335</div>
+                    <div class="col-2">03.12.2022</div>
+                    <div class="col-2">
+                      <button class="result__info-btn" type="button">Редактировать</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-5 g-justify-items-left">Охрана труда</div>
+                    <div class="col-3" title="Выдан(аттестован): Гусев Максим Маркович">234-423-4335</div>
+                    <div class="col-2">03.12.2022</div>
+                    <div class="col-2">
+                      <button class="result__info-btn" type="button">Редактировать</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-5 g-justify-items-left">Охрана труда</div>
+                    <div class="col-3" title="Выдан(аттестован): Гусев Максим Маркович">234-423-4335</div>
+                    <div class="col-2">03.12.2022</div>
+                    <div class="col-2">
+                      <button class="result__info-btn" type="button">Редактировать</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="result__info-box">
+
+                <div class="result__info-title">Доступные обучения</div>
+
+                <div class="result__info-row result__info-row--header">
+                  <div class="row gx-0">
+                    <div class="col">Программа обучения</div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col g-justify-items-left">Доврачебная помощь</div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col g-justify-items-left">Доврачебная помощь</div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col g-justify-items-left">Доврачебная помощь</div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col g-justify-items-left">Доврачебная помощь</div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="result__info-box">
+                <div class="result__info-title">Удостоверение на переаттестации</div>
+
+                <div class="result__info-row result__info-row--header">
+                  <div class="row gx-0">
+                    <div class="col-9">Программа обучения</div>
+                    <div class="col-3">Опции</div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-9 g-justify-items-left">Газоопасные работы</div>
+                    <div class="col-3">
+                      <button class="result__info-btn" type="button">Продлить</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-9 g-justify-items-left">Газоопасные работы</div>
+                    <div class="col-3">
+                      <button class="result__info-btn" type="button">Продлить</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-9 g-justify-items-left">Газоопасные работы</div>
+                    <div class="col-3">
+                      <button class="result__info-btn" type="button">Продлить</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result__info-row">
+                  <div class="row gx-0">
+                    <div class="col-9 g-justify-items-left">Газоопасные работы</div>
+                    <div class="col-3">
+                      <button class="result__info-btn" type="button">Продлить</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__row">
+            <div class="row gx-0">
+              <div class="col-1" title="ID: 100"></div>
+              <div class="col-2" title="Отдел: Информационное-вычислиния">
+                АК ОЗНА
+              </div>
+              <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+                <span class="result__clip">
+                  Куприянов Дмитрий Георгиевич
+                </span>
+              </div>
+              <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                <span class="result__clip">
+                  Директор (начальник) вычислительного (информационно-вычислительного) центра
+                </span>
+              </div>
+              <div class="col-2">работает</div>
+              <div class="col-1">
+                <button class="result__options-arrow" type="button" title="Подробно"></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!--./result-->
+
+    </div><!-- ./bx-frame__content -->
+
+  </div>
+
+  <script defer src="js/main.js"></script>
+
+</body>
+
+</html>

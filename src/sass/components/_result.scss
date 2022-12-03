@@ -2,32 +2,81 @@
 
 $color: #fbfbfb;
 $color2: #181818;
+$color3: #d7d7bc;
 
 .result{
   overflow: hidden;
 }
 
+.result__body{
+  counter-reset: list;
+}
+
 .result__row{
   margin: 0 0 5px 0;
-  padding: 6px 0;
 
-  background-color: #fbfbfb;
+  & > .row {
+    background-color: #fbfbfb;
 
-  border-top: 1px solid color.scale($color, $lightness: -10%);
-  border-bottom: 1px solid color.scale($color, $lightness: -10%);
+    border-top: 1px solid color.scale($color, $lightness: -10%);
+    border-bottom: 1px solid color.scale($color, $lightness: -10%);
+
+    transition: background-color 0.1s ease;
+
+    &:hover{
+      background-color: color.scale($color, $lightness: -3%);
+
+      & .result__options-arrow{
+        background-color: color.scale($color, $lightness: -15%);
+      }
+
+    }
+
+    &:active{
+
+      & .result__options-arrow{
+        background-color: color.scale($color, $lightness: 0%);
+      }
+    }
+
+  }
 
   & > .row > [class^='col'] {
-    align-self: center;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    padding: 9px 6px 9px 8px;
 
     border-right: 1px solid color.scale($color2, $lightness: 80%);
+
+    &:first-child{
+
+      &::before{
+        counter-increment: list;
+        content: counter(list);
+
+        border-right: none;
+      }
+
+    }
 
     &:last-child{
       border-right: none;
     }
   }
 
+  & > .row > [title] {
+    cursor: help;
+
+    transition: background-color 0.1s ease;
+
+    &:hover{
+      background-color: color.scale($color, $lightness: -8%);
+    }
+  }
+
   &--header{
-    padding: 16px 0;
     margin-bottom: 8px;
 
     font-weight: 600;
@@ -38,68 +87,178 @@ $color2: #181818;
 
     border-bottom: 1px solid color.scale($color, $lightness: -10%);
     box-shadow: 0 2px 2px 0 color.scale($color, $lightness: -7%);
+
+    & > .row {
+
+      &:hover{
+        background-color: #fbfbfb;
+      }
+
+    }
+
+    & > .row > [class^='col'] {
+      padding-top: 16px;
+      padding-bottom: 16px;
+
+      &:first-child{
+
+        &::before{
+          content: none;
+        }
+      }
+
+    }
+  }
+
+  &--active{
+    margin:  8px 0;
+
+    & > .row {
+      background-color: $color3;
+
+      &:hover{
+        background-color: color.scale($color3, $lightness: 0%);
+
+        & .result__options-arrow{
+          background-color: color.scale($color3, $lightness: -15%);
+        }
+
+      }
+
+      &:active{
+
+        & .result__options-arrow{
+          background-color: color.scale($color3, $lightness: 0%);
+        }
+      }
+
+    }
+
+    & > .row > [class^='col'] {
+      border-top: 1px solid color.scale($color2, $lightness: 70%);
+      border-right: 1px solid color.scale($color2, $lightness: 70%);
+      border-bottom: 1px solid color.scale($color2, $lightness: 70%);
+    }
+
+    & > .row > [title] {
+      &:hover{
+        background-color: $color3;
+      }
+    }
+
   }
 }
 
-.result__options{
-  display: flex;
-  justify-content: space-around;
-}
+.result__options-arrow{
+  width: 24px;
+  height: 24px;
 
-.result__options-user{
-
-  & .result__options-btn:first-child{
-    margin-right: 6px;
-  }
-}
-
-.result__options-btn{
-  vertical-align: middle;
-
-  width: 36px;
-  height: 36px;
-
-  padding: 0;
+  padding: 6px;
   margin: 0;
 
-  background-color: color.scale(#ffc107, $lightness: 60%);
+  background-color: color.scale($color, $lightness: 10%);
+  background-image: url(../img/downarrow-icon.svg);
+  background-position: center;
+  background-size: 12px;
+  background-repeat: no-repeat;
 
   border: 0;
-  border-radius: 8px;
+  border-radius: 2px;
 
   box-shadow: inset 0 0 6px color.scale($color2, $lightness: 80%);
 
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.2s ease;
 
   cursor: pointer;
 
   &:hover{
-    background-color: color.scale(#ffc107, $lightness: 30%);
+    background-color: color.scale($color, $lightness: -15%);
   }
 
   &:active{
-    box-shadow: inset 0 0 6px color.scale($color2, $lightness: 60%);
-  }
-
-  &--arrow{
-    background-color: color.scale(#ffc107, $lightness: 60%);
-
-    margin: 0 6px;
+    background-color: color.scale($color, $lightness: 0%);
   }
 }
 
-.result__options-svg{
-  display: block;
+.result__clip {
+  width: 100%;
+  white-space: nowrap; /* Запрещаем перенос строк */
+  overflow: hidden; /* Обрезаем все, что не помещается в область */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+}
 
-  margin: 0 auto;
+.result__info{
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  grid-column-gap: 24px;
 
-  width: 24px;
-  height: 24px;
+  padding: 18px 16px 4px 16px;
+  margin: 0 0 5px 0;
 
-  &--arrow{
-    width: 12px;
-    height: 12px;
+  background-color: color.scale($color3, $lightness: 60%);
 
-    fill: color.scale($color2, $lightness: 10%);
+  border-bottom: 1px solid color.scale($color2, $lightness: 70%);
+}
+
+.result__info-box{
+  margin: 0 0 18px 0;
+
+  &:nth-child(1){
+    grid-column: span 12;
   }
+
+  &:nth-child(2){
+    grid-column: span 5;
+  }
+
+  &:nth-child(3){
+    grid-column: span 7;
+  }
+}
+
+.result__info-title{
+  margin-bottom: 16px;
+
+  font-weight: 600;
+  font-size: 15px;
+
+  text-transform: uppercase;
+}
+
+.result__info-row{
+  background-color: color.scale($color3, $lightness: 10%);
+
+  & > .row {
+    border-bottom: 1px solid color.scale($color2, $lightness: 70%);
+  }
+
+  & > .row > [class^='col'] {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    padding: 6px 6px 6px 8px;
+
+    border-right: 1px solid color.scale($color2, $lightness: 70%);
+
+    &:first-child {
+      border-left: 1px solid color.scale($color2, $lightness: 70%);
+    }
+  }
+
+  &--header{
+
+    font-weight: 600;
+    font-size: 15px;
+
+    color: rgba($color2,0.9);
+
+    & > .row {
+      border-top: 1px solid color.scale($color2, $lightness: 70%);
+    }
+  }
+}
+
+.result__info-btn{
+
 }

@@ -13,5 +13,9 @@
   @include m.rulesBreakpoint(v.$container,(
           display: flex
   ),'flex');
+
+  @include m.rulesBreakpoint(v.$container,(
+          display: grid
+  ),'grid');
 }
 

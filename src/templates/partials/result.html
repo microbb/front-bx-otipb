@@ -2,49 +2,149 @@
 <div class="result">
 
   <div class="result__row result__row--header">
-    <div class="row">
+    <div class="row gx-0">
       <div class="col-1">№</div>
-      <div class="col-5">ФИO</div>
       <div class="col-2">Дивизион</div>
+      <div class="col-3">ФИO</div>
+      <div class="col-3">Должность</div>
       <div class="col-2">Статус</div>
-      <div class="col-2">Опции</div>
+      <div class="col-1">Опции</div>
     </div>
   </div>
 
-  {{#repeat 14}}
+  <div class="result__body">
 
-  <div class="result__row">
-    <div class="row">
-      <div class="col-1 text-align-center">1</div>
-      <div class="col-5">Смирнов Артём Евгеньевич</div>
-      <div class="col-2 text-align-center">АК ОЗНА</div>
-      <div class="col-2 text-align-center">работает</div>
-      <div class="col-2">
+    <div class="result__row result__row--active">
+      <div class="row gx-0">
+        <div class="col-1" title="ID: 200"></div>
+        <div class="col-2" title="Отдел: Информационное-вычислиния">
+          АК ОЗНА
+        </div>
+        <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+          <span class="result__clip">
+            Куприянов Дмитрий Георгиевич
+          </span>
+        </div>
+        <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+          <span class="result__clip">
+            Директор (начальник) вычислительного (информационно-вычислительного) центра
+          </span>
+        </div>
+        <div class="col-2">работает</div>
+        <div class="col-1">
+          <button class="result__options-arrow" type="button" title="Подробно"></button>
+        </div>
+      </div>
 
-        <div class="result__options">
-          <div class="result__options-user">
-            <button class="result__options-btn" type="button" title="Редактировать">
-              <svg class="result__options-svg" width="30" height="30" aria-hidden="true">
-                <use xlink:href="assets/img/sprite.svg#user_edit-icon"/>
-              </svg>
-            </button>
-            <button class="result__options-btn" type="button" title="Удалить">
-              <svg class="result__options-svg" width="30" height="30" aria-hidden="true">
-                <use xlink:href="assets/img/sprite.svg#user_delete-icon"/>
-              </svg>
-            </button>
+      <div class="result__info">
+
+        <div class="result__info-box">
+          <div class="result__info-title">Удостоверение действующие</div>
+
+          <div class="result__info-row result__info-row--header">
+            <div class="row gx-0">
+              <div class="col-5">Программа обучения</div>
+              <div class="col-3">Номер документа</div>
+              <div class="col-2">Дата след. аттестации</div>
+              <div class="col-2">Опции</div>
+            </div>
           </div>
-          <button class="result__options-btn result__options-btn--arrow" type="button" title="Подробно">
-            <svg class="result__options-svg result__options-svg--arrow" width="30" height="30" aria-hidden="true">
-              <use xlink:href="assets/img/sprite.svg#downarrow-icon"/>
-            </svg>
-          </button>
+
+          {{#repeat 4}}
+
+          <div class="result__info-row">
+            <div class="row gx-0">
+              <div class="col-5 g-justify-items-left">Охрана труда</div>
+              <div class="col-3" title="Выдан(аттестован): Гусев Максим Маркович">234-423-4335</div>
+              <div class="col-2">03.12.2022</div>
+              <div class="col-2">
+                <button class="result__info-btn" type="button">Редактировать</button>
+              </div>
+            </div>
+          </div>
+
+          {{/repeat}}
+
+        </div>
+
+        <div class="result__info-box">
+
+          <div class="result__info-title">Доступные обучения</div>
+
+          <div class="result__info-row result__info-row--header">
+            <div class="row gx-0">
+              <div class="col">Программа обучения</div>
+            </div>
+          </div>
+
+          {{#repeat 4}}
+
+          <div class="result__info-row">
+            <div class="row gx-0">
+              <div class="col g-justify-items-left">Доврачебная помощь</div>
+            </div>
+          </div>
+
+          {{/repeat}}
+
+        </div>
+
+        <div class="result__info-box">
+          <div class="result__info-title">Удостоверение на переаттестации</div>
+
+          <div class="result__info-row result__info-row--header">
+            <div class="row gx-0">
+              <div class="col-9">Программа обучения</div>
+              <div class="col-3">Опции</div>
+            </div>
+          </div>
+
+          {{#repeat 4}}
+
+          <div class="result__info-row">
+            <div class="row gx-0">
+              <div class="col-9 g-justify-items-left">Газоопасные работы</div>
+              <div class="col-3">
+                <button class="result__info-btn" type="button">Продлить</button>
+              </div>
+            </div>
+          </div>
+
+          {{/repeat}}
+
         </div>
 
       </div>
-    </div>
-  </div>
 
-  {{/repeat}}
+    </div>
+
+    {{#repeat 10}}
+
+    <div class="result__row">
+      <div class="row gx-0">
+        <div class="col-1" title="ID: 100"></div>
+        <div class="col-2" title="Отдел: Информационное-вычислиния">
+          АК ОЗНА
+        </div>
+        <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+          <span class="result__clip">
+            Куприянов Дмитрий Георгиевич
+          </span>
+        </div>
+        <div class="col-3 g-justify-items-left" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+          <span class="result__clip">
+            Директор (начальник) вычислительного (информационно-вычислительного) центра
+          </span>
+        </div>
+        <div class="col-2">работает</div>
+        <div class="col-1">
+          <button class="result__options-arrow" type="button" title="Подробно"></button>
+        </div>
+      </div>
+    </div>
+
+    {{/repeat}}
+
+  </div>
 
 </div><!--./result-->

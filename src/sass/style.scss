@@ -4,6 +4,7 @@
 @use 'library/my-bootstrap/general/variables' with (
   $width-container: 100%,
   $orientation: 'desktop-first',
+  $yellow: #ffb207,
   $container: (
     xxl: (breakpoint: 1400px, max-width: 100%),
     xl: (breakpoint: 1200px, max-width: 100%),
