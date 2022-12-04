@@ -39,84 +39,123 @@
       <div class="result__info">
 
         <div class="result__info-box">
-          <div class="result__info-title">Удостоверение действующие</div>
+          <div class="result__info-title">
+            Удостоверение действующие
 
-          <div class="result__info-row result__info-row--header">
-            <div class="row gx-0">
-              <div class="col-5">Программа обучения</div>
-              <div class="col-3">Номер документа</div>
-              <div class="col-2">Дата след. аттестации</div>
-              <div class="col-2">Опции</div>
+            <div class="result__info-options">
+              <button class="result__info-options-btn" title="Редактировать сотрудника">
+                <img class="result__info-options-img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
+              </button>
+              <button class="result__info-options-btn" title="Добавить удостоверение">
+                <img class="result__info-options-img" src="assets/img/edit-document-icon.svg" width="22" height="22" alt="">
+              </button>
+              <button class="result__info-options-btn" title="Удалить сотрудника">
+                <img class="result__info-options-img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
+              </button>
             </div>
           </div>
 
-          {{#repeat 4}}
+          <div class="result__info-box-inner">
 
-          <div class="result__info-row">
-            <div class="row gx-0">
-              <div class="col-5 g-justify-items-left">Охрана труда</div>
-              <div class="col-3" title="Выдан(аттестован): Гусев Максим Маркович">234-423-4335</div>
-              <div class="col-2">03.12.2022</div>
-              <div class="col-2">
-                <button class="result__info-btn" type="button">Редактировать</button>
+            <div class="result__info-row result__info-row--header">
+              <div class="row gx-0">
+                <div class="col-5">Программа обучения</div>
+                <div class="col-3">Номер документа</div>
+                <div class="col-2">Дата след. аттестации</div>
+                <div class="col-2">Опции</div>
               </div>
             </div>
-          </div>
 
-          {{/repeat}}
+            {{#repeat 4}}
 
-        </div>
+            <div class="result__info-row">
+              <div class="row gx-0">
+                <div class="col-5 g-justify-items-left" title="Охрана труда">
+                  <span class="result__clip">
+                    Охрана труда
+                  </span>
+                </div>
+                <div class="col-3" title="Дата аттестации: 03.12.2021">
+                  234-423-4335
+                </div>
+                <div class="col-2">03.12.2022</div>
+                <div class="col-2">
+                  <button class="result__info-btn" type="button">Редактировать</button>
+                </div>
+              </div>
+            </div>
+
+            {{/repeat}}
+
+          </div><!--.result__info-box-inner-->
+
+        </div><!--./result__info-box-->
 
         <div class="result__info-box">
-
           <div class="result__info-title">Доступные обучения</div>
 
-          <div class="result__info-row result__info-row--header">
-            <div class="row gx-0">
-              <div class="col">Программа обучения</div>
+          <div class="result__info-box-inner">
+
+            <div class="result__info-row result__info-row--header">
+              <div class="row gx-0">
+                <div class="col">Программа обучения</div>
+              </div>
             </div>
-          </div>
 
-          {{#repeat 4}}
+            {{#repeat 4}}
 
-          <div class="result__info-row">
-            <div class="row gx-0">
-              <div class="col g-justify-items-left">Доврачебная помощь</div>
+            <div class="result__info-row">
+              <div class="row gx-0">
+                <div class="col g-justify-items-left" title="Доврачебная помощь">
+                  <span class="result__clip">
+                    Доврачебная помощь
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {{/repeat}}
+            {{/repeat}}
 
-        </div>
+          </div><!--.result__info-box-inner-->
+
+        </div><!--./result__info-box-->
 
         <div class="result__info-box">
           <div class="result__info-title">Удостоверение на переаттестации</div>
 
-          <div class="result__info-row result__info-row--header">
-            <div class="row gx-0">
-              <div class="col-9">Программа обучения</div>
-              <div class="col-3">Опции</div>
-            </div>
-          </div>
+          <div class="result__info-box-inner">
 
-          {{#repeat 4}}
-
-          <div class="result__info-row">
-            <div class="row gx-0">
-              <div class="col-9 g-justify-items-left">Газоопасные работы</div>
-              <div class="col-3">
-                <button class="result__info-btn" type="button">Продлить</button>
+            <div class="result__info-row result__info-row--header">
+              <div class="row gx-0">
+                <div class="col-9">Программа обучения</div>
+                <div class="col-3">Опции</div>
               </div>
             </div>
-          </div>
 
-          {{/repeat}}
+            {{#repeat 4}}
 
-        </div>
+            <div class="result__info-row">
+              <div class="row gx-0">
+                <div class="col-9 g-justify-items-left" title="Газоопасные работы.&#10Номер документа: 234-423-4444&#10Аттестация закончилась: 02.12.2022">
+                  <span class="result__clip">
+                    Газоопасные работы
+                  </span>
+                </div>
+                <div class="col-3">
+                  <button class="result__info-btn" type="button">Продлить</button>
+                </div>
+              </div>
+            </div>
 
-      </div>
+            {{/repeat}}
 
-    </div>
+          </div><!--.result__info-box-inner-->
+
+        </div><!--./result__info-box-->
+
+      </div><!--./result__info-->
+
+    </div><!--./result__row-->
 
     {{#repeat 10}}
 
@@ -141,10 +180,10 @@
           <button class="result__options-arrow" type="button" title="Подробно"></button>
         </div>
       </div>
-    </div>
+    </div><!--./result__row-->
 
     {{/repeat}}
 
-  </div>
+  </div><!--./result__body-->
 
 </div><!--./result-->
