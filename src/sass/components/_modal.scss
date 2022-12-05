@@ -1,0 +1,63 @@
+@use "sass:color";
+
+$color: #fbfbfb;
+$color2: #181818;
+$color3: #e7e7e1;
+
+.modal{
+  position: relative;
+
+  margin: 24px 0;
+  padding: 24px 24px 30px 24px;
+
+  background-color: color.scale($color3, $lightness: 65%);
+
+  border-top: 1px solid color.scale($color, $lightness: -10%);
+  border-bottom: 1px solid color.scale($color, $lightness: -10%);
+  box-shadow: 0 2px 2px 0 color.scale($color, $lightness: -7%);
+}
+
+.modal__title{
+  max-width: 760px;
+
+  margin: 0 auto 24px auto;
+
+  font-size: 20px;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  color: $color2;
+
+  opacity: 0.8;
+}
+
+.modal__inner{
+  max-width: 760px;
+
+  margin: 0 auto;
+  padding: 32px;
+
+  background-color: color.scale($color3, $lightness: 45%);
+
+  border-radius: 4px;
+
+  border: 1px solid color.scale($color, $lightness: -15%);
+  box-shadow: 0 0 8px 0 color.scale($color, $lightness: -16%);
+}
+
+.modal__close{
+  width: 28px;
+  height: 28px;
+
+  position: absolute;
+  top: 22px;
+  right: 26px;
+
+  background-image: url(../img/close-icon.svg);
+  background-position: center;
+  background-size: 14px;
+  background-repeat: no-repeat;
+
+  opacity: 0.8;
+}
