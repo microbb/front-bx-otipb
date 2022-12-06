@@ -11,6 +11,10 @@
   ),'block');
 
   @include m.rulesBreakpoint(v.$container,(
+          display: inline-block,
+  ),'inline-block');
+
+  @include m.rulesBreakpoint(v.$container,(
           display: flex
   ),'flex');
 

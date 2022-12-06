@@ -147,6 +147,9 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   display: grid;
   grid-template-columns: repeat(12,1fr);
   grid-column-gap: 24px;
+  align-content:start;
+
+  position: relative;
 
   padding: 18px 16px 4px 16px;
   margin: 0 0 5px 0;
@@ -154,6 +157,10 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   background-color: color.scale($color3, $lightness: 60%);
 
   border-bottom: 1px solid color.scale($color2, $lightness: 70%);
+
+  &--modal_active{
+    min-height: 450px;
+  }
 }
 
 .result__info-box{
@@ -177,6 +184,7 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
 
 .result__info-title{
   position: relative;
+  z-index: 1;
 
   margin-bottom: 16px;
 

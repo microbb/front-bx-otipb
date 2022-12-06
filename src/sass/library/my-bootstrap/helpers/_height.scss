@@ -33,4 +33,14 @@
 
 }
 
+// region " 2 Пиксили "
+.h {
+
+  @include m.rulesBreakpoint(v.$container,(
+    height: 50px
+  ),'50px');
+
+}
+
+
 // endregion
