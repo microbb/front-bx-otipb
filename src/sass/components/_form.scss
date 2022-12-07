@@ -6,6 +6,40 @@ $color3: #e7e7e1;
 
 .form{
 
+
+  &--search{
+
+    .form__inner{
+      display: flex;
+      flex-wrap: wrap;
+
+      max-width: 400px;
+
+      grid-column-gap: 0;
+      grid-row-gap: 0;
+    }
+
+    .form__label{
+      display: inline-block;
+
+      margin-bottom: 0;
+
+      font-size: 11px;
+      line-height: 14px;
+
+      text-transform: none;
+
+      opacity: 0.7;
+    }
+
+    .form__input{
+      width: 300px;
+
+      margin: 0 8px 0 0;
+      padding: 11.5px 9px;
+    }
+  }
+
 }
 
 .form__inner{
@@ -23,6 +57,10 @@ $color3: #e7e7e1;
 
   &--column2{
     grid-column: span 2;
+  }
+
+  &--order-3{
+    order: 3;
   }
 }
 
@@ -74,4 +112,10 @@ $color3: #e7e7e1;
       color: color.scale($color2, $lightness: 0%);
     }
   }
+}
+
+.form__checkbox{
+  vertical-align: middle;
+
+  cursor: pointer;
 }

@@ -203,7 +203,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/modals/modal */ "./src/js/components/modals/modal.js");
 console.log("Тест");
 
-console.log(new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-modal="add-user"]'));
+
+// console.log(new Modal('[data-modal="add-user"]',))
 
 /***/ })
 
