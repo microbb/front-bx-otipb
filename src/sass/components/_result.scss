@@ -125,6 +125,76 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
     }
 
   }
+
+  &--inner{
+    background-color: color.scale($color3, $lightness: 10%);
+
+    margin: 0;
+
+    & > .row {
+      background-color: transparent;
+
+      border-top: none;
+      border-bottom: 1px solid color.scale($color2, $lightness: 70%);
+
+      transition: none;
+
+      &:hover{
+        background-color: color.scale($color3, $lightness: 10%);
+      }
+
+    }
+
+    & > .row > [class^='col'] {
+
+      padding: 6px 6px 6px 8px;
+
+      border-right: 1px solid color.scale($color2, $lightness: 70%);
+
+      &:first-child{
+
+        border-left: 1px solid color.scale($color2, $lightness: 70%);
+
+        &::before{
+          content: none;
+        }
+
+      }
+
+      &:last-child{
+        border-right: 1px solid color.scale($color2, $lightness: 70%);
+      }
+    }
+
+    & > .row > [title] {
+      cursor: help;
+
+      transition: none;
+
+      &:hover{
+        background-color: transparent;
+      }
+    }
+  }
+
+  &--inner-header{
+    background-color: color.scale($color3, $lightness: -3%);
+
+    font-weight: 600;
+    font-size: 15px;
+
+    text-align: center;
+
+    color: rgba($color2,0.9);
+
+    & > .row {
+      border-top: 1px solid color.scale($color2, $lightness: 70%);
+
+      &:hover{
+        background-color: transparent;
+      }
+    }
+  }
 }
 
 .result__options-arrow{
@@ -216,45 +286,4 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   background-color: color.scale($color3, $lightness: 10%);
 
   box-shadow: inset 0 0 0 1px color.scale($color2, $lightness: 70%);
-}
-
-.result__info-row{
-  background-color: color.scale($color3, $lightness: 10%);
-
-  & > .row {
-    border-bottom: 1px solid color.scale($color2, $lightness: 70%);
-  }
-
-  & > .row > [class^='col'] {
-    display: grid;
-    align-items: center;
-    justify-items: center;
-
-    padding: 6px 6px 6px 8px;
-
-    border-right: 1px solid color.scale($color2, $lightness: 70%);
-
-    &:first-child {
-      border-left: 1px solid color.scale($color2, $lightness: 70%);
-    }
-  }
-
-  & > .row > [title] {
-    cursor: help;
-  }
-
-  &--header{
-    background-color: color.scale($color3, $lightness: -3%);
-
-    font-weight: 600;
-    font-size: 15px;
-
-    text-align: center;
-
-    color: rgba($color2,0.9);
-
-    & > .row {
-      border-top: 1px solid color.scale($color2, $lightness: 70%);
-    }
-  }
 }

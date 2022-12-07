@@ -81,6 +81,8 @@ $color3: #e7e7e1;
 .form__input{
   width: 100%;
 
+  position: relative;
+
   margin: 0;
   padding: 12px 9px;
 
@@ -111,6 +113,30 @@ $color3: #e7e7e1;
     &::placeholder{
       color: color.scale($color2, $lightness: 0%);
     }
+  }
+
+  &[type="date"]::-webkit-calendar-picker-indicator{
+    // кастомизировал календарь, поменял иконку и вызов календаря происходит по клику во всей области input
+    width: auto;
+    height: auto;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    color: transparent;
+
+    background-color: transparent;
+    background-image: url(../img/calendar-icon.svg);
+    background-position: right 10px center;
+    background-size: 15px;
+    background-repeat: no-repeat;
+
+    opacity: 0.9;
+
+    cursor: pointer;
   }
 }
 

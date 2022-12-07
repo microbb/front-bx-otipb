@@ -52,6 +52,14 @@ $color3: #e7e7e1;
     background-color: color.scale($color, $lightness: 0%);
   }
 
+  .result__row--inner > .row:hover & {
+    background-color: color.scale($color, $lightness: 10%);
+  }
+
+  .result__row--inner > .row:active & {
+    background-color: color.scale($color, $lightness: 10%);
+  }
+
   &--arrow {
 
     &::before{
