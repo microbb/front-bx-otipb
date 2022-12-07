@@ -100,14 +100,14 @@ $color3: #e7e7e1;
   }
 
   &--add{
-    min-width: 300px;
+    min-width: 400px;
 
     position: absolute;
-    right: -10px;
-    top: 140%;
+    left: 50%;
+    top: 160%;
 
     margin: 0;
-    padding: 10px 10px 12px 10px;
+    padding: 12px 12px 16px 12px;
 
     background-color: color.scale(rgba($color3,1), $lightness: 65%);
 
@@ -115,15 +115,17 @@ $color3: #e7e7e1;
 
     border-radius: 4px;
 
+    transform: translateX(-50%);
+
     &::before{
       content: '';
 
-      width: 10px;
-      height: 10px;
+      width: 16px;
+      height: 16px;
 
       position: absolute;
-      top: -10px;
-      right: 20px;
+      top: -14px;
+      left: 48%;
 
       background-color: color.scale(rgba($color3,1), $lightness: 65%);
 
@@ -133,7 +135,7 @@ $color3: #e7e7e1;
     .modal__title{
       margin-bottom: 6px;
 
-      font-size: 12px;
+      font-size: 13px;
 
       text-transform: none;
     }
@@ -147,6 +149,17 @@ $color3: #e7e7e1;
 
       border: none;
       box-shadow: none;
+    }
+
+    .modal__close{
+      width: 20px;
+      height: 20px;
+
+      position: absolute;
+      top: 11px;
+      right: 15px;
+
+      background-size: 9px;
     }
   }
 }

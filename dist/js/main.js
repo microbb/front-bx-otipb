@@ -86,14 +86,124 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/components/modals/modal.js":
+/*!*******************************************!*\
+  !*** ./src/js/components/modals/modal.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Modal; });
+/* harmony import */ var _modalInterface__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modalInterface */ "./src/js/components/modals/modalInterface.js");
+
+
+/**
+ *  Модальное окно стандартное
+ * */
+class Modal extends _modalInterface__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} triggerSelector - селектор который открывает модальное окно.
+   * @param {string} modalSelector   - селектор модального окна которое мы будем открывать.
+   * @param {string} closeSelector   - селектор который закрывает модальное окно.
+   * @param {Object=} options        - конфигурация.
+   */
+  constructor(triggerSelector, modalSelector, closeSelector) {
+    let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    super(options);
+    this._trigger = document.querySelectorAll(triggerSelector);
+    this._modal = document.querySelector(modalSelector);
+    this._close = document.querySelector(closeSelector);
+  }
+
+  /**
+   * Инициализация модального окона
+   * @return {void}
+   */
+  _init() {
+    this._hideAllModals();
+    this._trigger.forEach(item => {
+      item.addEventListener('click', this._showModal);
+    });
+  }
+
+  /**
+   * Показать модальное окно
+   * @return {void}
+   */
+  _showModal(e) {
+    if (e.target) {
+      e.preventDefault();
+    }
+    this._hideAllModals();
+    this._modal.style.display = "block";
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/components/modals/modalInterface.js":
+/*!****************************************************!*\
+  !*** ./src/js/components/modals/modalInterface.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalInterface; });
+/**
+ *  Родитель модальных окон
+ * */
+class ModalInterface {
+  /**
+   * Конструктор
+   * @param {Object=} options - конфигурация.
+   */
+  constructor() {
+    let {
+      closeClickOverlay = true
+    } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    this._windows = document.querySelectorAll('[data-modal]');
+    this._closeClickOverlay = closeClickOverlay;
+    this._init();
+  }
+
+  /**
+   * Инициализация модального окона
+   * @return {void}
+   */
+  _init() {}
+
+  /**
+   * Скрывает все модальные окна
+   * @return {void}
+   */
+  _hideAllModals() {
+    this._windows.forEach(modal => {
+      modal.style.display = 'none';
+      modal.classList.add('animated', 'fadeIn');
+    });
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
   \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/modals/modal */ "./src/js/components/modals/modal.js");
 console.log("Тест");
+
+console.log(new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-modal="add-user"]'));
 
 /***/ })
 
