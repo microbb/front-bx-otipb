@@ -96,13 +96,13 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Modal; });
-/* harmony import */ var _modalInterface__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modalInterface */ "./src/js/components/modals/modalInterface.js");
-
-
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /**
  *  Модальное окно стандартное
  * */
-class Modal extends _modalInterface__WEBPACK_IMPORTED_MODULE_0__["default"] {
+class Modal {
   /**
    * Конструктор
    * @param {string} triggerSelector - селектор который открывает модальное окно.
@@ -111,61 +111,25 @@ class Modal extends _modalInterface__WEBPACK_IMPORTED_MODULE_0__["default"] {
    * @param {Object=} options        - конфигурация.
    */
   constructor(triggerSelector, modalSelector, closeSelector) {
-    let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    super(options);
+    let {
+      closeClickOverlay = true // - будет ли закрываться окно по клику по подложки
+    } = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    _defineProperty(this, "_showModal", e => {
+      if (e.target) {
+        e.preventDefault();
+      }
+      this._hideAllModals();
+      this._modal.style.display = "block";
+    });
+    _defineProperty(this, "_closeModalOverlay", e => {
+      if (e.target === this._modal && this._closeClickOverlay) {
+        this._hideAllModals();
+        this._modal.style.display = "none";
+      }
+    });
     this._trigger = document.querySelectorAll(triggerSelector);
     this._modal = document.querySelector(modalSelector);
-    this._close = document.querySelector(closeSelector);
-  }
-
-  /**
-   * Инициализация модального окона
-   * @return {void}
-   */
-  _init() {
-    this._hideAllModals();
-    this._trigger.forEach(item => {
-      item.addEventListener('click', this._showModal);
-    });
-  }
-
-  /**
-   * Показать модальное окно
-   * @return {void}
-   */
-  _showModal(e) {
-    if (e.target) {
-      e.preventDefault();
-    }
-    this._hideAllModals();
-    this._modal.style.display = "block";
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/components/modals/modalInterface.js":
-/*!****************************************************!*\
-  !*** ./src/js/components/modals/modalInterface.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalInterface; });
-/**
- *  Родитель модальных окон
- * */
-class ModalInterface {
-  /**
-   * Конструктор
-   * @param {Object=} options - конфигурация.
-   */
-  constructor() {
-    let {
-      closeClickOverlay = true
-    } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    this._close = this._modal.querySelector(closeSelector);
     this._windows = document.querySelectorAll('[data-modal]');
     this._closeClickOverlay = closeClickOverlay;
     this._init();
@@ -175,7 +139,21 @@ class ModalInterface {
    * Инициализация модального окона
    * @return {void}
    */
-  _init() {}
+  _init() {
+    this._hideAllModals();
+    this._trigger.forEach(item => {
+      item.addEventListener('click', e => {
+        this._showModal(e);
+        setTimeout(() => {
+          item.blur();
+        }, 150);
+      });
+    });
+    this._close.addEventListener('click', e => {
+      this._closeModal(e);
+    });
+    this._modal.addEventListener('click', this._closeModalOverlay);
+  }
 
   /**
    * Скрывает все модальные окна
@@ -187,6 +165,106 @@ class ModalInterface {
       modal.classList.add('animated', 'fadeIn');
     });
   }
+
+  /**
+   * Показать модальное окно
+   * @return {void}
+   */
+
+  /**
+   * Скрыть модальное окно
+   * @return {void}
+   */
+  _closeModal(e) {
+    if (e.target) {
+      e.preventDefault();
+    }
+    this._hideAllModals();
+    this._modal.style.display = "none";
+  }
+
+  /**
+   * Скрывает модальне окно по клику на подложку
+   * @return {void}
+   */
+}
+
+/***/ }),
+
+/***/ "./src/js/components/modals/modalDelete.js":
+/*!*************************************************!*\
+  !*** ./src/js/components/modals/modalDelete.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalDelete; });
+/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/components/modals/modal.js");
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+/**
+ *  Модальное окно удаление
+ * */
+class ModalDelete extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} triggerSelector - селектор который открывает модальное окно.
+   * @param {string | Object} modalSelector   - селектор модального окна которое мы будем открывать.
+   * @param {string} closeSelector   - селектор который закрывает модальное окно.
+   * @param {Object=} options        - конфигурация.
+   */
+  constructor(triggerSelector, modalSelector, closeSelector) {
+    let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    super(triggerSelector, modalSelector, closeSelector, options);
+    _defineProperty(this, "_closeModalOverlay", e => {
+      if (e.target === this._modal && this._closeClickOverlay) {
+        this._hideAllModals();
+        this._modal.style.display = "none";
+      }
+    });
+    this._modal = document.querySelector(modalSelector).cloneNode(true);
+    this._close = this._modal.querySelector(closeSelector);
+    console.log(this._modal, this._close);
+  }
+
+  /**
+   * Инициализация модального окона
+   * @return {void}
+   */
+  _init() {
+    this._hideAllModals();
+    this._trigger.forEach(item => {
+      item.addEventListener('click', e => {
+        this._showModal(e);
+        this._parent = item.closest('[data-wrapper]');
+        this._parent.append(this._modal);
+        this._close = this._modal.querySelector('[data-close="close-modal"]');
+        this._close.addEventListener('click', e => {
+          this._closeModal(e);
+        });
+        this._modal.addEventListener('click', this._closeModalOverlay);
+      });
+    });
+  }
+
+  /**
+   * Скрыть модальное окно
+   * @return {void}
+   */
+  _closeModal(e) {
+    super._closeModal(e);
+    this._parent.querySelector('[data-modal="delete-modal"]').remove();
+  }
+
+  /**
+   * Скрывает модальне окно по клику на подложку
+   * @return {void}
+   */
 }
 
 /***/ }),
@@ -201,10 +279,17 @@ class ModalInterface {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/modals/modal */ "./src/js/components/modals/modal.js");
+/* harmony import */ var _components_modals_modalDelete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/modals/modalDelete */ "./src/js/components/modals/modalDelete.js");
 console.log("Тест");
 
 
-// console.log(new Modal('[data-modal="add-user"]',))
+
+// модалка добавить сутрудника
+new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="user-modal"]', '[data-modal="user-modal"]', '[data-close="close-modal"]');
+// модалка фильтр
+new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="filter-modal"]', '[data-modal="filter-modal"]', '[data-close="close-modal"]');
+let t = new _components_modals_modalDelete__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-trigger="delete-modal"]', '[data-modal="delete-modal"]', '[data-close="close-modal"]');
+console.dir(t);
 
 /***/ })
 

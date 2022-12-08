@@ -17,6 +17,10 @@ $color3: #e7e7e1;
   border-bottom: 1px solid color.scale($color, $lightness: -10%);
   box-shadow: 0 2px 2px 0 color.scale($color, $lightness: -7%);
 
+  &[data-modal]{
+    display: none;
+  }
+
   &--position_absolute {
     position: absolute;
 
@@ -86,7 +90,9 @@ $color3: #e7e7e1;
     }
 
     .modal__inner{
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      grid-column-gap: 4px;
 
       padding: 0;
 
@@ -210,13 +216,11 @@ $color3: #e7e7e1;
 }
 
 .modal__button{
-  flex: 1 1 auto;
+  width: 100%;
 
   padding: 5px;
-  margin: 0 3px;
 
   font-size: 12px;
-
 
   &:focus{
     box-shadow: none!important;

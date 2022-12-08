@@ -51,15 +51,15 @@
           </div>
           <div class="col-auto">
 
-            <button type="button" class="top-panel__btn btn btn-primary" data-modal="add-user">Добавить сотрудника</button>
+            <button type="button" class="top-panel__btn btn btn-primary" data-trigger="user-modal">Добавить сотрудника</button>
             <button type="button" class="top-panel__btn btn btn-warning">Заявка на обучение</button>
-            <button type="button" class="top-panel__btn btn btn-success">Фильтр</button>
+            <button type="button" class="top-panel__btn btn btn-success" data-trigger="filter-modal">Фильтр</button>
 
           </div>
         </div>
       </div><!--./top-panel-->
 
-      <section class="modal js-add-" data-modal>
+      <section class="modal" data-modal="user-modal">
 
         <h2 class="modal__title">Добавить сотрудника</h2>
 
@@ -101,10 +101,10 @@
 
         </div><!--./modal__inner-->
 
-        <button type="button" class="modal__close button button--icon" title="Закрыть окно"></button>
+        <button type="button" class="modal__close button button--icon" data-close="close-modal" title="Закрыть окно"></button>
       </section><!--./form-->
 
-      <section class="modal" data-modal>
+      <section class="modal" data-modal="filter-modal">
 
         <h2 class="modal__title">Фильтр</h2>
 
@@ -147,7 +147,7 @@
 
         </div><!--./modal__inner-->
 
-        <button type="button" class="modal__close button button--icon" title="Закрыть окно"></button>
+        <button type="button" class="modal__close button button--icon" data-close="close-modal" title="Закрыть окно"></button>
       </section><!--./form-->
 
       <div class="result">
@@ -810,23 +810,10 @@
                     <button class="result__info-options-btn button button--icon" title="Редактировать сотрудника">
                       <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                     </button>
-                    <span class="p-relative d-inline-block">
-                      <button class="result__info-options-btn button button--icon" title="Удалить сотрудника">
+                    <span class="p-relative d-inline-block" data-wrapper>
+                      <button class="result__info-options-btn button button--icon" data-trigger="delete-modal" title="Удалить сотрудника">
                         <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                       </button>
-
-                      <section class="modal modal--delete">
-
-                        <h2 class="modal__title">Вы точно хотите удалить?</h2>
-
-                        <div class="modal__inner">
-
-                          <button class="modal__button btn btn-success">Да</button>
-                          <button class="modal__button btn btn-danger">Нет</button>
-
-                        </div><!--./modal__inner-->
-
-                      </section><!--./form-->
 
                     </span>
                   </div>
@@ -2273,6 +2260,24 @@
     </div><!-- ./bx-frame__content -->
 
   </div>
+
+  <section class="modal modal--delete" data-modal="delete-modal">
+
+    <h2 class="modal__title">Вы точно хотите удалить?</h2>
+
+    <div class="modal__inner">
+
+      <form action="" class="form">
+
+        <button type="submit" class="modal__button btn btn-success">Да</button>
+
+      </form><!--./form-->
+
+      <button class="modal__button btn btn-danger" data-close="close-modal">Нет</button>
+
+    </div><!--./modal__inner-->
+
+  </section><!--./form-->
 
   <script defer src="js/main.js"></script>
 
