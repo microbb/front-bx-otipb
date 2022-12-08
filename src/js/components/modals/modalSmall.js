@@ -15,7 +15,7 @@ export default class ModalSmall  extends Modal{
   constructor(triggerSelector, modalSelector, closeSelector,options = {}) {
     super(triggerSelector, modalSelector, closeSelector,options);
 
-    this._modal = document.body.removeChild(document.querySelector(modalSelector))
+    this._modal = document.querySelector(modalSelector).parentElement.removeChild(document.querySelector(modalSelector))
   }
 
   /**

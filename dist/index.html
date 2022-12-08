@@ -2038,53 +2038,57 @@
 
       </div><!--./result-->
 
+      <div class="wrapper-modal">
+
+        <section class="modal modal--delete" data-modal="delete-modal">
+
+          <h2 class="modal__title">Вы точно хотите удалить?</h2>
+
+          <div class="modal__inner">
+
+            <form action="" class="form">
+
+              <button type="submit" class="modal__button btn btn-success">Да</button>
+
+            </form><!--./form-->
+
+            <button class="modal__button btn btn-danger" data-close>Нет</button>
+
+          </div><!--./modal__inner-->
+
+        </section><!--./form-->
+
+        <section class="modal modal--add" data-modal="add-hse-modal">
+
+          <h2 class="modal__title">Добавить должность HSE</h2>
+
+          <div class="modal__inner">
+
+            <form action="" class="form">
+
+              <div class="form__inner form__inner--grid-row-gap-12">
+
+                <label class="form__item form__item--column2">
+                  <input class="form__input" type="text" name="name">
+                </label>
+
+                <button class="btn btn-primary h-50px form__item--column2">Добавить</button>
+
+              </div><!--./form__inner-->
+
+            </form><!--./form-->
+
+          </div><!--./modal__inner-->
+
+          <button type="button" class="modal__close button button--icon" data-close title="Закрыть окно"></button>
+
+        </section><!--./form-->
+
+      </div>
+
     </div><!-- ./bx-frame__content -->
 
   </div>
-
-  <section class="modal modal--delete" data-modal="delete-modal">
-
-    <h2 class="modal__title">Вы точно хотите удалить?</h2>
-
-    <div class="modal__inner">
-
-      <form action="" class="form">
-
-        <button type="submit" class="modal__button btn btn-success">Да</button>
-
-      </form><!--./form-->
-
-      <button class="modal__button btn btn-danger" data-close>Нет</button>
-
-    </div><!--./modal__inner-->
-
-  </section><!--./form-->
-
-  <section class="modal modal--add" data-modal="add-hse-modal">
-
-    <h2 class="modal__title">Добавить должность HSE</h2>
-
-    <div class="modal__inner">
-
-      <form action="" class="form">
-
-        <div class="form__inner form__inner--grid-row-gap-12">
-
-          <label class="form__item form__item--column2">
-            <input class="form__input" type="text" name="name">
-          </label>
-
-          <button class="btn btn-primary h-50px form__item--column2">Добавить</button>
-
-        </div><!--./form__inner-->
-
-      </form><!--./form-->
-
-    </div><!--./modal__inner-->
-
-    <button type="button" class="modal__close button button--icon" data-close title="Закрыть окно"></button>
-
-  </section><!--./form-->
 
   <script defer src="js/main.js"></script>
 

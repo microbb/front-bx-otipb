@@ -217,7 +217,7 @@ class ModalSmall extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor(triggerSelector, modalSelector, closeSelector) {
     let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     super(triggerSelector, modalSelector, closeSelector, options);
-    this._modal = document.body.removeChild(document.querySelector(modalSelector));
+    this._modal = document.querySelector(modalSelector).parentElement.removeChild(document.querySelector(modalSelector));
   }
 
   /**
@@ -303,18 +303,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/modals/modalSmall */ "./src/js/components/modals/modalSmall.js");
 
 
-
-// модалка добавить сутрудника
-new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="user-modal"]', '[data-modal="user-modal"]', '[data-close]');
-// модалка фильтр
-new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="filter-modal"]', '[data-modal="filter-modal"]', '[data-close]');
-// модалка удалить сотрудника и удалить удостоверение
-new _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-trigger="delete-modal"]', '[data-modal="delete-modal"]', '[data-close]', {
-  closeClickOverlay: false
-});
-// модалка добавление HSE
-new _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-trigger="add-hse-modal"]', '[data-modal="add-hse-modal"]', '[data-close]', {
-  closeClickOverlay: false
+window.addEventListener('DOMContentLoaded', () => {
+  // модалка добавить сутрудника
+  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="user-modal"]', '[data-modal="user-modal"]', '[data-close]');
+  // модалка фильтр
+  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="filter-modal"]', '[data-modal="filter-modal"]', '[data-close]');
+  // модалка удалить сотрудника и удалить удостоверение
+  new _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-trigger="delete-modal"]', '[data-modal="delete-modal"]', '[data-close]', {
+    closeClickOverlay: false
+  });
+  // модалка добавление HSE
+  new _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-trigger="add-hse-modal"]', '[data-modal="add-hse-modal"]', '[data-close]', {
+    closeClickOverlay: false
+  });
 });
 
 /***/ })
