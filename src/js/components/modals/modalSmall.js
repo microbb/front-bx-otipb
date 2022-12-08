@@ -1,8 +1,9 @@
+import Modal from "./modal";
 
 /**
- *  Модальное окно стандартное
+ *  Модальное окно добавление и удаление
  * */
-export default class Modal{
+export default class ModalSmall  extends Modal{
 
   /**
    * Конструктор
@@ -11,43 +12,10 @@ export default class Modal{
    * @param {string} closeSelector   - селектор который закрывает модальное окно.
    * @param {Object=} options        - конфигурация.
    */
-  constructor(triggerSelector,modalSelector,closeSelector,{
-              closeClickOverlay = true // - будет ли закрываться окно по клику по подложки
-              } = {}) {
+  constructor(triggerSelector, modalSelector, closeSelector,options = {}) {
+    super(triggerSelector, modalSelector, closeSelector,options);
 
-    this._trigger = document.querySelectorAll(triggerSelector)
-    this._modal = document.querySelector(modalSelector)
-    this._close = this._modal.querySelector(closeSelector)
-
-    this._windows = document.querySelectorAll('[data-modal]')
-    this._closeClickOverlay = closeClickOverlay
-
-    this._init()
-  }
-
-  /**
-   * Инициализация модального окона
-   * @return {void}
-   */
-  _init() {
-    this._hideAllModals()
-
-    this._showModal()
-
-    this._closeModal()
-
-    this._closeModalOverlay()
-  }
-
-  /**
-   * Скрывает все модальные окна
-   * @return {void}
-   */
-  _hideAllModals() {
-    this._windows.forEach(modal => {
-      modal.style.display = 'none';
-      modal.classList.add('animated', 'fadeIn');
-    })
+    this._modal = document.body.removeChild(document.querySelector(modalSelector))
   }
 
   /**
@@ -63,12 +31,14 @@ export default class Modal{
 
         this._hideAllModals()
 
+        if(this._modal.querySelector('.input-hidden')) {
+          this._modal.querySelector('.input-hidden').remove()
+        }
+
+        this._modalPosition(item)
+
+
         this._modal.style.display = "block";
-
-        setTimeout(() =>{
-          item.blur()
-        },150)
-
       });
     });
   }
@@ -83,9 +53,13 @@ export default class Modal{
         e.preventDefault();
       }
 
+      console.log(this._modal)
+
       this._hideAllModals()
 
       this._modal.style.display = "none";
+
+      this._parent.querySelector('.modal').remove()
     });
 
   }
@@ -100,8 +74,31 @@ export default class Modal{
         this._hideAllModals();
 
         this._modal.style.display = "none";
+
+        this._parent.querySelector('.modal').remove()
       }
     });
 
+  }
+
+  /**
+   * Позицианирует модальное окно в нужное место
+   * @param {HTMLElement} trigger - селектор который открывает модальное окно.
+   * @return {void}
+   */
+  _modalPosition(trigger){
+    let id = trigger.dataset.id,
+        input = document.createElement('input')
+
+    input.setAttribute('type','hidden')
+    input.classList.add('input-hidden')
+    input.setAttribute('name','id')
+    input.setAttribute('value',id)
+
+    this._modal.querySelector('.form').prepend(input)
+
+    this._parent = trigger.parentElement
+
+    this._parent.append(this._modal)
   }
 }
