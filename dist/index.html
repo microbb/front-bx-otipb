@@ -51,15 +51,15 @@
           </div>
           <div class="col-auto">
 
-            <button type="button" class="top-panel__btn btn btn-primary" data-trigger="user-modal">Добавить сотрудника</button>
+            <button type="button" class="top-panel__btn btn btn-primary js-add-user-modal" data-sumbiot-target="#add-user-modal">Добавить сотрудника</button>
             <button type="button" class="top-panel__btn btn btn-warning">Заявка на обучение</button>
-            <button type="button" class="top-panel__btn btn btn-success" data-trigger="filter-modal">Фильтр</button>
+            <button type="button" class="top-panel__btn btn btn-success js-filter-modal" data-sumbiot-target="#filter-modal">Фильтр</button>
 
           </div>
         </div>
       </div><!--./top-panel-->
 
-      <section class="modal" data-modal="user-modal">
+      <section class="modal" id="add-user-modal" data-sumbiot-modal>
 
         <h2 class="modal__title">Добавить сотрудника</h2>
 
@@ -101,10 +101,10 @@
 
         </div><!--./modal__inner-->
 
-        <button type="button" class="modal__close button button--icon" data-close title="Закрыть окно"></button>
+        <button type="button" class="modal__close button button--icon" data-sumbiot-modal-close title="Закрыть окно"></button>
       </section><!--./form-->
 
-      <section class="modal" data-modal="filter-modal">
+      <section class="modal" id="filter-modal" data-sumbiot-modal>
 
         <h2 class="modal__title">Фильтр</h2>
 
@@ -147,7 +147,7 @@
 
         </div><!--./modal__inner-->
 
-        <button type="button" class="modal__close button button--icon" data-close title="Закрыть окно"></button>
+        <button type="button" class="modal__close button button--icon" data-sumbiot-modal-close title="Закрыть окно"></button>
       </section><!--./form-->
 
       <div class="result">
@@ -196,11 +196,11 @@
                   Удостоверение действующие
 
                   <div class="result__info-options">
-                    <button class="result__info-options-btn button button--icon" title="Редактировать сотрудника">
+                    <button class="result__info-options-btn button button--icon" type="button" title="Редактировать сотрудника">
                       <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                     </button>
                     <span class="p-relative d-inline-block">
-                      <button class="result__info-options-btn button button--icon" data-trigger="delete-modal" data-id="1" title="Удалить сотрудника">
+                      <button class="result__info-options-btn button button--icon js-delete-user-modal" type="button" data-sumbiot-target="#delete-user-modal" data-id="1" title="Удалить сотрудника">
                         <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                       </button>
                     </span>
@@ -235,7 +235,7 @@
                         <span>
                           <button class="button button--text" type="button">Редактировать</button>
                           <span class="p-relative d-inline-block">
-                            <button class="button button--text" type="button" data-trigger="delete-modal" data-id="1" title="Удалить удостоверение">x</button>
+                            <button class="button button--text js-delete-user-modal" type="button" data-sumbiot-target="#delete-user-modal" data-id="1" title="Удалить удостоверение">x</button>
                           </span>
                         </span>
                       </div>
@@ -259,7 +259,7 @@
                         <span>
                           <button class="button button--text" type="button">Редактировать</button>
                           <span class="p-relative d-inline-block">
-                            <button class="button button--text" type="button" data-trigger="delete-modal" data-id="1" title="Удалить удостоверение">x</button>
+                            <button class="button button--text js-delete-user-modal" type="button" data-sumbiot-target="#delete-user-modal" data-id="1" title="Удалить удостоверение">x</button>
                           </span>
                         </span>
                       </div>
@@ -283,7 +283,7 @@
                         <span>
                           <button class="button button--text" type="button">Редактировать</button>
                           <span class="p-relative d-inline-block">
-                            <button class="button button--text" type="button" data-trigger="delete-modal" data-id="1" title="Удалить удостоверение">x</button>
+                            <button class="button button--text js-delete-user-modal" type="button" data-sumbiot-target="#delete-user-modal" data-id="1" title="Удалить удостоверение">x</button>
                           </span>
                         </span>
                       </div>
@@ -307,7 +307,7 @@
                         <span>
                           <button class="button button--text" type="button">Редактировать</button>
                           <span class="p-relative d-inline-block">
-                            <button class="button button--text" type="button" data-trigger="delete-modal" data-id="1" title="Удалить удостоверение">x</button>
+                            <button class="button button--text js-delete-user-modal" type="button" data-sumbiot-target="#delete-user-modal" data-id="1" title="Удалить удостоверение">x</button>
                           </span>
                         </span>
                       </div>
@@ -2040,19 +2040,19 @@
 
       <div class="wrapper-modal">
 
-        <section class="modal modal--delete" data-modal="delete-modal">
+        <section class="modal modal--delete" id="delete-user-modal" data-sumbiot-modal>
 
           <h2 class="modal__title">Вы точно хотите удалить?</h2>
 
           <div class="modal__inner">
 
-            <form action="" class="form">
+            <form class="form" action="" method="GET" data-sumbiot-wrapper>
 
               <button type="submit" class="modal__button btn btn-success">Да</button>
 
             </form><!--./form-->
 
-            <button class="modal__button btn btn-danger" data-close>Нет</button>
+            <button class="modal__button btn btn-danger" data-sumbiot-modal-close>Нет</button>
 
           </div><!--./modal__inner-->
 

@@ -1,15 +1,18 @@
 import Modal from './components/modals/modal'
-import ModalSmall from './components/modals/modalSmall'
+import ModalDynamics from "./components/modals/modalDynamics";
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка добавить сутрудника
-  new Modal('[data-trigger="user-modal"]','[data-modal="user-modal"]','[data-close]')
+  new Modal('.js-add-user-modal')
   // модалка фильтр
-  new Modal('[data-trigger="filter-modal"]','[data-modal="filter-modal"]','[data-close]')
-  // модалка удалить сотрудника и удалить удостоверение
-  new ModalSmall('[data-trigger="delete-modal"]','[data-modal="delete-modal"]','[data-close]',{closeClickOverlay: false})
-  // модалка добавление HSE
-  new ModalSmall('[data-trigger="add-hse-modal"]','[data-modal="add-hse-modal"]','[data-close]',{closeClickOverlay: false})
+  new Modal('.js-filter-modal')
+  // // модалка удалить сотрудника и удалить удостоверение
+  new ModalDynamics('.js-delete-user-modal',{closeClickOverlay: false})
+  // // модалка добавление HSE
+  // new ModalSmall('[data-trigger="add-hse-modal"]','[data-modal="add-hse-modal"]','[data-close]',{closeClickOverlay: false})
+
+
+  // new ModalPosition('[data-trigger="delete-modal"]','[data-modal="delete-modal"]','[data-close]',{closeClickOverlay: false})
 })
 
 

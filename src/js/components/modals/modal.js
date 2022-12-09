@@ -1,25 +1,26 @@
 
 /**
- *  Модальное окно стандартное
+ *  Модальное окна
  * */
 export default class Modal{
 
   /**
    * Конструктор
    * @param {string} triggerSelector - селектор который открывает модальное окно.
-   * @param {string} modalSelector   - селектор модального окна которое мы будем открывать.
-   * @param {string} closeSelector   - селектор который закрывает модальное окно.
    * @param {Object=} options        - конфигурация.
    */
-  constructor(triggerSelector,modalSelector,closeSelector,{
-              closeClickOverlay = true // - будет ли закрываться окно по клику по подложки
+  constructor(triggerSelector ,
+              {
+                modalSelector = null,          // - селектор модального окна которое мы будем открывать.
+                closeSelector= '[data-sumbiot-modal-close]', // - селектор который закрывает модальное окно.
+                closeClickOverlay = true,      // - будет ли закрываться окно по клику по подложки
               } = {}) {
 
     this._trigger = document.querySelectorAll(triggerSelector)
-    this._modal = document.querySelector(modalSelector)
-    this._close = this._modal.querySelector(closeSelector)
+    this.modal = document.querySelector(modalSelector || this._trigger[0].dataset.sumbiotTarget)
+    this._close = this.modal.querySelector(closeSelector)
 
-    this._windows = document.querySelectorAll('[data-modal]')
+    this._windows = document.querySelectorAll('[data-sumbiot-modal]')
     this._closeClickOverlay = closeClickOverlay
 
     this._init()
@@ -30,78 +31,87 @@ export default class Modal{
    * @return {void}
    */
   _init() {
-    this._hideAllModals()
+    this.hideAllModals()
 
-    this._showModal()
+    this._showHandler()
 
-    this._closeModal()
-
-    this._closeModalOverlay()
+    this._closeHandler()
   }
 
   /**
    * Скрывает все модальные окна
    * @return {void}
    */
-  _hideAllModals() {
+  hideAllModals() {
     this._windows.forEach(modal => {
-      modal.style.display = 'none';
       modal.classList.add('animated', 'fadeIn');
+      modal.style.display = 'none';
     })
+  }
+
+  /**
+   * Обработчик события клика по элементу который открывает модальное окно
+   * @return {void}
+   */
+  _showHandler() {
+    this._trigger.forEach(item => {
+      item.addEventListener('click', (e) => {
+        this._show(e)
+
+        setTimeout(() =>{
+          item.blur()
+        },150)
+      });
+    });
   }
 
   /**
    * Показать модальное окно
    * @return {void}
    */
-  _showModal() {
-    this._trigger.forEach(item => {
-      item.addEventListener('click', (e) => {
-        if (e.target) {
-          e.preventDefault()
-        }
+  _show(e){
+    if (e.target) {
+      e.preventDefault()
+    }
 
-        this._hideAllModals()
+    this.hideAllModals()
 
-        this._modal.style.display = "block";
+    this.modal.style.display = "block";
+  }
 
-        setTimeout(() =>{
-          item.blur()
-        },150)
+  /**
+   * Обработчик события клика по элементу который закрывает модальное окно
+   * @return {void}
+   */
+  _closeHandler() {
+    this._close.addEventListener('click', (e) => {
+      this._closeModal(e)
+    })
 
-      });
-    });
+    this.modal.addEventListener('click', (e) => {
+      this._closeModalOverlay(e)
+    })
   }
 
   /**
    * Скрыть модальное окно
    * @return {void}
    */
-  _closeModal() {
-    this._close.addEventListener('click', (e) => {
-      if (e.target) {
-        e.preventDefault();
-      }
+  _closeModal(e) {
+    if (e.target) {
+      e.preventDefault();
+    }
 
-      this._hideAllModals()
-
-      this._modal.style.display = "none";
-    });
-
+    this.modal.style.display = "none";
   }
 
   /**
    * Скрывает модальне окно по клику на подложку
    * @return {void}
    */
-  _closeModalOverlay() {
-    this._modal.addEventListener('click', (e) => {
-      if (e.target === this._modal && this._closeClickOverlay) {
-        this._hideAllModals();
-
-        this._modal.style.display = "none";
-      }
-    });
-
+  _closeModalOverlay(e) {
+    if (e.target === this.modal && this._closeClickOverlay) {
+      this.modal.style.display = "none";
+    }
   }
 }

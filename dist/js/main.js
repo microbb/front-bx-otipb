@@ -97,24 +97,26 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Modal; });
 /**
- *  Модальное окно стандартное
+ *  Модальное окна
  * */
 class Modal {
   /**
    * Конструктор
    * @param {string} triggerSelector - селектор который открывает модальное окно.
-   * @param {string} modalSelector   - селектор модального окна которое мы будем открывать.
-   * @param {string} closeSelector   - селектор который закрывает модальное окно.
    * @param {Object=} options        - конфигурация.
    */
-  constructor(triggerSelector, modalSelector, closeSelector) {
+  constructor(triggerSelector) {
     let {
+      modalSelector = null,
+      // - селектор модального окна которое мы будем открывать.
+      closeSelector = '[data-sumbiot-modal-close]',
+      // - селектор который закрывает модальное окно.
       closeClickOverlay = true // - будет ли закрываться окно по клику по подложки
-    } = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     this._trigger = document.querySelectorAll(triggerSelector);
-    this._modal = document.querySelector(modalSelector);
-    this._close = this._modal.querySelector(closeSelector);
-    this._windows = document.querySelectorAll('[data-modal]');
+    this.modal = document.querySelector(modalSelector || this._trigger[0].dataset.sumbiotTarget);
+    this._close = this.modal.querySelector(closeSelector);
+    this._windows = document.querySelectorAll('[data-sumbiot-modal]');
     this._closeClickOverlay = closeClickOverlay;
     this._init();
   }
@@ -124,35 +126,30 @@ class Modal {
    * @return {void}
    */
   _init() {
-    this._hideAllModals();
-    this._showModal();
-    this._closeModal();
-    this._closeModalOverlay();
+    this.hideAllModals();
+    this._showHandler();
+    this._closeHandler();
   }
 
   /**
    * Скрывает все модальные окна
    * @return {void}
    */
-  _hideAllModals() {
+  hideAllModals() {
     this._windows.forEach(modal => {
-      modal.style.display = 'none';
       modal.classList.add('animated', 'fadeIn');
+      modal.style.display = 'none';
     });
   }
 
   /**
-   * Показать модальное окно
+   * Обработчик события клика по элементу который открывает модальное окно
    * @return {void}
    */
-  _showModal() {
+  _showHandler() {
     this._trigger.forEach(item => {
       item.addEventListener('click', e => {
-        if (e.target) {
-          e.preventDefault();
-        }
-        this._hideAllModals();
-        this._modal.style.display = "block";
+        this._show(e);
         setTimeout(() => {
           item.blur();
         }, 150);
@@ -161,130 +158,144 @@ class Modal {
   }
 
   /**
+   * Показать модальное окно
+   * @return {void}
+   */
+  _show(e) {
+    if (e.target) {
+      e.preventDefault();
+    }
+    this.hideAllModals();
+    this.modal.style.display = "block";
+  }
+
+  /**
+   * Обработчик события клика по элементу который закрывает модальное окно
+   * @return {void}
+   */
+  _closeHandler() {
+    this._close.addEventListener('click', e => {
+      this._closeModal(e);
+    });
+    this.modal.addEventListener('click', e => {
+      this._closeModalOverlay(e);
+    });
+  }
+
+  /**
    * Скрыть модальное окно
    * @return {void}
    */
-  _closeModal() {
-    this._close.addEventListener('click', e => {
-      if (e.target) {
-        e.preventDefault();
-      }
-      this._hideAllModals();
-      this._modal.style.display = "none";
-    });
+  _closeModal(e) {
+    if (e.target) {
+      e.preventDefault();
+    }
+    this.modal.style.display = "none";
   }
 
   /**
    * Скрывает модальне окно по клику на подложку
    * @return {void}
    */
-  _closeModalOverlay() {
-    this._modal.addEventListener('click', e => {
-      if (e.target === this._modal && this._closeClickOverlay) {
-        this._hideAllModals();
-        this._modal.style.display = "none";
-      }
-    });
+  _closeModalOverlay(e) {
+    if (e.target === this.modal && this._closeClickOverlay) {
+      this.modal.style.display = "none";
+    }
   }
 }
 
 /***/ }),
 
-/***/ "./src/js/components/modals/modalSmall.js":
-/*!************************************************!*\
-  !*** ./src/js/components/modals/modalSmall.js ***!
-  \************************************************/
+/***/ "./src/js/components/modals/modalDynamics.js":
+/*!***************************************************!*\
+  !*** ./src/js/components/modals/modalDynamics.js ***!
+  \***************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalSmall; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalDynamics; });
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/components/modals/modal.js");
 
+class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Создает скрытый input
+   * @return {Node}
+   */
+  static createInput() {
+    const input = document.createElement('input');
+    input.classList.add('sumbiot-input-dynamic');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', 'id');
+    return input;
+  }
 
-/**
- *  Модальное окно добавление и удаление
- * */
-class ModalSmall extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * Конструктор
    * @param {string} triggerSelector - селектор который открывает модальное окно.
-   * @param {string} modalSelector   - селектор модального окна которое мы будем открывать.
-   * @param {string} closeSelector   - селектор который закрывает модальное окно.
    * @param {Object=} options        - конфигурация.
    */
-  constructor(triggerSelector, modalSelector, closeSelector) {
-    let options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-    super(triggerSelector, modalSelector, closeSelector, options);
-    this._modal = document.querySelector(modalSelector).parentElement.removeChild(document.querySelector(modalSelector));
+  constructor(triggerSelector) {
+    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    super(triggerSelector, options);
+    this._wrapperModalSelector = options.modalWrapper || '.sumbiot-wrapper'; // - родитель куда вставляем модальное окно
+    this._wrapperElementSelector = options.elementWrapper || '[data-sumbiot-wrapper]'; // - родитель куда вставить input или ссылку
+    this._existsElementForPasteIdSelector = options.existsElementForPasteId; // - элемент уже существует в форме и готов с добавлению id
+  }
+
+  /**
+   * Обработчик события клика по элементу который открывает модальное окно
+   * @return {void}
+   */
+  _showHandler() {
+    this._trigger.forEach(item => {
+      item.addEventListener('click', e => {
+        this._show(e, item);
+      });
+    });
   }
 
   /**
    * Показать модальное окно
    * @return {void}
    */
-  _showModal() {
-    this._trigger.forEach(item => {
-      item.addEventListener('click', e => {
-        if (e.target) {
-          e.preventDefault();
-        }
-        this._hideAllModals();
-        if (this._modal.querySelector('.input-hidden')) {
-          this._modal.querySelector('.input-hidden').remove();
-        }
-        this._modalPosition(item);
-        this._modal.style.display = "block";
-      });
-    });
-  }
-
-  /**
-   * Скрыть модальное окно
-   * @return {void}
-   */
-  _closeModal() {
-    this._close.addEventListener('click', e => {
-      if (e.target) {
-        e.preventDefault();
-      }
-      console.log(this._modal);
-      this._hideAllModals();
-      this._modal.style.display = "none";
-      this._parent.querySelector('.modal').remove();
-    });
-  }
-
-  /**
-   * Скрывает модальне окно по клику на подложку
-   * @return {void}
-   */
-  _closeModalOverlay() {
-    this._modal.addEventListener('click', e => {
-      if (e.target === this._modal && this._closeClickOverlay) {
-        this._hideAllModals();
-        this._modal.style.display = "none";
-        this._parent.querySelector('.modal').remove();
-      }
-    });
+  _show(e, trigger) {
+    if (e.target) {
+      e.preventDefault();
+    }
+    this.hideAllModals();
+    this._modalPosition(trigger);
+    this.modal.style.display = "block";
   }
 
   /**
    * Позицианирует модальное окно в нужное место
-   * @param {HTMLElement} trigger - селектор который открывает модальное окно.
+   * @param {HTMLElement} trigger - элемент который открывает модальное окно.
    * @return {void}
    */
   _modalPosition(trigger) {
+    this._elementPosition(trigger);
+    if (!trigger.closest(this._wrapperModalSelector)) {
+      trigger.parentElement.classList.add(this._wrapperModalSelector.slice(1));
+    }
+    this._wpapper = trigger.closest(this._wrapperModalSelector);
+    this._wpapper.append(this.modal);
+  }
+
+  /**
+   * Вставляет input
+   * @param {HTMLElement} trigger - элемент который открывает модальное окно.
+   * @return {void}
+   */
+  _elementPosition(trigger) {
     let id = trigger.dataset.id,
-      input = document.createElement('input');
-    input.setAttribute('type', 'hidden');
-    input.classList.add('input-hidden');
-    input.setAttribute('name', 'id');
+      input = this.modal.querySelector('.sumbiot-input-dynamic');
+    if (!input) {
+      input = ModalDynamics.createInput();
+      this.modal.querySelector(this._wrapperElementSelector).prepend(input);
+    }
     input.setAttribute('value', id);
-    this._modal.querySelector('.form').prepend(input);
-    this._parent = trigger.parentElement;
-    this._parent.append(this._modal);
   }
 }
 
@@ -300,22 +311,22 @@ class ModalSmall extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/modals/modal */ "./src/js/components/modals/modal.js");
-/* harmony import */ var _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/modals/modalSmall */ "./src/js/components/modals/modalSmall.js");
+/* harmony import */ var _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/modals/modalDynamics */ "./src/js/components/modals/modalDynamics.js");
 
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка добавить сутрудника
-  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="user-modal"]', '[data-modal="user-modal"]', '[data-close]');
+  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal');
   // модалка фильтр
-  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('[data-trigger="filter-modal"]', '[data-modal="filter-modal"]', '[data-close]');
-  // модалка удалить сотрудника и удалить удостоверение
-  new _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-trigger="delete-modal"]', '[data-modal="delete-modal"]', '[data-close]', {
+  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal');
+  // // модалка удалить сотрудника и удалить удостоверение
+  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-modal', {
     closeClickOverlay: false
   });
-  // модалка добавление HSE
-  new _components_modals_modalSmall__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-trigger="add-hse-modal"]', '[data-modal="add-hse-modal"]', '[data-close]', {
-    closeClickOverlay: false
-  });
+  // // модалка добавление HSE
+  // new ModalSmall('[data-trigger="add-hse-modal"]','[data-modal="add-hse-modal"]','[data-close]',{closeClickOverlay: false})
+
+  // new ModalPosition('[data-trigger="delete-modal"]','[data-modal="delete-modal"]','[data-close]',{closeClickOverlay: false})
 });
 
 /***/ })

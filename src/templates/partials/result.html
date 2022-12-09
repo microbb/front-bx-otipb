@@ -45,11 +45,11 @@
             Удостоверение действующие
 
             <div class="result__info-options">
-              <button class="result__info-options-btn button button--icon" title="Редактировать сотрудника">
+              <button class="result__info-options-btn button button--icon" type="button" title="Редактировать сотрудника">
                 <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
               </button>
               <span class="p-relative d-inline-block">
-                <button class="result__info-options-btn button button--icon" data-trigger="delete-modal" data-id="1" title="Удалить сотрудника">
+                <button class="result__info-options-btn button button--icon js-delete-user-modal" type="button" data-sumbiot-target="#delete-user-modal" data-id="1" title="Удалить сотрудника">
                   <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                 </button>
               </span>
@@ -86,7 +86,7 @@
                   <span>
                     <button class="button button--text" type="button">Редактировать</button>
                     <span class="p-relative d-inline-block">
-                      <button class="button button--text" type="button" data-trigger="delete-modal" data-id="1" title="Удалить удостоверение">x</button>
+                      <button class="button button--text js-delete-user-modal" type="button" data-sumbiot-target="#delete-user-modal" data-id="1" title="Удалить удостоверение">x</button>
                     </span>
                   </span>
                 </div>
