@@ -1,16 +1,16 @@
 
-<section class="modal modal--position_absolute">
+<section class="modal modal--position_absolute" id="edit-hse-modal" data-sumbiot-modal>
 
   <h2 class="modal__title">Изменить должность HSE</h2>
 
   <div class="modal__inner">
 
-    <form action="" class="form">
+    <form action="" class="form" data-sumbiot-wrapper>
 
       <div class="form__inner">
 
         <label class="form__item form__item--column2">
-          <input class="form__input" type="text" name="name" value="Куприянов Дмитрий Георгиевич" placeholder="Фамилия Имя Отчество">
+          <input class="form__input" type="text" name="name" value="Доврачебная помощь" placeholder="Фамилия Имя Отчество">
         </label>
 
         <button class="btn btn-primary h-50px form__item--column2">Изменить</button>
@@ -21,5 +21,5 @@
 
   </div><!--./modal__inner-->
 
-  <button type="button" class="modal__close button button--icon" title="Закрыть окно"></button>
+  <button type="button" class="modal__close button button--icon" data-sumbiot-modal-close title="Закрыть окно"></button>
 </section><!--./form-->

@@ -240,7 +240,7 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super(triggerSelector, options);
     this._wrapperModalSelector = options.modalWrapper || '.sumbiot-wrapper'; // - родитель куда вставляем модальное окно
-    this._wrapperElementSelector = options.elementWrapper || '[data-sumbiot-wrapper]'; // - родитель куда вставить input или ссылку
+    this._wrapperElementSelector = options.elementWrapper || '[data-sumbiot-wrapper]'; // - родитель куда вставить input
     this._existsElementForPasteIdSelector = options.existsElementForPasteId; // - элемент уже существует в форме и готов с добавлению id
   }
 
@@ -284,18 +284,18 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
   }
 
   /**
-   * Вставляет input
+   * Вставляет input или добавляет data-sumbiot-id в нужный элемент
    * @param {HTMLElement} trigger - элемент который открывает модальное окно.
    * @return {void}
    */
   _elementPosition(trigger) {
     let id = trigger.dataset.id,
-      input = this.modal.querySelector('.sumbiot-input-dynamic');
-    if (!input) {
-      input = ModalDynamics.createInput();
-      this.modal.querySelector(this._wrapperElementSelector).prepend(input);
+      elementForPasteId = this.modal.querySelector(this._existsElementForPasteIdSelector || '.sumbiot-input-dynamic');
+    if (!elementForPasteId) {
+      elementForPasteId = ModalDynamics.createInput();
+      this.modal.querySelector(this._wrapperElementSelector).prepend(elementForPasteId);
     }
-    input.setAttribute('value', id);
+    this._existsElementForPasteIdSelector ? elementForPasteId.setAttribute('data-sumbiot-id', id) : elementForPasteId.setAttribute('value', id);
   }
 }
 
@@ -315,18 +315,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  // модалка добавить сутрудника
-  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal');
   // модалка фильтр
   new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal');
-  // // модалка удалить сотрудника и удалить удостоверение
+  // модалка добавить сутрудника
+  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal');
+  // модалка редактировать сотрудника
+  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
+    modalWrapper: '.js-wrapper-modal'
+  });
+  // модалка удалить сотрудника
   new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-modal', {
     closeClickOverlay: false
   });
-  // // модалка добавление HSE
-  // new ModalSmall('[data-trigger="add-hse-modal"]','[data-modal="add-hse-modal"]','[data-close]',{closeClickOverlay: false})
-
-  // new ModalPosition('[data-trigger="delete-modal"]','[data-modal="delete-modal"]','[data-close]',{closeClickOverlay: false})
+  // модалка добавить / редактировать / продлить удостоверение
+  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
+    modalWrapper: '.js-wrapper-modal'
+  });
+  // модалка удалить удостоверение
+  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-card-modal', {
+    closeClickOverlay: false
+  });
+  // модалка добавление HSE
+  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
+    closeClickOverlay: false
+  });
+  // модалка редактировать HSE
+  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
+    modalWrapper: '.js-wrapper-modal'
+  });
 });
 
 /***/ })

@@ -26,9 +26,9 @@ export default class ModalDynamics extends Modal{
 
     super(triggerSelector,options)
 
-    this._wrapperModalSelector = options.modalWrapper || '.sumbiot-wrapper'           // - родитель куда вставляем модальное окно
-    this._wrapperElementSelector = options.elementWrapper || '[data-sumbiot-wrapper]' // - родитель куда вставить input или ссылку
-    this._existsElementForPasteIdSelector = options.existsElementForPasteId           // - элемент уже существует в форме и готов с добавлению id
+    this._wrapperModalSelector = options.modalWrapper || '.sumbiot-wrapper'            // - родитель куда вставляем модальное окно
+    this._wrapperElementSelector = options.elementWrapper || '[data-sumbiot-wrapper]'  // - родитель куда вставить input
+    this._existsElementForPasteIdSelector = options.existsElementForPasteId            // - элемент уже существует в форме и готов с добавлению id
   }
 
   /**
@@ -77,20 +77,20 @@ export default class ModalDynamics extends Modal{
   }
 
   /**
-   * Вставляет input
+   * Вставляет input или добавляет data-sumbiot-id в нужный элемент
    * @param {HTMLElement} trigger - элемент который открывает модальное окно.
    * @return {void}
    */
   _elementPosition(trigger) {
     let id = trigger.dataset.id,
-        input = this.modal.querySelector('.sumbiot-input-dynamic')
+        elementForPasteId  = this.modal.querySelector(this._existsElementForPasteIdSelector || '.sumbiot-input-dynamic')
 
-    if(!input) {
-      input = ModalDynamics.createInput()
-      this.modal.querySelector(this._wrapperElementSelector).prepend(input)
+    if(!elementForPasteId) {
+      elementForPasteId = ModalDynamics.createInput()
+      this.modal.querySelector(this._wrapperElementSelector).prepend(elementForPasteId)
     }
 
-    input.setAttribute('value',id)
+    this._existsElementForPasteIdSelector ? elementForPasteId.setAttribute('data-sumbiot-id',id) : elementForPasteId.setAttribute('value',id)
   }
 
 }

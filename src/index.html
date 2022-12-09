@@ -23,13 +23,17 @@ script: main.js
 
     {{> result}}
 
-    <div class="wrapper-modal">
+    {{> modal-delete-user}}
 
-      {{> modal-delete-user}}
+    {{> modal-edit-user}}
 
-      {{> modal-add-hse}}
+    {{> modal-edit-card}}
 
-    </div>
+    {{> modal-delete-card}}
+
+    {{> modal-add-hse}}
+
+    {{> modal-edit-hse}}
 
   </div><!-- ./bx-frame__content -->
 
