@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка удалить сотрудника
   new ModalDynamics('.js-delete-user-modal',{closeClickOverlay: false})
   // модалка добавить / редактировать / продлить удостоверение
-  new ModalDynamics('.js-edit-card-modal',{modalWrapper: '.js-wrapper-modal'})
+  const modalCard = new ModalDynamics('.js-edit-card-modal',{modalWrapper: '.js-wrapper-modal'})
   // модалка удалить удостоверение
   new ModalDynamics('.js-delete-card-modal',{closeClickOverlay: false})
   // модалка добавление HSE

@@ -16,8 +16,8 @@ export default class Modal{
                 closeClickOverlay = true,      // - будет ли закрываться окно по клику по подложки
               } = {}) {
 
-    this._trigger = document.querySelectorAll(triggerSelector)
-    this.modal = document.querySelector(modalSelector || this._trigger[0].dataset.sumbiotTarget)
+    this._trigger = triggerSelector
+    this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget)
     this._close = this.modal.querySelector(closeSelector)
 
     this._windows = document.querySelectorAll('[data-sumbiot-modal]')
@@ -54,15 +54,17 @@ export default class Modal{
    * @return {void}
    */
   _showHandler() {
-    this._trigger.forEach(item => {
-      item.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+
+      if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1)) ) {
         this._show(e)
 
         setTimeout(() =>{
-          item.blur()
+          target.blur()
         },150)
-      });
-    });
+      }
+    })
   }
 
   /**

@@ -1,5 +1,8 @@
 import Modal from "./modal";
 
+/**
+ *  Модальное окна c привязкой к блоку
+ * */
 export default class ModalDynamics extends Modal{
 
   /**
@@ -36,11 +39,17 @@ export default class ModalDynamics extends Modal{
    * @return {void}
    */
   _showHandler() {
-    this._trigger.forEach(item => {
-      item.addEventListener('click', (e) => {
-        this._show(e,item)
-      });
-    });
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+
+      if (target && target.classList.contains(this._trigger.slice(1))) {
+        this._show(e,target)
+
+      }else if(target.parentElement.classList.contains(this._trigger.slice(1))) {
+        this._show(e,target.parentElement)
+      }
+
+    })
   }
 
   /**

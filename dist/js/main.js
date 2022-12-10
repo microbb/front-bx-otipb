@@ -113,8 +113,8 @@ class Modal {
       // - селектор который закрывает модальное окно.
       closeClickOverlay = true // - будет ли закрываться окно по клику по подложки
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    this._trigger = document.querySelectorAll(triggerSelector);
-    this.modal = document.querySelector(modalSelector || this._trigger[0].dataset.sumbiotTarget);
+    this._trigger = triggerSelector;
+    this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget);
     this._close = this.modal.querySelector(closeSelector);
     this._windows = document.querySelectorAll('[data-sumbiot-modal]');
     this._closeClickOverlay = closeClickOverlay;
@@ -147,13 +147,14 @@ class Modal {
    * @return {void}
    */
   _showHandler() {
-    this._trigger.forEach(item => {
-      item.addEventListener('click', e => {
+    document.addEventListener('click', e => {
+      const target = e.target;
+      if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
         this._show(e);
         setTimeout(() => {
-          item.blur();
+          target.blur();
         }, 150);
-      });
+      }
     });
   }
 
@@ -218,6 +219,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalDynamics; });
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/components/modals/modal.js");
 
+
+/**
+ *  Модальное окна c привязкой к блоку
+ * */
 class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * Создает скрытый input
@@ -249,10 +254,13 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
    * @return {void}
    */
   _showHandler() {
-    this._trigger.forEach(item => {
-      item.addEventListener('click', e => {
-        this._show(e, item);
-      });
+    document.addEventListener('click', e => {
+      const target = e.target;
+      if (target && target.classList.contains(this._trigger.slice(1))) {
+        this._show(e, target);
+      } else if (target.parentElement.classList.contains(this._trigger.slice(1))) {
+        this._show(e, target.parentElement);
+      }
     });
   }
 
@@ -328,7 +336,7 @@ window.addEventListener('DOMContentLoaded', () => {
     closeClickOverlay: false
   });
   // модалка добавить / редактировать / продлить удостоверение
-  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
+  const modalCard = new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalWrapper: '.js-wrapper-modal'
   });
   // модалка удалить удостоверение
