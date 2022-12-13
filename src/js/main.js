@@ -1,5 +1,7 @@
-import Modal from './components/modals/modal'
-import ModalDynamics from "./components/modals/modalDynamics";
+import Modal from './library/sumbiot/modules/modals/components/modal'
+import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics'
+
+import Visitor from "./components/visitor"
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка фильтр
@@ -10,8 +12,12 @@ window.addEventListener('DOMContentLoaded', () => {
   new ModalDynamics('.js-edit-user-modal',{modalWrapper: '.js-wrapper-modal'})
   // модалка удалить сотрудника
   new ModalDynamics('.js-delete-user-modal',{closeClickOverlay: false})
+
   // модалка добавить / редактировать / продлить удостоверение
-  const modalCard = new ModalDynamics('.js-edit-card-modal',{modalWrapper: '.js-wrapper-modal'})
+  new ModalDynamics('.js-edit-card-modal',{modalWrapper: '.js-wrapper-modal'})
+                    .accept(Visitor.modalsUnity)
+                    .modalsUnity()
+
   // модалка удалить удостоверение
   new ModalDynamics('.js-delete-card-modal',{closeClickOverlay: false})
   // модалка добавление HSE

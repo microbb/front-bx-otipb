@@ -96,7 +96,10 @@ export default class ModalDynamics extends Modal{
 
     if(!elementForPasteId) {
       elementForPasteId = ModalDynamics.createInput()
-      this.modal.querySelector(this._wrapperElementSelector).prepend(elementForPasteId)
+
+      this.modal.querySelector(this._wrapperElementSelector) ?
+        this.modal.querySelector(this._wrapperElementSelector).prepend(elementForPasteId) :
+        this.modal.querySelector('form').prepend(elementForPasteId)
     }
 
     this._existsElementForPasteIdSelector ? elementForPasteId.setAttribute('data-sumbiot-id',id) : elementForPasteId.setAttribute('value',id)

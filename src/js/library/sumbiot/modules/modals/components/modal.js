@@ -1,8 +1,9 @@
+import ModalCore from "../modalCore";
 
 /**
- *  Модальное окна
+ *  Модальное окно стандартное
  * */
-export default class Modal{
+export default class Modal extends ModalCore{
 
   /**
    * Конструктор
@@ -15,6 +16,8 @@ export default class Modal{
                 closeSelector= '[data-sumbiot-modal-close]', // - селектор который закрывает модальное окно.
                 closeClickOverlay = true,      // - будет ли закрываться окно по клику по подложки
               } = {}) {
+
+    super();
 
     this._trigger = triggerSelector
     this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget)

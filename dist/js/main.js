@@ -86,20 +86,97 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/js/components/modals/modal.js":
-/*!*******************************************!*\
-  !*** ./src/js/components/modals/modal.js ***!
-  \*******************************************/
+/***/ "./src/js/components/visitor.js":
+/*!**************************************!*\
+  !*** ./src/js/components/visitor.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Visitor; });
+/**
+ *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
+ * */
+class Visitor {
+  /**
+   * Посититель для экземпляра модального окна которое реализует
+   * редактировать / добавить / продлить
+   * удостоверение
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
+  static modalsUnity(instanceClass) {
+    // метод объединения
+    instanceClass.modalsUnity = function () {
+      // изменяет заголовок
+      const editTitle = target => {
+        let btnText = target.innerText;
+        this.modal.querySelector('.modal__title').innerText = `${btnText || 'Редактировать'} удостоверение`;
+      };
+
+      // изменяет обработчик
+      const editAction = target => {
+        this.modal.querySelector('form').action = target.dataset.action || '';
+      };
+
+      // добавляет user id
+      const addUserId = target => {
+        if (target.dataset.idUser) {
+          const input = document.createElement('input');
+          input.classList.add('js-input-user-id');
+          input.setAttribute('type', 'hidden');
+          input.setAttribute('name', 'id_user');
+          input.setAttribute('value', target.dataset.idUser);
+          this.modal.querySelector('form').prepend(input);
+        }
+      };
+
+      // удаляет user id
+      const deleteUserId = () => {
+        const inputs = this.modal.querySelectorAll('input');
+        for (let input of inputs) {
+          if (input.classList.contains('js-input-user-id')) input.remove();
+        }
+      };
+      document.addEventListener('click', e => {
+        let target = e.target;
+        if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
+          if (target.parentElement.classList.contains(this._trigger.slice(1))) target = target.parentElement;
+          try {
+            deleteUserId();
+            editTitle(target);
+            editAction(target);
+            addUserId(target);
+          } catch (e) {
+            console.log(e.message);
+          }
+        }
+      });
+    };
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/library/sumbiot/modules/modals/components/modal.js":
+/*!*******************************************************************!*\
+  !*** ./src/js/library/sumbiot/modules/modals/components/modal.js ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Modal; });
+/* harmony import */ var _modalCore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modalCore */ "./src/js/library/sumbiot/modules/modals/modalCore.js");
+
+
 /**
- *  Модальное окна
+ *  Модальное окно стандартное
  * */
-class Modal {
+class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
   /**
    * Конструктор
    * @param {string} triggerSelector - селектор который открывает модальное окно.
@@ -113,6 +190,7 @@ class Modal {
       // - селектор который закрывает модальное окно.
       closeClickOverlay = true // - будет ли закрываться окно по клику по подложки
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    super();
     this._trigger = triggerSelector;
     this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget);
     this._close = this.modal.querySelector(closeSelector);
@@ -207,17 +285,17 @@ class Modal {
 
 /***/ }),
 
-/***/ "./src/js/components/modals/modalDynamics.js":
-/*!***************************************************!*\
-  !*** ./src/js/components/modals/modalDynamics.js ***!
-  \***************************************************/
+/***/ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js":
+/*!***************************************************************************!*\
+  !*** ./src/js/library/sumbiot/modules/modals/components/modalDynamics.js ***!
+  \***************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalDynamics; });
-/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/components/modals/modal.js");
+/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/library/sumbiot/modules/modals/components/modal.js");
 
 
 /**
@@ -301,9 +379,35 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
       elementForPasteId = this.modal.querySelector(this._existsElementForPasteIdSelector || '.sumbiot-input-dynamic');
     if (!elementForPasteId) {
       elementForPasteId = ModalDynamics.createInput();
-      this.modal.querySelector(this._wrapperElementSelector).prepend(elementForPasteId);
+      this.modal.querySelector(this._wrapperElementSelector) ? this.modal.querySelector(this._wrapperElementSelector).prepend(elementForPasteId) : this.modal.querySelector('form').prepend(elementForPasteId);
     }
     this._existsElementForPasteIdSelector ? elementForPasteId.setAttribute('data-sumbiot-id', id) : elementForPasteId.setAttribute('value', id);
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/library/sumbiot/modules/modals/modalCore.js":
+/*!************************************************************!*\
+  !*** ./src/js/library/sumbiot/modules/modals/modalCore.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalCore; });
+/**
+ *  Модальное окно Ядро
+ * */
+class ModalCore {
+  /**
+   * Добавляет новый метод к модалки, не изменяя исходный код класса(первоначальную реализацию) {паттерн Visitor}
+   * @return {this}
+   */
+  accept(visitor) {
+    visitor(this);
+    return this;
   }
 }
 
@@ -318,37 +422,41 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/modals/modal */ "./src/js/components/modals/modal.js");
-/* harmony import */ var _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/modals/modalDynamics */ "./src/js/components/modals/modalDynamics.js");
+/* harmony import */ var _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modal */ "./src/js/library/sumbiot/modules/modals/components/modal.js");
+/* harmony import */ var _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modalDynamics */ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js");
+/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+
 
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка фильтр
-  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal');
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal');
   // модалка добавить сутрудника
-  new _components_modals_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal');
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal');
   // модалка редактировать сотрудника
-  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
+  new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalWrapper: '.js-wrapper-modal'
   });
   // модалка удалить сотрудника
-  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-modal', {
+  new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-modal', {
     closeClickOverlay: false
   });
+
   // модалка добавить / редактировать / продлить удостоверение
-  const modalCard = new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
+  new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalWrapper: '.js-wrapper-modal'
-  });
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_2__["default"].modalsUnity).modalsUnity();
+
   // модалка удалить удостоверение
-  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-card-modal', {
+  new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-card-modal', {
     closeClickOverlay: false
   });
   // модалка добавление HSE
-  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
+  new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     closeClickOverlay: false
   });
   // модалка редактировать HSE
-  new _components_modals_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
+  new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalWrapper: '.js-wrapper-modal'
   });
 });
