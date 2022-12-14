@@ -96,6 +96,9 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Visitor; });
+/* harmony import */ var _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../library/sumbiot/modules/accordion/components/accordion */ "./src/js/library/sumbiot/modules/accordion/components/accordion.js");
+
+
 /**
  *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
  * */
@@ -155,6 +158,139 @@ class Visitor {
         }
       });
     };
+  }
+
+  /**
+   * Посититель для экземпляра аккрдиона которое реализует
+   * переключение класса активности родителю
+   * аккрдиона
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
+  static accordionParentMod(instanceClass) {
+    // метод переключение
+    instanceClass.accordionParentMod = function () {
+      // переключает класс
+      const toggleParent = target => {
+        target.closest(this._triggerSelector).parentElement.classList.toggle('result__row--active');
+      };
+      document.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.closest(this._triggerSelector)) {
+          try {
+            toggleParent(target);
+          } catch (e) {
+            console.log(e.message);
+          }
+        }
+      });
+    };
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/library/sumbiot/modules/accordion/accordionCore.js":
+/*!*******************************************************************!*\
+  !*** ./src/js/library/sumbiot/modules/accordion/accordionCore.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AccordionCore; });
+/**
+ *  Аккардион Ядро
+ * */
+class AccordionCore {
+  /**
+   * Добавляет новый метод к аккардион, не изменяя исходный код класса(первоначальную реализацию) {паттерн Visitor}
+   * @return {this}
+   */
+  accept(visitor) {
+    visitor(this);
+    return this;
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/library/sumbiot/modules/accordion/components/accordion.js":
+/*!**************************************************************************!*\
+  !*** ./src/js/library/sumbiot/modules/accordion/components/accordion.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Accordion; });
+/* harmony import */ var _accordionCore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../accordionCore */ "./src/js/library/sumbiot/modules/accordion/accordionCore.js");
+
+
+/**
+ *  Аккардион
+ * */
+
+class Accordion extends _accordionCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} triggersSelector - селектор который открывает скрытый контент.
+   * @param {Object=} options         - конфигурация.
+   */
+  constructor(triggersSelector) {
+    let {
+      headActive = null,
+      // - активный класс пункта
+      contentActive = null,
+      // - активный класс контента
+      display = 'block'
+    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    super();
+    this._triggerSelector = triggersSelector;
+    this._headActive = headActive || 'sumbiot-accordion-head';
+    this._contentActive = contentActive || 'sumbiot-accordion-content';
+    this._display = display;
+    this._init();
+  }
+
+  /**
+   * Инициализация аккардиона
+   * @return {void}
+   */
+  _init() {
+    this._toggleHandler();
+  }
+
+  /**
+   * Обработчик события переключения
+   * @return {void}
+   */
+  _toggleHandler() {
+    document.addEventListener('click', e => {
+      const target = e.target;
+      if (target && target.closest(this._triggerSelector)) {
+        const triggerElement = target.closest(this._triggerSelector);
+        const toggleContent = triggerElement.nextElementSibling;
+        this._toggle(triggerElement, toggleContent, e);
+      }
+    });
+  }
+
+  /**
+   * Переключатель
+   * @return {void}
+   */
+  _toggle(triggerElement, toggleContent, e) {
+    if (e.target) {
+      e.preventDefault();
+    }
+    toggleContent.style.display = toggleContent.style.display === this._display ? 'none' : this._display;
+    triggerElement.classList.toggle(this._headActive);
+    setTimeout(() => {
+      toggleContent.classList.toggle(this._contentActive);
+    });
   }
 }
 
@@ -424,7 +560,9 @@ class ModalCore {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modal */ "./src/js/library/sumbiot/modules/modals/components/modal.js");
 /* harmony import */ var _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modalDynamics */ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js");
-/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+/* harmony import */ var _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./library/sumbiot/modules/accordion/components/accordion */ "./src/js/library/sumbiot/modules/accordion/components/accordion.js");
+/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+
 
 
 
@@ -445,7 +583,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_2__["default"].modalsUnity).modalsUnity();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_3__["default"].modalsUnity).modalsUnity();
 
   // модалка удалить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-card-modal', {
@@ -459,6 +597,12 @@ window.addEventListener('DOMContentLoaded', () => {
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalWrapper: '.js-wrapper-modal'
   });
+
+  // аккардион
+  new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
+    contentActive: 'result__info--active',
+    display: 'grid'
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_3__["default"].accordionParentMod).accordionParentMod();
 });
 
 /***/ })

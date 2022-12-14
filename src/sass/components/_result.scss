@@ -101,7 +101,6 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   }
 
   &--active{
-    margin:  8px 0;
 
     & > .row {
       background-color: $color3;
@@ -214,7 +213,7 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
 }
 
 .result__info{
-  display: grid;
+  display: none;
   grid-template-columns: repeat(12,1fr);
   grid-column-gap: 24px;
   align-content:start;
@@ -228,8 +227,16 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
 
   border-bottom: 1px solid color.scale($color2, $lightness: 70%);
 
-  &--modal_active{
-    min-height: 450px;
+  opacity: 0;
+
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+
+  transition: transform 0.2s ease, opacity 0.5s ease;
+
+  &--active {
+    transform: scaleY(1);
+    opacity: 1;
   }
 }
 

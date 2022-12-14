@@ -1,3 +1,5 @@
+import Accordion from "../library/sumbiot/modules/accordion/components/accordion";
+
 /**
  *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
  * */
@@ -81,7 +83,44 @@ export default class Visitor {
         })
 
       }
+  }
 
+  /**
+   * Посититель для экземпляра аккрдиона которое реализует
+   * переключение класса активности родителю
+   * аккрдиона
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
+  static accordionParentMod(instanceClass) {
+
+    // метод переключение
+    instanceClass.accordionParentMod = function () {
+
+      // переключает класс
+      const toggleParent = (target) => {
+        target.closest(this._triggerSelector).parentElement.classList.toggle('result__row--active')
+      }
+
+      document.addEventListener('click', (e) => {
+        const target = e.target;
+
+        if (target && target.closest(this._triggerSelector)) {
+
+          try {
+
+            toggleParent(target)
+
+          }catch (e) {
+
+            console.log(e.message)
+
+          }
+
+        }
+      })
+
+    }
   }
 
 }

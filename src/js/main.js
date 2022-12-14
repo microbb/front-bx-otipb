@@ -1,5 +1,6 @@
 import Modal from './library/sumbiot/modules/modals/components/modal'
 import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics'
+import Accordion from './library/sumbiot/modules/accordion/components/accordion'
 
 import Visitor from "./components/visitor"
 
@@ -24,6 +25,11 @@ window.addEventListener('DOMContentLoaded', () => {
   new ModalDynamics('.js-add-hse-modal',{closeClickOverlay: false})
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',{modalWrapper: '.js-wrapper-modal'})
+
+  // аккардион
+  new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
+                .accept(Visitor.accordionParentMod)
+                .accordionParentMod()
 })
 
 
