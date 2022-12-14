@@ -13,9 +13,10 @@ export default class Accordion extends AccordionCore{
    */
   constructor(triggersSelector,
               {
-                headActive = null,     // - активный класс пункта
+                headActive = null,      // - активный класс пункта
                 contentActive  = null,  // - активный класс контента
-                display='block'
+                display = 'block',      // - тип отображаемого элемента
+                hideOpen = true         // - при открытии аккардиона скрывает все открытые
               } = {}) {
 
     super();
@@ -24,6 +25,7 @@ export default class Accordion extends AccordionCore{
     this._headActive = headActive || 'sumbiot-accordion-head'
     this._contentActive = contentActive || 'sumbiot-accordion-content'
     this._display = display
+    this._hideOpen = hideOpen
 
     this._init()
   }
@@ -45,11 +47,31 @@ export default class Accordion extends AccordionCore{
       const target = e.target;
 
       if (target && target.closest(this._triggerSelector)) {
-        const triggerElement = target.closest(this._triggerSelector)
-        const toggleContent = triggerElement.nextElementSibling
+        const triggerElement = target.closest(this._triggerSelector),
+              toggleContent = triggerElement.nextElementSibling
 
-        this._toggle(triggerElement,toggleContent,e)
+        if(this._hideOpen){
+          document.querySelectorAll(this._triggerSelector).forEach(element => {
+
+            if(triggerElement === element) {
+
+              this._toggle(triggerElement,toggleContent,e)
+
+            }else {
+
+              element.classList.remove(this._headActive)
+              element.nextElementSibling.classList.remove(this._contentActive)
+
+              element.nextElementSibling.style.display = 'none'
+            }
+
+          })
+
+        }else {
+          this._toggle(triggerElement,toggleContent,e)
+        }
       }
+
     })
   }
 
@@ -68,6 +90,7 @@ export default class Accordion extends AccordionCore{
     setTimeout(()=> {
       toggleContent.classList.toggle(this._contentActive)
     })
+
   }
 
 }

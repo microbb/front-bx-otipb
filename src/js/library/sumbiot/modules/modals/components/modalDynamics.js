@@ -49,7 +49,7 @@ export default class ModalDynamics extends Modal{
         this._show(e,target.parentElement)
       }
 
-    })
+    },true)
   }
 
   /**

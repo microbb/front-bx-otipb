@@ -172,7 +172,13 @@ class Visitor {
     instanceClass.accordionParentMod = function () {
       // переключает класс
       const toggleParent = target => {
-        target.closest(this._triggerSelector).parentElement.classList.toggle('result__row--active');
+        document.querySelectorAll(this._triggerSelector).forEach(element => {
+          if (element === target.closest(this._triggerSelector)) {
+            target.closest(this._triggerSelector).parentElement.classList.toggle('result__row--active');
+          } else {
+            element.parentElement.classList.remove('result__row--active');
+          }
+        });
       };
       document.addEventListener('click', e => {
         const target = e.target;
@@ -184,6 +190,19 @@ class Visitor {
           }
         }
       });
+    };
+  }
+  static sdf(instanceClass) {
+    // метод объединения
+    instanceClass.sdf = function () {
+      document.addEventListener('click', e => {
+        let target = e.target;
+        if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
+          // console.log(target)
+
+          e.stopPropagation();
+        }
+      }, true);
     };
   }
 }
@@ -245,13 +264,16 @@ class Accordion extends _accordionCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
       // - активный класс пункта
       contentActive = null,
       // - активный класс контента
-      display = 'block'
+      display = 'block',
+      // - тип отображаемого элемента
+      hideOpen = true // - при открытии аккардиона скрывает все открытые
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super();
     this._triggerSelector = triggersSelector;
     this._headActive = headActive || 'sumbiot-accordion-head';
     this._contentActive = contentActive || 'sumbiot-accordion-content';
     this._display = display;
+    this._hideOpen = hideOpen;
     this._init();
   }
 
@@ -271,9 +293,21 @@ class Accordion extends _accordionCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     document.addEventListener('click', e => {
       const target = e.target;
       if (target && target.closest(this._triggerSelector)) {
-        const triggerElement = target.closest(this._triggerSelector);
-        const toggleContent = triggerElement.nextElementSibling;
-        this._toggle(triggerElement, toggleContent, e);
+        const triggerElement = target.closest(this._triggerSelector),
+          toggleContent = triggerElement.nextElementSibling;
+        if (this._hideOpen) {
+          document.querySelectorAll(this._triggerSelector).forEach(element => {
+            if (triggerElement === element) {
+              this._toggle(triggerElement, toggleContent, e);
+            } else {
+              element.classList.remove(this._headActive);
+              element.nextElementSibling.classList.remove(this._contentActive);
+              element.nextElementSibling.style.display = 'none';
+            }
+          });
+        } else {
+          this._toggle(triggerElement, toggleContent, e);
+        }
       }
     });
   }
@@ -379,6 +413,7 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
   _show(e) {
     if (e.target) {
       e.preventDefault();
+      e.stopPropagation();
     }
     this.hideAllModals();
     this.modal.style.display = "block";
@@ -413,6 +448,9 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
    * @return {void}
    */
   _closeModalOverlay(e) {
+    if (e.target) {
+      e.stopPropagation();
+    }
     if (e.target === this.modal && this._closeClickOverlay) {
       this.modal.style.display = "none";
     }
@@ -475,7 +513,7 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
       } else if (target.parentElement.classList.contains(this._trigger.slice(1))) {
         this._show(e, target.parentElement);
       }
-    });
+    }, true);
   }
 
   /**
@@ -592,7 +630,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     closeClickOverlay: false
-  });
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_3__["default"].sdf).sdf();
+
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalWrapper: '.js-wrapper-modal'

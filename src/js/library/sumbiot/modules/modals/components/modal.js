@@ -77,6 +77,7 @@ export default class Modal extends ModalCore{
   _show(e){
     if (e.target) {
       e.preventDefault()
+      e.stopPropagation()
     }
 
     this.hideAllModals()
@@ -104,7 +105,7 @@ export default class Modal extends ModalCore{
    */
   _closeModal(e) {
     if (e.target) {
-      e.preventDefault();
+      e.preventDefault()
     }
 
     this.modal.style.display = "none";
@@ -115,6 +116,10 @@ export default class Modal extends ModalCore{
    * @return {void}
    */
   _closeModalOverlay(e) {
+    if (e.target) {
+      e.stopPropagation()
+    }
+
     if (e.target === this.modal && this._closeClickOverlay) {
       this.modal.style.display = "none";
     }

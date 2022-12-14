@@ -23,6 +23,9 @@ window.addEventListener('DOMContentLoaded', () => {
   new ModalDynamics('.js-delete-card-modal',{closeClickOverlay: false})
   // модалка добавление HSE
   new ModalDynamics('.js-add-hse-modal',{closeClickOverlay: false})
+    .accept(Visitor.sdf)
+    .sdf()
+
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',{modalWrapper: '.js-wrapper-modal'})
 
