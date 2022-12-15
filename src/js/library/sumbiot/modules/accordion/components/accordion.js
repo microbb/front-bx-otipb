@@ -1,7 +1,7 @@
 import AccordionCore from "../accordionCore";
 
 /**
- *  Аккардион
+ *  Аккардион стандарт
  * */
 
 export default class Accordion extends AccordionCore{

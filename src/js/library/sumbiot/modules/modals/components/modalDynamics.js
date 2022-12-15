@@ -40,13 +40,19 @@ export default class ModalDynamics extends Modal{
    */
   _showHandler() {
     document.addEventListener('click', (e) => {
+      if (e.target) {
+        e.preventDefault()
+      }
+
       const target = e.target;
 
       if (target && target.classList.contains(this._trigger.slice(1))) {
-        this._show(e,target)
+        this._triggerEvent = target
+        this._show()
 
       }else if(target.parentElement.classList.contains(this._trigger.slice(1))) {
-        this._show(e,target.parentElement)
+        this._triggerEvent = target.parentElement
+        this._show()
       }
 
     },true)
@@ -56,42 +62,37 @@ export default class ModalDynamics extends Modal{
    * Показать модальное окно
    * @return {void}
    */
-  _show(e,trigger){
-    if (e.target) {
-      e.preventDefault()
-    }
+  _show(){
 
     this.hideAllModals()
 
-    this._modalPosition(trigger)
+    this._modalPosition()
 
     this.modal.style.display = "block";
   }
 
   /**
    * Позицианирует модальное окно в нужное место
-   * @param {HTMLElement} trigger - элемент который открывает модальное окно.
    * @return {void}
    */
-  _modalPosition(trigger){
+  _modalPosition(){
 
-    this._elementPosition(trigger)
+    this._elementPosition()
 
-    if(!trigger.closest(this._wrapperModalSelector)) {
-      trigger.parentElement.classList.add(this._wrapperModalSelector.slice(1))
+    if(!this._triggerEvent.closest(this._wrapperModalSelector)) {
+      this._triggerEvent.parentElement.classList.add(this._wrapperModalSelector.slice(1))
     }
 
-    this._wpapper = trigger.closest(this._wrapperModalSelector)
+    this._wpapper = this._triggerEvent.closest(this._wrapperModalSelector)
     this._wpapper.append(this.modal)
   }
 
   /**
    * Вставляет input или добавляет data-sumbiot-id в нужный элемент
-   * @param {HTMLElement} trigger - элемент который открывает модальное окно.
    * @return {void}
    */
-  _elementPosition(trigger) {
-    let id = trigger.dataset.id,
+  _elementPosition() {
+    let id = this._triggerEvent.dataset.id,
         elementForPasteId  = this.modal.querySelector(this._existsElementForPasteIdSelector || '.sumbiot-input-dynamic')
 
     if(!elementForPasteId) {

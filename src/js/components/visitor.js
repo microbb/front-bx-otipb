@@ -132,19 +132,17 @@ export default class Visitor {
     }
   }
 
-  static sdf(instanceClass) {
+  static addHseMod(instanceClass) {
 
     // метод объединения
-    instanceClass.sdf = function () {
+    instanceClass.addHseMod = function () {
 
       document.addEventListener('click', (e) => {
         let target = e.target;
 
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1)) ) {
 
-          // console.log(target)
-
-          e.stopPropagation()
+          // e.stopPropagation()
 
         }
 

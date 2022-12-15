@@ -1,7 +1,7 @@
 import ModalCore from "../modalCore";
 
 /**
- *  Модальное окно стандартное
+ *  Модальное окно стандарт
  * */
 export default class Modal extends ModalCore{
 
@@ -13,11 +13,11 @@ export default class Modal extends ModalCore{
   constructor(triggerSelector ,
               {
                 modalSelector = null,          // - селектор модального окна которое мы будем открывать.
-                closeSelector= '[data-sumbiot-modal-close]', // - селектор который закрывает модальное окно.
+                closeSelector = '[data-sumbiot-modal-close]', // - селектор который закрывает модальное окно.
                 closeClickOverlay = true,      // - будет ли закрываться окно по клику по подложки
               } = {}) {
 
-    super();
+    super()
 
     this._trigger = triggerSelector
     this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget)
@@ -61,7 +61,10 @@ export default class Modal extends ModalCore{
       const target = e.target;
 
       if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1)) ) {
-        this._show(e)
+        // e.preventDefault()
+        // e.stopPropagation()
+
+        this._show()
 
         setTimeout(() =>{
           target.blur()
@@ -74,12 +77,7 @@ export default class Modal extends ModalCore{
    * Показать модальное окно
    * @return {void}
    */
-  _show(e){
-    if (e.target) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-
+  _show(){
     this.hideAllModals()
 
     this.modal.style.display = "block";
@@ -91,10 +89,18 @@ export default class Modal extends ModalCore{
    */
   _closeHandler() {
     this._close.addEventListener('click', (e) => {
-      this._closeModal(e)
+      if (e.target) {
+        // e.preventDefault()
+      }
+
+      this._closeModal()
     })
 
     this.modal.addEventListener('click', (e) => {
+      if (e.target) {
+        // e.stopPropagation()
+      }
+
       this._closeModalOverlay(e)
     })
   }
@@ -103,11 +109,7 @@ export default class Modal extends ModalCore{
    * Скрыть модальное окно
    * @return {void}
    */
-  _closeModal(e) {
-    if (e.target) {
-      e.preventDefault()
-    }
-
+  _closeModal() {
     this.modal.style.display = "none";
   }
 
@@ -116,9 +118,6 @@ export default class Modal extends ModalCore{
    * @return {void}
    */
   _closeModalOverlay(e) {
-    if (e.target) {
-      e.stopPropagation()
-    }
 
     if (e.target === this.modal && this._closeClickOverlay) {
       this.modal.style.display = "none";

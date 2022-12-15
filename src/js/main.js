@@ -1,6 +1,7 @@
 import Modal from './library/sumbiot/modules/modals/components/modal'
 import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics'
 import Accordion from './library/sumbiot/modules/accordion/components/accordion'
+import Dropdown from './library/sumbiot/modules/dropdown/components/dropdown'
 
 import Visitor from "./components/visitor"
 
@@ -23,8 +24,8 @@ window.addEventListener('DOMContentLoaded', () => {
   new ModalDynamics('.js-delete-card-modal',{closeClickOverlay: false})
   // модалка добавление HSE
   new ModalDynamics('.js-add-hse-modal',{closeClickOverlay: false})
-    .accept(Visitor.sdf)
-    .sdf()
+                    .accept(Visitor.addHseMod)
+                    .addHseMod()
 
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',{modalWrapper: '.js-wrapper-modal'})
@@ -33,6 +34,9 @@ window.addEventListener('DOMContentLoaded', () => {
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
                 .accept(Visitor.accordionParentMod)
                 .accordionParentMod()
+
+  // модалка редактировать HSE
+  // new Dropdown('.sumbiot-dropdown')
 })
 
 
