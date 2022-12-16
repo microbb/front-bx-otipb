@@ -28,6 +28,8 @@ $color3: #e7e7e1;
 
     background-color: color.scale(rgba($color3,0.9), $lightness: 65%);
 
+    border-top: none;
+
     overflow-y: auto;
 
     .modal__title{
@@ -164,6 +166,18 @@ $color3: #e7e7e1;
       right: 15px;
 
       background-size: 9px;
+    }
+  }
+
+  &--position-top{
+    top: -185px;
+
+    &::before{
+      top: auto;
+      bottom: -14px;
+      left: 48%;
+
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
     }
   }
 }

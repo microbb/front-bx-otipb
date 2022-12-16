@@ -219,6 +219,7 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   align-content:start;
 
   position: relative;
+  z-index: 1;
 
   padding: 18px 16px 4px 16px;
   margin: 0 0 5px 0;
@@ -237,6 +238,16 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   &--active {
     transform: scaleY(1);
     opacity: 1;
+  }
+
+  &--min_height-380{
+
+    min-height: 380px;
+  }
+
+  &--min_height-442{
+
+    min-height: 442px;
   }
 }
 

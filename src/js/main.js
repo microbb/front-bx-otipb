@@ -8,33 +8,33 @@ import Visitor from "./components/visitor"
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка фильтр
-  new Modal('.js-filter-modal')
+  const filterModal = new Modal('.js-filter-modal')
   // модалка добавить сутрудника
-  new Modal('.js-add-user-modal')
+  const addUserModal = new Modal('.js-add-user-modal')
+
   // модалка редактировать сотрудника
   new ModalDynamics('.js-edit-user-modal',{modalWrapper: '.js-wrapper-modal'})
-  // модалка удалить сотрудника
-  new ModalDynamics('.js-delete-user-modal',{closeClickOverlay: false})
-
+                    .accept(Visitor.editUserMod)
+                    .upgrade()
+  // модалка удалить сотрудника / удостоверение
+  new ModalDynamics('.js-delete-user-and-card-modal',{closeClickOverlay: false})
+                    .accept(Visitor.modalsUnityDeleteMod)
+                    .upgrade()
   // модалка добавить / редактировать / продлить удостоверение
   new ModalDynamics('.js-edit-card-modal',{modalWrapper: '.js-wrapper-modal'})
-                    .accept(Visitor.modalsUnity)
-                    .modalsUnity()
-
-  // модалка удалить удостоверение
-  new ModalDynamics('.js-delete-card-modal',{closeClickOverlay: false})
+                    .accept(Visitor.modalsUnityMod)
+                    .upgrade()
   // модалка добавление HSE
   new ModalDynamics('.js-add-hse-modal',{closeClickOverlay: false})
                     .accept(Visitor.addHseMod)
-                    .addHseMod()
-
+                    .upgrade()
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',{modalWrapper: '.js-wrapper-modal'})
 
   // аккардион
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
                 .accept(Visitor.accordionParentMod)
-                .accordionParentMod()
+                .upgrade()
 
   // выподающий список
   new Dropdown('.dropdown-sumbiot')
