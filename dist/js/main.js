@@ -198,8 +198,7 @@ class Visitor {
       document.addEventListener('click', e => {
         let target = e.target;
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
-
-          // e.stopPropagation()
+          e.stopPropagation();
         }
       }, true);
     };
@@ -354,7 +353,8 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor(dropdownSelector) {
     let {
       dropdownToggleSelector = '.dropdown-sumbiot__toggle',
-      dropdownOptionsSelector = '.dropdown-sumbiot__options'
+      // - активный пункт
+      dropdownOptionsSelector = '.dropdown-sumbiot__options' // - выпадающий список
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super();
     this._listDropdowns = document.querySelectorAll(dropdownSelector);
@@ -368,8 +368,7 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
    * @return {void}
    */
   _init() {
-    // this.hideAllDropdowns()
-
+    this.hideAllDropdowns();
     this._toggleHandler();
   }
 
@@ -379,7 +378,11 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
    */
   hideAllDropdowns() {
     this._listDropdownsOptions.forEach(dropdownOpen => {
-      if (this._target.nextElementSibling !== dropdownOpen) {
+      if (this._target) {
+        if (this._target.nextElementSibling !== dropdownOpen) {
+          dropdownOpen.style.display = 'none';
+        }
+      } else {
         dropdownOpen.style.display = 'none';
       }
     });
@@ -393,17 +396,51 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this._listDropdowns.forEach(dropdown => {
       dropdown.addEventListener('click', e => {
         if (e.target && e.target.classList.contains(this._dropdownToggleSelector.slice(1))) {
-          // e.preventDefault()
-
+          e.preventDefault();
           this._target = e.target;
           this._toggleOptions();
         }
       });
     });
   }
+
+  /**
+   * Открыть выподающие меню
+   * @return {void}
+   */
   _toggleOptions() {
     this.hideAllDropdowns();
     this._target.nextElementSibling.style.display = this._target.nextElementSibling.style.display === 'none' ? 'block' : 'none';
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js":
+/*!******************************************************************************!*\
+  !*** ./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DropdownSelect; });
+/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown */ "./src/js/library/sumbiot/modules/dropdown/components/dropdown.js");
+
+
+/**
+ *  Выподающий список Select
+ * */
+class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} dropdownSelector - селектор выподающего списка.
+   * @param {Object=} options         - конфигурация.
+   */
+  constructor(dropdownSelector) {
+    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    super(dropdownSelector, options);
   }
 }
 
@@ -503,9 +540,8 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     document.addEventListener('click', e => {
       const target = e.target;
       if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
-        // e.preventDefault()
-        // e.stopPropagation()
-
+        e.preventDefault();
+        e.stopPropagation();
         this._show();
         setTimeout(() => {
           target.blur();
@@ -530,13 +566,13 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
   _closeHandler() {
     this._close.addEventListener('click', e => {
       if (e.target) {
-        // e.preventDefault()
+        e.preventDefault();
       }
       this._closeModal();
     });
     this.modal.addEventListener('click', e => {
       if (e.target) {
-        // e.stopPropagation()
+        e.stopPropagation();
       }
       this._closeModalOverlay(e);
     });
@@ -611,14 +647,17 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
    */
   _showHandler() {
     document.addEventListener('click', e => {
-      if (e.target) {
-        e.preventDefault();
-      }
       const target = e.target;
       if (target && target.classList.contains(this._trigger.slice(1))) {
+        if (target.target) {
+          e.preventDefault();
+        }
         this._triggerEvent = target;
         this._show();
       } else if (target.parentElement.classList.contains(this._trigger.slice(1))) {
+        if (target.target) {
+          e.preventDefault();
+        }
         this._triggerEvent = target.parentElement;
         this._show();
       }
@@ -704,7 +743,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modalDynamics */ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js");
 /* harmony import */ var _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./library/sumbiot/modules/accordion/components/accordion */ "./src/js/library/sumbiot/modules/accordion/components/accordion.js");
 /* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdown */ "./src/js/library/sumbiot/modules/dropdown/components/dropdown.js");
-/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+/* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdownSelect */ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js");
+/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+
 
 
 
@@ -727,7 +768,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsUnity).modalsUnity();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsUnity).modalsUnity();
 
   // модалка удалить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-card-modal', {
@@ -736,7 +777,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].addHseMod).addHseMod();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].addHseMod).addHseMod();
 
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
@@ -747,10 +788,16 @@ window.addEventListener('DOMContentLoaded', () => {
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].accordionParentMod).accordionParentMod();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].accordionParentMod).accordionParentMod();
 
-  // модалка редактировать HSE
-  // new Dropdown('.sumbiot-dropdown')
+  // выподающий список
+  new _library_sumbiot_modules_dropdown_components_dropdown__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown-sumbiot');
+
+  // выподающий список
+  new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_4__["default"]('.dropdown', {
+    dropdownToggleSelector: '.dropdown__toggle',
+    dropdownOptionsSelector: '.dropdown__options'
+  });
 });
 
 /***/ })

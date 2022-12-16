@@ -2,6 +2,7 @@ import Modal from './library/sumbiot/modules/modals/components/modal'
 import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics'
 import Accordion from './library/sumbiot/modules/accordion/components/accordion'
 import Dropdown from './library/sumbiot/modules/dropdown/components/dropdown'
+import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdownSelect'
 
 import Visitor from "./components/visitor"
 
@@ -35,8 +36,14 @@ window.addEventListener('DOMContentLoaded', () => {
                 .accept(Visitor.accordionParentMod)
                 .accordionParentMod()
 
-  // модалка редактировать HSE
-  // new Dropdown('.sumbiot-dropdown')
+  // выподающий список
+  new Dropdown('.dropdown-sumbiot')
+
+  // выподающий список
+  new DropdownSelect('.dropdown',{
+    dropdownToggleSelector: '.dropdown__toggle',
+    dropdownOptionsSelector: '.dropdown__options'
+  })
 })
 
 

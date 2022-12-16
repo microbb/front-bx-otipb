@@ -61,8 +61,8 @@ export default class Modal extends ModalCore{
       const target = e.target;
 
       if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1)) ) {
-        // e.preventDefault()
-        // e.stopPropagation()
+        e.preventDefault()
+        e.stopPropagation()
 
         this._show()
 
@@ -90,7 +90,7 @@ export default class Modal extends ModalCore{
   _closeHandler() {
     this._close.addEventListener('click', (e) => {
       if (e.target) {
-        // e.preventDefault()
+        e.preventDefault()
       }
 
       this._closeModal()
@@ -98,7 +98,7 @@ export default class Modal extends ModalCore{
 
     this.modal.addEventListener('click', (e) => {
       if (e.target) {
-        // e.stopPropagation()
+        e.stopPropagation()
       }
 
       this._closeModalOverlay(e)

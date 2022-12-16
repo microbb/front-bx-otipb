@@ -5,7 +5,6 @@ import DropdownCore from "../dropdownCore";
  * */
 export default class Dropdown extends DropdownCore {
 
-
   /**
    * Конструктор
    * @param {string} dropdownSelector - селектор выподающего списка.
@@ -13,8 +12,8 @@ export default class Dropdown extends DropdownCore {
    */
   constructor(dropdownSelector ,
               {
-                dropdownToggleSelector = '.dropdown-sumbiot__toggle',
-                dropdownOptionsSelector = '.dropdown-sumbiot__options'
+                dropdownToggleSelector = '.dropdown-sumbiot__toggle',  // - активный пункт
+                dropdownOptionsSelector = '.dropdown-sumbiot__options' // - выпадающий список
               } = {}) {
 
     super()
@@ -32,7 +31,7 @@ export default class Dropdown extends DropdownCore {
    */
   _init() {
 
-    // this.hideAllDropdowns()
+    this.hideAllDropdowns()
 
     this._toggleHandler()
 
@@ -45,7 +44,11 @@ export default class Dropdown extends DropdownCore {
   hideAllDropdowns() {
     this._listDropdownsOptions.forEach(dropdownOpen => {
 
-      if(this._target.nextElementSibling !== dropdownOpen) {
+      if(this._target) {
+        if(this._target.nextElementSibling !== dropdownOpen) {
+          dropdownOpen.style.display = 'none';
+        }
+      }else {
         dropdownOpen.style.display = 'none';
       }
 
@@ -60,8 +63,9 @@ export default class Dropdown extends DropdownCore {
     this._listDropdowns.forEach(dropdown => {
 
       dropdown.addEventListener('click', (e) => {
+
         if (e.target && e.target.classList.contains(this._dropdownToggleSelector.slice(1))) {
-          // e.preventDefault()
+          e.preventDefault()
 
           this._target = e.target;
 
@@ -72,6 +76,10 @@ export default class Dropdown extends DropdownCore {
     })
   }
 
+  /**
+   * Открыть выподающие меню
+   * @return {void}
+   */
   _toggleOptions() {
     this.hideAllDropdowns()
 

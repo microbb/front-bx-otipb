@@ -142,7 +142,7 @@ export default class Visitor {
 
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1)) ) {
 
-          // e.stopPropagation()
+          e.stopPropagation()
 
         }
 

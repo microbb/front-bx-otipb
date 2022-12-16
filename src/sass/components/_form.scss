@@ -44,7 +44,7 @@ $color3: #e7e7e1;
 
 .form__inner{
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2,calc(50% - 12px));
   grid-column-gap: 24px;
   grid-row-gap: 24px;
 
@@ -90,6 +90,8 @@ $color3: #e7e7e1;
   font-weight: 400;
   font-size: 16px;
   font-family: "Roboto", sans-serif;
+
+  line-height: 18px;
 
   color: $color2;
 

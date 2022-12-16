@@ -40,17 +40,19 @@ export default class ModalDynamics extends Modal{
    */
   _showHandler() {
     document.addEventListener('click', (e) => {
-      if (e.target) {
-        e.preventDefault()
-      }
-
       const target = e.target;
 
       if (target && target.classList.contains(this._trigger.slice(1))) {
+        if (target.target) {
+          e.preventDefault()
+        }
         this._triggerEvent = target
         this._show()
 
       }else if(target.parentElement.classList.contains(this._trigger.slice(1))) {
+        if (target.target) {
+          e.preventDefault()
+        }
         this._triggerEvent = target.parentElement
         this._show()
       }
