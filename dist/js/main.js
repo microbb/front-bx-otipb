@@ -96,19 +96,13 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Visitor; });
-/* harmony import */ var _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../library/sumbiot/modules/accordion/components/accordion */ "./src/js/library/sumbiot/modules/accordion/components/accordion.js");
+/* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
 
 
 /**
  *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
  * */
 class Visitor {
-  static deleteAllClass() {
-    document.querySelectorAll('.js-wrapper-modal').forEach(elementWrap => {
-      elementWrap.classList.remove('result__info--min_height-380', 'result__info--min_height-442');
-    });
-  }
-
   /**
    * Посититель для экземпляра модального окна которое реализует
    * редактировать / добавить / продлить
@@ -118,11 +112,6 @@ class Visitor {
    */
   static modalsUnityMod(instanceClass) {
     instanceClass.upgrade = function () {
-      // высота для родителя модалки
-      const heightParent = target => {
-        target.closest('.js-wrapper-modal').classList.add('result__info--min_height-380');
-      };
-
       // изменяет заголовок
       const editTitle = target => {
         let btnText = target.innerText;
@@ -156,9 +145,11 @@ class Visitor {
       document.addEventListener('click', e => {
         let target = e.target;
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
-          if (target.parentElement.classList.contains(this._trigger.slice(1))) target = target.parentElement;
-          Visitor.deleteAllClass();
-          heightParent(target);
+          if (target.parentElement.classList.contains(this._trigger.slice(1))) {
+            target = target.parentElement;
+          }
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].addClosestClass(target, '.js-wrapper-modal', ['result__info--min_height-380']);
           deleteUserId();
           editTitle(target);
           editAction(target);
@@ -168,17 +159,75 @@ class Visitor {
 
       // по кнопки закрытия модального окна
       this._close.addEventListener('click', e => {
-        e.target.closest('.js-wrapper-modal').classList.remove('result__info--min_height-380');
+        _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-380']);
       });
 
       // на подложки
       this.modal.addEventListener('click', e => {
         if (e.target === this.modal && this._closeClickOverlay) {
-          e.target.closest('.js-wrapper-modal').classList.remove('result__info--min_height-380');
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-380']);
         }
       });
     };
   }
+
+  /**
+   * Посититель для экземпляра модального окна (добавления сотрудника и фильтр) которое реализует
+   * сброс высоты до стандартной
+   * у блока 'result__info'
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
+  static modalsStandardMod(instanceClass) {
+    instanceClass.upgrade = function () {
+      document.addEventListener('click', e => {
+        let target = e.target;
+        if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
+        }
+      });
+    };
+  }
+
+  /**
+   * Посититель для экземпляра модального окна (редактировать сотрудника) которое реализует
+   * подгон высоты для родительского блока под
+   * модальное окно
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
+  static editUserMod(instanceClass) {
+    instanceClass.upgrade = function () {
+      document.addEventListener('click', e => {
+        let target = e.target;
+        if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
+          if (target.parentElement.classList.contains(this._trigger.slice(1))) target = target.parentElement;
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].addClosestClass(target, '.js-wrapper-modal', ['result__info--min_height-442']);
+        }
+      });
+
+      // по кнопки закрытия модального окна
+      this._close.addEventListener('click', e => {
+        _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-442']);
+      });
+
+      // на подложки
+      this.modal.addEventListener('click', e => {
+        if (e.target === this.modal && this._closeClickOverlay) {
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-442']);
+        }
+      });
+    };
+  }
+
+  /**
+   * Посититель для экземпляра модального окна (удаления) которое реализует
+   * удаление
+   * удостоверение / сотрудника
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
   static modalsUnityDeleteMod(instanceClass) {
     instanceClass.upgrade = function () {
       // изменяет обработчик
@@ -188,8 +237,10 @@ class Visitor {
       document.addEventListener('click', e => {
         let target = e.target;
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
-          if (target.parentElement.classList.contains(this._trigger.slice(1))) target = target.parentElement;
-          Visitor.deleteAllClass();
+          if (target.parentElement.classList.contains(this._trigger.slice(1))) {
+            target = target.parentElement;
+          }
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
           editAction(target);
         }
       });
@@ -197,7 +248,7 @@ class Visitor {
   }
 
   /**
-   * Посититель для экземпляра модального окна добавить HSE которое реализует
+   * Посититель для экземпляра модального окна (добавить HSE) которое реализует
    * останавку распростронения события и следит за позиционированием
    * модального окна
    * @param {Object} instanceClass - экземпляр класса
@@ -217,7 +268,7 @@ class Visitor {
         let target = e.target;
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
           e.stopPropagation();
-          Visitor.deleteAllClass();
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
           modalPosition(e);
         }
       }, true);
@@ -225,36 +276,34 @@ class Visitor {
   }
 
   /**
-   * Посититель для экземпляра модального окна редактировать сотрудника которое реализует
+   * Посититель для экземпляра модального окна (редактировать HSE) которое реализует
    * подгон высоты для родительского блока под
    * модальное окно
    * @param {Object} instanceClass - экземпляр класса
    * @return {void}
    */
-  static editUserMod(instanceClass) {
+  static editHseMod(instanceClass) {
     instanceClass.upgrade = function () {
-      // высота для родителя модалки
-      const heightParent = target => {
-        target.closest('.js-wrapper-modal').classList.add('result__info--min_height-442');
-      };
       document.addEventListener('click', e => {
         let target = e.target;
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
-          if (target.parentElement.classList.contains(this._trigger.slice(1))) target = target.parentElement;
-          Visitor.deleteAllClass();
-          heightParent(target);
+          if (target.parentElement.classList.contains(this._trigger.slice(1))) {
+            target = target.parentElement;
+          }
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].addClosestClass(target, '.js-wrapper-modal', ['result__info--min_height-265']);
         }
       });
 
       // по кнопки закрытия модального окна
       this._close.addEventListener('click', e => {
-        e.target.closest('.js-wrapper-modal').classList.remove('result__info--min_height-442');
+        _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-265']);
       });
 
       // на подложки
       this.modal.addEventListener('click', e => {
         if (e.target === this.modal && this._closeClickOverlay) {
-          e.target.closest('.js-wrapper-modal').classList.remove('result__info--min_height-442');
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-265']);
         }
       });
     };
@@ -286,6 +335,57 @@ class Visitor {
         }
       });
     };
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/core/support.js":
+/*!********************************!*\
+  !*** ./src/js/core/support.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Support; });
+/**
+ *  Базовый набор функций для проекта
+ * */
+class Support {
+  /**
+   * Удаления класс(ов) у элементов
+   * @param {string} elementSelector - селектор элементов у которых надо удалить класс(ы).
+   * @param {array} arrayClasses     - массив со списком классов.
+   * @return {void}
+   */
+  static removeClass(elementSelector, arrayClasses) {
+    document.querySelectorAll(elementSelector).forEach(element => {
+      element.classList.remove(...arrayClasses);
+    });
+  }
+
+  /**
+   * Добавление класс(ов) у ближайщего подходящего родителя
+   * @param {Element} element       - элемент у которого надо найти ближайщего подходящего родителя.
+   * @param {string} searchSelector - селектор который надо найти у родителя.
+   * @param {array} arrayClasses    - массив со списком классов.
+   * @return {void}
+   */
+  static addClosestClass(element, searchSelector, arrayClasses) {
+    element.closest(searchSelector).classList.add(...arrayClasses);
+  }
+
+  /**
+   * Удаления класс(ов) у ближайщего подходящего родителя
+   * @param {Element} element       - элемент у которого надо найти ближайщего подходящего родителя.
+   * @param {string} searchSelector - селектор который надо найти у родителя.
+   * @param {array} arrayClasses    - массив со списком классов.
+   * @return {void}
+   */
+  static removeClosestClass(element, searchSelector, arrayClasses) {
+    element.closest(searchSelector).classList.remove(...arrayClasses);
   }
 }
 
@@ -837,46 +937,36 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка фильтр
-  const filterModal = new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal');
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
-  const addUserModal = new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal');
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalWrapper: '.js-wrapper-modal'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].editUserMod).upgrade();
-
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
     closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsUnityDeleteMod).upgrade();
-
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalWrapper: '.js-wrapper-modal'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsUnityMod).upgrade();
-
-  // // модалка удалить удостоверение
-  // new ModalDynamics('.js-delete-card-modal',{closeClickOverlay: false})
-
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].addHseMod).upgrade();
-
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalWrapper: '.js-wrapper-modal'
-  });
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].editHseMod).upgrade();
 
   // аккардион
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].accordionParentMod).upgrade();
-
-  // выподающий список
-  new _library_sumbiot_modules_dropdown_components_dropdown__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown-sumbiot');
 
   // выподающий список
   new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_4__["default"]('.dropdown', {

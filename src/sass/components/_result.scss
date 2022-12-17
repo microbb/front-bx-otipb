@@ -218,6 +218,8 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   grid-column-gap: 24px;
   align-content:start;
 
+  min-height: 0;
+
   position: relative;
   z-index: 1;
 
@@ -233,21 +235,35 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   transform: scaleY(0.9);
   transform-origin: 50% 0;
 
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, min-height 1s ease;
 
   &--active {
     transform: scaleY(1);
     opacity: 1;
   }
 
-  &--min_height-380{
+  &--min_height-265{
+    min-height: 265px;
 
+    transition-property: min-height;
+    transition-duration: 0s;
+    transition-timing-function: ease;
+  }
+
+  &--min_height-380{
     min-height: 380px;
+
+    transition-property: min-height;
+    transition-duration: 0s;
+    transition-timing-function: ease;
   }
 
   &--min_height-442{
-
     min-height: 442px;
+
+    transition-property: min-height;
+    transition-duration: 0s;
+    transition-timing-function: ease;
   }
 }
 

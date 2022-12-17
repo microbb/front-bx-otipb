@@ -8,9 +8,13 @@ import Visitor from "./components/visitor"
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка фильтр
-  const filterModal = new Modal('.js-filter-modal')
+  new Modal('.js-filter-modal')
+            .accept(Visitor.modalsStandardMod)
+            .upgrade()
   // модалка добавить сутрудника
-  const addUserModal = new Modal('.js-add-user-modal')
+  new Modal('.js-add-user-modal')
+            .accept(Visitor.modalsStandardMod)
+            .upgrade()
 
   // модалка редактировать сотрудника
   new ModalDynamics('.js-edit-user-modal',{modalWrapper: '.js-wrapper-modal'})
@@ -30,14 +34,13 @@ window.addEventListener('DOMContentLoaded', () => {
                     .upgrade()
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',{modalWrapper: '.js-wrapper-modal'})
+                    .accept(Visitor.editHseMod)
+                    .upgrade()
 
   // аккардион
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
                 .accept(Visitor.accordionParentMod)
                 .upgrade()
-
-  // выподающий список
-  new Dropdown('.dropdown-sumbiot')
 
   // выподающий список
   new DropdownSelect('.dropdown',{
