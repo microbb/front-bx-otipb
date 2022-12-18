@@ -45,7 +45,9 @@ export default class DropdownSelect extends Dropdown {
     })
 
     document.addEventListener('click', e =>{
-      if (e.target && !e.target.classList.contains(this._dropdownToggleSelector.slice(1))) {
+      if (e.target && !e.target.closest(this._dropdownSelector)) {
+
+        console.log('sdf')
 
         this._listDropdownsOptions.forEach(dropdownOpen => {
           dropdownOpen.style.display = 'none';

@@ -642,6 +642,7 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super();
     this._listDropdowns = document.querySelectorAll(dropdownSelector);
+    this._dropdownSelector = dropdownSelector;
     this._dropdownToggleSelector = dropdownToggleSelector;
     this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsWrapperSelector);
     this._init();
@@ -747,7 +748,8 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
       });
     });
     document.addEventListener('click', e => {
-      if (e.target && !e.target.classList.contains(this._dropdownToggleSelector.slice(1))) {
+      if (e.target && !e.target.closest(this._dropdownSelector)) {
+        console.log('sdf');
         this._listDropdownsOptions.forEach(dropdownOpen => {
           dropdownOpen.style.display = 'none';
         });

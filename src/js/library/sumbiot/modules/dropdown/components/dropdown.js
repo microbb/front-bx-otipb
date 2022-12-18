@@ -18,8 +18,9 @@ export default class Dropdown extends DropdownCore {
 
     super()
 
-    this._listDropdowns = document.querySelectorAll(dropdownSelector)
+    this._dropdownSelector = dropdownSelector
     this._dropdownToggleSelector = dropdownToggleSelector
+    this._listDropdowns = document.querySelectorAll(dropdownSelector)
     this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsWrapperSelector)
 
     this._init()
