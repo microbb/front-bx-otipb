@@ -15,7 +15,7 @@ export default class ModalDynamics extends Modal{
     input.classList.add('sumbiot-input-dynamic')
 
     input.setAttribute('type','hidden')
-    input.setAttribute('name','id')
+    input.setAttribute('name','ID')
 
     return input
   }

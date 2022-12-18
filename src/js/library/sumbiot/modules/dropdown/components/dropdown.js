@@ -12,15 +12,15 @@ export default class Dropdown extends DropdownCore {
    */
   constructor(dropdownSelector ,
               {
-                dropdownToggleSelector = '.dropdown-sumbiot__toggle',  // - активный пункт
-                dropdownOptionsSelector = '.dropdown-sumbiot__options' // - выпадающий список
+                dropdownToggleSelector = '.dropdown-sumbiot__toggle',        // - активный пункт
+                dropdownOptionsWrapperSelector = '.dropdown-sumbiot__options' // - выпадающий список
               } = {}) {
 
     super()
 
     this._listDropdowns = document.querySelectorAll(dropdownSelector)
     this._dropdownToggleSelector = dropdownToggleSelector
-    this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsSelector)
+    this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsWrapperSelector)
 
     this._init()
   }

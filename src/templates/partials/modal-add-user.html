@@ -5,90 +5,94 @@
 
   <div class="modal__inner">
 
-    <form action="" class="form">
+    <form class="form" id="add-user" action="/add_user" method="post">
 
       <div class="form__inner">
 
         <label class="form__item form__item--column2">
-          <input class="form__input" type="text" name="name" placeholder="Фамилия Имя Отчество">
-        </label>
+          <input class="form__input" type="text" name="E_FIO" placeholder="Фамилия Имя Отчество" required>
+        </label><!--./form__item-->
 
         <div class="form__item">
           <span class="form__label">Дивизион:</span>
-          <div class="form__dropdown dropdown dropdown--select">
-            <div class="dropdown__toggle"></div>
-            <ul class="dropdown__options">
-              <li class="dropdown__item">АК ОЗНА</li>
-              <li class="dropdown__item">АК ОЗНА #2</li>
-              <li class="dropdown__item">АК ОЗНА #3</li>
-              <li class="dropdown__item">АК ОЗНА #4</li>
-              <li class="dropdown__item">АК ОЗНА #5</li>
-              <li class="dropdown__item">Action #2</li>
-              <li class="dropdown__item">Action #3</li>
-              <li class="dropdown__item">Action #4</li>
-              <li class="dropdown__item">Action #5</li>
-              <li class="dropdown__item">Action #2</li>
-              <li class="dropdown__item">Action #3</li>
-              <li class="dropdown__item">Action #4</li>
-              <li class="dropdown__item">Action #5</li>
-            </ul>
+          <div class="form__dropdown dropdown" data-select-name="ID_DIVISION">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+            <div class="dropdown__options">
+              {{#repeat 12}}
+              <div class="dropdown__item" data-select-option="1">
+                АК ОЗНА
+              </div>
+              {{/repeat}}
+            </div>
           </div>
-        </div>
+        </div><!--./form__item-->
 
         <div class="form__item">
           <span class="form__label">Отдел:</span>
-          <div class="form__dropdown dropdown dropdown--select">
-            <div class="dropdown__toggle">Директор (начальник) вычислительного (информа</div>
-            <ul class="dropdown__options">
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел организации труда</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел главного механика</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел главного механика</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел главного механика</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел главного механика</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел главного механика</li>
-              <li class="dropdown__item" title="отдел кадров (отдел найма и увольнения) отдел кадров">отдел организации труда</li>
-            </ul>
+          <div class="form__dropdown dropdown" data-select-name="ID_DEPARTMENT">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+
+            <div class="dropdown__options dropdown__options--right">
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="2" title="отдел кадров (отдел найма и увольнения) отдел кадров">
+                отдел кадров (отдел найма и увольнения) отдел кадров (отдел найма и увольнения)
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item-on" title="Развернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-on-icon.svg" width="24" height="24" alt="Развернуть" aria-hidden="true">
+                  </li>
+                  <li class="option-panel__item option-panel__item-off" title="Свернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-off-icon.svg" width="24" height="24" alt="Свернуть" aria-hidden="true">
+                  </li>
+                </ul>
+              </div>
+            </div>
+
           </div>
-        </div>
+        </div><!--./form__item-->
 
         <div class="form__item">
           <span class="form__label">Должность HSE:</span>
-          <div class="form__dropdown dropdown dropdown--select">
-            <div class="dropdown__toggle"></div>
-            <ul class="dropdown__options">
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">Директор (начальник) вычислительного (информационно-вычислительного) центра</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел организации труда</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел кадров (отдел найма и увольнения)</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел главного механика</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел главного механика</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел главного механика</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел главного механика</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел главного механика</li>
-              <li class="dropdown__item" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">отдел организации труда</li>
-            </ul>
-          </div>
-          <input type="text" name="dsfsd" required style="display:block; height: 0; width: 0; margin-top: -20px">
-        </div>
+          <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
 
-        <label class="form__item">
+            <div class="dropdown__options">
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                Директор (начальник) вычислительного (информационно-вычислительного) центра
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item-on" title="Развернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-on-icon.svg" width="24" height="24" alt="Развернуть" aria-hidden="true">
+                  </li>
+                  <li class="option-panel__item option-panel__item-off" title="Свернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-off-icon.svg" width="24" height="24" alt="Свернуть" aria-hidden="true">
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div><!--./form__item-->
+
+        <div class="form__item">
           <span class="form__label">Статус:</span>
-          <div class="form__dropdown dropdown dropdown--select">
-            <div class="dropdown__toggle">работает</div>
-            <ul class="dropdown__options">
-              <li class="dropdown__item">работает</li>
-              <li class="dropdown__item">уволен</li>
-            </ul>
+          <div class="form__dropdown dropdown" data-select-name="E_EMPLOYEE_STATUS">
+            <div class="dropdown__toggle"></div>
+            <div class="dropdown__options">
+              <div class="dropdown__item" data-select-option="1">работает</div>
+              <div class="dropdown__item" data-select-option="0">уволен</div>
+            </div>
           </div>
-        </label>
+        </div><!--./form__item-->
 
-        <button type="submit" class="btn btn-primary h-50px form__item--column2">Добавить</button>
+        <button class="btn btn-primary h-50px form__item--column2" type="submit" name="btn_add_user">Добавить</button>
 
       </div><!--./form__inner-->
 

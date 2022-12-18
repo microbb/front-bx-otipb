@@ -5,35 +5,94 @@
 
   <div class="modal__inner">
 
-    <form action="" class="form" data-sumbiot-wrapper>
+    <form class="form" id="edit-user" action="/edit_user" method="post" data-sumbiot-wrapper>
 
       <div class="form__inner">
 
         <label class="form__item form__item--column2">
-          <input class="form__input" type="text" name="name" value="Куприянов Дмитрий Георгиевич" placeholder="Фамилия Имя Отчество">
+          <input class="form__input" type="text" name="E_FIO" placeholder="Фамилия Имя Отчество" required>
         </label>
 
-        <label class="form__item">
+        <div class="form__item">
           <span class="form__label">Дивизион:</span>
-          <input class="form__input" type="text" name="name">
-        </label>
+          <div class="form__dropdown dropdown" data-select-name="ID_DIVISION">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+            <div class="dropdown__options">
+              {{#repeat 12}}
+              <div class="dropdown__item" data-select-option="1">
+                АК ОЗНА
+              </div>
+              {{/repeat}}
+            </div>
+          </div>
+        </div><!--./form__item-->
 
-        <label class="form__item">
+        <div class="form__item">
           <span class="form__label">Отдел:</span>
-          <input class="form__input" type="text" name="name">
-        </label>
+          <div class="form__dropdown dropdown" data-select-name="ID_DEPARTMENT">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
 
-        <label class="form__item">
+            <div class="dropdown__options dropdown__options--right">
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="2" title="отдел кадров (отдел найма и увольнения) отдел кадров">
+                отдел кадров (отдел найма и увольнения) отдел кадров (отдел найма и увольнения)
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item-on" title="Развернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-on-icon.svg" width="24" height="24" alt="Развернуть" aria-hidden="true">
+                  </li>
+                  <li class="option-panel__item option-panel__item-off" title="Свернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-off-icon.svg" width="24" height="24" alt="Свернуть" aria-hidden="true">
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div><!--./form__item-->
+
+        <div class="form__item">
           <span class="form__label">Должность HSE:</span>
-          <input class="form__input" type="text" name="name">
-        </label>
+          <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
 
-        <label class="form__item">
+            <div class="dropdown__options">
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                Директор (начальник) вычислительного (информационно-вычислительного) центра
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item-on" title="Развернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-on-icon.svg" width="24" height="24" alt="Развернуть" aria-hidden="true">
+                  </li>
+                  <li class="option-panel__item option-panel__item-off" title="Свернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-off-icon.svg" width="24" height="24" alt="Свернуть" aria-hidden="true">
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div><!--./form__item-->
+
+        <div class="form__item">
           <span class="form__label">Статус:</span>
-          <input class="form__input" type="text" name="name">
-        </label>
+          <div class="form__dropdown dropdown" data-select-name="E_EMPLOYEE_STATUS">
+            <div class="dropdown__toggle"></div>
+            <div class="dropdown__options">
+              <div class="dropdown__item" data-select-option="1">работает</div>
+              <div class="dropdown__item" data-select-option="0">уволен</div>
+            </div>
+          </div>
+        </div><!--./form__item-->
 
-        <button class="btn btn-primary h-50px form__item--column2">Редактировать</button>
+        <button class="btn btn-primary h-50px form__item--column2" type="submit" name="btn_edit_user">Редактировать</button>
 
       </div><!--./form__inner-->
 

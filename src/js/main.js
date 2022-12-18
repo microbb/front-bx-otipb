@@ -1,10 +1,10 @@
 import Modal from './library/sumbiot/modules/modals/components/modal'
 import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics'
 import Accordion from './library/sumbiot/modules/accordion/components/accordion'
-import Dropdown from './library/sumbiot/modules/dropdown/components/dropdown'
 import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdownSelect'
 
 import Visitor from "./components/visitor"
+import Stretch from "./components/stretch";
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка фильтр
@@ -43,10 +43,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 .upgrade()
 
   // выподающий список
-  new DropdownSelect('.dropdown',{
+  const dropDown = new DropdownSelect('.dropdown',{
     dropdownToggleSelector: '.dropdown__toggle',
-    dropdownOptionsSelector: '.dropdown__options'
-  })
+    dropdownOptionsWrapperSelector: '.dropdown__options',
+    dropdownOptionSelector: '.dropdown__item'
+              }).accept(Visitor.positionMod)
+                .upgrade()
+
+  // ширина выподающего списка
+  new Stretch('.js-option-panel',
+             '.dropdown__options',
+                'dropdown__options--stretch')
+
 })
 
 

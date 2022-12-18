@@ -86,6 +86,79 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/components/stretch.js":
+/*!**************************************!*\
+  !*** ./src/js/components/stretch.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Stretch; });
+/**
+ *  Панель для выпадающего списка, для раскрытия списка по горизонтали
+ * */
+class Stretch {
+  /**
+   * Конструктор
+   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
+   * @param {string} stretchSelector  - селектор элемента над которым будет проводится модификация.
+   * @param {string} activeClass      - класс модификатор для элемента над которым будет проводится модификация.
+   */
+  constructor(panelsSelector, stretchSelector, activeClass) {
+    this._panelsElements = document.querySelectorAll(panelsSelector);
+    this._stretchSelector = stretchSelector;
+    this._activeClass = activeClass;
+    this._init();
+  }
+
+  /**
+   * Инициализация
+   * @return {void}
+   */
+  _init() {
+    this._stretchHandler();
+  }
+
+  /**
+   * Обработчик события клика по панели
+   * @return {void}
+   */
+  _stretchHandler() {
+    this._panelsElements.forEach(panel => {
+      let on = panel.querySelector('.option-panel__item-on'),
+        off = panel.querySelector('.option-panel__item-off');
+      on.addEventListener('click', e => {
+        e.preventDefault();
+        this._show(panel);
+      });
+      off.addEventListener('click', e => {
+        e.preventDefault();
+        this._hide(panel);
+      });
+    });
+  }
+
+  /**
+   * Развернуть список по горизонтали
+   * @return {void}
+   */
+  _show(panel) {
+    panel.closest(this._stretchSelector).classList.add(this._activeClass);
+  }
+
+  /**
+   * Свернуть список по горизонтали
+   * @return {void}
+   */
+  _hide(panel) {
+    panel.closest(this._stretchSelector).classList.remove(this._activeClass);
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/components/visitor.js":
 /*!**************************************!*\
   !*** ./src/js/components/visitor.js ***!
@@ -129,7 +202,7 @@ class Visitor {
           const input = document.createElement('input');
           input.classList.add('js-input-user-id');
           input.setAttribute('type', 'hidden');
-          input.setAttribute('name', 'id_user');
+          input.setAttribute('name', 'ID_USER');
           input.setAttribute('value', target.dataset.idUser);
           this.modal.querySelector('form').prepend(input);
         }
@@ -305,6 +378,33 @@ class Visitor {
         if (e.target === this.modal && this._closeClickOverlay) {
           _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-265']);
         }
+      });
+    };
+  }
+
+  /**
+   * Посититель для экземпляра выподающего списка (добавить HSE) которое реализует
+   * позицианирование
+   * выподающего списка
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
+  static positionMod(instanceClass) {
+    instanceClass.upgrade = function () {
+      // если до низу экрана меньше 372px позицианируем модалку вверху кнопки
+      const selectPosition = (wrap, e) => {
+        if (document.documentElement.scrollHeight - e.pageY < 400) {
+          wrap.nextElementSibling.classList.add('dropdown__options--top-position');
+        } else {
+          wrap.nextElementSibling.classList.remove('dropdown__options--top-position');
+        }
+      };
+      let optionWrap = document.querySelectorAll('.js-dropdown__toggle');
+      optionWrap.forEach(wrap => {
+        wrap.addEventListener('click', e => {
+          e.preventDefault();
+          selectPosition(wrap, e);
+        });
       });
     };
   }
@@ -538,12 +638,12 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     let {
       dropdownToggleSelector = '.dropdown-sumbiot__toggle',
       // - активный пункт
-      dropdownOptionsSelector = '.dropdown-sumbiot__options' // - выпадающий список
+      dropdownOptionsWrapperSelector = '.dropdown-sumbiot__options' // - выпадающий список
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super();
     this._listDropdowns = document.querySelectorAll(dropdownSelector);
     this._dropdownToggleSelector = dropdownToggleSelector;
-    this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsSelector);
+    this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsWrapperSelector);
     this._init();
   }
 
@@ -625,6 +725,100 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
   constructor(dropdownSelector) {
     let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super(dropdownSelector, options);
+    this._dropdownOptionSelector = options.dropdownOptionSelector || '[data-select-option]'; // - пункты выподающего списка
+  }
+
+  /**
+   * Обработчик события клика по элементу который открывает выподающие меню
+   * @return {void}
+   */
+  _toggleHandler() {
+    this._listDropdowns.forEach(dropdown => {
+      this._initInput(dropdown);
+      dropdown.addEventListener('click', e => {
+        if (e.target && e.target.classList.contains(this._dropdownToggleSelector.slice(1))) {
+          e.preventDefault();
+          this._target = e.target;
+          this._toggleOptions();
+        } else if (e.target && e.target.matches(this._dropdownOptionSelector)) {
+          e.preventDefault();
+          this._select(dropdown, e.target);
+        }
+      });
+    });
+    document.addEventListener('click', e => {
+      if (e.target && !e.target.classList.contains(this._dropdownToggleSelector.slice(1))) {
+        this._listDropdownsOptions.forEach(dropdownOpen => {
+          dropdownOpen.style.display = 'none';
+        });
+      }
+    }, true);
+  }
+
+  /**
+   * Выбирает активный пункт
+   * @return {void}
+   */
+  _select(dropdown, optionActive) {
+    const options = dropdown.querySelectorAll(this._dropdownOptionSelector),
+      showOption = dropdown.querySelector(this._dropdownToggleSelector);
+    options.forEach(option => {
+      option.style.backgroundColor = '';
+    });
+
+    // на пункте
+    optionActive.style.backgroundColor = '#e7e7e7';
+
+    // активный пункт
+    showOption.innerHTML = optionActive.innerText;
+    if (optionActive.getAttribute('title')) {
+      showOption.setAttribute('title', optionActive.getAttribute('title'));
+    }
+
+    // обертка пунктов
+    showOption.nextElementSibling.style.display = 'none';
+
+    // input
+    dropdown.previousElementSibling.setAttribute('value', optionActive.dataset.selectOption);
+  }
+
+  /**
+   * Создает input для кастомного select(а)
+   * @return {void}
+   */
+  _initInput(dropdown) {
+    const input = document.createElement('input');
+    input.classList.add('sumbiot-input-select');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', dropdown.dataset.selectName);
+    input.setAttribute('value', '');
+    dropdown.insertAdjacentElement('beforebegin', input);
+  }
+
+  /**
+   * Сброс input(ов) до состояния по умолчанию для кастомного select(а) в форме
+   * @return {void}
+   */
+  reset(formNode) {
+    const toggles = formNode.querySelectorAll(this._dropdownToggleSelector),
+      options = formNode.querySelectorAll(this._dropdownOptionSelector),
+      inputs = formNode.querySelectorAll('.sumbiot-input-select');
+
+    // активный пункт
+    toggles.forEach(toggle => {
+      toggle.innerText = '';
+      toggle.removeAttribute('title');
+    });
+
+    // пункты списка
+    options.forEach(option => {
+      option.style.backgroundColor = '';
+    });
+
+    // input
+    inputs.forEach(input => {
+      input.setAttribute('value', '');
+    });
   }
 }
 
@@ -808,7 +1002,7 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
     const input = document.createElement('input');
     input.classList.add('sumbiot-input-dynamic');
     input.setAttribute('type', 'hidden');
-    input.setAttribute('name', 'id');
+    input.setAttribute('name', 'ID');
     return input;
   }
 
@@ -926,9 +1120,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modal */ "./src/js/library/sumbiot/modules/modals/components/modal.js");
 /* harmony import */ var _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modalDynamics */ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js");
 /* harmony import */ var _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./library/sumbiot/modules/accordion/components/accordion */ "./src/js/library/sumbiot/modules/accordion/components/accordion.js");
-/* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdown */ "./src/js/library/sumbiot/modules/dropdown/components/dropdown.js");
-/* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdownSelect */ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js");
-/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+/* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdownSelect */ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js");
+/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
 
 
 
@@ -937,42 +1131,46 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener('DOMContentLoaded', () => {
   // модалка фильтр
-  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsStandardMod).upgrade();
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
-  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsStandardMod).upgrade();
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].editUserMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].editUserMod).upgrade();
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsUnityDeleteMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsUnityDeleteMod).upgrade();
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].modalsUnityMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsUnityMod).upgrade();
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].addHseMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].addHseMod).upgrade();
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].editHseMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].editHseMod).upgrade();
 
   // аккардион
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_5__["default"].accordionParentMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].accordionParentMod).upgrade();
 
   // выподающий список
-  new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_4__["default"]('.dropdown', {
+  const dropDown = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown', {
     dropdownToggleSelector: '.dropdown__toggle',
-    dropdownOptionsSelector: '.dropdown__options'
-  });
+    dropdownOptionsWrapperSelector: '.dropdown__options',
+    dropdownOptionSelector: '.dropdown__item'
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].positionMod).upgrade();
+
+  // ширина выподающего списка
+  new _components_stretch__WEBPACK_IMPORTED_MODULE_5__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
 });
 
 /***/ })

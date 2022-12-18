@@ -30,8 +30,6 @@ $color3: #e7e7e1;
 
     border-top: none;
 
-    overflow-y: auto;
-
     .modal__title{
       font-size: 18px;
 
@@ -107,6 +105,7 @@ $color3: #e7e7e1;
 
   &--add{
     min-width: 400px;
+    max-width: 400px;
 
     position: absolute;
     left: 50%;

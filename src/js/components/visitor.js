@@ -36,7 +36,7 @@ export default class Visitor {
           input.classList.add('js-input-user-id')
 
           input.setAttribute('type','hidden')
-          input.setAttribute('name','id_user')
+          input.setAttribute('name','ID_USER')
           input.setAttribute('value',target.dataset.idUser)
 
           this.modal.querySelector('form').prepend(input)
@@ -276,6 +276,42 @@ export default class Visitor {
         if (e.target === this.modal && this._closeClickOverlay) {
           Support.removeClosestClass(e.target,'.js-wrapper-modal',['result__info--min_height-265'])
         }
+      })
+
+    }
+  }
+
+  /**
+   * Посититель для экземпляра выподающего списка (добавить HSE) которое реализует
+   * позицианирование
+   * выподающего списка
+   * @param {Object} instanceClass - экземпляр класса
+   * @return {void}
+   */
+  static positionMod(instanceClass) {
+
+    instanceClass.upgrade = function () {
+
+      // если до низу экрана меньше 372px позицианируем модалку вверху кнопки
+      const selectPosition = (wrap,e) => {
+        if(document.documentElement.scrollHeight - e.pageY < 400) {
+          wrap.nextElementSibling.classList.add('dropdown__options--top-position')
+        }else {
+          wrap.nextElementSibling.classList.remove('dropdown__options--top-position')
+        }
+      }
+
+      let optionWrap = document.querySelectorAll('.js-dropdown__toggle')
+
+      optionWrap.forEach(wrap => {
+
+        wrap.addEventListener('click', (e)=> {
+          e.preventDefault()
+
+          selectPosition(wrap,e)
+
+        })
+
       })
 
     }

@@ -5,15 +5,37 @@
 
   <div class="modal__inner">
 
-    <form class="form" action="" method="GET" data-sumbiot-wrapper>
+    <form class="form" id="add-hse" action="/add_hse" method="post" data-sumbiot-wrapper>
 
       <div class="form__inner form__inner--grid-row-gap-12">
 
-        <label class="form__item form__item--column2">
-          <input class="form__input" type="text" name="name">
-        </label>
+        <div class="form__item form__item--column2">
+          <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
 
-        <button type="submit" class="btn btn-primary h-50px form__item--column2">Добавить</button>
+            <div class="dropdown__options dropdown__options--center">
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                Директор (начальник) вычислительного (информационно-вычислительного) центра
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item-on" title="Развернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-on-icon.svg" width="24" height="24" alt="Развернуть" aria-hidden="true">
+                  </li>
+                  <li class="option-panel__item option-panel__item-off" title="Свернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-off-icon.svg" width="24" height="24" alt="Свернуть" aria-hidden="true">
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div><!--./form__item-->
+
+        <button class="btn btn-primary h-50px form__item--column2" type="submit" name="btn_add_hse">Добавить</button>
 
       </div><!--./form__inner-->
 

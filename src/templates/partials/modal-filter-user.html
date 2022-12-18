@@ -5,36 +5,76 @@
 
   <div class="modal__inner">
 
-    <form action="" class="form">
+    <form class="form" id="filter" action="/filter" method="post">
 
       <div class="form__inner">
 
         <label class="form__item">
           <span class="form__label">от:</span>
-          <input class="form__input" type="date" name="date">
-        </label>
+          <input class="form__input" type="date" name="DATE_BEGIN">
+        </label><!--./form__item-->
 
         <label class="form__item">
           <span class="form__label">до:</span>
-          <input class="form__input" type="date" name="date-end">
-        </label>
+          <input class="form__input" type="date" name="DATE_END">
+        </label><!--./form__item-->
 
-        <label class="form__item">
+        <div class="form__item">
           <span class="form__label">Дивизион:</span>
-          <input class="form__input" type="text" name="name">
-        </label>
+          <div class="form__dropdown dropdown" data-select-name="ID_DIVISION">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+            <div class="dropdown__options">
+              {{#repeat 12}}
+              <div class="dropdown__item" data-select-option="1">
+                АК ОЗНА
+              </div>
+              {{/repeat}}
+            </div>
+          </div>
+        </div>
 
-        <label class="form__item">
+        <div class="form__item">
           <span class="form__label">Должность HSE:</span>
-          <input class="form__input" type="text" name="name">
-        </label>
+          <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
 
-        <label class="form__item form__item--column2">
+            <div class="dropdown__options dropdown__options--right">
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                Директор (начальник) вычислительного (информационно-вычислительного) центра
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item-on" title="Развернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-on-icon.svg" width="24" height="24" alt="Развернуть" aria-hidden="true">
+                  </li>
+                  <li class="option-panel__item option-panel__item-off" title="Свернуть">
+                    <img class="option-panel__img" src="assets/img/arrow-divider-horizontal-off-icon.svg" width="24" height="24" alt="Свернуть" aria-hidden="true">
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form__item form__item--column2">
           <span class="form__label">Удостоверение:</span>
-          <input class="form__input" type="text" name="name">
-        </label>
+          <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_PROGRAM">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+            <div class="dropdown__options">
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="3" title="Газоопасные работы">
+                Газоопасные работы
+              </div>
+              {{/repeat}}
+            </div>
+          </div>
+        </div>
 
-        <button class="btn btn-success h-50px form__item--column2">Применить фильтр</button>
+        <button class="btn btn-success h-50px form__item--column2" type="submit" name="btn_filter">Применить фильтр</button>
 
       </div><!--./form__inner-->
 
