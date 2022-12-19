@@ -208,7 +208,7 @@ export default class Visitor {
    */
   static addHseMod(instanceClass) {
 
-    instanceClass.upgrade = function () {
+    instanceClass.upgrade = function (instanceDropDown) {
 
       // если до низу экрана меньше 210px позицианируем модалку вверху кнопки
       const modalPosition = (e) => {
@@ -228,6 +228,8 @@ export default class Visitor {
 
           Support.removeClass('.js-wrapper-modal',
             ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265'])
+
+          instanceDropDown.reset(this.modal.querySelector('#add-hse'))
 
           modalPosition(e)
         }
@@ -282,7 +284,7 @@ export default class Visitor {
   }
 
   /**
-   * Посититель для экземпляра выподающего списка (добавить HSE) которое реализует
+   * Посититель для экземпляра выподающего списка которое реализует
    * позицианирование
    * выподающего списка
    * @param {Object} instanceClass - экземпляр класса

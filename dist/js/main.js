@@ -328,7 +328,7 @@ class Visitor {
    * @return {void}
    */
   static addHseMod(instanceClass) {
-    instanceClass.upgrade = function () {
+    instanceClass.upgrade = function (instanceDropDown) {
       // если до низу экрана меньше 210px позицианируем модалку вверху кнопки
       const modalPosition = e => {
         if (window.innerHeight - e.clientY < 210) {
@@ -342,6 +342,7 @@ class Visitor {
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
           e.stopPropagation();
           _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
+          instanceDropDown.reset(this.modal.querySelector('#add-hse'));
           modalPosition(e);
         }
       }, true);
@@ -383,7 +384,7 @@ class Visitor {
   }
 
   /**
-   * Посититель для экземпляра выподающего списка (добавить HSE) которое реализует
+   * Посититель для экземпляра выподающего списка которое реализует
    * позицианирование
    * выподающего списка
    * @param {Object} instanceClass - экземпляр класса
@@ -641,9 +642,9 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
       dropdownOptionsWrapperSelector = '.dropdown-sumbiot__options' // - выпадающий список
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super();
-    this._listDropdowns = document.querySelectorAll(dropdownSelector);
     this._dropdownSelector = dropdownSelector;
     this._dropdownToggleSelector = dropdownToggleSelector;
+    this._listDropdowns = document.querySelectorAll(dropdownSelector);
     this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsWrapperSelector);
     this._init();
   }
@@ -749,7 +750,6 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
     });
     document.addEventListener('click', e => {
       if (e.target && !e.target.closest(this._dropdownSelector)) {
-        console.log('sdf');
         this._listDropdownsOptions.forEach(dropdownOpen => {
           dropdownOpen.style.display = 'none';
         });
@@ -947,14 +947,14 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this._close.addEventListener('click', e => {
       if (e.target) {
         e.preventDefault();
+        this._closeModal();
       }
-      this._closeModal();
     });
     this.modal.addEventListener('click', e => {
       if (e.target) {
         e.stopPropagation();
+        this._closeModalOverlay(e);
       }
-      this._closeModalOverlay(e);
     });
   }
 
@@ -1029,15 +1029,11 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
     document.addEventListener('click', e => {
       const target = e.target;
       if (target && target.classList.contains(this._trigger.slice(1))) {
-        if (target.target) {
-          e.preventDefault();
-        }
+        e.preventDefault();
         this._triggerEvent = target;
         this._show();
       } else if (target.parentElement.classList.contains(this._trigger.slice(1))) {
-        if (target.target) {
-          e.preventDefault();
-        }
+        e.preventDefault();
         this._triggerEvent = target.parentElement;
         this._show();
       }
@@ -1132,6 +1128,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
+  // выподающий список
+  const dropDown = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown', {
+    dropdownToggleSelector: '.dropdown__toggle',
+    dropdownOptionsWrapperSelector: '.dropdown__options',
+    dropdownOptionSelector: '.dropdown__item'
+  });
+  dropDown.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].positionMod).upgrade();
+
   // модалка фильтр
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
@@ -1152,7 +1156,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].addHseMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].addHseMod).upgrade(dropDown);
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalWrapper: '.js-wrapper-modal'
@@ -1163,13 +1167,6 @@ window.addEventListener('DOMContentLoaded', () => {
     contentActive: 'result__info--active',
     display: 'grid'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].accordionParentMod).upgrade();
-
-  // выподающий список
-  const dropDown = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown', {
-    dropdownToggleSelector: '.dropdown__toggle',
-    dropdownOptionsWrapperSelector: '.dropdown__options',
-    dropdownOptionSelector: '.dropdown__item'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].positionMod).upgrade();
 
   // ширина выподающего списка
   new _components_stretch__WEBPACK_IMPORTED_MODULE_5__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');

@@ -7,6 +7,16 @@ import Visitor from "./components/visitor"
 import Stretch from "./components/stretch";
 
 window.addEventListener('DOMContentLoaded', () => {
+
+  // выподающий список
+  const dropDown = new DropdownSelect('.dropdown',{
+    dropdownToggleSelector: '.dropdown__toggle',
+    dropdownOptionsWrapperSelector: '.dropdown__options',
+    dropdownOptionSelector: '.dropdown__item'
+  })
+  dropDown.accept(Visitor.positionMod)
+          .upgrade()
+
   // модалка фильтр
   new Modal('.js-filter-modal')
             .accept(Visitor.modalsStandardMod)
@@ -31,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавление HSE
   new ModalDynamics('.js-add-hse-modal',{closeClickOverlay: false})
                     .accept(Visitor.addHseMod)
-                    .upgrade()
+                    .upgrade(dropDown)
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',{modalWrapper: '.js-wrapper-modal'})
                     .accept(Visitor.editHseMod)
@@ -40,14 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // аккардион
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
                 .accept(Visitor.accordionParentMod)
-                .upgrade()
-
-  // выподающий список
-  const dropDown = new DropdownSelect('.dropdown',{
-    dropdownToggleSelector: '.dropdown__toggle',
-    dropdownOptionsWrapperSelector: '.dropdown__options',
-    dropdownOptionSelector: '.dropdown__item'
-              }).accept(Visitor.positionMod)
                 .upgrade()
 
   // ширина выподающего списка

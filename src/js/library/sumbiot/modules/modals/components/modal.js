@@ -91,17 +91,17 @@ export default class Modal extends ModalCore{
     this._close.addEventListener('click', (e) => {
       if (e.target) {
         e.preventDefault()
-      }
 
-      this._closeModal()
+        this._closeModal()
+      }
     })
 
     this.modal.addEventListener('click', (e) => {
       if (e.target) {
         e.stopPropagation()
-      }
 
-      this._closeModalOverlay(e)
+        this._closeModalOverlay(e)
+      }
     })
   }
 
