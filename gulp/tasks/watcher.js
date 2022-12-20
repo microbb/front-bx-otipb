@@ -14,4 +14,11 @@ module.exports = function () {
 
     done();
   });
+
+  $.gulp.task('watcher_dist', (done) => {
+
+    $.gulp.watch($.config.output.path, $.gulp.series("copyTopLevel"))
+
+    done();
+  });
 }

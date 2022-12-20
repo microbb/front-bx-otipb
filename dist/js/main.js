@@ -1136,6 +1136,9 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   dropDown.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].positionMod).upgrade();
 
+  // панель которая регулирует ширина выподающего списка
+  new _components_stretch__WEBPACK_IMPORTED_MODULE_5__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
+
   // модалка фильтр
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
@@ -1167,9 +1170,6 @@ window.addEventListener('DOMContentLoaded', () => {
     contentActive: 'result__info--active',
     display: 'grid'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].accordionParentMod).upgrade();
-
-  // ширина выподающего списка
-  new _components_stretch__WEBPACK_IMPORTED_MODULE_5__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
 });
 
 /***/ })

@@ -17,6 +17,11 @@ window.addEventListener('DOMContentLoaded', () => {
   dropDown.accept(Visitor.positionMod)
           .upgrade()
 
+  // панель которая регулирует ширина выподающего списка
+  new Stretch('.js-option-panel',
+    '.dropdown__options',
+    'dropdown__options--stretch')
+
   // модалка фильтр
   new Modal('.js-filter-modal')
             .accept(Visitor.modalsStandardMod)
@@ -51,12 +56,6 @@ window.addEventListener('DOMContentLoaded', () => {
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
                 .accept(Visitor.accordionParentMod)
                 .upgrade()
-
-  // ширина выподающего списка
-  new Stretch('.js-option-panel',
-             '.dropdown__options',
-                'dropdown__options--stretch')
-
 })
 
 

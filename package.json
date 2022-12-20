@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "gulp watch",
     "prod": "gulp build",
-    "bx": "gulp build && gulp copyTopLevel"
+    "bxdev": "gulp bx_watch",
+    "bxprod": "gulp build && gulp copyTopLevel"
   },
   "repository": {
     "type": "git",
