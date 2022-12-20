@@ -17,6 +17,10 @@ $color3: #e7e7e1;
   border-bottom: 1px solid color.scale($color, $lightness: -10%);
   box-shadow: 0 2px 2px 0 color.scale($color, $lightness: -7%);
 
+  &[data-sumbiot-modal] {
+    display: none;
+  }
+
   &--position_absolute {
     position: absolute;
 

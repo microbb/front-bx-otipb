@@ -33,19 +33,13 @@ export default class Stretch {
   _stretchHandler(){
 
     this._panelsElements.forEach(panel => {
-      let on = panel.querySelector('.option-panel__item-on'),
-          off = panel.querySelector('.option-panel__item-off')
+      let stretchBtn = panel.querySelector('.option-panel__item--stretch')
 
-      on.addEventListener('click', (e) => {
+      stretchBtn.addEventListener('click', (e) => {
         e.preventDefault()
 
-        this._show(panel)
-      })
+        this._toggle(panel,stretchBtn)
 
-      off.addEventListener('click', (e) => {
-        e.preventDefault()
-
-        this._hide(panel)
       })
 
     })
@@ -53,19 +47,17 @@ export default class Stretch {
   }
 
   /**
-   * Развернуть список по горизонтали
+   * Развернуть или свернуть список по горизонтали
    * @return {void}
    */
-  _show(panel){
-    panel.closest(this._stretchSelector).classList.add(this._activeClass)
-  }
+  _toggle(panelElement,stretchBtnElement){
 
-  /**
-   * Свернуть список по горизонтали
-   * @return {void}
-   */
-  _hide(panel){
-    panel.closest(this._stretchSelector).classList.remove(this._activeClass)
+    panelElement.closest(this._stretchSelector).classList.toggle(this._activeClass)
+
+    stretchBtnElement.classList.toggle('option-panel__item--stretch-off')
+    stretchBtnElement.title.toLowerCase() === 'развернуть' ?
+      stretchBtnElement.setAttribute('title','Свернуть') :
+      stretchBtnElement.setAttribute('title','Развернуть')
   }
 
 }

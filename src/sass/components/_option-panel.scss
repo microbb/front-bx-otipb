@@ -24,6 +24,8 @@ $color3: #e7e7e1;
 .option-panel__item{
   flex: 1 1 auto;
 
+  height: 36px;
+
   padding: 6px 0;
 
   opacity: 0.7;
@@ -43,10 +45,15 @@ $color3: #e7e7e1;
   &:active{
     opacity: 0.5;
   }
-}
 
-.option-panel__img{
-  display: block;
+  &--stretch{
+    background-image: url(../img/arrow-divider-horizontal-on-icon.svg);
+    background-position: center;
+    background-size: 24px;
+    background-repeat: no-repeat;
+  }
 
-  margin: 0 auto;
+  &--stretch-off{
+    background-image: url(../img/arrow-divider-horizontal-off-icon.svg);
+  }
 }

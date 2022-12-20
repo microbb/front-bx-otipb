@@ -3,9 +3,6 @@
 
 // region " 1 Размер текста "
 
-
-
-
 .fz {
   @include m.rulesBreakpoint(v.$container,(
     font-size: 14px

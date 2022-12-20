@@ -10,7 +10,7 @@ export default class Support {
    * @param {array} arrayClasses     - массив со списком классов.
    * @return {void}
    */
-  static removeClass(elementSelector,arrayClasses ) {
+  static removeClass(elementSelector,arrayClasses) {
     document.querySelectorAll(elementSelector).forEach(element => {
       element.classList.remove(...arrayClasses)
     })
