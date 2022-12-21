@@ -29,16 +29,16 @@
         <div class="row f-justify-content-between">
           <div class="col-auto">
 
-            <form action="" class="form form--search">
+            <form class="form form--search" id="search" action="/search" method="post">
 
               <div class="form__inner">
 
                 <label class="form__item">
-                  <input type="text" class="form__input" name="search" placeholder="Поиск">
+                  <input type="text" class="form__input" name="SEARCH" placeholder="Поиск" required>
                 </label>
 
                 <label class="form__item form__item--order-3">
-                  <input type="checkbox" class="form__checkbox" name="search">
+                  <input type="checkbox" class="form__checkbox" name="STATUS">
                   <span class="form__label">Добавить в результат поиска уволенных сотрудников</span>
                 </label>
 
@@ -246,12 +246,12 @@
 
               <label class="form__item">
                 <span class="form__label">от:</span>
-                <input class="form__input" type="date" name="DATE_BEGIN">
+                <input class="form__input" type="date" name="DATE_BEGIN" required>
               </label><!--./form__item-->
 
               <label class="form__item">
                 <span class="form__label">до:</span>
-                <input class="form__input" type="date" name="DATE_END">
+                <input class="form__input" type="date" name="DATE_END" required>
               </label><!--./form__item-->
 
               <div class="form__item">
@@ -4883,17 +4883,17 @@
 
               <label class="form__item">
                 <span class="form__label">Дата аттестации:</span>
-                <input class="form__input" type="date" name="C_ATTESTATION_DATE" value="2012-12-22">
+                <input class="form__input" type="date" name="C_ATTESTATION_DATE" value="2012-12-22" required>
               </label>
 
               <label class="form__item">
                 <span class="form__label">Дата следующий аттестации:</span>
-                <input class="form__input" type="date" name="C_NEXT_ATTESTATION_DATE" value="2023-12-22">
+                <input class="form__input" type="date" name="C_NEXT_ATTESTATION_DATE" value="2023-12-22" required>
               </label>
 
               <label class="form__item form__item--column2">
                 <span class="form__label">Номер документа:</span>
-                <input class="form__input" type="text" name="C_CARD_NUMBER" value="234-423-4335">
+                <input class="form__input" type="text" name="C_CARD_NUMBER" value="234-423-4335" required>
               </label>
 
               <button class="btn btn-primary h-50px form__item--column2" type="submit" name="btn_edit_card">Изменить</button>
@@ -4936,6 +4936,7 @@
             <div class="form__inner form__inner--grid-row-gap-12">
 
               <div class="form__item form__item--column2">
+                <span class="form__label"></span>
                 <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
 
@@ -5004,6 +5005,7 @@
             <div class="form__inner">
 
               <div class="form__item form__item--column2">
+                <span class="form__label"></span>
                 <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
                   <div class="dropdown__options">

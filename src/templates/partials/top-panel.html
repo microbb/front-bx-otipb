@@ -3,16 +3,16 @@
   <div class="row f-justify-content-between">
       <div class="col-auto">
 
-        <form action="" class="form form--search">
+        <form class="form form--search" id="search" action="/search" method="post">
 
           <div class="form__inner">
 
             <label class="form__item">
-              <input type="text" class="form__input" name="search" placeholder="Поиск">
+              <input type="text" class="form__input" name="SEARCH" placeholder="Поиск" required>
             </label>
 
             <label class="form__item form__item--order-3">
-              <input type="checkbox" class="form__checkbox" name="search">
+              <input type="checkbox" class="form__checkbox" name="STATUS">
               <span class="form__label">Добавить в результат поиска уволенных сотрудников</span>
             </label>
 

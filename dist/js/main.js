@@ -86,6 +86,67 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/components/add-user.component.js":
+/*!*************************************************!*\
+  !*** ./src/js/components/add-user.component.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AddUserComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class AddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      E_FIO: [],
+      ID_DIVISION: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_DEPARTMENT: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_MATRIX_WORKS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      E_EMPLOYEE_STATUS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+    });
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    console.log('asd');
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/components/stretch.js":
 /*!**************************************!*\
   !*** ./src/js/components/stretch.js ***!
@@ -430,6 +491,174 @@ class Visitor {
 
 /***/ }),
 
+/***/ "./src/js/core/component.js":
+/*!**********************************!*\
+  !*** ./src/js/core/component.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Component; });
+/**
+ *  Базовый класс для компонентов
+ * */
+class Component {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id) {
+    let {} = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    this.$el = document.querySelector(id);
+    this._init();
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {}
+
+  /**
+   * Скрывает компонент
+   * @return {void}
+   */
+  hide() {
+    this.$el.classList.add('hide');
+    this._onHide(); // -> после скрытия компонента вызываем метод
+  }
+
+  /**
+   * Показать компонент
+   * @return {void}
+   */
+  show() {
+    this.$el.classList.remove('hide');
+    this._onShow(); // -> после показа компонента вызываем метод
+  }
+
+  /**
+   * Действия после скрытия компонента (хук)
+   * @return {void}
+   */
+  _onHide() {}
+
+  /**
+   * Действия после показа компонента (хук)
+   * @return {void}
+   */
+  _onShow() {}
+}
+
+/***/ }),
+
+/***/ "./src/js/core/form.js":
+/*!*****************************!*\
+  !*** ./src/js/core/form.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Form; });
+/**
+ *  Базовый класс для работы с формами
+ * */
+class Form {
+  /**
+   * Конструктор
+   * @param {Element} form      - форма.
+   * @param {Object=} controls  - поля формы.
+   */
+  constructor(form) {
+    let controls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    this.form = form;
+    this.controls = controls;
+  }
+
+  /**
+   * Вытаскивает значения из полей формы
+   * @return {Object}
+   */
+  value() {
+    const value = {};
+    Object.keys(this.controls).forEach(control => {
+      value[control] = this.form[control].value;
+    });
+    return value;
+  }
+
+  /**
+   * Проверка на валидацию
+   * @return {boolean}
+   */
+  isValid() {
+    let isFormValid = true; // Флаг
+
+    Object.keys(this.controls).forEach(control => {
+      if (this.controls[control].length) {
+        const validators = this.controls[control]; // массив с валидаторами
+
+        let isValid = true; // Флаг
+
+        validators.forEach(validator => {
+          isValid = validator(this.form[control].value) && isValid; // запускаем валидаторы по цепочки
+        });
+
+        //если элемент формы валиден
+        isValid ? clearError(this.form[control]) : setError(this.form[control]);
+        //если элемент формы невалиден
+
+        isFormValid = isFormValid && isValid; // переключаем Флаг
+      }
+    });
+
+    return isFormValid;
+  }
+
+  /**
+   * Очищаем форму
+   * @return {void}
+   */
+  clear() {
+    this.form.reset();
+  }
+}
+
+/**
+ * Сформировать и отправить ошибку
+ * @return {void}
+ */
+function setError($control) {
+  clearError($control); // удаляет сообщения об ошибки
+
+  const error = '<span class="form__validation-error">Введите значение</span>'; // формируем сообшения об ошибки
+
+  $control.nextElementSibling.firstElementChild.style.backgroundColor = '#fff5f5'; // подсветить не валидный элемент красным цветом
+
+  $control.previousElementSibling.insertAdjacentHTML('beforeend', error); // добавляем сообщения от ошибки для невалидного элемента
+}
+
+/**
+ * Удалить сообщения об ошибки
+ * @return {void}
+ */
+function clearError($control) {
+  console.log($control);
+  $control.nextElementSibling.firstElementChild.style.backgroundColor = ''; // удалить подсветку
+
+  // элемент с ошибкой сушествует
+  if ($control.previousElementSibling.querySelector('.form__validation-error')) {
+    $control.previousElementSibling.querySelector('.form__validation-error').remove(); // удаляет ошибку
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/core/support.js":
 /*!********************************!*\
   !*** ./src/js/core/support.js ***!
@@ -476,6 +705,42 @@ class Support {
    */
   static removeClosestClass(element, searchSelector, arrayClasses) {
     element.closest(searchSelector).classList.remove(...arrayClasses);
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/core/validators.js":
+/*!***********************************!*\
+  !*** ./src/js/core/validators.js ***!
+  \***********************************/
+/*! exports provided: Validators */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Validators", function() { return Validators; });
+/**
+ *  Вылидаторы для форм
+ * */
+class Validators {
+  /**
+   * Валидатор: вы незаполнили поле
+   * @return {string}
+   */
+  static required() {
+    let value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    return value && value.trim();
+  }
+
+  /**
+   * Валидатор: минимальное число симаолов
+   * @return {function}
+   */
+  static minLength(length) {
+    return value => {
+      return value.length >= length;
+    };
   }
 }
 
@@ -1110,6 +1375,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdownSelect */ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js");
 /* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
 /* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
+/* harmony import */ var _components_add_user_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/add-user.component */ "./src/js/components/add-user.component.js");
+
 
 
 
@@ -1159,7 +1426,35 @@ window.addEventListener('DOMContentLoaded', () => {
     contentActive: 'result__info--active',
     display: 'grid'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].accordionParentMod).upgrade();
+  new _components_add_user_component__WEBPACK_IMPORTED_MODULE_6__["default"]('#add-user');
 });
+
+/***/ }),
+
+/***/ "./src/js/services/api.service.js":
+/*!****************************************!*\
+  !*** ./src/js/services/api.service.js ***!
+  \****************************************/
+/*! exports provided: apiService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiService", function() { return apiService; });
+/**
+ *  API Сервисы
+ * */
+class ApiService {
+  /**
+   * Конструктор
+   * @param {string=} baseUrl  - url сервиса на который будем делать запросы
+   */
+  constructor() {
+    let baseUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    this.url = baseUrl || `${location.origin}${location.pathname}`;
+  }
+}
+const apiService = new ApiService();
 
 /***/ })
 

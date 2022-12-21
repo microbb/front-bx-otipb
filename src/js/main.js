@@ -5,6 +5,7 @@ import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdo
 
 import Visitor from "./components/visitor"
 import Stretch from "./components/stretch";
+import AddUserComponent from "./components/add-user.component";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -56,6 +57,9 @@ window.addEventListener('DOMContentLoaded', () => {
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
                 .accept(Visitor.accordionParentMod)
                 .upgrade()
+
+
+  new AddUserComponent('#add-user')
 })
 
 
