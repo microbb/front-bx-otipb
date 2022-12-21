@@ -3,9 +3,17 @@ import ModalDynamics from './library/sumbiot/modules/modals/components/modalDyna
 import Accordion from './library/sumbiot/modules/accordion/components/accordion'
 import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdownSelect'
 
+import AddUserComponent from "./components/add-user.component";
+import FilterComponent from "./components/filter.component";
+import EditUserComponent from "./components/edit-user.component";
+import DeleteUserOrCardComponent from "./components/delete-user-or-card.component";
+import EditCardComponent from "./components/edit-card.component";
+import AddOrEditHseComponent from "./components/add-or-edit-hse.component";
+import SearchComponent from "./components/search.component";
+
 import Visitor from "./components/visitor"
 import Stretch from "./components/stretch";
-import AddUserComponent from "./components/add-user.component";
+
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -22,6 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
   new Stretch('.js-option-panel',
     '.dropdown__options',
     'dropdown__options--stretch')
+
 
   // модалка фильтр
   new Modal('.js-filter-modal')
@@ -53,13 +62,37 @@ window.addEventListener('DOMContentLoaded', () => {
                     .accept(Visitor.editHseMod)
                     .upgrade()
 
+
   // аккардион
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
                 .accept(Visitor.accordionParentMod)
                 .upgrade()
 
 
+  // компонент добавления сотрудника
   new AddUserComponent('#add-user')
+
+  // компонент редактировать сотрудника
+  new FilterComponent('#filter')
+
+  // компонент добавить / редактировать / продлить удостоверение
+  new EditCardComponent('#edit-card')
+
+  // компонент удалить сотрудника / удостоверение
+  new DeleteUserOrCardComponent('#delete-user-or-card')
+
+  // компонент фильтр
+  new EditUserComponent('#edit-user')
+
+  // компонент добавить должность HSE
+  new AddOrEditHseComponent('#add-hse')
+
+  // компонент редактировать должность HSE
+  new AddOrEditHseComponent('#edit-hse')
+
+  // компонент Поиск
+  new SearchComponent('#search')
+
 })
 
 

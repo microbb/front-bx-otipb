@@ -8,7 +8,7 @@ import {apiService} from "../services/api.service";
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class EditUserComponent extends Component {
+export default class AddOrEditHseComponent extends Component {
 
   /**
    * Конструктор
@@ -29,11 +29,7 @@ export default class EditUserComponent extends Component {
 
     this.form = new Form(this.$el, {
       ID: [],
-      E_FIO: [],
-      ID_DIVISION: [Validators.required],
-      ID_DEPARTMENT: [Validators.required],
-      ID_MATRIX_WORKS: [Validators.required],
-      E_EMPLOYEE_STATUS: [Validators.required]
+      ID_MATRIX_WORKS: [Validators.required]
     })
 
   }

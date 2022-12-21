@@ -49,8 +49,8 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
+    console.log('Триста тридцать три')
 
-    console.log('asd')
   }
 
 

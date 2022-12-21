@@ -95,8 +95,6 @@ function setError($control){
  */
 function clearError($control){
 
-  console.log($control)
-
   $control.nextElementSibling.firstElementChild.style.backgroundColor = '' // удалить подсветку
 
   // элемент с ошибкой сушествует

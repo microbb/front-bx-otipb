@@ -86,6 +86,64 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/components/add-or-edit-hse.component.js":
+/*!********************************************************!*\
+  !*** ./src/js/components/add-or-edit-hse.component.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AddOrEditHseComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class AddOrEditHseComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      ID: [],
+      ID_MATRIX_WORKS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+    });
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    console.log('Триста тридцать три');
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/components/add-user.component.js":
 /*!*************************************************!*\
   !*** ./src/js/components/add-user.component.js ***!
@@ -141,7 +199,297 @@ class AddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["def
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    console.log('asd');
+    console.log('Триста тридцать три');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/components/delete-user-or-card.component.js":
+/*!************************************************************!*\
+  !*** ./src/js/components/delete-user-or-card.component.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DeleteUserOrCardComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class DeleteUserOrCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      ID: []
+    });
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    console.log('Триста тридцать три');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/components/edit-card.component.js":
+/*!**************************************************!*\
+  !*** ./src/js/components/edit-card.component.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EditCardComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class EditCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      ID: [],
+      C_ATTESTATION_DATE: [],
+      C_NEXT_ATTESTATION_DATE: [],
+      C_CARD_NUMBER: []
+    });
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    console.log('Триста тридцать три');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/components/edit-user.component.js":
+/*!**************************************************!*\
+  !*** ./src/js/components/edit-user.component.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EditUserComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class EditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      ID: [],
+      E_FIO: [],
+      ID_DIVISION: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_DEPARTMENT: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_MATRIX_WORKS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      E_EMPLOYEE_STATUS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+    });
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    console.log('Триста тридцать три');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/components/filter.component.js":
+/*!***********************************************!*\
+  !*** ./src/js/components/filter.component.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FilterComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class FilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      DATE_BEGIN: [],
+      DATE_END: [],
+      ID_DIVISION: [],
+      ID_MATRIX_WORKS: [],
+      ID_PROGRAM: []
+    });
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    console.log('Триста тридцать три');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/components/search.component.js":
+/*!***********************************************!*\
+  !*** ./src/js/components/search.component.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class SearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      SEARCH: [],
+      STATUS: []
+    });
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    console.log('Триста тридцать три');
   }
 }
 
@@ -648,7 +996,6 @@ function setError($control) {
  * @return {void}
  */
 function clearError($control) {
-  console.log($control);
   $control.nextElementSibling.firstElementChild.style.backgroundColor = ''; // удалить подсветку
 
   // элемент с ошибкой сушествует
@@ -1373,9 +1720,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modalDynamics */ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js");
 /* harmony import */ var _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./library/sumbiot/modules/accordion/components/accordion */ "./src/js/library/sumbiot/modules/accordion/components/accordion.js");
 /* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdownSelect */ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js");
-/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
-/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
-/* harmony import */ var _components_add_user_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/add-user.component */ "./src/js/components/add-user.component.js");
+/* harmony import */ var _components_add_user_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/add-user.component */ "./src/js/components/add-user.component.js");
+/* harmony import */ var _components_filter_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/filter.component */ "./src/js/components/filter.component.js");
+/* harmony import */ var _components_edit_user_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/edit-user.component */ "./src/js/components/edit-user.component.js");
+/* harmony import */ var _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/delete-user-or-card.component */ "./src/js/components/delete-user-or-card.component.js");
+/* harmony import */ var _components_edit_card_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/edit-card.component */ "./src/js/components/edit-card.component.js");
+/* harmony import */ var _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/add-or-edit-hse.component */ "./src/js/components/add-or-edit-hse.component.js");
+/* harmony import */ var _components_search_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/search.component */ "./src/js/components/search.component.js");
+/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
+
+
+
+
+
+
 
 
 
@@ -1390,43 +1749,66 @@ window.addEventListener('DOMContentLoaded', () => {
     dropdownOptionsWrapperSelector: '.dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
   });
-  dropDown.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].positionMod).upgrade();
+  dropDown.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].positionMod).upgrade();
 
   // панель которая регулирует ширина выподающего списка
-  new _components_stretch__WEBPACK_IMPORTED_MODULE_5__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
+  new _components_stretch__WEBPACK_IMPORTED_MODULE_12__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
 
   // модалка фильтр
-  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsStandardMod).upgrade();
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
-  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsStandardMod).upgrade();
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].editUserMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editUserMod).upgrade();
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsUnityDeleteMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsUnityDeleteMod).upgrade();
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].modalsUnityMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsUnityMod).upgrade();
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].addHseMod).upgrade(dropDown);
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].addHseMod).upgrade(dropDown);
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalWrapper: '.js-wrapper-modal'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].editHseMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editHseMod).upgrade();
 
   // аккардион
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_4__["default"].accordionParentMod).upgrade();
-  new _components_add_user_component__WEBPACK_IMPORTED_MODULE_6__["default"]('#add-user');
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].accordionParentMod).upgrade();
+
+  // компонент добавления сотрудника
+  new _components_add_user_component__WEBPACK_IMPORTED_MODULE_4__["default"]('#add-user');
+
+  // компонент редактировать сотрудника
+  new _components_filter_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#filter');
+
+  // компонент добавить / редактировать / продлить удостоверение
+  new _components_edit_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#edit-card');
+
+  // компонент удалить сотрудника / удостоверение
+  new _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_7__["default"]('#delete-user-or-card');
+
+  // компонент фильтр
+  new _components_edit_user_component__WEBPACK_IMPORTED_MODULE_6__["default"]('#edit-user');
+
+  // компонент добавить должность HSE
+  new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#add-hse');
+
+  // компонент редактировать должность HSE
+  new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#edit-hse');
+
+  // компонент Поиск
+  new _components_search_component__WEBPACK_IMPORTED_MODULE_10__["default"]('#search');
 });
 
 /***/ }),
