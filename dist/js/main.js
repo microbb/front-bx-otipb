@@ -199,7 +199,24 @@ class AddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["def
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    console.log('Триста тридцать три');
+    try {
+      const action = this.$el.getAttribute('action').slice(1),
+        formData = new FormData(this.$el);
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData, {
+        thisComponentCreateRequest: 'AddUserComponent'
+      });
+
+      // if(response) {}
+
+      console.log(response);
+    } catch (err) {
+      console.group('In file AddUserComponent error');
+      console.error(`Error description: ${err.message}`);
+      console.groupEnd();
+    } finally {
+
+      // finallyStatements
+    }
   }
 }
 
@@ -1823,17 +1840,46 @@ window.addEventListener('DOMContentLoaded', () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiService", function() { return apiService; });
+/* harmony import */ var _components_add_user_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/add-user.component */ "./src/js/components/add-user.component.js");
+
+
 /**
  *  API Сервисы
  * */
 class ApiService {
   /**
    * Конструктор
-   * @param {string=} baseUrl  - url сервиса на который будем делать запросы
+   * @param {string=} componentBx - компонент на сервере к которому будем делать запросы
    */
   constructor() {
-    let baseUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-    this.url = baseUrl || `${location.origin}${location.pathname}`;
+    let componentBx = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    this.componentBx = componentBx || `${location.origin}${location.pathname}`;
+  }
+
+  /**
+   * Запрос на сервер
+   * @param {string} action   - метод на сервере который будет обрабатывать запрос
+   * @param {Object} data     - объект с данными которые будут передаваться на сервер
+   * @param {Object} options  - объект с дополнительными настройками
+   * @param {string=} [options.thisComponentCreateRequest] - компонент который отправляет запрос на сервер
+   * @return {Promise}
+   */
+  async useRequest(action, data) {
+    let {
+      thisComponentCreateRequest = ''
+    } = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    try {
+      // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
+      return await BX.ajax.runComponentAction(this.componentBx, action, {
+        mode: 'class',
+        data: data
+      });
+    } catch (err) {
+      console.group('In file ApiService, in function useRequest error');
+      console.error(`Sends a request: ${thisComponentCreateRequest}`);
+      console.error(`Error description: ${err.message}`);
+      console.groupEnd();
+    }
   }
 }
 const apiService = new ApiService();

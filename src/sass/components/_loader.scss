@@ -1,0 +1,39 @@
+@use "sass:color";
+
+$color: #fbfbfb;
+$color2: #181818;
+$color3: #e7e7e1;
+
+.loader{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background-color: rgba($color,0.8);
+
+  &--user{
+    min-height: 297px;
+  }
+}
+
+.loader_img{
+  display: block;
+
+  margin-bottom: 15px;
+}
+
+.loader__massage{
+  margin: 0;
+
+  font-weight: 400;
+  font-size: 15px;
+
+
+}

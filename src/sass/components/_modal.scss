@@ -201,6 +201,8 @@ $color3: #e7e7e1;
 }
 
 .modal__inner{
+  position: relative;
+
   max-width: 760px;
 
   margin: 0 auto;

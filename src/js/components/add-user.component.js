@@ -49,7 +49,32 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    console.log('Триста тридцать три')
+    try {
+
+      const action = this.$el.getAttribute('action').slice(1),
+            formData = new FormData(this.$el)
+
+      const response =  await apiService.useRequest(action,formData, {
+        thisComponentCreateRequest: 'AddUserComponent'
+      })
+
+      // if(response) {}
+
+      console.log(response)
+
+    } catch (err) {
+
+      console.group('In file AddUserComponent error')
+        console.error(`Error description: ${err.message}`)
+      console.groupEnd();
+
+    } finally {
+
+      // finallyStatements
+
+    }
+
+
 
   }
 
