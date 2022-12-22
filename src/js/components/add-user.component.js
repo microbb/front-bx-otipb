@@ -65,19 +65,19 @@ async function submitHandler(e) {
 
       this.$el.append(loader.loading())
 
-      // const response =  await apiService.useRequest(action,formData, {
-      //   thisComponentCreateRequest: 'AddUserComponent'
-      // })
-      //
-      // if(response.status === 'success') {
-      //   loader.success()
-      // }
-      //
-      // if(response.status === 'error') {
-      //   loader.failure()
-      // }
-      //
-      // console.log(response)
+      const response = await apiService.useRequest(action,formData, {
+        thisComponentCreateRequest: 'AddUserComponent'
+      })
+
+      if(response.status === 'success') {
+        loader.success()
+      }
+
+      if(response.status === 'error') {
+        loader.failure()
+      }
+
+      console.log(response)
 
     } catch (err) {
 

@@ -43,34 +43,22 @@ export default class Loader{
     this.$el = document.createElement('div')
     this.$el.classList.add('loader')
 
-    this.$img = document.createElement('img')
-    this.$img.classList.add('loader_img')
-
-    this.$img.setAttribute('width','44')
-    this.$img.setAttribute('height','44')
-
-    this.$p = document.createElement('p')
-    this.$p.classList.add('loader__massage')
-
-    this.$el.append(this.$img)
-    this.$el.append(this.$p)
+    this.$el.innerHTML = `
+      <div class="loader__img"></div>
+      <p class="loader__massage">${this.message.loading.title}</p>
+    `
   }
 
   loading() {
-    this.$img.setAttribute('src', this.message.loading.img)
-    this.$p.innerHTML = this.message.loading.title
-
     return this.$el
   }
 
   success() {
-    this.$img.setAttribute('src',this.message.success.img)
-    this.$p.innerHTML = this.message.success.title
+    this.$el.querySelector('.loader__massage').innerHTML = this.message.success.title
   }
 
   failure() {
-    this.$img.setAttribute('src',this.message.failure.img)
-    this.$p.innerHTML = this.message.failure.title
+    this.$el.querySelector('.loader__massage').innerHTML = this.message.failure.title
   }
 
   removeLoader() {

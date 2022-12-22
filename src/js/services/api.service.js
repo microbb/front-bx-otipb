@@ -43,4 +43,4 @@ class ApiService{
 
 }
 
-export const apiService = new ApiService()
+export const apiService = new ApiService('bizproc:otipb.new')

@@ -23,8 +23,16 @@ $color3: #e7e7e1;
   }
 }
 
-.loader_img{
+.loader__img{
   display: block;
+
+  width: 44px;
+  height: 44px;
+
+  background-image: url(../img/loader.svg);
+  background-position: center;
+  background-size: 44px;
+  background-repeat: no-repeat;
 
   margin-bottom: 15px;
 }
