@@ -70,7 +70,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
   // компонент добавления сотрудника
-  new AddUserComponent('#add-user')
+  new AddUserComponent('#add-user', {
+    dropDown
+  })
 
   // компонент редактировать сотрудника
   new FilterComponent('#filter')

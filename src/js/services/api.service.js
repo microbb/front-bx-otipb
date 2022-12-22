@@ -1,4 +1,3 @@
-import AddUserComponent from "../components/add-user.component";
 
 /**
  *  API Сервисы
@@ -11,9 +10,7 @@ class ApiService{
    * @param {string=} componentBx - компонент на сервере к которому будем делать запросы
    */
   constructor(componentBx= "") {
-
     this.componentBx = componentBx || `${location.origin}${location.pathname}`
-
   }
 
   /**

@@ -1,9 +1,11 @@
-import Component from "../core/component"
+import Component from "../core/component";
 
 import Form from "../core/form";
 import {Validators} from "../core/validators";
 
 import {apiService} from "../services/api.service";
+
+import Loader from "./loader";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -18,6 +20,8 @@ export default class AddUserComponent extends Component {
   constructor(id,options) {
 
     super(id,options);
+
+    this.instanceDropDown = options.dropDown || {}
   }
 
   /**
@@ -49,20 +53,35 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
+    const loader = new Loader({
+      loading: 'Идет добавления сотрудника',
+      success: 'Сотрудник добавлен'
+    })
+
     try {
 
       const action = this.$el.getAttribute('action').slice(1),
             formData = new FormData(this.$el)
 
-      const response =  await apiService.useRequest(action,formData, {
-        thisComponentCreateRequest: 'AddUserComponent'
-      })
+      this.$el.append(loader.loading())
 
-      // if(response) {}
-
-      console.log(response)
+      // const response =  await apiService.useRequest(action,formData, {
+      //   thisComponentCreateRequest: 'AddUserComponent'
+      // })
+      //
+      // if(response.status === 'success') {
+      //   loader.success()
+      // }
+      //
+      // if(response.status === 'error') {
+      //   loader.failure()
+      // }
+      //
+      // console.log(response)
 
     } catch (err) {
+
+      loader.failure()
 
       console.group('In file AddUserComponent error')
         console.error(`Error description: ${err.message}`)
@@ -70,10 +89,14 @@ async function submitHandler(e) {
 
     } finally {
 
-      // finallyStatements
+      setTimeout(() => {
+        this.form.clear()
+        this.instanceDropDown.reset(this.form.form)
+
+        loader.removeLoader()
+      }, 500)
 
     }
-
 
 
   }

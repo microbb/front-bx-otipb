@@ -158,6 +158,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
 /* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+
 
 
 
@@ -174,6 +176,7 @@ class AddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["def
    */
   constructor(id, options) {
     super(id, options);
+    this.instanceDropDown = options.dropDown || {};
   }
 
   /**
@@ -199,23 +202,39 @@ class AddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["def
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      loading: 'Идет добавления сотрудника',
+      success: 'Сотрудник добавлен'
+    });
     try {
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el);
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData, {
-        thisComponentCreateRequest: 'AddUserComponent'
-      });
+      this.$el.append(loader.loading());
 
-      // if(response) {}
-
-      console.log(response);
+      // const response =  await apiService.useRequest(action,formData, {
+      //   thisComponentCreateRequest: 'AddUserComponent'
+      // })
+      //
+      // if(response.status === 'success') {
+      //   loader.success()
+      // }
+      //
+      // if(response.status === 'error') {
+      //   loader.failure()
+      // }
+      //
+      // console.log(response)
     } catch (err) {
+      loader.failure();
       console.group('In file AddUserComponent error');
       console.error(`Error description: ${err.message}`);
       console.groupEnd();
     } finally {
-
-      // finallyStatements
+      setTimeout(() => {
+        this.form.clear();
+        this.instanceDropDown.reset(this.form.form);
+        loader.removeLoader();
+      }, 500);
     }
   }
 }
@@ -451,6 +470,82 @@ async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
     console.log('Триста тридцать три');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/components/loader.js":
+/*!*************************************!*\
+  !*** ./src/js/components/loader.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Loader; });
+/**
+ *  Погрузчик
+ * */
+
+class Loader {
+  /**
+   * Конструктор
+   * @param {Object=} message - компонент на сервере к которому будем делать запросы
+   */
+  constructor() {
+    let {
+      loading = 'Загрузка...',
+      success = 'Успех',
+      failure = 'Неудача'
+    } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    this.message = {
+      loading: {
+        title: loading,
+        img: 'assets/img/loader.svg'
+      },
+      success: {
+        title: success,
+        img: 'assets/img/ok.gif'
+      },
+      failure: {
+        title: failure,
+        img: 'assets/img/error.gif'
+      }
+    };
+    this._init();
+  }
+  _init() {
+    this._fillHTML();
+  }
+  _fillHTML() {
+    this.$el = document.createElement('div');
+    this.$el.classList.add('loader');
+    this.$img = document.createElement('img');
+    this.$img.classList.add('loader_img');
+    this.$img.setAttribute('width', '44');
+    this.$img.setAttribute('height', '44');
+    this.$p = document.createElement('p');
+    this.$p.classList.add('loader__massage');
+    this.$el.append(this.$img);
+    this.$el.append(this.$p);
+  }
+  loading() {
+    this.$img.setAttribute('src', this.message.loading.img);
+    this.$p.innerHTML = this.message.loading.title;
+    return this.$el;
+  }
+  success() {
+    this.$img.setAttribute('src', this.message.success.img);
+    this.$p.innerHTML = this.message.success.title;
+  }
+  failure() {
+    this.$img.setAttribute('src', this.message.failure.img);
+    this.$p.innerHTML = this.message.failure.title;
+  }
+  removeLoader() {
+    this.$el.remove();
   }
 }
 
@@ -1804,7 +1899,9 @@ window.addEventListener('DOMContentLoaded', () => {
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].accordionParentMod).upgrade();
 
   // компонент добавления сотрудника
-  new _components_add_user_component__WEBPACK_IMPORTED_MODULE_4__["default"]('#add-user');
+  new _components_add_user_component__WEBPACK_IMPORTED_MODULE_4__["default"]('#add-user', {
+    dropDown
+  });
 
   // компонент редактировать сотрудника
   new _components_filter_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#filter');
@@ -1840,9 +1937,6 @@ window.addEventListener('DOMContentLoaded', () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiService", function() { return apiService; });
-/* harmony import */ var _components_add_user_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/add-user.component */ "./src/js/components/add-user.component.js");
-
-
 /**
  *  API Сервисы
  * */
