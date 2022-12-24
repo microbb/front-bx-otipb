@@ -134,9 +134,14 @@ async function submitHandler(e) {
       this.$el.querySelector('button').blur()
       this.$el.append(loader.loading())
 
-      const response = await apiService.useRequest(action,formData),
-            htmlInfo = userInfoTemplate(response.data.result,{build: 2}),
-            htmlWork = workNameTemplate(response.data.result.work)
+      const response = await apiService.useRequest(action,formData)
+
+
+      console.log(response)
+      console.log(JSON.parse(response.data.result))
+
+      const htmlInfo = userInfoTemplate(JSON.parse(response.data.result),{build: 2}),
+            htmlWork = workNameTemplate(JSON.parse(response.data.result).work)
 
       loader.success()
 
@@ -158,8 +163,11 @@ async function submitHandler(e) {
 
       if(error.status === 'error') {
 
+        console.log(error)
+
         console.group('In file ApiService, in function useRequest, promise return reject')
-          console.error(`Error description: ${error.data.result}`)
+          // console.error(`Error description: ${error.data.result}`)
+
 
           console.group('List of errors')
 

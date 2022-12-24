@@ -8,8 +8,8 @@ import {plugTemplate} from "../card/plug.template";
  *  Шаблон информация о удостоверениях пользователя
  *  @param {Object} user - удостоверение
  *  @param {number} [user.idUser] - id
- *  @param {Array} [user.cards] - название удостоверения
- *  @param {Array} [user.training] - номер документа
+ *  @param {Object} [user.cards] -
+ *  @param {Array} [user.training] -
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 3-из БХ без Hse
  *  @return {string}
@@ -25,7 +25,7 @@ export function userInfoTemplate({idUser,cards,training},
    * @return {string}
    */
   const renderCard = () => {
-    if(cards['NORMAL_DATE'].length){
+    if(cards && cards['NORMAL_DATE']){
       return cards['NORMAL_DATE'].map(card => cardTemplate(card)).join(' ')
     }else {
       return plugTemplate('Нет удостоверений')
@@ -49,7 +49,7 @@ export function userInfoTemplate({idUser,cards,training},
    * @return {string}
    */
   const renderRecertification = () => {
-    if(cards['OVER_DATE'].length){
+    if(cards && cards['OVER_DATE']){
       return cards['OVER_DATE'].map(card => cardRecertificationTemplate(card)).join(' ')
     }else {
       return plugTemplate('Нет удостоверений')
@@ -79,7 +79,7 @@ export function userInfoTemplate({idUser,cards,training},
     else if (build === 2) {
       return  `
         <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="${idUser}" title="Изменить должность HSE">
-          <img class="result__img" src="assets/img/edit-document-icon.svg" width="22" height="22" alt="">
+          <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-document-icon.svg" width="22" height="22" alt="">
         </button>
       `
     }

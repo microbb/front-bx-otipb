@@ -201,11 +201,13 @@ async function submitHandler(e) {
         formData = new FormData(this.$el);
       this.$el.querySelector('button').blur();
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
-        htmlInfo = Object(_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__["userInfoTemplate"])(response.data.result, {
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData);
+      console.log(response);
+      console.log(JSON.parse(response.data.result));
+      const htmlInfo = Object(_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__["userInfoTemplate"])(JSON.parse(response.data.result), {
           build: 2
         }),
-        htmlWork = Object(_templates_workName_template__WEBPACK_IMPORTED_MODULE_6__["workNameTemplate"])(response.data.result.work);
+        htmlWork = Object(_templates_workName_template__WEBPACK_IMPORTED_MODULE_6__["workNameTemplate"])(JSON.parse(response.data.result).work);
       loader.success();
       setTimeout(() => {
         const parent = this.$el.closest('.result__row'),
@@ -219,8 +221,10 @@ async function submitHandler(e) {
     } catch (error) {
       loader.failure();
       if (error.status === 'error') {
+        console.log(error);
         console.group('In file ApiService, in function useRequest, promise return reject');
-        console.error(`Error description: ${error.data.result}`);
+        // console.error(`Error description: ${error.data.result}`)
+
         console.group('List of errors');
         error.errors.forEach(error => {
           console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -2311,8 +2315,8 @@ __webpack_require__.r(__webpack_exports__);
  *  Шаблон информация о удостоверениях пользователя
  *  @param {Object} user - удостоверение
  *  @param {number} [user.idUser] - id
- *  @param {Array} [user.cards] - название удостоверения
- *  @param {Array} [user.training] - номер документа
+ *  @param {Object} [user.cards] -
+ *  @param {Array} [user.training] -
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 3-из БХ без Hse
  *  @return {string}
@@ -2331,7 +2335,7 @@ function userInfoTemplate(_ref) {
    * @return {string}
    */
   const renderCard = () => {
-    if (cards['NORMAL_DATE'].length) {
+    if (cards && cards['NORMAL_DATE']) {
       return cards['NORMAL_DATE'].map(card => Object(_card_ard_template__WEBPACK_IMPORTED_MODULE_0__["cardTemplate"])(card)).join(' ');
     } else {
       return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет удостоверений');
@@ -2357,7 +2361,7 @@ function userInfoTemplate(_ref) {
    * @return {string}
    */
   const renderRecertification = () => {
-    if (cards['OVER_DATE'].length) {
+    if (cards && cards['OVER_DATE']) {
       return cards['OVER_DATE'].map(card => Object(_card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__["cardRecertificationTemplate"])(card)).join(' ');
     } else {
       return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет удостоверений');
@@ -2386,7 +2390,7 @@ function userInfoTemplate(_ref) {
     else if (build === 2) {
       return `
         <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="${idUser}" title="Изменить должность HSE">
-          <img class="result__img" src="assets/img/edit-document-icon.svg" width="22" height="22" alt="">
+          <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-document-icon.svg" width="22" height="22" alt="">
         </button>
       `;
     }
