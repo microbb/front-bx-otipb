@@ -16,7 +16,7 @@ $color3: #e7e7e1;
   left: 0;
   right: 0;
 
-  background-color: rgba($color,0.8);
+  background-color: rgba($color,0.9);
 
   &--user{
     min-height: 297px;
@@ -35,6 +35,14 @@ $color3: #e7e7e1;
   background-repeat: no-repeat;
 
   margin-bottom: 15px;
+
+  &--ok {
+    background-image: url(../img/ok.svg);
+  }
+
+  &--error {
+    background-image: url(../img/error.gif);
+  }
 }
 
 .loader__massage{

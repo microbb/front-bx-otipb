@@ -2,12 +2,11 @@
 /**
  *  Погрузчик
  * */
-
 export default class Loader{
 
   /**
    * Конструктор
-   * @param {Object=} message - компонент на сервере к которому будем делать запросы
+   * @param {Object=} message - объект с настройками
    */
   constructor({
                 loading = 'Загрузка...',
@@ -18,28 +17,26 @@ export default class Loader{
     this.message = {
       loading: {
         title: loading,
-        img: 'assets/img/loader.svg'
+        img: ''
       },
       success: {
         title: success,
-        img: 'assets/img/ok.gif'
+        img: 'loader__img--ok'
       },
       failure: {
         title: failure,
-        img: 'assets/img/error.gif'
+        img: 'loader__img--error'
       }
     }
 
     this._init()
   }
 
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
   _init(){
-
-    this._fillHTML()
-
-  }
-
-  _fillHTML() {
     this.$el = document.createElement('div')
     this.$el.classList.add('loader')
 
@@ -47,20 +44,41 @@ export default class Loader{
       <div class="loader__img"></div>
       <p class="loader__massage">${this.message.loading.title}</p>
     `
+
+    this.$img = this.$el.querySelector('.loader__img')
+    this.$massage = this.$el.querySelector('.loader__massage')
   }
 
+  /**
+   * Загрузка
+   * @return {Element}
+   */
   loading() {
     return this.$el
   }
 
+  /**
+   * Успех
+   * @return {void}
+   */
   success() {
-    this.$el.querySelector('.loader__massage').innerHTML = this.message.success.title
+    this.$img.classList.add(this.message.success.img)
+    this.$massage.innerHTML = this.message.success.title
   }
 
+  /**
+   * Неудача
+   * @return {void}
+   */
   failure() {
-    this.$el.querySelector('.loader__massage').innerHTML = this.message.failure.title
+    this.$img.classList.add(this.message.failure.img)
+    this.$massage.innerHTML = this.message.failure.title
   }
 
+  /**
+   * Удалить загрузчик
+   * @return {void}
+   */
   removeLoader() {
     this.$el.remove()
   }
