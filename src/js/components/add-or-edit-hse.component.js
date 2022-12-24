@@ -8,6 +8,7 @@ import Loader from "./loader";
 
 import {userInfoTemplate} from "../templates/user/userInfo.template";
 import {workNameTemplate} from "../templates/workName.template";
+import Support from "../core/support";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -32,11 +33,79 @@ export default class AddOrEditHseComponent extends Component {
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this))
 
+    if(this.$el.getAttribute('id') === 'edit-hse') {
+
+      document.addEventListener('click', (e) => {
+        let target = e.target;
+
+          if (target && target.classList.contains('js-edit-hse-modal') || target.parentElement.classList.contains('js-edit-hse-modal') ) {
+            e.preventDefault()
+
+            if (target.parentElement.classList.contains('js-edit-hse-modal')){
+              target = target.parentElement
+            }
+
+            getData.call(this,target)
+
+          }
+      })
+
+    }
+
     this.form = new Form(this.$el, {
       ID: [],
       ID_MATRIX_WORKS: [Validators.required]
     })
 
+  }
+
+}
+
+/**
+ * Обработчик заполнения формы
+ * @return {void}
+ */
+async function getData(target) {
+
+  try {
+
+    const formData = new FormData(),
+          options = this.$el.querySelectorAll('.dropdown__item')
+
+    formData.append('ID',target.dataset.id)
+
+    const response = await apiService.useRequest('getIdHse',formData)
+
+    options.forEach(option => {
+      if(+option.dataset.selectOption === +response.data.result) {
+
+        option.click()
+      }
+    })
+
+  } catch (error) {
+    if(error.status === 'error') {
+
+      console.group('In file ApiService, in function useRequest, promise return reject')
+        console.error(`Error description: ${error.data.result}`)
+
+        console.group('List of errors')
+
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+        })
+
+        console.groupEnd();
+
+      console.groupEnd();
+
+    } else {
+
+      console.group('In file AddOrEditHseComponent, in function getData error')
+        console.error(`${error.stack}`)
+      console.groupEnd();
+
+    }
   }
 
 }
@@ -104,7 +173,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file AddOrEditHseComponent error')
+        console.group('In file AddOrEditHseComponent, in function submitHandler error')
           console.error(`${error.stack}`)
         console.groupEnd();
 

@@ -103,6 +103,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
 /* harmony import */ var _templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userInfo.template */ "./src/js/templates/user/userInfo.template.js");
 /* harmony import */ var _templates_workName_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/workName.template */ "./src/js/templates/workName.template.js");
+/* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
+
 
 
 
@@ -130,10 +132,55 @@ class AddOrEditHseComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
+    if (this.$el.getAttribute('id') === 'edit-hse') {
+      document.addEventListener('click', e => {
+        let target = e.target;
+        if (target && target.classList.contains('js-edit-hse-modal') || target.parentElement.classList.contains('js-edit-hse-modal')) {
+          e.preventDefault();
+          if (target.parentElement.classList.contains('js-edit-hse-modal')) {
+            target = target.parentElement;
+          }
+          getData.call(this, target);
+        }
+      });
+    }
     this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
       ID_MATRIX_WORKS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
     });
+  }
+}
+
+/**
+ * Обработчик заполнения формы
+ * @return {void}
+ */
+async function getData(target) {
+  try {
+    const formData = new FormData(),
+      options = this.$el.querySelectorAll('.dropdown__item');
+    formData.append('ID', target.dataset.id);
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getIdHse', formData);
+    options.forEach(option => {
+      if (+option.dataset.selectOption === +response.data.result) {
+        option.click();
+      }
+    });
+  } catch (error) {
+    if (error.status === 'error') {
+      console.group('In file ApiService, in function useRequest, promise return reject');
+      console.error(`Error description: ${error.data.result}`);
+      console.group('List of errors');
+      error.errors.forEach(error => {
+        console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+      });
+      console.groupEnd();
+      console.groupEnd();
+    } else {
+      console.group('In file AddOrEditHseComponent, in function getData error');
+      console.error(`${error.stack}`);
+      console.groupEnd();
+    }
   }
 }
 
@@ -181,7 +228,7 @@ async function submitHandler(e) {
         console.groupEnd();
         console.groupEnd();
       } else {
-        console.group('In file AddOrEditHseComponent error');
+        console.group('In file AddOrEditHseComponent, in function submitHandler error');
         console.error(`${error.stack}`);
         console.groupEnd();
       }
@@ -749,6 +796,8 @@ class Stretch {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Visitor; });
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
 
 
 /**
@@ -2025,29 +2074,32 @@ class ApiService {
    * @return {Promise}
    */
   async useRequest(action, data) {
-    // // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    // return await BX.ajax.runComponentAction(this.componentBx, action, {
-    //   mode: 'class',
-    //   data: data
-    // })
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "Произошла ошибка"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 1000);
+    // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
     });
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "3"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },1000)
+
+    // })
   }
 }
+
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),

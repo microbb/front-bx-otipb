@@ -1,4 +1,5 @@
 import Support from '../core/support'
+import {apiService} from "../services/api.service";
 
 /**
  *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
