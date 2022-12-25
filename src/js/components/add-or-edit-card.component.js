@@ -1,0 +1,204 @@
+import Component from "../core/component"
+
+import Form from "../core/form";
+
+import {apiService} from "../services/api.service";
+import Loader from "./loader";
+
+import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+export default class AddOrEditCardComponent extends Component {
+
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id,options) {
+
+    super(id,options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this))
+
+    document.addEventListener('click', (e) => {
+
+      if(this.$el.getAttribute('action').slice(1) === 'addCard') {
+        let target = e.target;
+
+        if (target) {
+          e.preventDefault()
+
+          getData.call(this,target)
+
+          console.log('asd')
+        }
+      }
+
+    })
+
+    this.form = new Form(this.$el, {
+      ID: [],
+      C_ATTESTATION_DATE: [],
+      C_NEXT_ATTESTATION_DATE: [],
+      C_CARD_NUMBER: [],
+    })
+  }
+
+}
+
+/**
+ * Обработчик заполнения формы
+ * @return {void}
+ */
+async function getData(target) {
+
+  try {
+
+    const formData = new FormData(),
+          attDateInput = this.$el.querySelector('.js-edit-att-date'),
+          nextAttDateInput = this.$el.querySelector('.js-edit-next-att-date'),
+          cardNumberInput = this.$el.querySelector('.js-edit-card-number')
+
+    formData.append('ID',target.dataset.id)
+
+    const response = await apiService.useRequest('getCard',formData),
+      result = JSON.parse(response.data.result)
+
+    attDateInput.setAttribute('value', result.attestationDate)
+    nextAttDateInput.setAttribute('value', result.nextAttestationDate)
+    cardNumberInput.setAttribute('value', result.cardNumber)
+
+  } catch (error) {
+    if(error.status === 'error') {
+
+      console.group('In file ApiService, in function useRequest, promise return reject')
+
+        console.group('List of errors')
+
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+        })
+
+        console.groupEnd();
+
+      console.groupEnd();
+
+    } else {
+
+      console.group('In file EditCardComponent, in function getData error')
+        console.error(`${error.stack}`)
+      console.groupEnd();
+
+    }
+  }
+
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+
+  e.preventDefault()
+
+  if(this.form.isValid()){
+
+    let loader;
+
+    if (this.$el.getAttribute('action').slice(1) === 'addCard') {
+
+      loader = new Loader({
+        loading: 'Добавление удостоверения',
+        success: 'Удостоверение добавлено',
+        failure: 'Удостоверение не добавлено'
+      })
+
+    }
+    else if (this.$el.getAttribute('action').slice(1) === 'editCard') {
+
+      loader = new Loader({
+        loading: 'Редактирование удостоверения',
+        success: 'Удостоверение отредактировано',
+        failure: 'Удостоверение не отредактировано'
+      })
+
+    }
+
+    try {
+
+      const action = this.$el.getAttribute('action').slice(1),
+            formData = new FormData(this.$el)
+
+      this.$el.append(loader.loading())
+
+      const response = await apiService.useRequest(action,formData),
+            result = JSON.parse(response.data.result)
+
+      const htmlCardInfo = (+result.customUser) ? userCardInfoTemplate(result,{build: 1}) :
+            (+result.idMatrixWorks) ? userCardInfoTemplate(result,{build: 2}) :
+              userCardInfoTemplate(result,{build: 0})
+
+      loader.success()
+
+      setTimeout(() => {
+        const parent = this.$el.closest('.result__row'),
+              info = parent.querySelector('.result__info')
+
+        info.innerHTML = htmlCardInfo
+
+      },900)
+
+    } catch (error) {
+
+      loader.failure()
+
+      if(error.status === 'error') {
+
+        console.group('In file ApiService, in function useRequest, promise return reject')
+
+          console.group('List of errors')
+
+          error.errors.forEach(error => {
+            console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+          })
+
+          console.groupEnd();
+
+        console.groupEnd();
+
+      } else {
+
+        console.group('In file EditCardComponent, in function submitHandler error')
+          console.error(`${error.stack}`)
+        console.groupEnd();
+
+      }
+
+    } finally {
+
+      setTimeout(() => {
+
+        if (this.$el.getAttribute('action').slice(1) === 'addCard') {
+          this.form.clear()
+        }
+
+        this.$el.closest('.modal').style.display = 'none'
+
+        loader.removeLoader()
+      }, 900)
+
+    }
+
+  }
+
+}

@@ -4,6 +4,7 @@ import Form from "../core/form";
 
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
+import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -47,7 +48,7 @@ async function submitHandler(e) {
 
     const loader = new Loader({
       loading: 'Удаление',
-      success: 'Успех',
+      success: 'Удален',
       failure: 'Неудача',
       activeClass: 'loader--delete'
     })
@@ -68,6 +69,23 @@ async function submitHandler(e) {
           const parent = this.$el.closest('.result__row')
 
           parent.remove()
+        },900)
+      }
+
+      if(action === 'deleteCard'){
+        const result = JSON.parse(response.data.result)
+
+        const htmlCardInfo = (+result.customUser) ? userCardInfoTemplate(result,{build: 1}) :
+          (+result.idMatrixWorks) ? userCardInfoTemplate(result,{build: 2}) :
+            userCardInfoTemplate(result,{build: 0})
+
+        loader.success()
+
+        setTimeout(() => {
+          const parent = this.$el.closest('.js-result-row'),
+                info = parent.querySelector('.result__info')
+
+          info.innerHTML = htmlCardInfo
         },900)
       }
 

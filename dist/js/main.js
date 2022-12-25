@@ -86,6 +86,167 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/components/add-or-edit-card.component.js":
+/*!*********************************************************!*\
+  !*** ./src/js/components/add-or-edit-card.component.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AddOrEditCardComponent; });
+/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+
+
+
+
+
+
+/**
+ *  Компонент добавить кастомного сотрудника
+ * */
+class AddOrEditCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} id         - находит компонент.
+   * @param {Object=} options   - конфигурация.
+   */
+  constructor(id, options) {
+    super(id, options);
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.$el.addEventListener('submit', submitHandler.bind(this));
+    document.addEventListener('click', e => {
+      if (this.$el.getAttribute('action').slice(1) === 'addCard') {
+        let target = e.target;
+        if (target) {
+          e.preventDefault();
+          getData.call(this, target);
+          console.log('asd');
+        }
+      }
+    });
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+      ID: [],
+      C_ATTESTATION_DATE: [],
+      C_NEXT_ATTESTATION_DATE: [],
+      C_CARD_NUMBER: []
+    });
+  }
+}
+
+/**
+ * Обработчик заполнения формы
+ * @return {void}
+ */
+async function getData(target) {
+  try {
+    const formData = new FormData(),
+      attDateInput = this.$el.querySelector('.js-edit-att-date'),
+      nextAttDateInput = this.$el.querySelector('.js-edit-next-att-date'),
+      cardNumberInput = this.$el.querySelector('.js-edit-card-number');
+    formData.append('ID', target.dataset.id);
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest('getCard', formData),
+      result = JSON.parse(response.data.result);
+    attDateInput.setAttribute('value', result.attestationDate);
+    nextAttDateInput.setAttribute('value', result.nextAttestationDate);
+    cardNumberInput.setAttribute('value', result.cardNumber);
+  } catch (error) {
+    if (error.status === 'error') {
+      console.group('In file ApiService, in function useRequest, promise return reject');
+      console.group('List of errors');
+      error.errors.forEach(error => {
+        console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+      });
+      console.groupEnd();
+      console.groupEnd();
+    } else {
+      console.group('In file EditCardComponent, in function getData error');
+      console.error(`${error.stack}`);
+      console.groupEnd();
+    }
+  }
+}
+
+/**
+ * Обработчик отправки формы
+ * @return {void}
+ */
+async function submitHandler(e) {
+  e.preventDefault();
+  if (this.form.isValid()) {
+    let loader;
+    if (this.$el.getAttribute('action').slice(1) === 'addCard') {
+      loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        loading: 'Добавление удостоверения',
+        success: 'Удостоверение добавлено',
+        failure: 'Удостоверение не добавлено'
+      });
+    } else if (this.$el.getAttribute('action').slice(1) === 'editCard') {
+      loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        loading: 'Редактирование удостоверения',
+        success: 'Удостоверение отредактировано',
+        failure: 'Удостоверение не отредактировано'
+      });
+    }
+    try {
+      const action = this.$el.getAttribute('action').slice(1),
+        formData = new FormData(this.$el);
+      this.$el.append(loader.loading());
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest(action, formData),
+        result = JSON.parse(response.data.result);
+      const htmlCardInfo = +result.customUser ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+        build: 1
+      }) : +result.idMatrixWorks ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+        build: 2
+      }) : Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+        build: 0
+      });
+      loader.success();
+      setTimeout(() => {
+        const parent = this.$el.closest('.result__row'),
+          info = parent.querySelector('.result__info');
+        info.innerHTML = htmlCardInfo;
+      }, 900);
+    } catch (error) {
+      loader.failure();
+      if (error.status === 'error') {
+        console.group('In file ApiService, in function useRequest, promise return reject');
+        console.group('List of errors');
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+        });
+        console.groupEnd();
+        console.groupEnd();
+      } else {
+        console.group('In file EditCardComponent, in function submitHandler error');
+        console.error(`${error.stack}`);
+        console.groupEnd();
+      }
+    } finally {
+      setTimeout(() => {
+        if (this.$el.getAttribute('action').slice(1) === 'addCard') {
+          this.form.clear();
+        }
+        this.$el.closest('.modal').style.display = 'none';
+        loader.removeLoader();
+      }, 900);
+    }
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/components/add-or-edit-hse.component.js":
 /*!********************************************************!*\
   !*** ./src/js/components/add-or-edit-hse.component.js ***!
@@ -352,6 +513,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
 /* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+
 
 
 
@@ -391,7 +554,7 @@ async function submitHandler(e) {
   if (this.form.isValid()) {
     const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
       loading: 'Удаление',
-      success: 'Успех',
+      success: 'Удален',
       failure: 'Неудача',
       activeClass: 'loader--delete'
     });
@@ -405,6 +568,22 @@ async function submitHandler(e) {
         setTimeout(() => {
           const parent = this.$el.closest('.result__row');
           parent.remove();
+        }, 900);
+      }
+      if (action === 'deleteCard') {
+        const result = JSON.parse(response.data.result);
+        const htmlCardInfo = +result.customUser ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+          build: 1
+        }) : +result.idMatrixWorks ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+          build: 2
+        }) : Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+          build: 0
+        });
+        loader.success();
+        setTimeout(() => {
+          const parent = this.$el.closest('.js-result-row'),
+            info = parent.querySelector('.result__info');
+          info.innerHTML = htmlCardInfo;
         }, 900);
       }
     } catch (error) {
@@ -428,64 +607,6 @@ async function submitHandler(e) {
         loader.removeLoader();
       }, 900);
     }
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/components/edit-card.component.js":
-/*!**************************************************!*\
-  !*** ./src/js/components/edit-card.component.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EditCardComponent; });
-/* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-
-
-
-
-/**
- *  Компонент добавить кастомного сотрудника
- * */
-class EditCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  /**
-   * Конструктор
-   * @param {string} id         - находит компонент.
-   * @param {Object=} options   - конфигурация.
-   */
-  constructor(id, options) {
-    super(id, options);
-  }
-
-  /**
-   * Интерфейс компонента
-   * @return {void}
-   */
-  _init() {
-    this.$el.addEventListener('submit', submitHandler.bind(this));
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
-      ID: [],
-      C_ATTESTATION_DATE: [],
-      C_NEXT_ATTESTATION_DATE: [],
-      C_CARD_NUMBER: []
-    });
-  }
-}
-
-/**
- * Обработчик отправки формы
- * @return {void}
- */
-async function submitHandler(e) {
-  e.preventDefault();
-  if (this.form.isValid()) {
-    console.log('Триста тридцать три');
   }
 }
 
@@ -2134,7 +2255,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_filter_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/filter.component */ "./src/js/components/filter.component.js");
 /* harmony import */ var _components_edit_user_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/edit-user.component */ "./src/js/components/edit-user.component.js");
 /* harmony import */ var _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/delete-user-or-card.component */ "./src/js/components/delete-user-or-card.component.js");
-/* harmony import */ var _components_edit_card_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/edit-card.component */ "./src/js/components/edit-card.component.js");
+/* harmony import */ var _components_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/add-or-edit-card.component */ "./src/js/components/add-or-edit-card.component.js");
 /* harmony import */ var _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/add-or-edit-hse.component */ "./src/js/components/add-or-edit-hse.component.js");
 /* harmony import */ var _components_search_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/search.component */ "./src/js/components/search.component.js");
 /* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
@@ -2222,7 +2343,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // компонент добавить / редактировать / продлить удостоверение
-  new _components_edit_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#edit-card');
+  new _components_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#edit-card');
 
   // компонент удалить сотрудника / удостоверение
   new _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_7__["default"]('#delete-user-or-card');

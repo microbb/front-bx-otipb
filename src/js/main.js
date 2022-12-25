@@ -7,7 +7,7 @@ import AddUserComponent from "./components/add-user.component";
 import FilterComponent from "./components/filter.component";
 import EditUserComponent from "./components/edit-user.component";
 import DeleteUserOrCardComponent from "./components/delete-user-or-card.component";
-import EditCardComponent from "./components/edit-card.component";
+import AddOrEditCardComponent from "./components/add-or-edit-card.component";
 import AddOrEditHseComponent from "./components/add-or-edit-hse.component";
 import SearchComponent from "./components/search.component";
 
@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
   })
 
   // компонент добавить / редактировать / продлить удостоверение
-  new EditCardComponent('#edit-card')
+  new AddOrEditCardComponent('#edit-card')
 
   // компонент удалить сотрудника / удостоверение
   new DeleteUserOrCardComponent('#delete-user-or-card')
