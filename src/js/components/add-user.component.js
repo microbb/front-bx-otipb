@@ -68,13 +68,9 @@ async function submitHandler(e) {
 
       const response = await apiService.useRequest(action,formData)
 
-      console.log(response)
-
       loader.success()
 
     } catch (error) {
-
-      console.log(error)
 
       loader.failure()
 

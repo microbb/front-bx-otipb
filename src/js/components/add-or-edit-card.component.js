@@ -29,27 +29,25 @@ export default class AddOrEditCardComponent extends Component {
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this))
 
+    this.form = new Form(this.$el, {
+      ID: [],
+      C_ATTESTATION_DATE: [],
+      C_NEXT_ATTESTATION_DATE: [],
+      C_CARD_NUMBER: [],
+    })
+
     document.addEventListener('click', (e) => {
 
-      if(this.$el.getAttribute('action').slice(1) === 'addCard') {
+      if(this.$el.getAttribute('action').slice(1) === 'editCard') {
         let target = e.target;
 
         if (target) {
           e.preventDefault()
 
           getData.call(this,target)
-
-          console.log('asd')
         }
       }
 
-    })
-
-    this.form = new Form(this.$el, {
-      ID: [],
-      C_ATTESTATION_DATE: [],
-      C_NEXT_ATTESTATION_DATE: [],
-      C_CARD_NUMBER: [],
     })
   }
 
@@ -187,10 +185,9 @@ async function submitHandler(e) {
     } finally {
 
       setTimeout(() => {
+        this.form.clear()
 
-        if (this.$el.getAttribute('action').slice(1) === 'addCard') {
-          this.form.clear()
-        }
+        console.log('asd')
 
         this.$el.closest('.modal').style.display = 'none'
 

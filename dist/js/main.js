@@ -126,21 +126,20 @@ class AddOrEditCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0_
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
-    document.addEventListener('click', e => {
-      if (this.$el.getAttribute('action').slice(1) === 'addCard') {
-        let target = e.target;
-        if (target) {
-          e.preventDefault();
-          getData.call(this, target);
-          console.log('asd');
-        }
-      }
-    });
     this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
       C_ATTESTATION_DATE: [],
       C_NEXT_ATTESTATION_DATE: [],
       C_CARD_NUMBER: []
+    });
+    document.addEventListener('click', e => {
+      if (this.$el.getAttribute('action').slice(1) === 'editCard') {
+        let target = e.target;
+        if (target) {
+          e.preventDefault();
+          getData.call(this, target);
+        }
+      }
     });
   }
 }
@@ -235,9 +234,8 @@ async function submitHandler(e) {
       }
     } finally {
       setTimeout(() => {
-        if (this.$el.getAttribute('action').slice(1) === 'addCard') {
-          this.form.clear();
-        }
+        this.form.clear();
+        console.log('asd');
         this.$el.closest('.modal').style.display = 'none';
         loader.removeLoader();
       }, 900);
@@ -469,10 +467,8 @@ async function submitHandler(e) {
         formData = new FormData(this.$el);
       this.$el.append(loader.loading());
       const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData);
-      console.log(response);
       loader.success();
     } catch (error) {
-      console.log(error);
       loader.failure();
       if (error.status === 'error') {
         console.group('In file ApiService, in function useRequest, promise return reject');
@@ -2464,7 +2460,7 @@ function cardRecertificationTemplate(_ref, _ref2) {
         </div>
         <div class="col-3">
           <span>
-            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/edit_card">Продлить</button>
+            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Продлить</button>
             <span class="p-relative d-inline-block">
               <button class="button button--text js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение">x</button>
             </span>
