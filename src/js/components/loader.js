@@ -11,7 +11,8 @@ export default class Loader{
   constructor({
                 loading = 'Загрузка...',
                 success = 'Успех',
-                failure = 'Неудача'
+                failure = 'Неудача',
+                activeClass = ''
               } = {}) {
 
     this.message = {
@@ -28,6 +29,7 @@ export default class Loader{
         img: 'loader__img--error'
       }
     }
+    this.activeClass = activeClass
 
     this._init()
   }
@@ -39,6 +41,9 @@ export default class Loader{
   _init(){
     this.$el = document.createElement('div')
     this.$el.classList.add('loader')
+    if(this.activeClass) {
+      this.$el.classList.add(this.activeClass)
+    }
 
     this.$el.innerHTML = `
       <div class="loader__img"></div>

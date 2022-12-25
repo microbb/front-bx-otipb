@@ -1,5 +1,4 @@
 import Support from '../core/support'
-import {apiService} from "../services/api.service";
 
 /**
  *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
@@ -29,7 +28,7 @@ export default class Visitor {
         this.modal.querySelector('form').action = target.dataset.action || ''
       }
 
-      // добавляет user id
+      // добавляет id
       const addUserId = (target) => {
         if(target.dataset.idUser) {
           const input = document.createElement('input')
@@ -42,14 +41,26 @@ export default class Visitor {
 
           this.modal.querySelector('form').prepend(input)
         }
+
+        if(target.dataset.customUser) {
+          const input = document.createElement('input')
+
+          input.classList.add('js-input-custom-user')
+
+          input.setAttribute('type','hidden')
+          input.setAttribute('name','CUSTOM_USER')
+          input.setAttribute('value',target.dataset.customUser)
+
+          this.modal.querySelector('form').prepend(input)
+        }
       }
 
-      // удаляет user id
+      // удаляет id
       const deleteUserId = () => {
         const inputs = this.modal.querySelectorAll('input')
 
         for (let input of inputs) {
-          if (input.classList.contains('js-input-user-id'))
+          if (input.classList.contains('js-input-user-id') || input.classList.contains('js-input-custom-user'))
             input.remove()
         }
       }
@@ -179,6 +190,43 @@ export default class Visitor {
         this.modal.querySelector('form').action = target.dataset.action || ''
       }
 
+      // добавляет user id
+      const addUserId = (target) => {
+        if(target.dataset.idUser) {
+          const input = document.createElement('input')
+
+          input.classList.add('js-input-user-id')
+
+          input.setAttribute('type','hidden')
+          input.setAttribute('name','ID_USER')
+          input.setAttribute('value',target.dataset.idUser)
+
+          this.modal.querySelector('form').prepend(input)
+        }
+
+        if(target.dataset.customUser) {
+          const input = document.createElement('input')
+
+          input.classList.add('js-input-custom-user')
+
+          input.setAttribute('type','hidden')
+          input.setAttribute('name','CUSTOM_USER')
+          input.setAttribute('value',target.dataset.customUser)
+
+          this.modal.querySelector('form').prepend(input)
+        }
+      }
+
+      // удаляет user id
+      const deleteUserId = () => {
+        const inputs = this.modal.querySelectorAll('input')
+
+        for (let input of inputs) {
+          if (input.classList.contains('js-input-user-id') || input.classList.contains('js-input-custom-user'))
+            input.remove()
+        }
+      }
+
       document.addEventListener('click', (e) => {
         let target = e.target;
 
@@ -191,7 +239,11 @@ export default class Visitor {
           Support.removeClass('.js-wrapper-modal',
             ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265'])
 
+          deleteUserId()
+
           editAction(target)
+
+          addUserId(target)
 
         }
 

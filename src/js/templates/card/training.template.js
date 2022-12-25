@@ -6,11 +6,13 @@
  *  @param {string} [card.NAME] - название обучение
  *  @param {Object} options - настройки
  *  @param {?number} [options.idUser] - id сотрудника
+ *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
  *  @return {string}
  * */
 export function trainingTemplate({ID,NAME},
   {
-    idUser = null
+    idUser = null,
+    customUser = null
   }
 ) {
 
@@ -23,7 +25,7 @@ export function trainingTemplate({ID,NAME},
           </span>
         </div>
         <div class="col-3">
-          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-action="/addCard">Добавить</button>
+          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/addCard">Добавить</button>
         </div>
       </div>
     </div>

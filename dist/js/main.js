@@ -101,10 +101,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
 /* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
-/* harmony import */ var _templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userInfo.template */ "./src/js/templates/user/userInfo.template.js");
+/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
 /* harmony import */ var _templates_workName_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/workName.template */ "./src/js/templates/workName.template.js");
-/* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
-
 
 
 
@@ -201,30 +199,27 @@ async function submitHandler(e) {
         formData = new FormData(this.$el);
       this.$el.querySelector('button').blur();
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData);
-      console.log(response);
-      console.log(JSON.parse(response.data.result));
-      const htmlInfo = Object(_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__["userInfoTemplate"])(JSON.parse(response.data.result), {
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+        result = JSON.parse(response.data.result);
+      const htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
           build: 2
         }),
-        htmlWork = Object(_templates_workName_template__WEBPACK_IMPORTED_MODULE_6__["workNameTemplate"])(JSON.parse(response.data.result).work);
+        htmlUserWork = Object(_templates_workName_template__WEBPACK_IMPORTED_MODULE_6__["workNameTemplate"])(result.work);
       loader.success();
       setTimeout(() => {
         const parent = this.$el.closest('.result__row'),
           info = parent.querySelector('.result__info'),
           work = parent.querySelector('.js-matrix-work-hse');
-        info.innerHTML = htmlInfo;
+        info.innerHTML = htmlCardInfo;
         work.classList.add('g-justify-items-left');
-        work.setAttribute('title', response.data.result.work);
-        work.innerHTML = htmlWork;
+        work.setAttribute('title', result.work);
+        work.innerHTML = htmlUserWork;
       }, 900);
     } catch (error) {
       loader.failure();
       if (error.status === 'error') {
-        console.log(error);
         console.group('In file ApiService, in function useRequest, promise return reject');
-        // console.error(`Error description: ${error.data.result}`)
-
+        console.error(`Error description: ${error.data.result}`);
         console.group('List of errors');
         error.errors.forEach(error => {
           console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -357,6 +352,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+
 
 
 
@@ -393,7 +390,46 @@ class DeleteUserOrCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    console.log('Триста тридцать три');
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      loading: 'Удаление',
+      success: 'Успех',
+      failure: 'Неудача',
+      activeClass: 'loader--delete'
+    });
+    try {
+      const action = this.$el.getAttribute('action').slice(1),
+        formData = new FormData(this.$el);
+      this.$el.append(loader.loading());
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest(action, formData);
+      if (action === 'deleteUser') {
+        loader.success();
+        setTimeout(() => {
+          const parent = this.$el.closest('.result__row');
+          parent.remove();
+        }, 900);
+      }
+    } catch (error) {
+      loader.failure();
+      if (error.status === 'error') {
+        console.group('In file ApiService, in function useRequest, promise return reject');
+        console.error(`Error description: ${error.data.result}`);
+        console.group('List of errors');
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+        });
+        console.groupEnd();
+        console.groupEnd();
+      } else {
+        console.group('In file DeleteUserOrCardComponent, in function submitHandler error');
+        console.error(`${error.stack}`);
+        console.groupEnd();
+      }
+    } finally {
+      setTimeout(() => {
+        this.$el.closest('.modal').style.display = 'none';
+        loader.removeLoader();
+      }, 900);
+    }
   }
 }
 
@@ -471,6 +507,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
 /* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userInfo.template */ "./src/js/templates/user/userInfo.template.js");
+/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+
+
+
 
 
 
@@ -487,6 +529,7 @@ class EditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["de
    */
   constructor(id, options) {
     super(id, options);
+    this.instanceDropDown = options.dropDown || {};
   }
 
   /**
@@ -495,6 +538,16 @@ class EditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["de
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
+    document.addEventListener('click', e => {
+      let target = e.target;
+      if (target && target.classList.contains('js-edit-user-modal') || target.parentElement.classList.contains('js-edit-user-modal')) {
+        e.preventDefault();
+        if (target.parentElement.classList.contains('js-edit-user-modal')) {
+          target = target.parentElement;
+        }
+        getData.call(this, target);
+      }
+    });
     this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
       E_FIO: [],
@@ -507,13 +560,99 @@ class EditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["de
 }
 
 /**
+ * Обработчик заполнения формы
+ * @return {void}
+ */
+async function getData(target) {
+  try {
+    const formData = new FormData(),
+      fioInput = this.$el.querySelector('.js-edit-fio'),
+      options = this.$el.querySelectorAll('.dropdown__item');
+    formData.append('ID', target.dataset.id);
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getUserInfo', formData),
+      result = JSON.parse(response.data.result);
+    fioInput.setAttribute('value', result.fio);
+    delete result.fio;
+    const optionsKey = Object.values(result);
+    options.forEach(option => {
+      if (optionsKey.includes(+option.dataset.selectOption)) {
+        option.click();
+      }
+    });
+  } catch (error) {
+    if (error.status === 'error') {
+      console.group('In file ApiService, in function useRequest, promise return reject');
+      console.error(`Error description: ${error.data.result}`);
+      console.group('List of errors');
+      error.errors.forEach(error => {
+        console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+      });
+      console.groupEnd();
+      console.groupEnd();
+    } else {
+      console.group('In file EditUserComponent, in function getData error');
+      console.error(`${error.stack}`);
+      console.groupEnd();
+    }
+  }
+}
+
+/**
  * Обработчик отправки формы
  * @return {void}
  */
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    console.log('Триста тридцать три');
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      loading: 'Идет добавления сотрудника',
+      success: 'Сотрудник добавлен',
+      failure: 'Сотрудник не добавлен'
+    });
+    try {
+      const action = this.$el.getAttribute('action').slice(1),
+        formData = new FormData(this.$el);
+      this.$el.append(loader.loading());
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+        result = JSON.parse(response.data.result);
+      const htmlUserInfo = Object(_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__["userInfoTemplate"])(result, {
+          build: 1
+        }),
+        htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__["userCardInfoTemplate"])(result, {
+          build: 1
+        });
+      loader.success();
+      setTimeout(() => {
+        const parent = this.$el.closest('.result__row'),
+          user = parent.querySelector('.js-user-info'),
+          info = parent.querySelector('.result__info');
+        user.innerHTML = htmlUserInfo;
+        info.innerHTML = htmlCardInfo;
+      }, 900);
+    } catch (error) {
+      loader.failure();
+      if (error.status === 'error') {
+        console.group('In file ApiService, in function useRequest, promise return reject');
+        console.error(`Error description: ${error.data.result}`);
+        console.group('List of errors');
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+        });
+        console.groupEnd();
+        console.groupEnd();
+      } else {
+        console.group('In file EditUserComponent, in function submitHandler error');
+        console.error(`${error.stack}`);
+        console.groupEnd();
+      }
+    } finally {
+      setTimeout(() => {
+        this.form.clear();
+        this.instanceDropDown.reset(this.form.form);
+        this.$el.closest('.modal').style.display = 'none';
+        loader.removeLoader();
+      }, 900);
+    }
   }
 }
 
@@ -600,7 +739,8 @@ class Loader {
     let {
       loading = 'Загрузка...',
       success = 'Успех',
-      failure = 'Неудача'
+      failure = 'Неудача',
+      activeClass = ''
     } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     this.message = {
       loading: {
@@ -616,6 +756,7 @@ class Loader {
         img: 'loader__img--error'
       }
     };
+    this.activeClass = activeClass;
     this._init();
   }
 
@@ -626,6 +767,9 @@ class Loader {
   _init() {
     this.$el = document.createElement('div');
     this.$el.classList.add('loader');
+    if (this.activeClass) {
+      this.$el.classList.add(this.activeClass);
+    }
     this.$el.innerHTML = `
       <div class="loader__img"></div>
       <p class="loader__massage">${this.message.loading.title}</p>
@@ -800,8 +944,6 @@ class Stretch {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Visitor; });
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-
 
 
 /**
@@ -828,7 +970,7 @@ class Visitor {
         this.modal.querySelector('form').action = target.dataset.action || '';
       };
 
-      // добавляет user id
+      // добавляет id
       const addUserId = target => {
         if (target.dataset.idUser) {
           const input = document.createElement('input');
@@ -838,13 +980,21 @@ class Visitor {
           input.setAttribute('value', target.dataset.idUser);
           this.modal.querySelector('form').prepend(input);
         }
+        if (target.dataset.customUser) {
+          const input = document.createElement('input');
+          input.classList.add('js-input-custom-user');
+          input.setAttribute('type', 'hidden');
+          input.setAttribute('name', 'CUSTOM_USER');
+          input.setAttribute('value', target.dataset.customUser);
+          this.modal.querySelector('form').prepend(input);
+        }
       };
 
-      // удаляет user id
+      // удаляет id
       const deleteUserId = () => {
         const inputs = this.modal.querySelectorAll('input');
         for (let input of inputs) {
-          if (input.classList.contains('js-input-user-id')) input.remove();
+          if (input.classList.contains('js-input-user-id') || input.classList.contains('js-input-custom-user')) input.remove();
         }
       };
       document.addEventListener('click', e => {
@@ -939,6 +1089,34 @@ class Visitor {
       const editAction = target => {
         this.modal.querySelector('form').action = target.dataset.action || '';
       };
+
+      // добавляет user id
+      const addUserId = target => {
+        if (target.dataset.idUser) {
+          const input = document.createElement('input');
+          input.classList.add('js-input-user-id');
+          input.setAttribute('type', 'hidden');
+          input.setAttribute('name', 'ID_USER');
+          input.setAttribute('value', target.dataset.idUser);
+          this.modal.querySelector('form').prepend(input);
+        }
+        if (target.dataset.customUser) {
+          const input = document.createElement('input');
+          input.classList.add('js-input-custom-user');
+          input.setAttribute('type', 'hidden');
+          input.setAttribute('name', 'CUSTOM_USER');
+          input.setAttribute('value', target.dataset.customUser);
+          this.modal.querySelector('form').prepend(input);
+        }
+      };
+
+      // удаляет user id
+      const deleteUserId = () => {
+        const inputs = this.modal.querySelectorAll('input');
+        for (let input of inputs) {
+          if (input.classList.contains('js-input-user-id') || input.classList.contains('js-input-custom-user')) input.remove();
+        }
+      };
       document.addEventListener('click', e => {
         let target = e.target;
         if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
@@ -946,7 +1124,9 @@ class Visitor {
             target = target.parentElement;
           }
           _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
+          deleteUserId();
           editAction(target);
+          addUserId(target);
         }
       });
     };
@@ -1977,6 +2157,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
+  window.BX = {
+    TemplateFolder: '',
+    message: function (path) {
+      return this[path];
+    }
+  };
+
   // выподающий список
   const dropDown = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown', {
     dropdownToggleSelector: '.dropdown__toggle',
@@ -1995,22 +2182,31 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
+    modalSelector: '#edit-user-modal',
     modalWrapper: '.js-wrapper-modal'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editUserMod).upgrade();
+
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
+    modalSelector: '#delete-user-or-card-modal',
     closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsUnityDeleteMod).upgrade();
+
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
+    modalSelector: '#edit-card-modal',
     modalWrapper: '.js-wrapper-modal'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsUnityMod).upgrade();
+
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
+    modalSelector: '#add-hse-modal',
     closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].addHseMod).upgrade(dropDown);
+
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
+    modalSelector: '#edit-hse-modal',
     modalWrapper: '.js-wrapper-modal'
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editHseMod).upgrade();
 
@@ -2024,9 +2220,10 @@ window.addEventListener('DOMContentLoaded', () => {
   new _components_add_user_component__WEBPACK_IMPORTED_MODULE_4__["default"]('#add-user', {
     dropDown
   });
-
   // компонент редактировать сотрудника
-  new _components_filter_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#filter');
+  new _components_edit_user_component__WEBPACK_IMPORTED_MODULE_6__["default"]('#edit-user', {
+    dropDown
+  });
 
   // компонент добавить / редактировать / продлить удостоверение
   new _components_edit_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#edit-card');
@@ -2034,14 +2231,14 @@ window.addEventListener('DOMContentLoaded', () => {
   // компонент удалить сотрудника / удостоверение
   new _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_7__["default"]('#delete-user-or-card');
 
-  // компонент фильтр
-  new _components_edit_user_component__WEBPACK_IMPORTED_MODULE_6__["default"]('#edit-user');
-
   // компонент добавить должность HSE
   new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#add-hse');
 
   // компонент редактировать должность HSE
   new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#edit-hse');
+
+  // компонент фильтр
+  new _components_filter_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#filter');
 
   // компонент Поиск
   new _components_search_component__WEBPACK_IMPORTED_MODULE_10__["default"]('#search');
@@ -2079,31 +2276,28 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    return await BX.ajax.runComponentAction(this.componentBx, action, {
-      mode: 'class',
-      data: data
-    });
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "3"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },1000)
-
+    // return await BX.ajax.runComponentAction(this.componentBx, action, {
+    //   mode: 'class',
+    //   data: data
     // })
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "3"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 1000);
+    });
   }
 }
-
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),
@@ -2126,16 +2320,21 @@ __webpack_require__.r(__webpack_exports__);
  *  @param {string} [card.cardNumber] - номер документа
  *  @param {string} [card.nextAttestationDate] - дата следующий аттестации
  *  @param {Object} options - настройки
+ *  @param {?number} [options.idUser] - id сотрудника
+ *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
  *  @return {string}
  * */
-function cardRecertificationTemplate(_ref) {
+function cardRecertificationTemplate(_ref, _ref2) {
   let {
     idCard,
     programName,
     cardNumber,
     nextAttestationDate
   } = _ref;
-  let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  let {
+    idUser = null,
+    customUser = null
+  } = _ref2;
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
@@ -2146,9 +2345,9 @@ function cardRecertificationTemplate(_ref) {
         </div>
         <div class="col-3">
           <span>
-            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-action="/edit_card">Продлить</button>
+            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/edit_card">Продлить</button>
             <span class="p-relative d-inline-block">
-              <button class="button button--text js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-action="/deleteCard" title="Удалить удостоверение">x</button>
+              <button class="button button--text js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение">x</button>
             </span>
           </span>
         </div>
@@ -2205,6 +2404,7 @@ __webpack_require__.r(__webpack_exports__);
  *  @param {string} [card.NAME] - название обучение
  *  @param {Object} options - настройки
  *  @param {?number} [options.idUser] - id сотрудника
+ *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
  *  @return {string}
  * */
 function trainingTemplate(_ref, _ref2) {
@@ -2213,7 +2413,8 @@ function trainingTemplate(_ref, _ref2) {
     NAME
   } = _ref;
   let {
-    idUser = null
+    idUser = null,
+    customUser = null
   } = _ref2;
   return `
     <div class="result__row result__row--inner">
@@ -2224,7 +2425,7 @@ function trainingTemplate(_ref, _ref2) {
           </span>
         </div>
         <div class="col-3">
-          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-action="/addCard">Добавить</button>
+          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/addCard">Добавить</button>
         </div>
       </div>
     </div>
@@ -2252,9 +2453,11 @@ __webpack_require__.r(__webpack_exports__);
  *  @param {string} [card.attestationDate] - дата аттестации
  *  @param {string} [card.nextAttestationDate] - дата следующий аттестации
  *  @param {Object} options - настройки
+ *  @param {?number} [options.idUser] - id сотрудника
+ *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
  *  @return {string}
  * */
-function cardTemplate(_ref) {
+function cardTemplate(_ref, _ref2) {
   let {
     idCard,
     programName,
@@ -2262,7 +2465,10 @@ function cardTemplate(_ref) {
     attestationDate,
     nextAttestationDate
   } = _ref;
-  let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  let {
+    idUser = null,
+    customUser = null
+  } = _ref2;
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
@@ -2279,9 +2485,9 @@ function cardTemplate(_ref) {
         <div class="col-2">${nextAttestationDate}</div>
         <div class="col-2">
           <span>
-            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-action="/editCard">Редактировать</button>
+            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>
             <span class="p-relative d-inline-block">
-              <button class="button button--text js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-action="/deleteCard" title="Удалить удостоверение">x</button>
+              <button class="button button--text js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение">x</button>
             </span>
           </span>
         </div>
@@ -2292,16 +2498,16 @@ function cardTemplate(_ref) {
 
 /***/ }),
 
-/***/ "./src/js/templates/user/userInfo.template.js":
-/*!****************************************************!*\
-  !*** ./src/js/templates/user/userInfo.template.js ***!
-  \****************************************************/
-/*! exports provided: userInfoTemplate */
+/***/ "./src/js/templates/user/userCardInfo.template.js":
+/*!********************************************************!*\
+  !*** ./src/js/templates/user/userCardInfo.template.js ***!
+  \********************************************************/
+/*! exports provided: userCardInfoTemplate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userInfoTemplate", function() { return userInfoTemplate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userCardInfoTemplate", function() { return userCardInfoTemplate; });
 /* harmony import */ var _card_ard_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card/сard.template */ "./src/js/templates/card/сard.template.js");
 /* harmony import */ var _card_training_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/training.template */ "./src/js/templates/card/training.template.js");
 /* harmony import */ var _card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../card/cardRecertification.template */ "./src/js/templates/card/cardRecertification.template.js");
@@ -2313,19 +2519,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /**
  *  Шаблон информация о удостоверениях пользователя
- *  @param {Object} user - удостоверение
+ *  @param {Object} user - сотрудник
  *  @param {number} [user.idUser] - id
- *  @param {Object} [user.cards] -
- *  @param {Array} [user.training] -
+ *  @param {Object} [user.cards] - обьект с действующими ['NORMAL_DATE'] и просрочеными ['OVER_DATE'] удостоверениями
+ *  @param {Array} [user.training] - обучения
+ *  @param {number} [user.customUser] - обучения
  *  @param {Object} options - настройки
- *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 3-из БХ без Hse
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
  *  @return {string}
  * */
-function userInfoTemplate(_ref) {
+function userCardInfoTemplate(_ref) {
   let {
     idUser,
     cards,
-    training
+    training,
+    customUser
   } = _ref;
   let {
     build = 0
@@ -2336,7 +2544,10 @@ function userInfoTemplate(_ref) {
    */
   const renderCard = () => {
     if (cards && cards['NORMAL_DATE']) {
-      return cards['NORMAL_DATE'].map(card => Object(_card_ard_template__WEBPACK_IMPORTED_MODULE_0__["cardTemplate"])(card)).join(' ');
+      return cards['NORMAL_DATE'].map(card => Object(_card_ard_template__WEBPACK_IMPORTED_MODULE_0__["cardTemplate"])(card, {
+        idUser,
+        customUser
+      })).join(' ');
     } else {
       return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет удостоверений');
     }
@@ -2347,9 +2558,10 @@ function userInfoTemplate(_ref) {
    * @return {string}
    */
   const renderTraining = () => {
-    if (training.length) {
+    if (training && training.length) {
       return training.map(training => Object(_card_training_template__WEBPACK_IMPORTED_MODULE_1__["trainingTemplate"])(training, {
-        idUser
+        idUser,
+        customUser
       })).join(' ');
     } else {
       return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет обучений');
@@ -2362,7 +2574,10 @@ function userInfoTemplate(_ref) {
    */
   const renderRecertification = () => {
     if (cards && cards['OVER_DATE']) {
-      return cards['OVER_DATE'].map(card => Object(_card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__["cardRecertificationTemplate"])(card)).join(' ');
+      return cards['OVER_DATE'].map(card => Object(_card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__["cardRecertificationTemplate"])(card, {
+        idUser,
+        customUser
+      })).join(' ');
     } else {
       return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет удостоверений');
     }
@@ -2377,11 +2592,11 @@ function userInfoTemplate(_ref) {
     if (build === 1) {
       return `
         <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="${idUser}" title="Редактировать сотрудника">
-          <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
+          <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-user-icon.svg" width="22" height="22" alt="">
         </button>
         <span class="p-relative d-inline-block">
           <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idUser}" data-action="/deleteUser" title="Удалить сотрудника">
-            <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
+            <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/remove-user-icon.svg" width="22" height="22" alt="">
           </button>
         </span>
       `;
@@ -2461,6 +2676,91 @@ function userInfoTemplate(_ref) {
       </div><!--.result__info-box-inner-->
 
     </div><!--./result__info-box-->
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/user/userInfo.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/user/userInfo.template.js ***!
+  \****************************************************/
+/*! exports provided: userInfoTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userInfoTemplate", function() { return userInfoTemplate; });
+/**
+ *  Шаблон информация о пользователе
+ *  @param {Object} user - сотрудник
+ *  @param {number} [user.idUser] - id
+ *  @param {string} [user.fio] - ФИО
+ *  @param {string} [user.division] - дивизион
+ *  @param {string} [user.department] - отдел
+ *  @param {string} [user.work] - названия должности
+ *  @param {string} [user.status] - названия должности
+ *  @param {Object} options - настройки
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 0-из БХ без Hse
+ *  @return {string}
+ * */
+function userInfoTemplate(_ref) {
+  let {
+    idUser,
+    fio,
+    division,
+    department,
+    work,
+    status
+  } = _ref;
+  let {
+    build = 0
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  /**
+   * Конфигурация пользователя
+   * @return {string}
+   */
+  const renderUserConfig = () => {
+    // кастомный и существующий пользователь с HSE
+    if (build === 1) {
+      return `
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
+          <span class="result__clip">
+            ${work}
+          </span>
+        </div>
+      `;
+    }
+    // существующий пользователь из BX без HSE
+    else {
+      return `
+        <div class="col-4 js-matrix-work-hse">
+          <span class="p-relative d-inline-block">
+            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="2" title="Добавить должность HSE">
+              <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/add-document-icon.svg" width="18" height="18" alt="">
+            </button>
+          </span>
+        </div>
+      `;
+    }
+  };
+  return `
+    <div class="col-1" title="ID: ${idUser}"></div>
+    <div class="col-2" title="Отдел: ${department}">
+      <span class="result__clip text-align-center">
+        ${division}
+      </span>
+    </div>
+    <div class="col-3 g-justify-items-left" title="${fio}">
+      <span class="result__clip">
+        ${fio}
+      </span>
+    </div>
+    ${renderUserConfig()}
+    <div class="col-1">${status}</div>
+    <div class="col-1">
+      <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
+    </div>
   `;
 }
 

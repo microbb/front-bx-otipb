@@ -4,6 +4,10 @@ import Form from "../core/form";
 import {Validators} from "../core/validators";
 
 import {apiService} from "../services/api.service";
+import Loader from "./loader";
+
+import {userInfoTemplate} from "../templates/user/userInfo.template";
+import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -18,6 +22,8 @@ export default class EditUserComponent extends Component {
   constructor(id,options) {
 
     super(id,options);
+
+    this.instanceDropDown = options.dropDown || {}
   }
 
   /**
@@ -26,6 +32,21 @@ export default class EditUserComponent extends Component {
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this))
+
+    document.addEventListener('click', (e) => {
+      let target = e.target;
+
+      if (target && target.classList.contains('js-edit-user-modal') || target.parentElement.classList.contains('js-edit-user-modal') ) {
+        e.preventDefault()
+
+        if (target.parentElement.classList.contains('js-edit-user-modal')){
+          target = target.parentElement
+        }
+
+        getData.call(this,target)
+
+      }
+    })
 
     this.form = new Form(this.$el, {
       ID: [],
@@ -41,6 +62,62 @@ export default class EditUserComponent extends Component {
 }
 
 /**
+ * Обработчик заполнения формы
+ * @return {void}
+ */
+async function getData(target) {
+
+  try {
+
+    const formData = new FormData(),
+          fioInput = this.$el.querySelector('.js-edit-fio'),
+          options = this.$el.querySelectorAll('.dropdown__item')
+
+    formData.append('ID',target.dataset.id)
+
+    const response = await apiService.useRequest('getUserInfo',formData),
+          result = JSON.parse(response.data.result)
+
+    fioInput.setAttribute('value', result.fio)
+
+    delete result.fio
+    const optionsKey = Object.values(result)
+    options.forEach(option => {
+      if(optionsKey.includes(+option.dataset.selectOption)) {
+
+        option.click()
+
+      }
+    })
+
+  } catch (error) {
+    if(error.status === 'error') {
+
+      console.group('In file ApiService, in function useRequest, promise return reject')
+        console.error(`Error description: ${error.data.result}`)
+
+        console.group('List of errors')
+
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+        })
+
+        console.groupEnd();
+
+      console.groupEnd();
+
+    } else {
+
+      console.group('In file EditUserComponent, in function getData error')
+        console.error(`${error.stack}`)
+      console.groupEnd();
+
+    }
+  }
+
+}
+
+/**
  * Обработчик отправки формы
  * @return {void}
  */
@@ -50,7 +127,76 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    console.log('Триста тридцать три')
+    const loader = new Loader({
+      loading: 'Идет добавления сотрудника',
+      success: 'Сотрудник добавлен',
+      failure: 'Сотрудник не добавлен'
+    })
+
+    try {
+
+      const action = this.$el.getAttribute('action').slice(1),
+            formData = new FormData(this.$el)
+
+      this.$el.append(loader.loading())
+
+      const response = await apiService.useRequest(action,formData),
+            result = JSON.parse(response.data.result)
+
+      const htmlUserInfo = userInfoTemplate(result,{build: 1}),
+            htmlCardInfo = userCardInfoTemplate(result,{build: 1})
+
+      loader.success()
+
+      setTimeout(() => {
+        const parent = this.$el.closest('.result__row'),
+              user = parent.querySelector('.js-user-info'),
+              info = parent.querySelector('.result__info')
+
+        user.innerHTML = htmlUserInfo
+        info.innerHTML = htmlCardInfo
+
+      },900)
+
+    } catch (error) {
+
+      loader.failure()
+
+      if(error.status === 'error') {
+
+        console.group('In file ApiService, in function useRequest, promise return reject')
+          console.error(`Error description: ${error.data.result}`)
+
+          console.group('List of errors')
+
+          error.errors.forEach(error => {
+            console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+          })
+
+          console.groupEnd();
+
+        console.groupEnd();
+
+      } else {
+
+        console.group('In file EditUserComponent, in function submitHandler error')
+          console.error(`${error.stack}`)
+        console.groupEnd();
+
+      }
+
+    } finally {
+
+      setTimeout(() => {
+        this.form.clear()
+        this.instanceDropDown.reset(this.form.form)
+
+        this.$el.closest('.modal').style.display = 'none'
+
+        loader.removeLoader()
+      }, 900)
+
+    }
 
   }
 

@@ -17,6 +17,13 @@ import Stretch from "./components/stretch";
 
 window.addEventListener('DOMContentLoaded', () => {
 
+  window.BX = {
+    TemplateFolder: '',
+    message: function (path) {
+      return this[path]
+    }
+  }
+
   // выподающий список
   const dropDown = new DropdownSelect('.dropdown',{
     dropdownToggleSelector: '.dropdown__toggle',
@@ -42,25 +49,29 @@ window.addEventListener('DOMContentLoaded', () => {
             .upgrade()
 
   // модалка редактировать сотрудника
-  new ModalDynamics('.js-edit-user-modal',{modalWrapper: '.js-wrapper-modal'})
-                    .accept(Visitor.editUserMod)
-                    .upgrade()
+  new ModalDynamics('.js-edit-user-modal',
+    {modalSelector:'#edit-user-modal', modalWrapper: '.js-wrapper-modal'})
+    .accept(Visitor.editUserMod).upgrade()
+
   // модалка удалить сотрудника / удостоверение
-  new ModalDynamics('.js-delete-user-and-card-modal',{closeClickOverlay: false})
-                    .accept(Visitor.modalsUnityDeleteMod)
-                    .upgrade()
+  new ModalDynamics('.js-delete-user-and-card-modal',
+    {modalSelector:'#delete-user-or-card-modal', closeClickOverlay: false})
+    .accept(Visitor.modalsUnityDeleteMod).upgrade()
+
   // модалка добавить / редактировать / продлить удостоверение
-  new ModalDynamics('.js-edit-card-modal',{modalWrapper: '.js-wrapper-modal'})
-                    .accept(Visitor.modalsUnityMod)
-                    .upgrade()
+  new ModalDynamics('.js-edit-card-modal',
+    {modalSelector:'#edit-card-modal', modalWrapper: '.js-wrapper-modal'})
+    .accept(Visitor.modalsUnityMod).upgrade()
+
   // модалка добавление HSE
-  new ModalDynamics('.js-add-hse-modal',{closeClickOverlay: false})
-                    .accept(Visitor.addHseMod)
-                    .upgrade(dropDown)
+  new ModalDynamics('.js-add-hse-modal',
+    {modalSelector:'#add-hse-modal', closeClickOverlay: false})
+    .accept(Visitor.addHseMod).upgrade(dropDown)
+
   // модалка редактировать HSE
-  new ModalDynamics('.js-edit-hse-modal',{modalWrapper: '.js-wrapper-modal'})
-                    .accept(Visitor.editHseMod)
-                    .upgrade()
+  new ModalDynamics('.js-edit-hse-modal',
+    {modalSelector:'#edit-hse-modal', modalWrapper: '.js-wrapper-modal'})
+    .accept(Visitor.editHseMod).upgrade()
 
 
   // аккардион
@@ -73,9 +84,10 @@ window.addEventListener('DOMContentLoaded', () => {
   new AddUserComponent('#add-user', {
     dropDown
   })
-
   // компонент редактировать сотрудника
-  new FilterComponent('#filter')
+  new EditUserComponent('#edit-user', {
+    dropDown
+  })
 
   // компонент добавить / редактировать / продлить удостоверение
   new EditCardComponent('#edit-card')
@@ -83,14 +95,14 @@ window.addEventListener('DOMContentLoaded', () => {
   // компонент удалить сотрудника / удостоверение
   new DeleteUserOrCardComponent('#delete-user-or-card')
 
-  // компонент фильтр
-  new EditUserComponent('#edit-user')
-
   // компонент добавить должность HSE
   new AddOrEditHseComponent('#add-hse')
 
   // компонент редактировать должность HSE
   new AddOrEditHseComponent('#edit-hse')
+
+  // компонент фильтр
+  new FilterComponent('#filter')
 
   // компонент Поиск
   new SearchComponent('#search')

@@ -21,6 +21,24 @@ $color3: #e7e7e1;
   &--user{
     min-height: 297px;
   }
+
+  &--delete{
+    flex-direction: row;
+
+    .loader__img{
+      width: 26px;
+      height: 26px;
+
+      background-size: 26px;
+
+      margin-bottom: 0;
+      margin-right: 7px;
+    }
+
+    .loader__massage{
+      text-transform: none;
+    }
+  }
 }
 
 .loader__img{
@@ -50,6 +68,4 @@ $color3: #e7e7e1;
 
   font-weight: 400;
   font-size: 15px;
-
-
 }

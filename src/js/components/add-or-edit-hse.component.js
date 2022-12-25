@@ -6,9 +6,8 @@ import {Validators} from "../core/validators";
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
 
-import {userInfoTemplate} from "../templates/user/userInfo.template";
+import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
 import {workNameTemplate} from "../templates/workName.template";
-import Support from "../core/support";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -96,7 +95,6 @@ async function getData(target) {
         })
 
         console.groupEnd();
-
       console.groupEnd();
 
     } else {
@@ -129,19 +127,16 @@ async function submitHandler(e) {
     try {
 
       const action = this.$el.getAttribute('action').slice(1),
-        formData = new FormData(this.$el)
+            formData = new FormData(this.$el)
 
       this.$el.querySelector('button').blur()
       this.$el.append(loader.loading())
 
-      const response = await apiService.useRequest(action,formData)
+      const response = await apiService.useRequest(action,formData),
+            result = JSON.parse(response.data.result)
 
-
-      console.log(response)
-      console.log(JSON.parse(response.data.result))
-
-      const htmlInfo = userInfoTemplate(JSON.parse(response.data.result),{build: 2}),
-            htmlWork = workNameTemplate(JSON.parse(response.data.result).work)
+      const htmlCardInfo = userCardInfoTemplate(result,{build: 2}),
+            htmlUserWork = workNameTemplate(result.work)
 
       loader.success()
 
@@ -150,11 +145,11 @@ async function submitHandler(e) {
               info = parent.querySelector('.result__info'),
               work = parent.querySelector('.js-matrix-work-hse')
 
-        info.innerHTML = htmlInfo
+        info.innerHTML = htmlCardInfo
 
         work.classList.add('g-justify-items-left')
-        work.setAttribute('title',response.data.result.work)
-        work.innerHTML = htmlWork
+        work.setAttribute('title',result.work)
+        work.innerHTML = htmlUserWork
       },900)
 
     } catch (error) {
@@ -163,11 +158,8 @@ async function submitHandler(e) {
 
       if(error.status === 'error') {
 
-        console.log(error)
-
         console.group('In file ApiService, in function useRequest, promise return reject')
-          // console.error(`Error description: ${error.data.result}`)
-
+          console.error(`Error description: ${error.data.result}`)
 
           console.group('List of errors')
 

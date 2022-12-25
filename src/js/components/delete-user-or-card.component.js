@@ -3,6 +3,7 @@ import Component from "../core/component"
 import Form from "../core/form";
 
 import {apiService} from "../services/api.service";
+import Loader from "./loader";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -44,7 +45,69 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    console.log('Триста тридцать три')
+    const loader = new Loader({
+      loading: 'Удаление',
+      success: 'Успех',
+      failure: 'Неудача',
+      activeClass: 'loader--delete'
+    })
+
+    try {
+
+      const action = this.$el.getAttribute('action').slice(1),
+            formData = new FormData(this.$el)
+
+      this.$el.append(loader.loading())
+
+      const response = await apiService.useRequest(action,formData)
+
+      if(action === 'deleteUser'){
+        loader.success()
+
+        setTimeout(() => {
+          const parent = this.$el.closest('.result__row')
+
+          parent.remove()
+        },900)
+      }
+
+    } catch (error) {
+
+      loader.failure()
+
+      if(error.status === 'error') {
+
+        console.group('In file ApiService, in function useRequest, promise return reject')
+          console.error(`Error description: ${error.data.result}`)
+
+          console.group('List of errors')
+
+          error.errors.forEach(error => {
+            console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+          })
+
+          console.groupEnd();
+
+        console.groupEnd();
+
+      } else {
+
+        console.group('In file DeleteUserOrCardComponent, in function submitHandler error')
+          console.error(`${error.stack}`)
+        console.groupEnd();
+
+      }
+
+    } finally {
+
+      setTimeout(() => {
+
+        this.$el.closest('.modal').style.display = 'none'
+
+        loader.removeLoader()
+      }, 900)
+
+    }
 
   }
 
