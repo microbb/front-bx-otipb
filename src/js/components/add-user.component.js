@@ -68,16 +68,19 @@ async function submitHandler(e) {
 
       const response = await apiService.useRequest(action,formData)
 
+      console.log(response)
+
       loader.success()
 
     } catch (error) {
+
+      console.log(error)
 
       loader.failure()
 
       if(error.status === 'error') {
 
         console.group('In file ApiService, in function useRequest, promise return reject')
-          console.error(`Error description: ${error.data.result}`)
 
           console.group('List of errors')
 

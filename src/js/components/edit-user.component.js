@@ -83,7 +83,7 @@ async function getData(target) {
     delete result.fio
     const optionsKey = Object.values(result)
     options.forEach(option => {
-      if(optionsKey.includes(+option.dataset.selectOption)) {
+      if(optionsKey.includes(option.dataset.selectOption)) {
 
         option.click()
 
@@ -94,7 +94,6 @@ async function getData(target) {
     if(error.status === 'error') {
 
       console.group('In file ApiService, in function useRequest, promise return reject')
-        console.error(`Error description: ${error.data.result}`)
 
         console.group('List of errors')
 
@@ -165,7 +164,6 @@ async function submitHandler(e) {
       if(error.status === 'error') {
 
         console.group('In file ApiService, in function useRequest, promise return reject')
-          console.error(`Error description: ${error.data.result}`)
 
           console.group('List of errors')
 

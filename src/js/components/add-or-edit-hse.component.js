@@ -86,7 +86,6 @@ async function getData(target) {
     if(error.status === 'error') {
 
       console.group('In file ApiService, in function useRequest, promise return reject')
-        console.error(`Error description: ${error.data.result}`)
 
         console.group('List of errors')
 
@@ -159,7 +158,6 @@ async function submitHandler(e) {
       if(error.status === 'error') {
 
         console.group('In file ApiService, in function useRequest, promise return reject')
-          console.error(`Error description: ${error.data.result}`)
 
           console.group('List of errors')
 

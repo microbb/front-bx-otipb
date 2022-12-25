@@ -167,7 +167,6 @@ async function getData(target) {
   } catch (error) {
     if (error.status === 'error') {
       console.group('In file ApiService, in function useRequest, promise return reject');
-      console.error(`Error description: ${error.data.result}`);
       console.group('List of errors');
       error.errors.forEach(error => {
         console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -219,7 +218,6 @@ async function submitHandler(e) {
       loader.failure();
       if (error.status === 'error') {
         console.group('In file ApiService, in function useRequest, promise return reject');
-        console.error(`Error description: ${error.data.result}`);
         console.group('List of errors');
         error.errors.forEach(error => {
           console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -310,12 +308,13 @@ async function submitHandler(e) {
         formData = new FormData(this.$el);
       this.$el.append(loader.loading());
       const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData);
+      console.log(response);
       loader.success();
     } catch (error) {
+      console.log(error);
       loader.failure();
       if (error.status === 'error') {
         console.group('In file ApiService, in function useRequest, promise return reject');
-        console.error(`Error description: ${error.data.result}`);
         console.group('List of errors');
         error.errors.forEach(error => {
           console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -412,7 +411,6 @@ async function submitHandler(e) {
       loader.failure();
       if (error.status === 'error') {
         console.group('In file ApiService, in function useRequest, promise return reject');
-        console.error(`Error description: ${error.data.result}`);
         console.group('List of errors');
         error.errors.forEach(error => {
           console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -575,14 +573,13 @@ async function getData(target) {
     delete result.fio;
     const optionsKey = Object.values(result);
     options.forEach(option => {
-      if (optionsKey.includes(+option.dataset.selectOption)) {
+      if (optionsKey.includes(option.dataset.selectOption)) {
         option.click();
       }
     });
   } catch (error) {
     if (error.status === 'error') {
       console.group('In file ApiService, in function useRequest, promise return reject');
-      console.error(`Error description: ${error.data.result}`);
       console.group('List of errors');
       error.errors.forEach(error => {
         console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -633,7 +630,6 @@ async function submitHandler(e) {
       loader.failure();
       if (error.status === 'error') {
         console.group('In file ApiService, in function useRequest, promise return reject');
-        console.error(`Error description: ${error.data.result}`);
         console.group('List of errors');
         error.errors.forEach(error => {
           console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -2157,12 +2153,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  window.BX = {
-    TemplateFolder: '',
-    message: function (path) {
-      return this[path];
-    }
-  };
+  // window.BX = {
+  //   TemplateFolder: '',
+  //   message: function (path) {
+  //     return this[path]
+  //   }
+  // }
 
   // выподающий список
   const dropDown = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown', {
@@ -2276,28 +2272,30 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    // return await BX.ajax.runComponentAction(this.componentBx, action, {
-    //   mode: 'class',
-    //   data: data
-    // })
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "3"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 1000);
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
     });
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "3"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },1000)
+    // })
   }
 }
+
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),

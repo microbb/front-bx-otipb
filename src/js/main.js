@@ -17,12 +17,12 @@ import Stretch from "./components/stretch";
 
 window.addEventListener('DOMContentLoaded', () => {
 
-  window.BX = {
-    TemplateFolder: '',
-    message: function (path) {
-      return this[path]
-    }
-  }
+  // window.BX = {
+  //   TemplateFolder: '',
+  //   message: function (path) {
+  //     return this[path]
+  //   }
+  // }
 
   // выподающий список
   const dropDown = new DropdownSelect('.dropdown',{
