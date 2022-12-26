@@ -40,7 +40,7 @@ class ApiService{
     //         "customData": null
     //       }]
     //     })
-    //   },1000)
+    //   },2000)
     // })
 
   }

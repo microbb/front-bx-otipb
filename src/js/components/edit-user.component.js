@@ -67,6 +67,12 @@ export default class EditUserComponent extends Component {
  */
 async function getData(target) {
 
+  let idTimeout;
+
+  const loader = new Loader({
+    loading: 'Идет сбор данных, о сотруднике',
+  })
+
   try {
 
     const formData = new FormData(),
@@ -74,6 +80,10 @@ async function getData(target) {
           options = this.$el.querySelectorAll('.dropdown__item')
 
     formData.append('ID',target.dataset.id)
+
+    idTimeout = setTimeout(() =>{
+      this.$el.append(loader.loading())
+    },400)
 
     const response = await apiService.useRequest('getUserInfo',formData),
           result = JSON.parse(response.data.result)
@@ -112,6 +122,10 @@ async function getData(target) {
       console.groupEnd();
 
     }
+  } finally {
+    clearTimeout(idTimeout)
+
+    loader.removeLoader()
   }
 
 }

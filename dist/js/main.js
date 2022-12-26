@@ -157,12 +157,19 @@ class AddOrEditCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0_
  * @return {void}
  */
 async function getData(target) {
+  let idTimeout;
+  const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    loading: 'Идет сбор данных, об удостоверение'
+  });
   try {
     const formData = new FormData(),
       attDateInput = this.$el.querySelector('.js-edit-att-date'),
       nextAttDateInput = this.$el.querySelector('.js-edit-next-att-date'),
       cardNumberInput = this.$el.querySelector('.js-edit-card-number');
     formData.append('ID', target.dataset.id);
+    idTimeout = setTimeout(() => {
+      this.$el.append(loader.loading());
+    }, 400);
     const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest('getCard', formData),
       result = JSON.parse(response.data.result);
     attDateInput.value = result.attestationDate;
@@ -182,6 +189,9 @@ async function getData(target) {
       console.error(`${error.stack}`);
       console.groupEnd();
     }
+  } finally {
+    clearTimeout(idTimeout);
+    loader.removeLoader();
   }
 }
 
@@ -320,10 +330,17 @@ class AddOrEditHseComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
  * @return {void}
  */
 async function getData(target) {
+  let idTimeout;
+  const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+    loading: 'Идет сбор данных, о сотруднике'
+  });
   try {
     const formData = new FormData(),
       options = this.$el.querySelectorAll('.dropdown__item');
     formData.append('ID', target.dataset.id);
+    idTimeout = setTimeout(() => {
+      this.$el.append(loader.loading());
+    }, 400);
     const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getIdHse', formData);
     options.forEach(option => {
       if (+option.dataset.selectOption === +response.data.result) {
@@ -344,6 +361,9 @@ async function getData(target) {
       console.error(`${error.stack}`);
       console.groupEnd();
     }
+  } finally {
+    clearTimeout(idTimeout);
+    loader.removeLoader();
   }
 }
 
@@ -686,11 +706,18 @@ class EditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["de
  * @return {void}
  */
 async function getData(target) {
+  let idTimeout;
+  const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+    loading: 'Идет сбор данных, о сотруднике'
+  });
   try {
     const formData = new FormData(),
       fioInput = this.$el.querySelector('.js-edit-fio'),
       options = this.$el.querySelectorAll('.dropdown__item');
     formData.append('ID', target.dataset.id);
+    idTimeout = setTimeout(() => {
+      this.$el.append(loader.loading());
+    }, 400);
     const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getUserInfo', formData),
       result = JSON.parse(response.data.result);
     fioInput.value = result.fio;
@@ -715,6 +742,9 @@ async function getData(target) {
       console.error(`${error.stack}`);
       console.groupEnd();
     }
+  } finally {
+    clearTimeout(idTimeout);
+    loader.removeLoader();
   }
 }
 
@@ -2439,7 +2469,7 @@ class ApiService {
     //         "customData": null
     //       }]
     //     })
-    //   },1000)
+    //   },2000)
     // })
   }
 }
