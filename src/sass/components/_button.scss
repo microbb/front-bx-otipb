@@ -148,4 +148,16 @@ $color3: #e7e7e1;
     }
   }
 
+  &--img-delete {
+    width: 20px;
+    height: 20px;
+
+    padding: 5px;
+
+    background-image: url(../img/close-icon.svg);
+    background-position: center;
+    background-size: 12px;
+    background-repeat: no-repeat;
+  }
+
 }
