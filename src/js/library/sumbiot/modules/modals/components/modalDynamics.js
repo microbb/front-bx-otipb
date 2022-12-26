@@ -47,7 +47,7 @@ export default class ModalDynamics extends Modal{
 
           this._triggerEvent = target
           this._show()
-      }else if(target.parentElement.classList.contains(this._trigger.slice(1))) {
+      }else if(target && target.parentElement.classList.contains(this._trigger.slice(1))) {
           e.preventDefault()
 
           this._triggerEvent = target.parentElement

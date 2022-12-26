@@ -40,17 +40,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
   // модалка фильтр
-  new Modal('.js-filter-modal')
+  new Modal('.js-filter-modal',{closeClickOverlay: false})
             .accept(Visitor.modalsStandardMod)
             .upgrade()
   // модалка добавить сутрудника
-  new Modal('.js-add-user-modal')
+  new Modal('.js-add-user-modal',{closeClickOverlay: false})
             .accept(Visitor.modalsStandardMod)
             .upgrade()
 
   // модалка редактировать сотрудника
   new ModalDynamics('.js-edit-user-modal',
-    {modalSelector:'#edit-user-modal', modalWrapper: '.js-wrapper-modal'})
+    {modalSelector:'#edit-user-modal', modalWrapper: '.js-wrapper-modal', closeClickOverlay: false})
     .accept(Visitor.editUserMod).upgrade()
 
   // модалка удалить сотрудника / удостоверение
@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // модалка добавить / редактировать / продлить удостоверение
   new ModalDynamics('.js-edit-card-modal',
-    {modalSelector:'#edit-card-modal', modalWrapper: '.js-wrapper-modal'})
+    {modalSelector:'#edit-card-modal', modalWrapper: '.js-wrapper-modal', closeClickOverlay: false})
     .accept(Visitor.modalsUnityMod).upgrade()
 
   // модалка добавление HSE
@@ -70,7 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',
-    {modalSelector:'#edit-hse-modal', modalWrapper: '.js-wrapper-modal'})
+    {modalSelector:'#edit-hse-modal', modalWrapper: '.js-wrapper-modal', closeClickOverlay: false})
     .accept(Visitor.editHseMod).upgrade()
 
 

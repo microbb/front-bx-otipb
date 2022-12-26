@@ -37,16 +37,16 @@ export default class AddOrEditHseComponent extends Component {
       document.addEventListener('click', (e) => {
         let target = e.target;
 
-          if (target && target.classList.contains('js-edit-hse-modal') || target.parentElement.classList.contains('js-edit-hse-modal') ) {
-            e.preventDefault()
+        if (target && target.classList.contains('js-edit-hse-modal') || target.parentElement.classList.contains('js-edit-hse-modal') ) {
+          e.preventDefault()
 
-            if (target.parentElement.classList.contains('js-edit-hse-modal')){
-              target = target.parentElement
-            }
-
-            getData.call(this,target)
-
+          if (target.parentElement.classList.contains('js-edit-hse-modal')){
+            target = target.parentElement
           }
+
+          getData.call(this,target)
+
+        }
       })
 
     }

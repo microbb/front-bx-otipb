@@ -29,25 +29,37 @@ export default class AddOrEditCardComponent extends Component {
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this))
 
+    document.addEventListener('click', (e) => {
+
+      let target = e.target;
+
+      if (target && target.classList.contains('js-edit-card-modal') || target.parentElement.classList.contains('js-edit-card-modal') ) {
+        e.preventDefault()
+
+        if (target.parentElement.classList.contains('js-edit-card-modal')){
+          target = target.parentElement
+        }
+
+        this.form.clear()
+      }
+
+      if (target && target.classList.contains('js-edit-card') || target.parentElement.classList.contains('js-edit-card') ) {
+        e.preventDefault()
+
+        if (target.parentElement.classList.contains('js-edit-card')){
+          target = target.parentElement
+        }
+
+        getData.call(this,target)
+      }
+
+    })
+
     this.form = new Form(this.$el, {
       ID: [],
       C_ATTESTATION_DATE: [],
       C_NEXT_ATTESTATION_DATE: [],
       C_CARD_NUMBER: [],
-    })
-
-    document.addEventListener('click', (e) => {
-
-      if(this.$el.getAttribute('action').slice(1) === 'editCard') {
-        let target = e.target;
-
-        if (target) {
-          e.preventDefault()
-
-          getData.call(this,target)
-        }
-      }
-
     })
   }
 
@@ -71,9 +83,9 @@ async function getData(target) {
     const response = await apiService.useRequest('getCard',formData),
       result = JSON.parse(response.data.result)
 
-    attDateInput.setAttribute('value', result.attestationDate)
-    nextAttDateInput.setAttribute('value', result.nextAttestationDate)
-    cardNumberInput.setAttribute('value', result.cardNumber)
+    attDateInput.value = result.attestationDate
+    nextAttDateInput.value = result.nextAttestationDate
+    cardNumberInput.value = result.cardNumber
 
   } catch (error) {
     if(error.status === 'error') {
@@ -176,7 +188,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file EditCardComponent, in function submitHandler error')
+        console.group('In file AddOrEditCardComponent, in function submitHandler error')
           console.error(`${error.stack}`)
         console.groupEnd();
 
@@ -186,8 +198,6 @@ async function submitHandler(e) {
 
       setTimeout(() => {
         this.form.clear()
-
-        console.log('asd')
 
         this.$el.closest('.modal').style.display = 'none'
 

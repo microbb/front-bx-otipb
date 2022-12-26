@@ -4,6 +4,8 @@ $color: #fbfbfb;
 $color2: #181818;
 $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
 
+$select: #98948a;
+
 .result{
   font-size: 16px;
 }
@@ -52,6 +54,11 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
     &:last-child{
       border-right: none;
     }
+
+    &::selection {
+      color: #fff; /* Цвет текста */
+      background: $select; /* Цвет фона */
+    }
   }
 
   & > .row > [title] {
@@ -65,6 +72,8 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   }
 
   &--header{
+    user-select: none;
+
     margin-bottom: 8px;
 
     font-weight: 600;
@@ -175,6 +184,8 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   }
 
   &--inner-header{
+    user-select: none;
+
     background-color: color.scale($color3, $lightness: -3%);
 
     font-weight: 600;
@@ -204,6 +215,11 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
   white-space: nowrap; /* Запрещаем перенос строк */
   overflow: hidden; /* Обрезаем все, что не помещается в область */
   text-overflow: ellipsis; /* Добавляем многоточие */
+
+  &::selection {
+    color: #fff; /* Цвет текста */
+    background: $select; /* Цвет фона */
+  }
 }
 
 .result__img{
@@ -285,6 +301,8 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
 }
 
 .result__info-title{
+  user-select: none;
+
   position: relative;
   z-index: 1;
 
@@ -310,6 +328,10 @@ $color3: #e7e7e1; //d7d7bc // d3d3cf // e7e7e1
 
 .result__info-options-btn{
   margin: 0 2px;
+}
+
+.result__options-card{
+  user-select: none;
 }
 
 .result__info-box-inner{

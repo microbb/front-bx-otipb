@@ -126,20 +126,28 @@ class AddOrEditCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0_
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
+    document.addEventListener('click', e => {
+      let target = e.target;
+      if (target && target.classList.contains('js-edit-card-modal') || target.parentElement.classList.contains('js-edit-card-modal')) {
+        e.preventDefault();
+        if (target.parentElement.classList.contains('js-edit-card-modal')) {
+          target = target.parentElement;
+        }
+        this.form.clear();
+      }
+      if (target && target.classList.contains('js-edit-card') || target.parentElement.classList.contains('js-edit-card')) {
+        e.preventDefault();
+        if (target.parentElement.classList.contains('js-edit-card')) {
+          target = target.parentElement;
+        }
+        getData.call(this, target);
+      }
+    });
     this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
       C_ATTESTATION_DATE: [],
       C_NEXT_ATTESTATION_DATE: [],
       C_CARD_NUMBER: []
-    });
-    document.addEventListener('click', e => {
-      if (this.$el.getAttribute('action').slice(1) === 'editCard') {
-        let target = e.target;
-        if (target) {
-          e.preventDefault();
-          getData.call(this, target);
-        }
-      }
     });
   }
 }
@@ -157,9 +165,9 @@ async function getData(target) {
     formData.append('ID', target.dataset.id);
     const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest('getCard', formData),
       result = JSON.parse(response.data.result);
-    attDateInput.setAttribute('value', result.attestationDate);
-    nextAttDateInput.setAttribute('value', result.nextAttestationDate);
-    cardNumberInput.setAttribute('value', result.cardNumber);
+    attDateInput.value = result.attestationDate;
+    nextAttDateInput.value = result.nextAttestationDate;
+    cardNumberInput.value = result.cardNumber;
   } catch (error) {
     if (error.status === 'error') {
       console.group('In file ApiService, in function useRequest, promise return reject');
@@ -228,14 +236,13 @@ async function submitHandler(e) {
         console.groupEnd();
         console.groupEnd();
       } else {
-        console.group('In file EditCardComponent, in function submitHandler error');
+        console.group('In file AddOrEditCardComponent, in function submitHandler error');
         console.error(`${error.stack}`);
         console.groupEnd();
       }
     } finally {
       setTimeout(() => {
         this.form.clear();
-        console.log('asd');
         this.$el.closest('.modal').style.display = 'none';
         loader.removeLoader();
       }, 900);
@@ -686,7 +693,7 @@ async function getData(target) {
     formData.append('ID', target.dataset.id);
     const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getUserInfo', formData),
       result = JSON.parse(response.data.result);
-    fioInput.setAttribute('value', result.fio);
+    fioInput.value = result.fio;
     delete result.fio;
     const optionsKey = Object.values(result);
     options.forEach(option => {
@@ -2084,6 +2091,11 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
         this._closeModalOverlay(e);
       }
     });
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape" || e.keyCode === 27) {
+        this._closeModalEscape(e);
+      }
+    });
   }
 
   /**
@@ -2092,6 +2104,18 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
    */
   _closeModal() {
     this.modal.style.display = "none";
+  }
+
+  /**
+   * Скрыть модальное окно
+   * @return {void}
+   */
+  _closeModalEscape(e) {
+    document.querySelectorAll('[data-sumbiot-modal]').forEach(modals => {
+      if (modals.style.display === 'block') {
+        modals.style.display = "none";
+      }
+    });
   }
 
   /**
@@ -2160,7 +2184,7 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
         e.preventDefault();
         this._triggerEvent = target;
         this._show();
-      } else if (target.parentElement.classList.contains(this._trigger.slice(1))) {
+      } else if (target && target.parentElement.classList.contains(this._trigger.slice(1))) {
         e.preventDefault();
         this._triggerEvent = target.parentElement;
         this._show();
@@ -2289,14 +2313,19 @@ window.addEventListener('DOMContentLoaded', () => {
   new _components_stretch__WEBPACK_IMPORTED_MODULE_12__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
 
   // модалка фильтр
-  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal', {
+    closeClickOverlay: false
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
-  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal').accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
+  new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal', {
+    closeClickOverlay: false
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalSelector: '#edit-user-modal',
-    modalWrapper: '.js-wrapper-modal'
+    modalWrapper: '.js-wrapper-modal',
+    closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editUserMod).upgrade();
 
   // модалка удалить сотрудника / удостоверение
@@ -2308,7 +2337,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalSelector: '#edit-card-modal',
-    modalWrapper: '.js-wrapper-modal'
+    modalWrapper: '.js-wrapper-modal',
+    closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsUnityMod).upgrade();
 
   // модалка добавление HSE
@@ -2320,7 +2350,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalSelector: '#edit-hse-modal',
-    modalWrapper: '.js-wrapper-modal'
+    modalWrapper: '.js-wrapper-modal',
+    closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editHseMod).upgrade();
 
   // аккардион
@@ -2459,8 +2490,8 @@ function cardRecertificationTemplate(_ref, _ref2) {
           </span>
         </div>
         <div class="col-3">
-          <span>
-            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Продлить</button>
+          <span class="result__options-card">
+            <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Продлить</button>
             <span class="p-relative d-inline-block">
               <button class="button button--text js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение">x</button>
             </span>
@@ -2599,8 +2630,8 @@ function cardTemplate(_ref, _ref2) {
         </div>
         <div class="col-2">${nextAttestationDate}</div>
         <div class="col-2">
-          <span>
-            <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>
+          <span class="result__options-card">
+            <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>
             <span class="p-relative d-inline-block">
               <button class="button button--text js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение">x</button>
             </span>

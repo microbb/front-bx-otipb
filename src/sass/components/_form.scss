@@ -4,6 +4,8 @@ $color: #fbfbfb;
 $color2: #181818;
 $color3: #e7e7e1;
 
+$select: #98948a;
+
 .form{
 
   &--search{
@@ -116,6 +118,11 @@ $color3: #e7e7e1;
     &::placeholder{
       color: color.scale($color2, $lightness: 0%);
     }
+  }
+
+  &::selection {
+    color: #fff; /* Цвет текста */
+    background: $select; /* Цвет фона */
   }
 
   &[type="date"]::-webkit-calendar-picker-indicator{

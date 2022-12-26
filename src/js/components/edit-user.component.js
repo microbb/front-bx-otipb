@@ -78,7 +78,7 @@ async function getData(target) {
     const response = await apiService.useRequest('getUserInfo',formData),
           result = JSON.parse(response.data.result)
 
-    fioInput.setAttribute('value', result.fio)
+    fioInput.value = result.fio
 
     delete result.fio
     const optionsKey = Object.values(result)

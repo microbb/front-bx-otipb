@@ -103,6 +103,12 @@ export default class Modal extends ModalCore{
         this._closeModalOverlay(e)
       }
     })
+
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" || e.keyCode === 27) {
+        this._closeModalEscape(e)
+      }
+    })
   }
 
   /**
@@ -111,6 +117,19 @@ export default class Modal extends ModalCore{
    */
   _closeModal() {
     this.modal.style.display = "none";
+  }
+
+  /**
+   * Скрыть модальное окно
+   * @return {void}
+   */
+  _closeModalEscape(e) {
+
+    document.querySelectorAll('[data-sumbiot-modal]').forEach((modals)=>{
+      if(modals.style.display === 'block'){
+        modals.style.display = "none"
+      }
+    })
   }
 
   /**
