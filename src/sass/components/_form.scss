@@ -156,6 +156,20 @@ $select: #98948a;
   cursor: pointer;
 }
 
+.form__button{
+  flex: 1 0 auto;
+
+  margin-right: 16px;
+
+  &--reset_filter{
+    flex: 0 1 auto;
+
+    padding: 10px;
+
+    margin-right: 0;
+  }
+}
+
 .form__validation-error{
   padding: 0 8px 0 20px;
 

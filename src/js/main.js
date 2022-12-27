@@ -102,7 +102,9 @@ window.addEventListener('DOMContentLoaded', () => {
   new AddOrEditHseComponent('#edit-hse')
 
   // компонент фильтр
-  new FilterComponent('#filter')
+  new FilterComponent('#filter', {
+    dropDown
+  })
 
   // компонент Поиск
   new SearchComponent('#search')

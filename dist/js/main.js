@@ -821,6 +821,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/user/userMain.template */ "./src/js/templates/user/userMain.template.js");
+/* harmony import */ var _templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userPlug.template */ "./src/js/templates/user/userPlug.template.js");
+
+
+
 
 
 
@@ -836,6 +842,7 @@ class FilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["defa
    */
   constructor(id, options) {
     super(id, options);
+    this.instanceDropDown = options.dropDown || {};
   }
 
   /**
@@ -844,6 +851,7 @@ class FilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["defa
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
+    this.$el.addEventListener('reset', resetHandler.bind(this));
     this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       DATE_BEGIN: [],
       DATE_END: [],
@@ -860,9 +868,87 @@ class FilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["defa
  */
 async function submitHandler(e) {
   e.preventDefault();
+  e.target.querySelector('.form__button--submit').blur();
   if (this.form.isValid()) {
-    console.log('Триста тридцать три');
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      loading: 'Идет фильтрация данных',
+      failure: 'Ошибка'
+    });
+    try {
+      const action = this.$el.getAttribute('action').slice(1),
+        formData = new FormData(this.$el);
+      this.$el.append(loader.loading());
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest(action, formData),
+        result = JSON.parse(response.data.result),
+        count = result.length || 0;
+      const htmlUsers = result.length ? result.map(user => {
+        if (+user.customUser) {
+          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__["userMainTemplate"])(user, {
+            build: 1
+          });
+        } else if (+user.idMatrixWorks) {
+          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__["userMainTemplate"])(user, {
+            build: 2
+          });
+        } else {
+          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__["userMainTemplate"])(user, {
+            build: 0
+          });
+        }
+      }) : Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_5__["userPlugTemplate"])(`Найдено: ${count} совпадений`);
+      loader.success(`Найдено: ${count} совпадений`);
+      const $parent = document.querySelector('#filter-result'),
+        $boxPaste = $parent.querySelector('.result__inner'),
+        $blocks = document.querySelectorAll('.result__body');
+      $blocks.forEach(block => {
+        block.style.display = 'none';
+        if (block.matches('#filter-result, #search-result')) {
+          block.querySelector('.result__inner').innerHTML = '';
+        }
+      });
+      $boxPaste.insertAdjacentHTML('afterbegin', Array.isArray(htmlUsers) ? htmlUsers.join('') : htmlUsers);
+      $parent.style.display = 'block';
+    } catch (error) {
+      loader.failure();
+      if (error.status === 'error') {
+        console.group('In file ApiService, in function useRequest, promise return reject');
+        console.group('List of errors');
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+        });
+        console.groupEnd();
+        console.groupEnd();
+      } else {
+        console.group('In file FilterComponent error');
+        console.error(`${error.stack}`);
+        console.groupEnd();
+      }
+    } finally {
+      setTimeout(() => {
+        loader.removeLoader();
+      }, 900);
+    }
   }
+}
+
+/**
+ * Обработчик сброса фильтра
+ * @return {void}
+ */
+function resetHandler(e) {
+  setTimeout(() => {
+    e.target.querySelector('.form__button--reset_filter').blur();
+  }, 150);
+  this.instanceDropDown.reset(this.form.form);
+  document.querySelectorAll('.result__body').forEach(block => {
+    block.style.display = 'none';
+    if (block.matches('#filter-result') || block.matches('#search-result')) {
+      block.querySelector('.result__inner').innerHTML = '';
+    }
+    if (block.matches('#main-result')) {
+      block.style.display = 'block';
+    }
+  });
 }
 
 /***/ }),
@@ -941,8 +1027,9 @@ class Loader {
    * @return {void}
    */
   success() {
+    let text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     this.$img.classList.add(this.message.success.img);
-    this.$massage.innerHTML = this.message.success.title;
+    this.$massage.innerHTML = text || this.message.success.title;
   }
 
   /**
@@ -2412,7 +2499,9 @@ window.addEventListener('DOMContentLoaded', () => {
   new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#edit-hse');
 
   // компонент фильтр
-  new _components_filter_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#filter');
+  new _components_filter_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#filter', {
+    dropDown
+  });
 
   // компонент Поиск
   new _components_search_component__WEBPACK_IMPORTED_MODULE_10__["default"]('#search');
@@ -2450,31 +2539,58 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    return await BX.ajax.runComponentAction(this.componentBx, action, {
-      mode: 'class',
-      data: data
-    });
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "3"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
+    // return await BX.ajax.runComponentAction(this.componentBx, action, {
+    //   mode: 'class',
+    //   data: data
     // })
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "3"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
   }
 }
-
 const apiService = new ApiService('bizproc:otipb.new');
+
+/***/ }),
+
+/***/ "./src/js/templates/card/cardPlug.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/card/cardPlug.template.js ***!
+  \****************************************************/
+/*! exports provided: cardPlugTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cardPlugTemplate", function() { return cardPlugTemplate; });
+/**
+ *  Заглушка для удостовенений
+ *  @param {string} text - текст заглушки
+ *  @return {string}
+ * */
+function cardPlugTemplate(text) {
+  return `
+    <div class="result__row result__row--inner">
+      <div class="row gx-0">
+        <div class="col-12">
+              ${text}
+        </div>
+      </div>
+    </div>
+  `;
+}
 
 /***/ }),
 
@@ -2526,35 +2642,6 @@ function cardRecertificationTemplate(_ref, _ref2) {
               <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение"></button>
             </span>
           </span>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/card/plug.template.js":
-/*!************************************************!*\
-  !*** ./src/js/templates/card/plug.template.js ***!
-  \************************************************/
-/*! exports provided: plugTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "plugTemplate", function() { return plugTemplate; });
-/**
- *  Заглушка
- *  @param {string} text - текст заглушки
- *  @return {string}
- * */
-function plugTemplate(text) {
-  return `
-    <div class="result__row result__row--inner">
-      <div class="row gx-0">
-        <div class="col-12">
-              ${text}
         </div>
       </div>
     </div>
@@ -2687,7 +2774,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _card_ard_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card/сard.template */ "./src/js/templates/card/сard.template.js");
 /* harmony import */ var _card_training_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/training.template */ "./src/js/templates/card/training.template.js");
 /* harmony import */ var _card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../card/cardRecertification.template */ "./src/js/templates/card/cardRecertification.template.js");
-/* harmony import */ var _card_plug_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../card/plug.template */ "./src/js/templates/card/plug.template.js");
+/* harmony import */ var _card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../card/cardPlug.template */ "./src/js/templates/card/cardPlug.template.js");
 
 
 
@@ -2725,7 +2812,7 @@ function userCardInfoTemplate(_ref) {
         customUser
       })).join(' ');
     } else {
-      return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет удостоверений');
+      return Object(_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__["cardPlugTemplate"])('Нет удостоверений');
     }
   };
 
@@ -2740,7 +2827,7 @@ function userCardInfoTemplate(_ref) {
         customUser
       })).join(' ');
     } else {
-      return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет обучений');
+      return Object(_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__["cardPlugTemplate"])('Нет обучений');
     }
   };
 
@@ -2755,7 +2842,7 @@ function userCardInfoTemplate(_ref) {
         customUser
       })).join(' ');
     } else {
-      return Object(_card_plug_template__WEBPACK_IMPORTED_MODULE_3__["plugTemplate"])('Нет удостоверений');
+      return Object(_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__["cardPlugTemplate"])('Нет удостоверений');
     }
   };
 
@@ -2877,7 +2964,7 @@ __webpack_require__.r(__webpack_exports__);
  *  @param {string} [user.work] - названия должности
  *  @param {string} [user.status] - названия должности
  *  @param {Object} options - настройки
- *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 0-из БХ без Hse
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
  *  @return {string}
  * */
 function userInfoTemplate(_ref) {
@@ -2897,8 +2984,18 @@ function userInfoTemplate(_ref) {
    * @return {string}
    */
   const renderUserConfig = () => {
-    // кастомный и существующий пользователь с HSE
+    // кастомный пользователь
     if (build === 1) {
+      return `
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
+          <span class="result__clip">
+            ${work}
+          </span>
+        </div>
+      `;
+    }
+    // существующий пользователь из BX
+    else if (build === 2) {
       return `
         <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
           <span class="result__clip">
@@ -2937,6 +3034,83 @@ function userInfoTemplate(_ref) {
     <div class="col-1">
       <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
     </div>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/user/userMain.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/user/userMain.template.js ***!
+  \****************************************************/
+/*! exports provided: userMainTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userMainTemplate", function() { return userMainTemplate; });
+/* harmony import */ var _userInfo_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./userInfo.template */ "./src/js/templates/user/userInfo.template.js");
+/* harmony import */ var _userCardInfo_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+
+
+
+/**
+ *  Шаблон сотрудник
+ *  @param {Object} user - сотрудник
+ *  @param {Object} options - настройки
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
+ *  @return {string}
+ *  @return {string}
+ * */
+function userMainTemplate(user) {
+  let {
+    build = 0
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return `
+    <div class="result__row js-result-row">
+
+      <div class="row gx-0 js-accordion js-user-info">
+        ${Object(_userInfo_template__WEBPACK_IMPORTED_MODULE_0__["userInfoTemplate"])(user, {
+    build
+  })}
+      </div><!--/.js-user-info-->
+
+      <div class="result__info js-wrapper-modal">
+        ${Object(_userCardInfo_template__WEBPACK_IMPORTED_MODULE_1__["userCardInfoTemplate"])(user, {
+    build
+  })}
+      </div><!--./result__info-->
+
+    </div><!--./result__row-->
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/user/userPlug.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/user/userPlug.template.js ***!
+  \****************************************************/
+/*! exports provided: userPlugTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userPlugTemplate", function() { return userPlugTemplate; });
+/**
+ *  Заглушка для сотрудников
+ *  @param {string} text - текст заглушки
+ *  @return {string}
+ * */
+function userPlugTemplate(text) {
+  return `
+    <div class="result__row js-result-row">
+      <div class="row gx-0 result__empty">
+        <div class="col-12">
+          ${text}
+        </div>
+      </div>
+    </div><!--./result__row-->
   `;
 }
 

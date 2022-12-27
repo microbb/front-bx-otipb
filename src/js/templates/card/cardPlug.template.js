@@ -1,10 +1,10 @@
 
 /**
- *  Заглушка
+ *  Заглушка для удостовенений
  *  @param {string} text - текст заглушки
  *  @return {string}
  * */
-export function plugTemplate(text) {
+export function cardPlugTemplate(text) {
 
   return `
     <div class="result__row result__row--inner">

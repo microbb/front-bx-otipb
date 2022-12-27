@@ -9,7 +9,7 @@
  *  @param {string} [user.work] - названия должности
  *  @param {string} [user.status] - названия должности
  *  @param {Object} options - настройки
- *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 0-из БХ без Hse
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
  *  @return {string}
  * */
 export function userInfoTemplate({idUser,fio,division,department,work,status},
@@ -22,8 +22,18 @@ export function userInfoTemplate({idUser,fio,division,department,work,status},
    */
   const renderUserConfig = () => {
 
-    // кастомный и существующий пользователь с HSE
+    // кастомный пользователь
     if(build === 1){
+      return  `
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
+          <span class="result__clip">
+            ${work}
+          </span>
+        </div>
+      `
+    }
+    // существующий пользователь из BX
+    else if (build === 2) {
       return  `
         <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
           <span class="result__clip">

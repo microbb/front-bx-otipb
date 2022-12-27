@@ -205,6 +205,25 @@ $select: #98948a;
   }
 }
 
+.result__empty{
+  background-color: #e7e7e1!important;
+
+  margin-bottom: 30px;
+
+  font-style: italic;
+
+  & > [class^=col] {
+
+    &:first-child{
+
+      &::before{
+        content: none!important;
+      }
+    }
+
+  }
+}
+
 .result__options-arrow{
   width: 24px;
   height: 24px;

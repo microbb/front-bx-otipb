@@ -2,7 +2,7 @@ import {cardTemplate} from "../card/сard.template";
 import {trainingTemplate} from "../card/training.template";
 import {cardRecertificationTemplate} from "../card/cardRecertification.template";
 
-import {plugTemplate} from "../card/plug.template";
+import {cardPlugTemplate} from "../card/cardPlug.template";
 
 /**
  *  Шаблон информация о удостоверениях пользователя
@@ -27,7 +27,7 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
     if(cards && cards['NORMAL_DATE']){
       return cards['NORMAL_DATE'].map(card => cardTemplate(card,{idUser,customUser})).join(' ')
     }else {
-      return plugTemplate('Нет удостоверений')
+      return cardPlugTemplate('Нет удостоверений')
     }
   }
 
@@ -39,7 +39,7 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
     if(training && training.length){
       return training.map(training => trainingTemplate(training,{idUser,customUser})).join(' ')
     }else {
-      return plugTemplate('Нет обучений')
+      return cardPlugTemplate('Нет обучений')
     }
   }
 
@@ -51,7 +51,7 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
     if(cards && cards['OVER_DATE']){
       return cards['OVER_DATE'].map(card => cardRecertificationTemplate(card,{idUser,customUser})).join(' ')
     }else {
-      return plugTemplate('Нет удостоверений')
+      return cardPlugTemplate('Нет удостоверений')
     }
   }
 

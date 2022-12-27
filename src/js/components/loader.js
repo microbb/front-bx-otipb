@@ -66,9 +66,9 @@ export default class Loader{
    * Успех
    * @return {void}
    */
-  success() {
+  success(text = '') {
     this.$img.classList.add(this.message.success.img)
-    this.$massage.innerHTML = this.message.success.title
+    this.$massage.innerHTML = text || this.message.success.title
   }
 
   /**

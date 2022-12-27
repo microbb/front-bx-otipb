@@ -12,488 +12,502 @@
     </div>
   </div>
 
-  <div class="result__body">
+  <div id="main-result" class="result__body">
 
-    <!-- КАСТОМНЫЙ ПОЛЬЗОВАТЕЛЬ -->
-    {{#repeat 5}}
-    <div class="result__row js-result-row">
+    <div class="result__inner">
 
-      <div class="row gx-0 js-accordion js-user-info">
-        <div class="col-1" title="ID: 200"></div>
-        <div class="col-2" title="Отдел: Информационное-вычислиния">
-          <span class="result__clip text-align-center">
-            АК ОЗНА
-          </span>
+      <!-- КАСТОМНЫЙ ПОЛЬЗОВАТЕЛЬ -->
+      {{#repeat 5}}
+      <div class="result__row js-result-row">
+
+        <div class="row gx-0 js-accordion js-user-info">
+          <div class="col-1" title="ID: 200"></div>
+          <div class="col-2" title="Отдел: Информационное-вычислиния">
+            <span class="result__clip text-align-center">
+              АК ОЗНА
+            </span>
+          </div>
+          <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+            <span class="result__clip">
+              Куприянов Дмитрий Георгиевич
+            </span>
+          </div>
+          <div class="col-4 g-justify-items-left js-matrix-work-hse" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+            <span class="result__clip">
+              Директор (начальник) вычислительного (информационно-вычислительного) центра
+            </span>
+          </div>
+          <div class="col-1">работает</div>
+          <div class="col-1">
+            <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
+          </div>
         </div>
-        <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
-          <span class="result__clip">
-            Куприянов Дмитрий Георгиевич
-          </span>
-        </div>
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
-          <span class="result__clip">
-            Директор (начальник) вычислительного (информационно-вычислительного) центра
-          </span>
-        </div>
-        <div class="col-1">работает</div>
-        <div class="col-1">
-          <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
-        </div>
-      </div>
 
-      <div class="result__info js-wrapper-modal">
+        <div class="result__info js-wrapper-modal">
 
-        <div class="result__info-box">
-          <div class="result__info-title">
-            Удостоверение действующие
+          <div class="result__info-box">
+            <div class="result__info-title">
+              Удостоверение действующие
 
-            <div class="result__info-options">
-              <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника">
-                <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
-              </button>
-              <span class="p-relative d-inline-block">
-                <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника">
-                  <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
+              <div class="result__info-options">
+                <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника">
+                  <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                 </button>
-              </span>
+                <span class="p-relative d-inline-block">
+                  <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника">
+                    <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
+                  </button>
+                </span>
+              </div>
             </div>
+
+            <div class="result__info-box-inner">
+
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-5">Программа обучения</div>
+                  <div class="col-3">Номер документа</div>
+                  <div class="col-2">Дата след. аттестации</div>
+                  <div class="col-2">Опции</div>
+                </div>
+              </div>
+
+              {{#repeat 4}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col-5 g-justify-items-left" title="Охрана труда">
+                    <span class="result__clip">
+                      Охрана труда
+                    </span>
+                  </div>
+                  <div class="col-3" title="Номер документа: 234-423-4335&#10Дата аттестации: 03.12.2021">
+                    <span class="result__clip text-align-center">
+                      234-423-4335
+                    </span>
+                  </div>
+                  <div class="col-2">03.12.2022</div>
+                  <div class="col-2">
+                    <span class="result__options-card">
+                      <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                      <span class="p-relative d-inline-block">
+                        <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {{/repeat}}
+
+            </div><!--.result__info-box-inner-->
+
+          </div><!--./result__info-box-->
+
+          <div class="result__info-box">
+            <div class="result__info-title">Доступные обучения</div>
+
+            <div class="result__info-box-inner">
+
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-9">Программа обучения</div>
+                  <div class="col-3">Опции</div>
+                </div>
+              </div>
+
+              {{#repeat 4}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col g-justify-items-left" title="Доврачебная помощь">
+                    <span class="result__clip">
+                      Доврачебная помощь
+                    </span>
+                  </div>
+                  <div class="col-3">
+                    <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                  </div>
+                </div>
+              </div>
+
+              {{/repeat}}
+
+            </div><!--.result__info-box-inner-->
+
+          </div><!--./result__info-box-->
+
+          <div class="result__info-box">
+            <div class="result__info-title">Удостоверение на переаттестации</div>
+
+            <div class="result__info-box-inner">
+
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-9">Программа обучения</div>
+                  <div class="col-3">Опции</div>
+                </div>
+              </div>
+
+              {{#repeat 4}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col-9 g-justify-items-left" title="Газоопасные работы.&#10Номер документа: 234-423-4444&#10Аттестация закончилась: 02.12.2022">
+                    <span class="result__clip">
+                      Газоопасные работы
+                    </span>
+                  </div>
+                  <div class="col-3">
+                    <span class="result__options-card">
+                      <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                      <span class="p-relative d-inline-block">
+                        <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {{/repeat}}
+
+            </div><!--.result__info-box-inner-->
+
+          </div><!--./result__info-box-->
+
+        </div><!--./result__info-->
+
+      </div><!--./result__row-->
+      {{/repeat}}
+
+      <!-- ИЗ 1С ПОЛЬЗОВАТЕЛЬ -->
+      {{#repeat 5}}
+      <div class="result__row js-result-row">
+
+        <div class="row gx-0 js-accordion js-user-info">
+          <div class="col-1" title="ID: 200"></div>
+          <div class="col-2" title="Отдел: Информационное-вычислиния">
+            <span class="result__clip text-align-center">
+              АК ОЗНА
+            </span>
           </div>
+          <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+            <span class="result__clip">
+              Горюнова Арина Кирилловна
+            </span>
+          </div>
+          <div class="col-4 g-justify-items-left js-matrix-work-hse" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+            <span class="result__clip">
+              Заместитель директора по коммерческим вопросам
+            </span>
+          </div>
+          <div class="col-1">работает</div>
+          <div class="col-1">
+            <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
+          </div>
+        </div>
 
-          <div class="result__info-box-inner">
+        <div class="result__info js-wrapper-modal">
 
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-5">Программа обучения</div>
-                <div class="col-3">Номер документа</div>
-                <div class="col-2">Дата след. аттестации</div>
-                <div class="col-2">Опции</div>
+          <div class="result__info-box">
+            <div class="result__info-title">
+              Удостоверение действующие
+
+              <div class="result__info-options">
+                <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="1" title="Изменить должность HSE">
+                  <img class="result__img" src="assets/img/edit-document-icon.svg" width="22" height="22" alt="">
+                </button>
               </div>
             </div>
 
-            {{#repeat 4}}
+            <div class="result__info-box-inner">
 
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col-5 g-justify-items-left" title="Охрана труда">
-                  <span class="result__clip">
-                    Охрана труда
-                  </span>
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-5">Программа обучения</div>
+                  <div class="col-3">Номер документа</div>
+                  <div class="col-2">Дата след. аттестации</div>
+                  <div class="col-2">Опции</div>
                 </div>
-                <div class="col-3" title="Номер документа: 234-423-4335&#10Дата аттестации: 03.12.2021">
-                  <span class="result__clip text-align-center">
-                    234-423-4335
-                  </span>
-                </div>
-                <div class="col-2">03.12.2022</div>
-                <div class="col-2">
-                  <span class="result__options-card">
-                    <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
-                    <span class="p-relative d-inline-block">
-                      <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+              </div>
+
+              {{#repeat 2}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col-5 g-justify-items-left" title="Охрана труда">
+                    <span class="result__clip">
+                      Охрана труда
                     </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {{/repeat}}
-
-          </div><!--.result__info-box-inner-->
-
-        </div><!--./result__info-box-->
-
-        <div class="result__info-box">
-          <div class="result__info-title">Доступные обучения</div>
-
-          <div class="result__info-box-inner">
-
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-9">Программа обучения</div>
-                <div class="col-3">Опции</div>
-              </div>
-            </div>
-
-            {{#repeat 4}}
-
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col g-justify-items-left" title="Доврачебная помощь">
-                  <span class="result__clip">
-                    Доврачебная помощь
-                  </span>
-                </div>
-                <div class="col-3">
-                  <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
-                </div>
-              </div>
-            </div>
-
-            {{/repeat}}
-
-          </div><!--.result__info-box-inner-->
-
-        </div><!--./result__info-box-->
-
-        <div class="result__info-box">
-          <div class="result__info-title">Удостоверение на переаттестации</div>
-
-          <div class="result__info-box-inner">
-
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-9">Программа обучения</div>
-                <div class="col-3">Опции</div>
-              </div>
-            </div>
-
-            {{#repeat 4}}
-
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col-9 g-justify-items-left" title="Газоопасные работы.&#10Номер документа: 234-423-4444&#10Аттестация закончилась: 02.12.2022">
-                  <span class="result__clip">
-                    Газоопасные работы
-                  </span>
-                </div>
-                <div class="col-3">
-                  <span class="result__options-card">
-                    <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
-                    <span class="p-relative d-inline-block">
-                      <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                  </div>
+                  <div class="col-3" title="Номер документа: 234-423-4335&#10Дата аттестации: 03.12.2021">
+                    <span class="result__clip text-align-center">
+                      234-423-4335
                     </span>
-                  </span>
+                  </div>
+                  <div class="col-2">03.12.2022</div>
+                  <div class="col-2">
+                    <span class="result__options-card">
+                      <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Редактировать</button>
+                      <span class="p-relative d-inline-block">
+                        <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                      </span>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {{/repeat}}
+              {{/repeat}}
 
-          </div><!--.result__info-box-inner-->
+            </div><!--.result__info-box-inner-->
 
-        </div><!--./result__info-box-->
+          </div><!--./result__info-box-->
 
-      </div><!--./result__info-->
+          <div class="result__info-box">
+            <div class="result__info-title">Доступные обучения</div>
 
-    </div><!--./result__row-->
-    {{/repeat}}
+            <div class="result__info-box-inner">
 
-    <!-- ИЗ 1С ПОЛЬЗОВАТЕЛЬ -->
-    {{#repeat 5}}
-    <div class="result__row js-result-row">
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-9">Программа обучения</div>
+                  <div class="col-3">Опции</div>
+                </div>
+              </div>
 
-      <div class="row gx-0 js-accordion js-user-info">
-        <div class="col-1" title="ID: 200"></div>
-        <div class="col-2" title="Отдел: Информационное-вычислиния">
-          <span class="result__clip text-align-center">
-            АК ОЗНА
-          </span>
-        </div>
-        <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
-          <span class="result__clip">
-            Горюнова Арина Кирилловна
-          </span>
-        </div>
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
-          <span class="result__clip">
-            Заместитель директора по коммерческим вопросам
-          </span>
-        </div>
-        <div class="col-1">работает</div>
-        <div class="col-1">
-          <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
-        </div>
-      </div>
+              {{#repeat 4}}
 
-      <div class="result__info js-wrapper-modal">
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col g-justify-items-left" title="Доврачебная помощь">
+                    <span class="result__clip">
+                      Доврачебная помощь
+                    </span>
+                  </div>
+                  <div class="col-3">
+                    <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/addCard">Добавить</button>
+                  </div>
+                </div>
+              </div>
 
-        <div class="result__info-box">
-          <div class="result__info-title">
-            Удостоверение действующие
+              {{/repeat}}
 
-            <div class="result__info-options">
-              <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="1" title="Изменить должность HSE">
-                <img class="result__img" src="assets/img/edit-document-icon.svg" width="22" height="22" alt="">
+            </div><!--.result__info-box-inner-->
+
+          </div><!--./result__info-box-->
+
+          <div class="result__info-box">
+            <div class="result__info-title">Удостоверение на переаттестации</div>
+
+            <div class="result__info-box-inner">
+
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-9">Программа обучения</div>
+                  <div class="col-3">Опции</div>
+                </div>
+              </div>
+
+              {{#repeat 4}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col-9 g-justify-items-left" title="Газоопасные работы.&#10Номер документа: 234-423-4444&#10Аттестация закончилась: 02.12.2022">
+                    <span class="result__clip">
+                      Газоопасные работы
+                    </span>
+                  </div>
+                  <div class="col-3">
+                    <span class="result__options-card">
+                      <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Продлить</button>
+                      <span class="p-relative d-inline-block">
+                        <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {{/repeat}}
+
+            </div><!--.result__info-box-inner-->
+
+          </div><!--./result__info-box-->
+
+        </div><!--./result__info-->
+
+      </div><!--./result__row-->
+      {{/repeat}}
+
+      <!-- ИЗ 1С ПОЛЬЗОВАТЕЛЬ БЕЗ HSE -->
+      {{#repeat 5}}
+      <div class="result__row js-result-row">
+
+        <div class="row gx-0 js-accordion js-user-info">
+          <div class="col-1" title="ID: 200"></div>
+          <div class="col-2" title="Отдел: Информационное-вычислиния">
+            <span class="result__clip text-align-center">
+              АК ОЗНА
+            </span>
+          </div>
+          <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
+            <span class="result__clip">
+              Горюнова Арина Кирилловна
+            </span>
+          </div>
+          <div class="col-4 js-matrix-work-hse">
+            <span class="p-relative d-inline-block">
+              <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="2" title="Добавить должность HSE">
+                <img class="result__img" src="assets/img/add-document-icon.svg" width="18" height="18" alt="">
               </button>
-            </div>
+            </span>
           </div>
-
-          <div class="result__info-box-inner">
-
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-5">Программа обучения</div>
-                <div class="col-3">Номер документа</div>
-                <div class="col-2">Дата след. аттестации</div>
-                <div class="col-2">Опции</div>
-              </div>
-            </div>
-
-            {{#repeat 2}}
-
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col-5 g-justify-items-left" title="Охрана труда">
-                  <span class="result__clip">
-                    Охрана труда
-                  </span>
-                </div>
-                <div class="col-3" title="Номер документа: 234-423-4335&#10Дата аттестации: 03.12.2021">
-                  <span class="result__clip text-align-center">
-                    234-423-4335
-                  </span>
-                </div>
-                <div class="col-2">03.12.2022</div>
-                <div class="col-2">
-                  <span class="result__options-card">
-                    <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Редактировать</button>
-                    <span class="p-relative d-inline-block">
-                      <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {{/repeat}}
-
-          </div><!--.result__info-box-inner-->
-
-        </div><!--./result__info-box-->
-
-        <div class="result__info-box">
-          <div class="result__info-title">Доступные обучения</div>
-
-          <div class="result__info-box-inner">
-
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-9">Программа обучения</div>
-                <div class="col-3">Опции</div>
-              </div>
-            </div>
-
-            {{#repeat 4}}
-
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col g-justify-items-left" title="Доврачебная помощь">
-                  <span class="result__clip">
-                    Доврачебная помощь
-                  </span>
-                </div>
-                <div class="col-3">
-                  <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/addCard">Добавить</button>
-                </div>
-              </div>
-            </div>
-
-            {{/repeat}}
-
-          </div><!--.result__info-box-inner-->
-
-        </div><!--./result__info-box-->
-
-        <div class="result__info-box">
-          <div class="result__info-title">Удостоверение на переаттестации</div>
-
-          <div class="result__info-box-inner">
-
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-9">Программа обучения</div>
-                <div class="col-3">Опции</div>
-              </div>
-            </div>
-
-            {{#repeat 4}}
-
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col-9 g-justify-items-left" title="Газоопасные работы.&#10Номер документа: 234-423-4444&#10Аттестация закончилась: 02.12.2022">
-                  <span class="result__clip">
-                    Газоопасные работы
-                  </span>
-                </div>
-                <div class="col-3">
-                  <span class="result__options-card">
-                    <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Продлить</button>
-                    <span class="p-relative d-inline-block">
-                      <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {{/repeat}}
-
-          </div><!--.result__info-box-inner-->
-
-        </div><!--./result__info-box-->
-
-      </div><!--./result__info-->
-
-    </div><!--./result__row-->
-    {{/repeat}}
-
-    <!-- ИЗ 1С ПОЛЬЗОВАТЕЛЬ БЕЗ HSE -->
-    {{#repeat 5}}
-    <div class="result__row js-result-row">
-
-      <div class="row gx-0 js-accordion js-user-info">
-        <div class="col-1" title="ID: 200"></div>
-        <div class="col-2" title="Отдел: Информационное-вычислиния">
-          <span class="result__clip text-align-center">
-            АК ОЗНА
-          </span>
-        </div>
-        <div class="col-3 g-justify-items-left" title="Куприянов Дмитрий Георгиевич">
-          <span class="result__clip">
-            Горюнова Арина Кирилловна
-          </span>
-        </div>
-        <div class="col-4 js-matrix-work-hse">
-          <span class="p-relative d-inline-block">
-            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="2" title="Добавить должность HSE">
-              <img class="result__img" src="assets/img/add-document-icon.svg" width="18" height="18" alt="">
-            </button>
-          </span>
-        </div>
-        <div class="col-1">работает</div>
-        <div class="col-1">
-          <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
-        </div>
-      </div>
-
-      <div class="result__info js-wrapper-modal">
-
-        <div class="result__info-box">
-          <div class="result__info-title">
-            Удостоверение действующие
-
-            <div class="result__info-options"></div>
+          <div class="col-1">работает</div>
+          <div class="col-1">
+            <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
           </div>
+        </div>
 
-          <div class="result__info-box-inner">
+        <div class="result__info js-wrapper-modal">
 
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-5">Программа обучения</div>
-                <div class="col-3">Номер документа</div>
-                <div class="col-2">Дата след. аттестации</div>
-                <div class="col-2">Опции</div>
-              </div>
+          <div class="result__info-box">
+            <div class="result__info-title">
+              Удостоверение действующие
+
+              <div class="result__info-options"></div>
             </div>
 
-            {{#repeat 3}}
+            <div class="result__info-box-inner">
 
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col-5 g-justify-items-left" title="Охрана труда">
-                  <span class="result__clip">
-                    Охрана труда
-                  </span>
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-5">Программа обучения</div>
+                  <div class="col-3">Номер документа</div>
+                  <div class="col-2">Дата след. аттестации</div>
+                  <div class="col-2">Опции</div>
                 </div>
-                <div class="col-3" title="Номер документа: 234-423-4335&#10Дата аттестации: 03.12.2021">
-                  <span class="result__clip text-align-center">
-                    234-423-4335
-                  </span>
-                </div>
-                <div class="col-2">03.12.2022</div>
-                <div class="col-2">
-                  <span class="result__options-card">
-                    <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Редактировать</button>
-                    <span class="p-relative d-inline-block">
-                      <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
+              </div>
+
+              {{#repeat 3}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col-5 g-justify-items-left" title="Охрана труда">
+                    <span class="result__clip">
+                      Охрана труда
                     </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {{/repeat}}
-
-          </div><!--.result__info-box-inner-->
-
-        </div><!--./result__info-box-->
-
-        <div class="result__info-box">
-          <div class="result__info-title">Доступные обучения</div>
-
-          <div class="result__info-box-inner">
-
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-9">Программа обучения</div>
-                <div class="col-3">Опции</div>
-              </div>
-            </div>
-
-            {{#repeat 4}}
-
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col g-justify-items-left" title="Доврачебная помощь">
-                  <span class="result__clip">
-                    Доврачебная помощь
-                  </span>
-                </div>
-                <div class="col-3">
-                  <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/addCard">Добавить</button>
-                </div>
-              </div>
-            </div>
-
-            {{/repeat}}
-
-          </div><!--.result__info-box-inner-->
-
-        </div><!--./result__info-box-->
-
-        <div class="result__info-box">
-          <div class="result__info-title">Удостоверение на переаттестации</div>
-
-          <div class="result__info-box-inner">
-
-            <div class="result__row result__row--inner result__row--inner-header">
-              <div class="row gx-0">
-                <div class="col-9">Программа обучения</div>
-                <div class="col-3">Опции</div>
-              </div>
-            </div>
-
-            {{#repeat 4}}
-
-            <div class="result__row result__row--inner">
-              <div class="row gx-0">
-                <div class="col-9 g-justify-items-left" title="Газоопасные работы.&#10Номер документа: 234-423-4444&#10Аттестация закончилась: 02.12.2022">
-                  <span class="result__clip">
-                    Газоопасные работы
-                  </span>
-                </div>
-                <div class="col-3">
-                  <span class="result__options-card">
-                    <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Продлить</button>
-                    <span class="p-relative d-inline-block">
-                      <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                  </div>
+                  <div class="col-3" title="Номер документа: 234-423-4335&#10Дата аттестации: 03.12.2021">
+                    <span class="result__clip text-align-center">
+                      234-423-4335
                     </span>
-                  </span>
+                  </div>
+                  <div class="col-2">03.12.2022</div>
+                  <div class="col-2">
+                    <span class="result__options-card">
+                      <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Редактировать</button>
+                      <span class="p-relative d-inline-block">
+                        <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                      </span>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {{/repeat}}
+              {{/repeat}}
 
-          </div><!--.result__info-box-inner-->
+            </div><!--.result__info-box-inner-->
 
-        </div><!--./result__info-box-->
+          </div><!--./result__info-box-->
 
-      </div><!--./result__info-->
+          <div class="result__info-box">
+            <div class="result__info-title">Доступные обучения</div>
 
-    </div><!--./result__row-->
-    {{/repeat}}
+            <div class="result__info-box-inner">
 
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-9">Программа обучения</div>
+                  <div class="col-3">Опции</div>
+                </div>
+              </div>
+
+              {{#repeat 4}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col g-justify-items-left" title="Доврачебная помощь">
+                    <span class="result__clip">
+                      Доврачебная помощь
+                    </span>
+                  </div>
+                  <div class="col-3">
+                    <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/addCard">Добавить</button>
+                  </div>
+                </div>
+              </div>
+
+              {{/repeat}}
+
+            </div><!--.result__info-box-inner-->
+
+          </div><!--./result__info-box-->
+
+          <div class="result__info-box">
+            <div class="result__info-title">Удостоверение на переаттестации</div>
+
+            <div class="result__info-box-inner">
+
+              <div class="result__row result__row--inner result__row--inner-header">
+                <div class="row gx-0">
+                  <div class="col-9">Программа обучения</div>
+                  <div class="col-3">Опции</div>
+                </div>
+              </div>
+
+              {{#repeat 4}}
+
+              <div class="result__row result__row--inner">
+                <div class="row gx-0">
+                  <div class="col-9 g-justify-items-left" title="Газоопасные работы.&#10Номер документа: 234-423-4444&#10Аттестация закончилась: 02.12.2022">
+                    <span class="result__clip">
+                      Газоопасные работы
+                    </span>
+                  </div>
+                  <div class="col-3">
+                    <span class="result__options-card">
+                      <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/editCard">Продлить</button>
+                      <span class="p-relative d-inline-block">
+                        <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="0" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {{/repeat}}
+
+            </div><!--.result__info-box-inner-->
+
+          </div><!--./result__info-box-->
+
+        </div><!--./result__info-->
+
+      </div><!--./result__row-->
+      {{/repeat}}
+
+    </div><!--./result__inner-->
+
+  </div><!--./result__body-->
+
+  <div id="filter-result" class="result__body">
+    <div class="result__inner"></div>
+    <div class="pagination"></div>
+  </div><!--./result__body-->
+
+  <div id="search-result" class="result__body">
+    <div class="result__inner"></div>
+    <div class="pagination"></div>
   </div><!--./result__body-->
 
 </div><!--./result-->
