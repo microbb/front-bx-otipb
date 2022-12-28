@@ -16,7 +16,7 @@ export default class Pagination extends PaginationCore{
    */
   constructor(paginationInSelector,resultInSelector,listElements,
               {
-                perpage = 3,
+                perpage = 16,
                 page = 1
               } = {}) {
 
@@ -32,12 +32,10 @@ export default class Pagination extends PaginationCore{
     this._perpage = perpage // сколько показывать на странице
 
     this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
-    if(!this._pagesCount) this._pagesCount = 1; // минимум 1 страница
 
     this._page = page // активная страница
-    if(this._page > this._pagesCount) this._page = this._pagesCount; // если запрошеная страница больше максимума
 
-    if(this._pagesCount > 1) this._init() // если больше 1 страницы инициализируем постраничную навигацию
+    this._init() // если больше 1 страницы инициализируем постраничную навигацию
   }
 
   /**
@@ -45,9 +43,11 @@ export default class Pagination extends PaginationCore{
    * @return {void}
    */
   _init() {
-      this._paginationCreate()
+    this._switchPage()
 
-      this._switchingHandler()
+    // if(this._pagesCount > 1) {
+    //   this._switchingHandler()
+    // }
   }
 
   /**
@@ -55,35 +55,54 @@ export default class Pagination extends PaginationCore{
    * @return {void}
    */
   _switchingHandler() {
-    document.addEventListener('click', (e) => {
-      const target = e.target;
 
-      if (target && target.classList.contains('pagination__btn') && target.closest(this.paginationInSelector) || target.parentElement.classList.contains('pagination__btn') && target.closest(this.paginationInSelector)) {
-        e.preventDefault()
+    // this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
+    //   elem.addEventListener('click', this._test)
+    // })
 
-        this._switchPage(target)
+  }
 
-      }
-    })
+  _test = (e) => {
+    e.preventDefault()
+
+    // const target = e.target;
+    this._switchPage(e.target)
+
+    // if (target && target.classList.contains('pagination__btn') && target.closest(this.paginationInSelector) || target.parentElement.classList.contains('pagination__btn') && target.closest(this.paginationInSelector)) {
+    //   e.preventDefault()
+    //
+    //   this._switchPage(target)
+    //
+    // }
   }
 
   /**
    * Переключить страницу
    * @return {void}
    */
-  _switchPage(btn) {
-    this._page = +btn.dataset.page
+  _switchPage(btn = null) {
+    if(btn) {
+      this._page = +btn.dataset.page
+    }
 
     let start = (this._page - 1) * this._perpage,
         end = start + this._perpage
 
     let resSlice = this._listElements.slice(start, end)
 
+    console.log(resSlice)
+
     this.$resultInElement.innerHTML = ''
     this.$resultInElement.insertAdjacentHTML('beforeend', resSlice.join(''))
 
-    this.$paginationInElement.querySelector('.pagination').remove()
-    this._paginationCreate()
+    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
+      elem.removeEventListener('click', this._test)
+    })
+    this.$paginationInElement.querySelector('.pagination')?.remove()
+
+    if(this._pagesCount > 1){
+      this._paginationCreate()
+    }
   }
 
   /**
@@ -110,6 +129,10 @@ export default class Pagination extends PaginationCore{
         pageActive = `<button type="button" class="pagination__btn pagination__btn--active">${this._page}</button>`
 
     pagination.innerHTML = startPage + page4left + page3left + page2left + page1left + pageActive + page1right + page2right + page3right + page4right + endPage
+
+    pagination.querySelectorAll('.pagination__btn').forEach(elem => {
+      elem.addEventListener('click', this._test)
+    })
 
     this.$paginationInElement.append(pagination)
   }

@@ -75,6 +75,8 @@ async function submitHandler(e) {
             result = JSON.parse(response.data.result),
             count = result.length || 0
 
+      console.log(result,result.length)
+
       loader.success(`Найдено: ${count} совпадений`)
 
       const $parent = document.querySelector('#filter-result'),
@@ -83,13 +85,18 @@ async function submitHandler(e) {
 
       $blocks.forEach(block => {
         block.style.display = 'none'
+
+        if(block.matches('#filter-result')) {
+          block.querySelector('.result__inner').innerHTML = ''
+          block.querySelector('.pagination')?.remove()
+        }
       })
 
-      console.log(result.length)
+      let res;
 
       if(Array.isArray(result) && result.length) {
 
-        let res = result.map(user => {
+        res = result.map(user => {
           if(+user.customUser) {
             return userMainTemplate(user,{build: 1})
           } else if (+user.idMatrixWorks) {
@@ -100,9 +107,11 @@ async function submitHandler(e) {
         })
 
         new Pagination('#filter-result','#filter-result .result__inner',res)
+
+        console.log(this)
       }
       else{
-        let res = userPlugTemplate(`Найдено: ${count} совпадений`)
+        res = userPlugTemplate(`Найдено: ${count} совпадений`)
 
         $boxPaste.insertAdjacentHTML('afterbegin',res)
       }

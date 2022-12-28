@@ -47,7 +47,7 @@ export function userInfoTemplate({idUser,fio,division,department,work,status},
       return `
         <div class="col-4 js-matrix-work-hse">
           <span class="p-relative d-inline-block">
-            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="2" title="Добавить должность HSE">
+            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="${idUser}" title="Добавить должность HSE">
               <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/add-document-icon.svg" width="18" height="18" alt="">
             </button>
           </span>

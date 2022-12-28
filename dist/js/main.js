@@ -892,16 +892,22 @@ async function submitHandler(e) {
       const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
         result = JSON.parse(response.data.result),
         count = result.length || 0;
+      console.log(result, result.length);
       loader.success(`Найдено: ${count} совпадений`);
       const $parent = document.querySelector('#filter-result'),
         $boxPaste = $parent.querySelector('.result__inner'),
         $blocks = document.querySelectorAll('.result__body');
       $blocks.forEach(block => {
         block.style.display = 'none';
+        if (block.matches('#filter-result')) {
+          var _block$querySelector;
+          block.querySelector('.result__inner').innerHTML = '';
+          (_block$querySelector = block.querySelector('.pagination')) === null || _block$querySelector === void 0 ? void 0 : _block$querySelector.remove();
+        }
       });
-      console.log(result.length);
+      let res;
       if (Array.isArray(result) && result.length) {
-        let res = result.map(user => {
+        res = result.map(user => {
           if (+user.customUser) {
             return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
               build: 1
@@ -917,8 +923,9 @@ async function submitHandler(e) {
           }
         });
         new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]('#filter-result', '#filter-result .result__inner', res);
+        console.log(this);
       } else {
-        let res = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__["userPlugTemplate"])(`Найдено: ${count} совпадений`);
+        res = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__["userPlugTemplate"])(`Найдено: ${count} совпадений`);
         $boxPaste.insertAdjacentHTML('afterbegin', res);
       }
       $parent.style.display = 'block';
@@ -957,9 +964,9 @@ function resetHandler(e) {
   document.querySelectorAll('.result__body').forEach(block => {
     block.style.display = 'none';
     if (block.matches('#filter-result')) {
-      var _block$querySelector;
+      var _block$querySelector2;
       block.querySelector('.result__inner').innerHTML = '';
-      (_block$querySelector = block.querySelector('.pagination')) === null || _block$querySelector === void 0 ? void 0 : _block$querySelector.remove();
+      (_block$querySelector2 = block.querySelector('.pagination')) === null || _block$querySelector2 === void 0 ? void 0 : _block$querySelector2.remove();
     }
     if (block.matches('#main-result')) {
       block.style.display = 'block';
@@ -2393,6 +2400,9 @@ class ModalCore {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Pagination; });
 /* harmony import */ var _paginationCore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../paginationCore */ "./src/js/library/sumbiot/modules/pagination/paginationCore.js");
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 /**
@@ -2410,10 +2420,23 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    */
   constructor(paginationInSelector, resultInSelector, listElements) {
     let {
-      perpage = 3,
+      perpage = 16,
       page = 1
     } = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     super();
+    _defineProperty(this, "_test", e => {
+      e.preventDefault();
+
+      // const target = e.target;
+      this._switchPage(e.target);
+
+      // if (target && target.classList.contains('pagination__btn') && target.closest(this.paginationInSelector) || target.parentElement.classList.contains('pagination__btn') && target.closest(this.paginationInSelector)) {
+      //   e.preventDefault()
+      //
+      //   this._switchPage(target)
+      //
+      // }
+    });
     this.paginationInSelector = paginationInSelector;
     this.$paginationInElement = document.querySelector(paginationInSelector);
     this.$resultInElement = document.querySelector(resultInSelector);
@@ -2423,12 +2446,10 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
     this._perpage = perpage; // сколько показывать на странице
 
     this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
-    if (!this._pagesCount) this._pagesCount = 1; // минимум 1 страница
 
     this._page = page; // активная страница
-    if (this._page > this._pagesCount) this._page = this._pagesCount; // если запрошеная страница больше максимума
 
-    if (this._pagesCount > 1) this._init(); // если больше 1 страницы инициализируем постраничную навигацию
+    this._init(); // если больше 1 страницы инициализируем постраничную навигацию
   }
 
   /**
@@ -2436,8 +2457,11 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * @return {void}
    */
   _init() {
-    this._paginationCreate();
-    this._switchingHandler();
+    this._switchPage();
+
+    // if(this._pagesCount > 1) {
+    //   this._switchingHandler()
+    // }
   }
 
   /**
@@ -2445,28 +2469,34 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * @return {void}
    */
   _switchingHandler() {
-    document.addEventListener('click', e => {
-      const target = e.target;
-      if (target && target.classList.contains('pagination__btn') && target.closest(this.paginationInSelector) || target.parentElement.classList.contains('pagination__btn') && target.closest(this.paginationInSelector)) {
-        e.preventDefault();
-        this._switchPage(target);
-      }
-    });
-  }
 
+    // this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
+    //   elem.addEventListener('click', this._test)
+    // })
+  }
   /**
    * Переключить страницу
    * @return {void}
    */
-  _switchPage(btn) {
-    this._page = +btn.dataset.page;
+  _switchPage() {
+    var _this$$paginationInEl;
+    let btn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    if (btn) {
+      this._page = +btn.dataset.page;
+    }
     let start = (this._page - 1) * this._perpage,
       end = start + this._perpage;
     let resSlice = this._listElements.slice(start, end);
+    console.log(resSlice);
     this.$resultInElement.innerHTML = '';
     this.$resultInElement.insertAdjacentHTML('beforeend', resSlice.join(''));
-    this.$paginationInElement.querySelector('.pagination').remove();
-    this._paginationCreate();
+    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
+      elem.removeEventListener('click', this._test);
+    });
+    (_this$$paginationInEl = this.$paginationInElement.querySelector('.pagination')) === null || _this$$paginationInEl === void 0 ? void 0 : _this$$paginationInEl.remove();
+    if (this._pagesCount > 1) {
+      this._paginationCreate();
+    }
   }
 
   /**
@@ -2488,6 +2518,9 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
       page1right = this._page + 1 <= this._pagesCount ? `<button type="button" class="pagination__btn" data-page="${this._page + 1}">${this._page + 1}</button>` : '',
       pageActive = `<button type="button" class="pagination__btn pagination__btn--active">${this._page}</button>`;
     pagination.innerHTML = startPage + page4left + page3left + page2left + page1left + pageActive + page1right + page2right + page3right + page4right + endPage;
+    pagination.querySelectorAll('.pagination__btn').forEach(elem => {
+      elem.addEventListener('click', this._test);
+    });
     this.$paginationInElement.append(pagination);
   }
 }
@@ -3158,7 +3191,7 @@ function userInfoTemplate(_ref) {
       return `
         <div class="col-4 js-matrix-work-hse">
           <span class="p-relative d-inline-block">
-            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="2" title="Добавить должность HSE">
+            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="${idUser}" title="Добавить должность HSE">
               <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/add-document-icon.svg" width="18" height="18" alt="">
             </button>
           </span>
