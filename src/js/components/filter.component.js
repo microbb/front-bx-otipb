@@ -75,18 +75,6 @@ async function submitHandler(e) {
             result = JSON.parse(response.data.result),
             count = result.length || 0
 
-      const htmlUsers = result.length ?
-            result.map(user => {
-              if(+user.customUser) {
-                return userMainTemplate(user,{build: 1})
-              } else if (+user.idMatrixWorks) {
-                return userMainTemplate(user,{build: 2})
-              } else {
-                return userMainTemplate(user,{build: 0})
-              }
-            }) :
-            userPlugTemplate(`Найдено: ${count} совпадений`)
-
       loader.success(`Найдено: ${count} совпадений`)
 
       const $parent = document.querySelector('#filter-result'),
@@ -97,9 +85,27 @@ async function submitHandler(e) {
         block.style.display = 'none'
       })
 
-      htmlUsers.length ?
-        new Pagination('#filter-result','#filter-result .result__inner',htmlUsers) :
-        $boxPaste.insertAdjacentHTML('afterbegin',htmlUsers)
+      console.log(result.length)
+
+      if(Array.isArray(result) && result.length) {
+
+        let res = result.map(user => {
+          if(+user.customUser) {
+            return userMainTemplate(user,{build: 1})
+          } else if (+user.idMatrixWorks) {
+            return userMainTemplate(user,{build: 2})
+          } else {
+            return userMainTemplate(user,{build: 0})
+          }
+        })
+
+        new Pagination('#filter-result','#filter-result .result__inner',res)
+      }
+      else{
+        let res = userPlugTemplate(`Найдено: ${count} совпадений`)
+
+        $boxPaste.insertAdjacentHTML('afterbegin',res)
+      }
 
       $parent.style.display = 'block'
 

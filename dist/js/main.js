@@ -892,21 +892,6 @@ async function submitHandler(e) {
       const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
         result = JSON.parse(response.data.result),
         count = result.length || 0;
-      const htmlUsers = result.length ? result.map(user => {
-        if (+user.customUser) {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
-            build: 1
-          });
-        } else if (+user.idMatrixWorks) {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
-            build: 2
-          });
-        } else {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
-            build: 0
-          });
-        }
-      }) : Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__["userPlugTemplate"])(`Найдено: ${count} совпадений`);
       loader.success(`Найдено: ${count} совпадений`);
       const $parent = document.querySelector('#filter-result'),
         $boxPaste = $parent.querySelector('.result__inner'),
@@ -914,7 +899,28 @@ async function submitHandler(e) {
       $blocks.forEach(block => {
         block.style.display = 'none';
       });
-      htmlUsers.length ? new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]('#filter-result', '#filter-result .result__inner', htmlUsers) : $boxPaste.insertAdjacentHTML('afterbegin', htmlUsers);
+      console.log(result.length);
+      if (Array.isArray(result) && result.length) {
+        let res = result.map(user => {
+          if (+user.customUser) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
+              build: 1
+            });
+          } else if (+user.idMatrixWorks) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
+              build: 2
+            });
+          } else {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
+              build: 0
+            });
+          }
+        });
+        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]('#filter-result', '#filter-result .result__inner', res);
+      } else {
+        let res = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__["userPlugTemplate"])(`Найдено: ${count} совпадений`);
+        $boxPaste.insertAdjacentHTML('afterbegin', res);
+      }
       $parent.style.display = 'block';
     } catch (error) {
       loader.failure();
@@ -2468,8 +2474,6 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * @return {void}
    */
   _paginationCreate() {
-    console.log(this._page);
-    console.log(this._pagesCount);
     const pagination = document.createElement('div');
     pagination.classList.add('pagination');
     let startPage = this._page > 3 ? `<button type="button" class="pagination__btn" data-page="1">1</button>` : '',
@@ -2682,28 +2686,30 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    // return await BX.ajax.runComponentAction(this.componentBx, action, {
-    //   mode: 'class',
-    //   data: data
-    // })
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "3"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
     });
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 }
+
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),
@@ -2878,17 +2884,17 @@ function cardTemplate(_ref, _ref2) {
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
-        <div class="col-5 g-justify-items-left" title="${programName}">
+        <div class="col-5 g-justify-items-left" title="${programName || 'не заполнено'}">
           <span class="result__clip">
-            ${programName}
+            ${programName || 'не заполнено'}
           </span>
         </div>
-        <div class="col-3" title="Номер документа: ${cardNumber}&#10Дата аттестации: ${attestationDate}">
+        <div class="col-3" title="Номер документа: ${cardNumber || 'не заполнено'}&#10Дата аттестации: ${attestationDate || 'не заполнено'}">
           <span class="result__clip text-align-center">
-            ${cardNumber}
+            ${cardNumber || 'не заполнено'}
           </span>
         </div>
-        <div class="col-2">${nextAttestationDate}</div>
+        <div class="col-2">${nextAttestationDate || 'не заполнено'}</div>
         <div class="col-2">
           <span class="result__options-card">
             <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>

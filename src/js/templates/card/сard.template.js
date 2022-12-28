@@ -22,17 +22,17 @@ export function cardTemplate({idCard,programName,cardNumber,attestationDate,next
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
-        <div class="col-5 g-justify-items-left" title="${programName}">
+        <div class="col-5 g-justify-items-left" title="${programName || 'не заполнено'}">
           <span class="result__clip">
-            ${programName}
+            ${programName || 'не заполнено'}
           </span>
         </div>
-        <div class="col-3" title="Номер документа: ${cardNumber}&#10Дата аттестации: ${attestationDate}">
+        <div class="col-3" title="Номер документа: ${cardNumber || 'не заполнено'}&#10Дата аттестации: ${attestationDate || 'не заполнено'}">
           <span class="result__clip text-align-center">
-            ${cardNumber}
+            ${cardNumber || 'не заполнено'}
           </span>
         </div>
-        <div class="col-2">${nextAttestationDate}</div>
+        <div class="col-2">${nextAttestationDate || 'не заполнено'}</div>
         <div class="col-2">
           <span class="result__options-card">
             <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>
