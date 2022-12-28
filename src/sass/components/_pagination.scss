@@ -1,0 +1,73 @@
+@use "sass:color";
+
+$color: #fbfbfb;
+$color2: #181818;
+$color3: #e7e7e1;
+
+.pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px 10px 25px 10px;
+}
+
+.pagination__btn{
+  user-select: none;
+
+  vertical-align: middle;
+
+  min-height: 32px;
+  min-width: 32px;
+
+  margin: 5px;
+
+  background-color: color.scale($color, $lightness: 0%);
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+
+  border: 1px solid color.scale($color2, $lightness: 50%);
+  border-radius: 4px;
+
+  transform: translateY(0);
+  transition: color 0.1s ease, background-color 0.1s ease, transform 0.2s ease;
+
+  cursor: pointer;
+
+  &:hover{
+    background-color: color.scale($color, $lightness: -10%);
+
+    border: 1px solid color.scale($color2, $lightness: 30%);
+
+    transform: translateY(-2px);
+  }
+
+  &:active{
+    background-color: color.scale($color, $lightness: 0%);
+  }
+
+  &--active{
+    pointer-events: none;
+
+    min-height: 36px;
+    min-width: 36px;
+
+    background-color: color.scale(#4f4f4f, $lightness: 10%);
+
+    border: 1px solid color.scale(#4f4f4f, $lightness: -10%);
+
+    color: $color;
+
+    cursor: default;
+  }
+}
+
+.pagination__plug{
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 16px;
+}

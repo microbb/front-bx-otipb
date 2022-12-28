@@ -1,5 +1,7 @@
 import Component from "../core/component"
 
+import Pagination from "../library/sumbiot/modules/pagination/components/pagination";
+
 import Form from "../core/form";
 
 import {apiService} from "../services/api.service";
@@ -93,13 +95,12 @@ async function submitHandler(e) {
 
       $blocks.forEach(block => {
         block.style.display = 'none'
-
-        if(block.matches('#filter-result, #search-result')) {
-          block.querySelector('.result__inner').innerHTML = ''
-        }
       })
 
-      $boxPaste.insertAdjacentHTML('afterbegin',Array.isArray(htmlUsers) ? htmlUsers.join('') : htmlUsers)
+      htmlUsers.length ?
+        new Pagination('#filter-result','#filter-result .result__inner',htmlUsers) :
+        $boxPaste.insertAdjacentHTML('afterbegin',htmlUsers)
+
       $parent.style.display = 'block'
 
     } catch (error) {
@@ -157,8 +158,9 @@ function resetHandler(e) {
   document.querySelectorAll('.result__body').forEach(block => {
     block.style.display = 'none'
 
-    if(block.matches('#filter-result') || block.matches('#search-result')) {
+    if(block.matches('#filter-result')) {
       block.querySelector('.result__inner').innerHTML = ''
+      block.querySelector('.pagination')?.remove()
     }
 
     if(block.matches('#main-result')) {

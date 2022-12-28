@@ -31,7 +31,7 @@ $color3: #e7e7e1;
   cursor: pointer;
 
   &:hover{
-    background-color: color.scale($color, $lightness: -15%);
+    background-color: color.scale($color, $lightness: -10%);
   }
 
   &:active{
