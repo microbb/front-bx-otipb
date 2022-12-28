@@ -98,9 +98,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AddOrEditCardComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
-/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+/* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+
 
 
 
@@ -158,7 +160,7 @@ class AddOrEditCardComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0_
  */
 async function getData(target) {
   let idTimeout;
-  const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+  const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
     loading: 'Идет сбор данных, об удостоверение'
   });
   try {
@@ -170,7 +172,7 @@ async function getData(target) {
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
     }, 400);
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest('getCard', formData),
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getCard', formData),
       result = JSON.parse(response.data.result);
     attDateInput.value = result.attestationDate;
     nextAttDateInput.value = result.nextAttestationDate;
@@ -204,13 +206,13 @@ async function submitHandler(e) {
   if (this.form.isValid()) {
     let loader;
     if (this.$el.getAttribute('action').slice(1) === 'addCard') {
-      loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
         loading: 'Добавление удостоверения',
         success: 'Удостоверение добавлено',
         failure: 'Удостоверение не добавлено'
       });
     } else if (this.$el.getAttribute('action').slice(1) === 'editCard') {
-      loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
         loading: 'Редактирование удостоверения',
         success: 'Удостоверение отредактировано',
         failure: 'Удостоверение не отредактировано'
@@ -220,13 +222,13 @@ async function submitHandler(e) {
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el);
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
         result = JSON.parse(response.data.result);
-      const htmlCardInfo = +result.customUser ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+      const htmlCardInfo = +result.customUser ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
         build: 1
-      }) : +result.idMatrixWorks ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+      }) : +result.idMatrixWorks ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
         build: 2
-      }) : Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+      }) : Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
         build: 0
       });
       loader.success();
@@ -254,6 +256,7 @@ async function submitHandler(e) {
       setTimeout(() => {
         this.form.clear();
         this.$el.closest('.modal').style.display = 'none';
+        _core_support__WEBPACK_IMPORTED_MODULE_2__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
         loader.removeLoader();
       }, 900);
     }
@@ -275,10 +278,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
 /* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
-/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
-/* harmony import */ var _templates_workName_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/workName.template */ "./src/js/templates/workName.template.js");
+/* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+/* harmony import */ var _templates_workName_template__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../templates/workName.template */ "./src/js/templates/workName.template.js");
+
 
 
 
@@ -331,7 +336,7 @@ class AddOrEditHseComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
  */
 async function getData(target) {
   let idTimeout;
-  const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+  const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
     loading: 'Идет сбор данных, о сотруднике'
   });
   try {
@@ -341,7 +346,7 @@ async function getData(target) {
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
     }, 400);
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getIdHse', formData);
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest('getIdHse', formData);
     options.forEach(option => {
       if (+option.dataset.selectOption === +response.data.result) {
         option.click();
@@ -374,7 +379,7 @@ async function getData(target) {
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
       loading: 'Добавление должности',
       success: 'Должность добавлена',
       failure: 'Должность не добавлена'
@@ -384,12 +389,12 @@ async function submitHandler(e) {
         formData = new FormData(this.$el);
       this.$el.querySelector('button').blur();
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest(action, formData),
         result = JSON.parse(response.data.result);
-      const htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
+      const htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__["userCardInfoTemplate"])(result, {
           build: 2
         }),
-        htmlUserWork = Object(_templates_workName_template__WEBPACK_IMPORTED_MODULE_6__["workNameTemplate"])(result.work);
+        htmlUserWork = Object(_templates_workName_template__WEBPACK_IMPORTED_MODULE_7__["workNameTemplate"])(result.work);
       loader.success();
       setTimeout(() => {
         const parent = this.$el.closest('.result__row'),
@@ -418,6 +423,7 @@ async function submitHandler(e) {
     } finally {
       setTimeout(() => {
         this.$el.closest('.modal').style.display = 'none';
+        _core_support__WEBPACK_IMPORTED_MODULE_3__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
         loader.removeLoader();
       }, 900);
     }
@@ -648,10 +654,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
 /* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
-/* harmony import */ var _templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userInfo.template */ "./src/js/templates/user/userInfo.template.js");
-/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+/* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userInfo.template */ "./src/js/templates/user/userInfo.template.js");
+/* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+
 
 
 
@@ -707,7 +715,7 @@ class EditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["de
  */
 async function getData(target) {
   let idTimeout;
-  const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+  const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
     loading: 'Идет сбор данных, о сотруднике'
   });
   try {
@@ -718,7 +726,7 @@ async function getData(target) {
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
     }, 400);
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getUserInfo', formData),
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest('getUserInfo', formData),
       result = JSON.parse(response.data.result);
     fioInput.value = result.fio;
     delete result.fio;
@@ -755,7 +763,7 @@ async function getData(target) {
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
       loading: 'Идет добавления сотрудника',
       success: 'Сотрудник добавлен',
       failure: 'Сотрудник не добавлен'
@@ -764,12 +772,12 @@ async function submitHandler(e) {
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el);
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest(action, formData),
         result = JSON.parse(response.data.result);
-      const htmlUserInfo = Object(_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_5__["userInfoTemplate"])(result, {
+      const htmlUserInfo = Object(_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_6__["userInfoTemplate"])(result, {
           build: 1
         }),
-        htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__["userCardInfoTemplate"])(result, {
+        htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_7__["userCardInfoTemplate"])(result, {
           build: 1
         });
       loader.success();
@@ -800,6 +808,7 @@ async function submitHandler(e) {
         this.form.clear();
         this.instanceDropDown.reset(this.form.form);
         this.$el.closest('.modal').style.display = 'none';
+        _core_support__WEBPACK_IMPORTED_MODULE_3__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
         loader.removeLoader();
       }, 900);
     }
@@ -1254,10 +1263,10 @@ class Visitor {
         _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-380']);
       });
 
-      // на подложки
-      this.modal.addEventListener('click', e => {
-        if (e.target === this.modal && this._closeClickOverlay) {
-          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-380']);
+      // по клавиши Esc
+      window.addEventListener("keydown", e => {
+        if (e.key === "Escape" || e.keyCode === 27) {
+          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
         }
       });
     };
@@ -1274,8 +1283,9 @@ class Visitor {
     instanceClass.upgrade = function () {
       document.addEventListener('click', e => {
         let target = e.target;
-        if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1))) {
-          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
+        if (target && target.classList.contains(this._trigger.slice(1)) || target && target.parentElement.classList.contains(this._trigger.slice(1))) {
+
+          // неиспользуется
         }
       });
     };
@@ -1302,13 +1312,6 @@ class Visitor {
       // по кнопки закрытия модального окна
       this._close.addEventListener('click', e => {
         _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-442']);
-      });
-
-      // на подложки
-      this.modal.addEventListener('click', e => {
-        if (e.target === this.modal && this._closeClickOverlay) {
-          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-442']);
-        }
       });
     };
   }
@@ -1421,13 +1424,6 @@ class Visitor {
       // по кнопки закрытия модального окна
       this._close.addEventListener('click', e => {
         _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-265']);
-      });
-
-      // на подложки
-      this.modal.addEventListener('click', e => {
-        if (e.target === this.modal && this._closeClickOverlay) {
-          _core_support__WEBPACK_IMPORTED_MODULE_0__["default"].removeClosestClass(e.target, '.js-wrapper-modal', ['result__info--min_height-265']);
-        }
       });
     };
   }
@@ -2027,6 +2023,8 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
     showOption.innerHTML = optionActive.innerText;
     if (optionActive.getAttribute('title')) {
       showOption.setAttribute('title', optionActive.getAttribute('title'));
+    } else {
+      showOption.removeAttribute('title');
     }
 
     // обертка пунктов
@@ -2130,6 +2128,8 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     let {
       modalSelector = null,
       // - селектор модального окна которое мы будем открывать.
+      modalGroup = '[data-sumbiot-modal]',
+      // - группирует модалки в группы
       closeSelector = '[data-sumbiot-modal-close]',
       // - селектор который закрывает модальное окно.
       closeClickOverlay = true // - будет ли закрываться окно по клику по подложки
@@ -2138,7 +2138,7 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this._trigger = triggerSelector;
     this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget);
     this._close = this.modal.querySelector(closeSelector);
-    this._windows = document.querySelectorAll('[data-sumbiot-modal]');
+    this._windows = document.querySelectorAll(modalGroup);
     this._closeClickOverlay = closeClickOverlay;
     this._init();
   }
@@ -2431,10 +2431,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // модалка фильтр
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal', {
+    modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal', {
+    modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
   }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
 
@@ -2630,9 +2632,9 @@ function cardRecertificationTemplate(_ref, _ref2) {
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
-        <div class="col-9 g-justify-items-left" title="${programName}.&#10Номер документа: ${cardNumber}&#10Аттестация закончилась: ${nextAttestationDate}">
+        <div class="col-9 g-justify-items-left" title="${programName || 'не заполнено'}.&#10Номер документа: ${cardNumber || 'не заполнено'}&#10Аттестация закончилась: ${nextAttestationDate || 'не заполнено'}">
           <span class="result__clip">
-            ${programName}
+            ${programName || 'не заполнено'}
           </span>
         </div>
         <div class="col-3">
@@ -2682,9 +2684,9 @@ function trainingTemplate(_ref, _ref2) {
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
-        <div class="col g-justify-items-left" title="${NAME}">
+        <div class="col g-justify-items-left" title="${NAME || 'не заполнено'}">
           <span class="result__clip">
-            ${NAME}
+            ${NAME || 'не заполнено'}
           </span>
         </div>
         <div class="col-3">
@@ -2987,9 +2989,9 @@ function userInfoTemplate(_ref) {
     // кастомный пользователь
     if (build === 1) {
       return `
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
           <span class="result__clip">
-            ${work}
+            ${work || 'не заполнено'}
           </span>
         </div>
       `;
@@ -2997,9 +2999,9 @@ function userInfoTemplate(_ref) {
     // существующий пользователь из BX
     else if (build === 2) {
       return `
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
           <span class="result__clip">
-            ${work}
+            ${work || 'не заполнено'}
           </span>
         </div>
       `;
@@ -3019,18 +3021,18 @@ function userInfoTemplate(_ref) {
   };
   return `
     <div class="col-1" title="ID: ${idUser}"></div>
-    <div class="col-2" title="Отдел: ${department}">
+    <div class="col-2" title="Отдел: ${department || 'не заполнено'}">
       <span class="result__clip text-align-center">
-        ${division}
+        ${division || 'не заполнено'}
       </span>
     </div>
-    <div class="col-3 g-justify-items-left" title="${fio}">
+    <div class="col-3 g-justify-items-left" title="${fio || 'не заполнено'}">
       <span class="result__clip">
-        ${fio}
+        ${fio || 'не заполнено'}
       </span>
     </div>
     ${renderUserConfig()}
-    <div class="col-1">${status}</div>
+    <div class="col-1">${status || 'не заполнено'}</div>
     <div class="col-1">
       <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
     </div>

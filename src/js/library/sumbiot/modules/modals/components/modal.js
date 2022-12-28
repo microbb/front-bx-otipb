@@ -13,6 +13,7 @@ export default class Modal extends ModalCore{
   constructor(triggerSelector ,
               {
                 modalSelector = null,          // - селектор модального окна которое мы будем открывать.
+                modalGroup = '[data-sumbiot-modal]', // - группирует модалки в группы
                 closeSelector = '[data-sumbiot-modal-close]', // - селектор который закрывает модальное окно.
                 closeClickOverlay = true,      // - будет ли закрываться окно по клику по подложки
               } = {}) {
@@ -23,7 +24,7 @@ export default class Modal extends ModalCore{
     this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget)
     this._close = this.modal.querySelector(closeSelector)
 
-    this._windows = document.querySelectorAll('[data-sumbiot-modal]')
+    this._windows = document.querySelectorAll(modalGroup)
     this._closeClickOverlay = closeClickOverlay
 
     this._init()

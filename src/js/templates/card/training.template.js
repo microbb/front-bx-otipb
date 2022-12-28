@@ -19,9 +19,9 @@ export function trainingTemplate({ID,NAME},
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
-        <div class="col g-justify-items-left" title="${NAME}">
+        <div class="col g-justify-items-left" title="${NAME || 'не заполнено'}">
           <span class="result__clip">
-            ${NAME}
+            ${NAME || 'не заполнено'}
           </span>
         </div>
         <div class="col-3">

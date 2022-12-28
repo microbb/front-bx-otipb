@@ -25,9 +25,9 @@ export function userInfoTemplate({idUser,fio,division,department,work,status},
     // кастомный пользователь
     if(build === 1){
       return  `
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
           <span class="result__clip">
-            ${work}
+            ${work || 'не заполнено'}
           </span>
         </div>
       `
@@ -35,9 +35,9 @@ export function userInfoTemplate({idUser,fio,division,department,work,status},
     // существующий пользователь из BX
     else if (build === 2) {
       return  `
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work}">
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
           <span class="result__clip">
-            ${work}
+            ${work || 'не заполнено'}
           </span>
         </div>
       `
@@ -58,18 +58,18 @@ export function userInfoTemplate({idUser,fio,division,department,work,status},
 
   return `
     <div class="col-1" title="ID: ${idUser}"></div>
-    <div class="col-2" title="Отдел: ${department}">
+    <div class="col-2" title="Отдел: ${department || 'не заполнено'}">
       <span class="result__clip text-align-center">
-        ${division}
+        ${division || 'не заполнено'}
       </span>
     </div>
-    <div class="col-3 g-justify-items-left" title="${fio}">
+    <div class="col-3 g-justify-items-left" title="${fio || 'не заполнено'}">
       <span class="result__clip">
-        ${fio}
+        ${fio || 'не заполнено'}
       </span>
     </div>
     ${renderUserConfig()}
-    <div class="col-1">${status}</div>
+    <div class="col-1">${status || 'не заполнено'}</div>
     <div class="col-1">
       <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
     </div>

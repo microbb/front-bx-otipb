@@ -59,7 +59,7 @@
         </div>
       </div><!--./top-panel-->
 
-      <section class="modal" id="add-user-modal" data-sumbiot-modal>
+      <section class="modal" id="add-user-modal" data-sumbiot-modal-top>
 
         <h2 class="modal__title">Добавить сотрудника</h2>
 
@@ -234,7 +234,7 @@
         <button type="button" class="modal__close button button--icon" data-sumbiot-modal-close title="Закрыть окно"></button>
       </section><!--./form-->
 
-      <section class="modal" id="filter-modal" data-sumbiot-modal>
+      <section class="modal" id="filter-modal" data-sumbiot-modal-top>
 
         <h2 class="modal__title" title="За промежуток ОТ и ДО, у кого удостоверение перестанет действовать">Фильтр</h2>
 
@@ -257,8 +257,9 @@
               <div class="form__item">
                 <span class="form__label">Дивизион:</span>
                 <div class="form__dropdown dropdown" data-select-name="ID_DIVISION">
-                  <div class="dropdown__toggle js-dropdown__toggle"></div>
+                  <div class="dropdown__toggle js-dropdown__toggle">---</div>
                   <div class="dropdown__options">
+                    <div class="dropdown__item" data-select-option="" title="Не выбран">---</div>
                     <div class="dropdown__item" data-select-option="1">
                       АК ОЗНА
                     </div>
@@ -302,9 +303,10 @@
               <div class="form__item">
                 <span class="form__label">Должность HSE:</span>
                 <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
-                  <div class="dropdown__toggle js-dropdown__toggle"></div>
+                  <div class="dropdown__toggle js-dropdown__toggle">---</div>
 
                   <div class="dropdown__options dropdown__options--right">
+                    <div class="dropdown__item" data-select-option="" title="Не выбран">---</div>
                     <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
                       Директор (начальник) вычислительного (информационно-вычислительного) центра
                     </div>
@@ -349,8 +351,9 @@
               <div class="form__item form__item--column2">
                 <span class="form__label">Удостоверение:</span>
                 <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_PROGRAM">
-                  <div class="dropdown__toggle js-dropdown__toggle"></div>
+                  <div class="dropdown__toggle js-dropdown__toggle">---</div>
                   <div class="dropdown__options">
+                    <div class="dropdown__item" data-select-option="" title="Не выбран">---</div>
                     <div class="dropdown__item" data-select-option="3" title="Газоопасные работы">
                       Газоопасные работы
                     </div>

@@ -40,11 +40,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
   // модалка фильтр
-  new Modal('.js-filter-modal',{closeClickOverlay: false})
+  new Modal('.js-filter-modal',
+    {modalGroup: '[data-sumbiot-modal-top]', closeClickOverlay: false})
             .accept(Visitor.modalsStandardMod)
             .upgrade()
   // модалка добавить сутрудника
-  new Modal('.js-add-user-modal',{closeClickOverlay: false})
+  new Modal('.js-add-user-modal',
+    {modalGroup: '[data-sumbiot-modal-top]', closeClickOverlay: false})
             .accept(Visitor.modalsStandardMod)
             .upgrade()
 

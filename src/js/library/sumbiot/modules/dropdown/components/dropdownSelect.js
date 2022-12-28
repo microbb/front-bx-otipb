@@ -74,6 +74,8 @@ export default class DropdownSelect extends Dropdown {
     showOption.innerHTML = optionActive.innerText
     if(optionActive.getAttribute('title')){
       showOption.setAttribute('title', optionActive.getAttribute('title'))
+    } else {
+      showOption.removeAttribute('title')
     }
 
     // обертка пунктов

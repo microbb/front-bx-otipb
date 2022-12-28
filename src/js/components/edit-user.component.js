@@ -2,6 +2,7 @@ import Component from "../core/component"
 
 import Form from "../core/form";
 import {Validators} from "../core/validators";
+import Support from "../core/support";
 
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
@@ -204,6 +205,9 @@ async function submitHandler(e) {
         this.instanceDropDown.reset(this.form.form)
 
         this.$el.closest('.modal').style.display = 'none'
+
+        Support.removeClass('.js-wrapper-modal',
+          ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265'])
 
         loader.removeLoader()
       }, 900)

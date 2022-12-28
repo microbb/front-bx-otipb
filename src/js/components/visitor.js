@@ -96,10 +96,11 @@ export default class Visitor {
         Support.removeClosestClass(e.target,'.js-wrapper-modal',['result__info--min_height-380'])
       })
 
-      // на подложки
-      this.modal.addEventListener('click', (e) => {
-        if (e.target === this.modal && this._closeClickOverlay) {
-          Support.removeClosestClass(e.target,'.js-wrapper-modal',['result__info--min_height-380'])
+      // по клавиши Esc
+      window.addEventListener("keydown", (e) => {
+        if(e.key === "Escape" || e.keyCode === 27) {
+          Support.removeClass('.js-wrapper-modal',
+            ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265'])
         }
       })
 
@@ -120,10 +121,9 @@ export default class Visitor {
       document.addEventListener('click', (e) => {
         let target = e.target;
 
-        if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1)) ) {
+        if (target && target.classList.contains(this._trigger.slice(1)) || target && target.parentElement.classList.contains(this._trigger.slice(1)) ) {
 
-          Support.removeClass('.js-wrapper-modal',
-            ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265'])
+          // неиспользуется
 
         }
       })
@@ -162,13 +162,6 @@ export default class Visitor {
       // по кнопки закрытия модального окна
       this._close.addEventListener('click', (e) => {
         Support.removeClosestClass(e.target,'.js-wrapper-modal',['result__info--min_height-442'])
-      })
-
-      // на подложки
-      this.modal.addEventListener('click', (e) => {
-        if (e.target === this.modal && this._closeClickOverlay) {
-          Support.removeClosestClass(e.target,'.js-wrapper-modal',['result__info--min_height-442'])
-        }
       })
 
     }
@@ -324,13 +317,6 @@ export default class Visitor {
       // по кнопки закрытия модального окна
       this._close.addEventListener('click', (e) => {
         Support.removeClosestClass(e.target,'.js-wrapper-modal',['result__info--min_height-265'])
-      })
-
-      // на подложки
-      this.modal.addEventListener('click', (e) => {
-        if (e.target === this.modal && this._closeClickOverlay) {
-          Support.removeClosestClass(e.target,'.js-wrapper-modal',['result__info--min_height-265'])
-        }
       })
 
     }

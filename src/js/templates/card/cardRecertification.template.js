@@ -21,9 +21,9 @@ export function cardRecertificationTemplate({idCard,programName,cardNumber,nextA
   return `
     <div class="result__row result__row--inner">
       <div class="row gx-0">
-        <div class="col-9 g-justify-items-left" title="${programName}.&#10Номер документа: ${cardNumber}&#10Аттестация закончилась: ${nextAttestationDate}">
+        <div class="col-9 g-justify-items-left" title="${programName || 'не заполнено'}.&#10Номер документа: ${cardNumber || 'не заполнено'}&#10Аттестация закончилась: ${nextAttestationDate || 'не заполнено'}">
           <span class="result__clip">
-            ${programName}
+            ${programName || 'не заполнено'}
           </span>
         </div>
         <div class="col-3">
