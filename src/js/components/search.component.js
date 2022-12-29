@@ -80,7 +80,7 @@ async function getData() {
 
       let html = result.map(name => {
         return `
-            <div class="dropdown__item" title="${name}">
+            <div class="dropdown__item" title="${name}" style="display: none">
               ${name}
             </div>
         `
@@ -96,20 +96,20 @@ async function getData() {
 
       console.group('In file ApiService, in function useRequest, promise return reject')
 
-      console.group('List of errors')
+        console.group('List of errors')
 
-      error.errors.forEach(error => {
-        console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
-      })
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+        })
 
-      console.groupEnd();
+        console.groupEnd();
 
       console.groupEnd();
 
     } else {
 
       console.group('In file SearchComponent, in function getData error')
-      console.error(`${error.stack}`)
+        console.error(`${error.stack}`)
       console.groupEnd();
 
     }

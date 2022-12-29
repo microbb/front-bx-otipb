@@ -83,7 +83,7 @@ export default class DropdownInput extends Dropdown {
     let flag = false,
         valueInput = input.value.trim()
 
-    if(valueInput) {
+    if(valueInput && valueInput.length > 2) {
       let options = Array.from(document.querySelectorAll(`${this._dropdownSelector} ${this._dropdownOptionSelector}`))
 
       options.forEach(option => {

@@ -21,27 +21,27 @@ class ApiService{
   async useRequest(action,data) {
 
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    // return await BX.ajax.runComponentAction(this.componentBx, action, {
-    //   mode: 'class',
-    //   data: data
-    // })
-
-    return new Promise((resolve,reject) => {
-
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        })
-      },2000)
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
     })
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
 
   }
 

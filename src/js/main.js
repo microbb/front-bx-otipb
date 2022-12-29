@@ -117,7 +117,7 @@ window.addEventListener('DOMContentLoaded', () => {
   })
 
   // компонент Поиск
-  new SearchComponent('#search')
+  new SearchComponent('#search-otipb')
 
 })
 

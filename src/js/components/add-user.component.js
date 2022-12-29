@@ -62,13 +62,16 @@ async function submitHandler(e) {
     try {
 
       const action = this.$el.getAttribute('action').slice(1),
-            formData = new FormData(this.$el)
+            formData = new FormData(this.$el),
+            options = document.querySelector('.js-options-search')
 
       this.$el.append(loader.loading())
 
       const response = await apiService.useRequest(action,formData)
 
       loader.success()
+
+      options.append(optionsUser(response.data.result))
 
     } catch (error) {
 
@@ -96,7 +99,6 @@ async function submitHandler(e) {
 
       }
 
-
     } finally {
 
       setTimeout(() => {
@@ -110,4 +112,20 @@ async function submitHandler(e) {
 
   }
 
+}
+
+/**
+ * Пункт в ФИО сотрудника
+ * @return {HTMLElement}
+ */
+function optionsUser(fio) {
+  let div = document.createElement('div'),
+      text = document.createTextNode(fio)
+
+  div.append(text)
+  div.classList.add('dropdown__item')
+  div.setAttribute('title', fio)
+  div.style.display = 'none'
+
+  return div
 }
