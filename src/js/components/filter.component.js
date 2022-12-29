@@ -46,6 +46,26 @@ export default class FilterComponent extends Component {
 
   }
 
+  /**
+   * Скрывает не нужные блоки и отрисовывает блок фильтра
+   * @param {function} cb - callback функция
+   * @return {void}
+   */
+  _hideAllBlocks(cb = null) {
+    document.querySelectorAll('.result__body').forEach(block => {
+      block.style.display = 'none'
+
+      if(block.matches('#filter-result')) {
+        block.querySelector('.result__inner').innerHTML = ''
+        block.querySelector('.pagination')?.remove()
+      }
+
+      if(typeof cb === 'function') {
+        cb(block)
+      }
+    })
+  }
+
 }
 
 /**
@@ -75,28 +95,13 @@ async function submitHandler(e) {
             result = JSON.parse(response.data.result),
             count = result.length || 0
 
-      console.log(result,result.length)
-
       loader.success(`Найдено: ${count} совпадений`)
 
-      const $parent = document.querySelector('#filter-result'),
-            $boxPaste = $parent.querySelector('.result__inner'),
-            $blocks = document.querySelectorAll('.result__body')
-
-      $blocks.forEach(block => {
-        block.style.display = 'none'
-
-        if(block.matches('#filter-result')) {
-          block.querySelector('.result__inner').innerHTML = ''
-          block.querySelector('.pagination')?.remove()
-        }
-      })
-
-      let res;
+      this._hideAllBlocks()
 
       if(Array.isArray(result) && result.length) {
 
-        res = result.map(user => {
+        let html = result.map(user => {
           if(+user.customUser) {
             return userMainTemplate(user,{build: 1})
           } else if (+user.idMatrixWorks) {
@@ -106,17 +111,16 @@ async function submitHandler(e) {
           }
         })
 
-        new Pagination('#filter-result','#filter-result .result__inner',res)
-
-        console.log(this)
+        new Pagination('#filter-result','#filter-result .result__inner',html)
       }
       else{
-        res = userPlugTemplate(`Найдено: ${count} совпадений`)
+        let html = userPlugTemplate(`Найдено: ${count} совпадений`)
 
-        $boxPaste.insertAdjacentHTML('afterbegin',res)
+        document.querySelector('#filter-result .result__inner')
+          .insertAdjacentHTML('afterbegin',html)
       }
 
-      $parent.style.display = 'block'
+      document.querySelector('#filter-result').style.display = 'block'
 
     } catch (error) {
 
@@ -170,17 +174,12 @@ function resetHandler(e) {
 
   this.instanceDropDown.reset(this.form.form)
 
-  document.querySelectorAll('.result__body').forEach(block => {
-    block.style.display = 'none'
-
-    if(block.matches('#filter-result')) {
-      block.querySelector('.result__inner').innerHTML = ''
-      block.querySelector('.pagination')?.remove()
-    }
+  this._hideAllBlocks(block => {
 
     if(block.matches('#main-result')) {
       block.style.display = 'block'
     }
+
   })
 
 }

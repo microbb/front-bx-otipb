@@ -44,36 +44,26 @@ export default class Pagination extends PaginationCore{
    */
   _init() {
     this._switchPage()
-
-    // if(this._pagesCount > 1) {
-    //   this._switchingHandler()
-    // }
   }
 
   /**
    * Обработчик события клика по элементу который переключает страницы
    * @return {void}
    */
-  _switchingHandler() {
-
-    // this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
-    //   elem.addEventListener('click', this._test)
-    // })
-
-  }
-
-  _test = (e) => {
+  _switchingHandler = (e) => {
     e.preventDefault()
 
-    // const target = e.target;
-    this._switchPage(e.target)
+    let target = e.target;
 
-    // if (target && target.classList.contains('pagination__btn') && target.closest(this.paginationInSelector) || target.parentElement.classList.contains('pagination__btn') && target.closest(this.paginationInSelector)) {
-    //   e.preventDefault()
-    //
-    //   this._switchPage(target)
-    //
-    // }
+    if(target && target.classList.contains('pagination__btn') || target && target.parentElement.classList.contains('pagination__btn')) {
+
+      if (target.parentElement.classList.contains('pagination__btn')){
+        target = target.parentElement
+      }
+
+      this._switchPage(target)
+
+    }
   }
 
   /**
@@ -90,15 +80,10 @@ export default class Pagination extends PaginationCore{
 
     let resSlice = this._listElements.slice(start, end)
 
-    console.log(resSlice)
-
     this.$resultInElement.innerHTML = ''
     this.$resultInElement.insertAdjacentHTML('beforeend', resSlice.join(''))
 
-    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
-      elem.removeEventListener('click', this._test)
-    })
-    this.$paginationInElement.querySelector('.pagination')?.remove()
+    this._removeEventListenerClick()
 
     if(this._pagesCount > 1){
       this._paginationCreate()
@@ -130,11 +115,30 @@ export default class Pagination extends PaginationCore{
 
     pagination.innerHTML = startPage + page4left + page3left + page2left + page1left + pageActive + page1right + page2right + page3right + page4right + endPage
 
-    pagination.querySelectorAll('.pagination__btn').forEach(elem => {
-      elem.addEventListener('click', this._test)
-    })
-
     this.$paginationInElement.append(pagination)
+
+    this._addEventListenerClick()
+  }
+
+  /**
+   * Добавить слушатель
+   * @return {void}
+   */
+  _addEventListenerClick() {
+    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(btn => {
+      btn.addEventListener('click', this._switchingHandler)
+    })
+  }
+
+  /**
+   * Удалить слушатель
+   * @return {void}
+   */
+  _removeEventListenerClick() {
+    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(btn => {
+      btn.removeEventListener('click', this._switchingHandler)
+    })
+    this.$paginationInElement.querySelector('.pagination')?.remove()
   }
 
 }
