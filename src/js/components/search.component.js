@@ -37,6 +37,8 @@ export default class SearchComponent extends Component {
       STATUS: []
     })
 
+    getData.call(this)
+
   }
 
   /**
@@ -57,6 +59,60 @@ export default class SearchComponent extends Component {
         cb(block)
       }
     })
+  }
+
+}
+
+/**
+ * Обработчик заполнения имен сотрудников для поиска
+ * @return {void}
+ */
+async function getData() {
+  try {
+
+    const formData = new FormData(),
+          optionsWrap = this.$el.querySelector('.js-options-search')
+
+    const response = await apiService.useRequest('getUsers',formData),
+          result = JSON.parse(response.data.result)
+
+    if(Array.isArray(result)) {
+
+      let html = result.map(name => {
+        return `
+            <div class="dropdown__item" title="${name}">
+              ${name}
+            </div>
+        `
+      })
+
+      optionsWrap.innerHTML = ''
+      optionsWrap.insertAdjacentHTML('afterbegin', html.join(''))
+
+    }
+
+  } catch (error) {
+    if(error.status === 'error') {
+
+      console.group('In file ApiService, in function useRequest, promise return reject')
+
+      console.group('List of errors')
+
+      error.errors.forEach(error => {
+        console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`)
+      })
+
+      console.groupEnd();
+
+      console.groupEnd();
+
+    } else {
+
+      console.group('In file SearchComponent, in function getData error')
+      console.error(`${error.stack}`)
+      console.groupEnd();
+
+    }
   }
 
 }
