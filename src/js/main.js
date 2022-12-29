@@ -2,6 +2,7 @@ import Modal from './library/sumbiot/modules/modals/components/modal'
 import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics'
 import Accordion from './library/sumbiot/modules/accordion/components/accordion'
 import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdownSelect'
+import DropdownInput from "./library/sumbiot/modules/dropdown/components/dropdownInput";
 
 import AddUserComponent from "./components/add-user.component";
 import FilterComponent from "./components/filter.component";
@@ -24,14 +25,21 @@ window.addEventListener('DOMContentLoaded', () => {
   //   }
   // }
 
-  // выподающий список
-  const dropDown = new DropdownSelect('.dropdown',{
+  // выподающий список select
+  const dropDownSelect = new DropdownSelect('.dropdown--select',{
     dropdownToggleSelector: '.dropdown__toggle',
-    dropdownOptionsWrapperSelector: '.dropdown__options',
+    dropdownOptionsWrapperSelector: '.dropdown--select .dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
   })
-  dropDown.accept(Visitor.positionMod)
+  dropDownSelect.accept(Visitor.positionMod)
           .upgrade()
+
+  // выподающий список поиск
+  const dropDownInput = new DropdownInput('.dropdown--input',{
+    dropdownToggleSelector: '.dropdown__toggle',
+    dropdownOptionsWrapperSelector: '.dropdown--input .dropdown__options',
+    dropdownOptionSelector: '.dropdown__item'
+  })
 
   // панель которая регулирует ширина выподающего списка
   new Stretch('.js-option-panel',
@@ -68,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // модалка добавление HSE
   new ModalDynamics('.js-add-hse-modal',
     {modalSelector:'#add-hse-modal', closeClickOverlay: false})
-    .accept(Visitor.addHseMod).upgrade(dropDown)
+    .accept(Visitor.addHseMod).upgrade(dropDownSelect)
 
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',
@@ -84,11 +92,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // компонент добавления сотрудника
   new AddUserComponent('#add-user', {
-    dropDown
+    dropDown: dropDownSelect
   })
   // компонент редактировать сотрудника
   new EditUserComponent('#edit-user', {
-    dropDown
+    dropDown: dropDownSelect
   })
 
   // компонент добавить / редактировать / продлить удостоверение
@@ -105,7 +113,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // компонент фильтр
   new FilterComponent('#filter', {
-    dropDown
+    dropDown: dropDownSelect
   })
 
   // компонент Поиск

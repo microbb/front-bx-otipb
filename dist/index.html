@@ -29,20 +29,45 @@
         <div class="row f-justify-content-between">
           <div class="col-auto">
 
-            <form class="form form--search" id="search" action="/search" method="post">
+            <form class="form form--search" id="search" action="/search" method="post" autocomplete="off">
 
               <div class="form__inner">
 
-                <label class="form__item">
-                  <input type="text" class="form__input" name="SEARCH" placeholder="Поиск" required>
-                </label>
+                <div class="form__item">
+                  <div class="form__dropdown dropdown dropdown--input">
+                    <input type="text" class="dropdown__toggle form__input" name="SEARCH" placeholder="Поиск" required>
+                    <div class="dropdown__options">
+                      <div class="dropdown__item" title="Вася Пупкин Иванович">
+                        Куприянов Дмитрий Георгиевич
+                      </div>
+                      <div class="dropdown__item" title="Вася Пупкин Иванович">
+                        Кузнецов Николай Сергеевич
+                      </div>
+                      <div class="dropdown__item" title="Вася Пупкин Иванович">
+                        Григорьев Иван Богданович
+                      </div>
+                      <div class="dropdown__item" title="Вася Пупкин Иванович">
+                        Ершов Илья Данилович
+                      </div>
+                      <div class="dropdown__item" title="Вася Пупкин Иванович">
+                        Олейникова Полина Тимофеевна
+                      </div>
+                      <div class="dropdown__item" title="Вася Пупкин Иванович">
+                        Лаптев Матвей Эмильевич
+                      </div>
+                      <div class="dropdown__item" title="Вася Пупкин Иванович">
+                        Фролова Екатерина Михайловна
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <label class="form__item form__item--order-3">
                   <input type="checkbox" class="form__checkbox" name="STATUS">
                   <span class="form__label">Добавить в результат поиска уволенных сотрудников</span>
                 </label>
 
-                <button type="submit" class="btn btn-primary">Найти</button>
+                <button type="submit" class="form__button btn btn-primary js-button-search-submit">Найти</button>
 
               </div>
 
@@ -58,6 +83,40 @@
           </div>
         </div>
       </div><!--./top-panel-->
+
+      <!--<div class="top-panel">-->
+      <!--  <div class="row f-justify-content-between">-->
+      <!--    <div class="col-auto">-->
+
+      <!--      <form class="form form&#45;&#45;search" id="search" action="/search" method="post">-->
+
+      <!--        <div class="form__inner">-->
+
+      <!--          <label class="form__item">-->
+      <!--            <input type="text" class="form__input" name="SEARCH" placeholder="Поиск" required>-->
+      <!--          </label>-->
+
+      <!--          <label class="form__item form__item&#45;&#45;order-3">-->
+      <!--            <input type="checkbox" class="form__checkbox" name="STATUS">-->
+      <!--            <span class="form__label">Добавить в результат поиска уволенных сотрудников</span>-->
+      <!--          </label>-->
+
+      <!--          <button type="submit" class="btn btn-primary">Найти</button>-->
+
+      <!--        </div>-->
+
+      <!--      </form>&lt;!&ndash;./search&ndash;&gt;-->
+
+      <!--    </div>-->
+      <!--    <div class="col-auto">-->
+
+      <!--      <button type="button" class="top-panel__btn btn btn-primary js-add-user-modal" data-sumbiot-target="#add-user-modal">Добавить сотрудника</button>-->
+      <!--      <button type="button" class="top-panel__btn btn btn-warning">Заявка на обучение</button>-->
+      <!--      <button type="button" class="top-panel__btn btn btn-success js-filter-modal" data-sumbiot-target="#filter-modal">Фильтр</button>-->
+
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--</div>&lt;!&ndash;./top-panel&ndash;&gt;-->
 
       <section class="modal" id="add-user-modal" data-sumbiot-modal-top>
 
@@ -75,7 +134,7 @@
 
               <div class="form__item">
                 <span class="form__label">Дивизион:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_DIVISION">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_DIVISION">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
                   <div class="dropdown__options">
                     <div class="dropdown__item" data-select-option="1">
@@ -120,7 +179,7 @@
 
               <div class="form__item">
                 <span class="form__label">Отдел:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_DEPARTMENT">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_DEPARTMENT">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
 
                   <div class="dropdown__options dropdown__options--right">
@@ -167,7 +226,7 @@
 
               <div class="form__item">
                 <span class="form__label">Должность HSE:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_MATRIX_WORKS">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
 
                   <div class="dropdown__options">
@@ -214,7 +273,7 @@
 
               <div class="form__item">
                 <span class="form__label">Статус:</span>
-                <div class="form__dropdown dropdown" data-select-name="E_EMPLOYEE_STATUS">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="E_EMPLOYEE_STATUS">
                   <div class="dropdown__toggle"></div>
                   <div class="dropdown__options">
                     <div class="dropdown__item" data-select-option="1">работает</div>
@@ -256,7 +315,7 @@
 
               <div class="form__item">
                 <span class="form__label">Дивизион:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_DIVISION">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_DIVISION">
                   <div class="dropdown__toggle js-dropdown__toggle">---</div>
                   <div class="dropdown__options">
                     <div class="dropdown__item" data-select-option="" title="Не выбран">---</div>
@@ -302,7 +361,7 @@
 
               <div class="form__item">
                 <span class="form__label">Должность HSE:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_MATRIX_WORKS">
                   <div class="dropdown__toggle js-dropdown__toggle">---</div>
 
                   <div class="dropdown__options dropdown__options--right">
@@ -4713,7 +4772,6 @@
 
         <div id="search-result" class="result__body">
           <div class="result__inner"></div>
-          <!--    <div class="pagination"></div>-->
         </div><!--./result__body-->
 
       </div><!--./result-->
@@ -4734,7 +4792,7 @@
 
               <div class="form__item">
                 <span class="form__label">Дивизион:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_DIVISION">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_DIVISION">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
                   <div class="dropdown__options">
                     <div class="dropdown__item" data-select-option="1">
@@ -4779,7 +4837,7 @@
 
               <div class="form__item">
                 <span class="form__label">Отдел:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_DEPARTMENT">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_DEPARTMENT">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
 
                   <div class="dropdown__options dropdown__options--right">
@@ -4826,7 +4884,7 @@
 
               <div class="form__item">
                 <span class="form__label">Должность HSE:</span>
-                <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_MATRIX_WORKS">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
 
                   <div class="dropdown__options">
@@ -4873,7 +4931,7 @@
 
               <div class="form__item">
                 <span class="form__label">Статус:</span>
-                <div class="form__dropdown dropdown" data-select-name="E_EMPLOYEE_STATUS">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="E_EMPLOYEE_STATUS">
                   <div class="dropdown__toggle"></div>
                   <div class="dropdown__options">
                     <div class="dropdown__item" data-select-option="1">работает</div>
@@ -4959,7 +5017,7 @@
 
               <div class="form__item form__item--column2">
                 <span class="form__label"></span>
-                <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_MATRIX_WORKS">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
 
                   <div class="dropdown__options dropdown__options--center">
@@ -5028,7 +5086,7 @@
 
               <div class="form__item form__item--column2">
                 <span class="form__label"></span>
-                <div class="form__dropdown dropdown" data-select-name="ID_MATRIX_WORKS">
+                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_MATRIX_WORKS">
                   <div class="dropdown__toggle js-dropdown__toggle"></div>
                   <div class="dropdown__options">
                     <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">

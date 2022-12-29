@@ -871,6 +871,26 @@ class FilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["defa
       ID_PROGRAM: []
     });
   }
+
+  /**
+   * Скрывает не нужные блоки и отрисовывает блок фильтра
+   * @param {function} cb - callback функция
+   * @return {void}
+   */
+  _hideAllBlocks() {
+    let cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    document.querySelectorAll('.result__body').forEach(block => {
+      block.style.display = 'none';
+      if (block.matches('#filter-result')) {
+        var _block$querySelector;
+        block.querySelector('.result__inner').innerHTML = '';
+        (_block$querySelector = block.querySelector('.pagination')) === null || _block$querySelector === void 0 ? void 0 : _block$querySelector.remove();
+      }
+      if (typeof cb === 'function') {
+        cb(block);
+      }
+    });
+  }
 }
 
 /**
@@ -892,22 +912,10 @@ async function submitHandler(e) {
       const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
         result = JSON.parse(response.data.result),
         count = result.length || 0;
-      console.log(result, result.length);
       loader.success(`Найдено: ${count} совпадений`);
-      const $parent = document.querySelector('#filter-result'),
-        $boxPaste = $parent.querySelector('.result__inner'),
-        $blocks = document.querySelectorAll('.result__body');
-      $blocks.forEach(block => {
-        block.style.display = 'none';
-        if (block.matches('#filter-result')) {
-          var _block$querySelector;
-          block.querySelector('.result__inner').innerHTML = '';
-          (_block$querySelector = block.querySelector('.pagination')) === null || _block$querySelector === void 0 ? void 0 : _block$querySelector.remove();
-        }
-      });
-      let res;
+      this._hideAllBlocks();
       if (Array.isArray(result) && result.length) {
-        res = result.map(user => {
+        let html = result.map(user => {
           if (+user.customUser) {
             return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
               build: 1
@@ -922,13 +930,12 @@ async function submitHandler(e) {
             });
           }
         });
-        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]('#filter-result', '#filter-result .result__inner', res);
-        console.log(this);
+        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]('#filter-result', '#filter-result .result__inner', html);
       } else {
-        res = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__["userPlugTemplate"])(`Найдено: ${count} совпадений`);
-        $boxPaste.insertAdjacentHTML('afterbegin', res);
+        let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__["userPlugTemplate"])(`Найдено: ${count} совпадений`);
+        document.querySelector('#filter-result .result__inner').insertAdjacentHTML('afterbegin', html);
       }
-      $parent.style.display = 'block';
+      document.querySelector('#filter-result').style.display = 'block';
     } catch (error) {
       loader.failure();
       if (error.status === 'error') {
@@ -961,13 +968,7 @@ function resetHandler(e) {
     e.target.querySelector('.form__button--reset_filter').blur();
   }, 150);
   this.instanceDropDown.reset(this.form.form);
-  document.querySelectorAll('.result__body').forEach(block => {
-    block.style.display = 'none';
-    if (block.matches('#filter-result')) {
-      var _block$querySelector2;
-      block.querySelector('.result__inner').innerHTML = '';
-      (_block$querySelector2 = block.querySelector('.pagination')) === null || _block$querySelector2 === void 0 ? void 0 : _block$querySelector2.remove();
-    }
+  this._hideAllBlocks(block => {
     if (block.matches('#main-result')) {
       block.style.display = 'block';
     }
@@ -1086,8 +1087,16 @@ class Loader {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../library/sumbiot/modules/pagination/components/pagination */ "./src/js/library/sumbiot/modules/pagination/components/pagination.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userMain.template */ "./src/js/templates/user/userMain.template.js");
+/* harmony import */ var _templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userPlug.template */ "./src/js/templates/user/userPlug.template.js");
+
+
+
+
 
 
 
@@ -1111,9 +1120,29 @@ class SearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["defa
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_2__["default"](this.$el, {
       SEARCH: [],
       STATUS: []
+    });
+  }
+
+  /**
+   * Скрывает не нужные блоки и отрисовывает блок поиска
+   * @param {function} cb - callback функция
+   * @return {void}
+   */
+  _hideAllBlocks() {
+    let cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    document.querySelectorAll('.result__body').forEach(block => {
+      block.style.display = 'none';
+      if (block.matches('#search-result')) {
+        var _block$querySelector;
+        block.querySelector('.result__inner').innerHTML = '';
+        (_block$querySelector = block.querySelector('.pagination')) === null || _block$querySelector === void 0 ? void 0 : _block$querySelector.remove();
+      }
+      if (typeof cb === 'function') {
+        cb(block);
+      }
     });
   }
 }
@@ -1124,9 +1153,98 @@ class SearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["defa
  */
 async function submitHandler(e) {
   e.preventDefault();
+  e.target.querySelector('.js-button-search-submit').blur();
   if (this.form.isValid()) {
-    console.log('Триста тридцать три');
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      loading: 'Идет поиск сотрудника',
+      failure: 'Ошибка',
+      activeClass: 'loader--min-height'
+    });
+    try {
+      const action = this.$el.getAttribute('action').slice(1),
+        formData = new FormData(this.$el),
+        parentBox = document.querySelector('#search-result');
+      this._hideAllBlocks();
+      parentBox.prepend(loader.loading());
+      parentBox.style.display = 'block';
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+        result = JSON.parse(response.data.result),
+        count = result.length || 0;
+      loader.success(`Найдено: ${count} совпадений`);
+      if (Array.isArray(result) && result.length) {
+        let html = result.map(user => {
+          if (+user.customUser) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
+              build: 1
+            });
+          } else if (+user.idMatrixWorks) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
+              build: 2
+            });
+          } else {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_5__["userMainTemplate"])(user, {
+              build: 0
+            });
+          }
+        });
+        setTimeout(() => {
+          new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]('#search-result', '#search-result .result__inner', html);
+        }, 1000);
+      } else {
+        let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_6__["userPlugTemplate"])(`Ваш запрос не дал результатов`);
+        setTimeout(() => {
+          var _parentBox$querySelec;
+          parentBox.querySelector('.result__inner').insertAdjacentHTML('afterbegin', html);
+          (_parentBox$querySelec = parentBox.querySelector('.text-align-center')) === null || _parentBox$querySelec === void 0 ? void 0 : _parentBox$querySelec.append(nextBtn());
+        }, 1000);
+      }
+    } catch (error) {
+      loader.failure();
+      if (error.status === 'error') {
+        console.group('In file ApiService, in function useRequest, promise return reject');
+        console.group('List of errors');
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+        });
+        console.groupEnd();
+        console.groupEnd();
+      } else {
+        console.group('In file SearchComponent error');
+        console.error(`${error.stack}`);
+        console.groupEnd();
+      }
+    } finally {
+      setTimeout(() => {
+        loader.removeLoader();
+      }, 900);
+    }
   }
+}
+
+/**
+ * Назад кнопка
+ * @return {HTMLElement}
+ */
+function nextBtn() {
+  let btn = document.createElement('button'),
+    text = document.createTextNode('на главную');
+  btn.append(text);
+  btn.classList.add('button', 'button--text');
+  btn.style.marginLeft = '10px';
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.result__body').forEach(block => {
+      block.style.display = 'none';
+      if (block.matches('#search-result')) {
+        var _block$querySelector2;
+        block.querySelector('.result__inner').innerHTML = '';
+        (_block$querySelector2 = block.querySelector('.pagination')) === null || _block$querySelector2 === void 0 ? void 0 : _block$querySelector2.remove();
+      }
+      if (block.matches('#main-result')) {
+        block.style.display = 'block';
+      }
+    });
+  });
+  return btn;
 }
 
 /***/ }),
@@ -1964,6 +2082,118 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 /***/ }),
 
+/***/ "./src/js/library/sumbiot/modules/dropdown/components/dropdownInput.js":
+/*!*****************************************************************************!*\
+  !*** ./src/js/library/sumbiot/modules/dropdown/components/dropdownInput.js ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DropdownInput; });
+/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown */ "./src/js/library/sumbiot/modules/dropdown/components/dropdown.js");
+
+
+/**
+ *  Выподающий список Input
+ * */
+class DropdownInput extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  /**
+   * Конструктор
+   * @param {string} dropdownSelector - селектор выподающего списка.
+   * @param {Object=} options         - конфигурация.
+   */
+  constructor(dropdownSelector) {
+    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    super(dropdownSelector, options);
+    this._dropdownOptionSelector = options.dropdownOptionSelector || '[data-input-search-option]'; // - пункты выподающего списка
+  }
+
+  /**
+   * Инициализация выподающего списка
+   * @return {void}
+   */
+  _init() {
+    this.hideAllDropdowns();
+    this._searchHandler();
+  }
+
+  /**
+   * Скрывает все открытые выподающие списки
+   * @return {void}
+   */
+  hideAllDropdowns() {
+    this._listDropdownsOptions.forEach(dropdownOpen => {
+      dropdownOpen.style.display = 'none';
+    });
+  }
+
+  /**
+   * Обработчик событий поиска
+   * @return {void}
+   */
+  _searchHandler() {
+    this._listDropdowns.forEach(dropdown => {
+      dropdown.addEventListener('input', e => {
+        if (e.target && e.target.classList.contains(this._dropdownToggleSelector.slice(1))) {
+          e.preventDefault();
+          this._showOptionsWrapper(e.target);
+        }
+      });
+      dropdown.addEventListener('click', e => {
+        if (e.target && e.target.matches(this._dropdownOptionSelector)) {
+          e.preventDefault();
+          this._activeInput(dropdown, e.target);
+        }
+      });
+    });
+    document.addEventListener('click', e => {
+      if (e.target && !e.target.closest(this._dropdownSelector)) {
+        this.hideAllDropdowns();
+      }
+    }, true);
+  }
+
+  /**
+   * Открыть выподающие меню
+   * @param {HTMLInputElement} input - input для ввода текста
+   * @return {void}
+   */
+  _showOptionsWrapper(input) {
+    let flag = false,
+      valueInput = input.value.trim();
+    if (valueInput) {
+      let options = Array.from(document.querySelectorAll(`${this._dropdownSelector} ${this._dropdownOptionSelector}`));
+      options.forEach(option => {
+        if (option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
+          option.style.display = 'block';
+          flag = true;
+        } else {
+          option.style.display = 'none';
+        }
+      });
+      flag ? input.nextElementSibling.style.display = 'block' : input.nextElementSibling.style.display = 'none';
+    } else {
+      input.nextElementSibling.style.display = 'none';
+    }
+  }
+
+  /**
+   * Выбирает активный пункт
+   * @param {HTMLElement} dropdown - блок выпадающего списка
+   * @param {HTMLElement} optionActive - пункт выпадающего списка
+   * @return {void}
+   */
+  _activeInput(dropdown, optionActive) {
+    const pasteInOption = dropdown.querySelector(this._dropdownToggleSelector);
+    pasteInOption.value = optionActive.innerText;
+    this.hideAllDropdowns();
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js":
 /*!******************************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js ***!
@@ -2021,6 +2251,8 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
   /**
    * Выбирает активный пункт
+   * @param {HTMLElement} dropdown - блок выпадающего списка
+   * @param {HTMLElement} optionActive - пункт выпадающего списка
    * @return {void}
    */
   _select(dropdown, optionActive) {
@@ -2152,6 +2384,7 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     this._trigger = triggerSelector;
     this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget);
     this._close = this.modal.querySelector(closeSelector);
+    this._modalGroupSelector = modalGroup;
     this._windows = document.querySelectorAll(modalGroup);
     this._closeClickOverlay = closeClickOverlay;
     this._init();
@@ -2242,7 +2475,7 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
    * @return {void}
    */
   _closeModalEscape(e) {
-    document.querySelectorAll('[data-sumbiot-modal]').forEach(modals => {
+    document.querySelectorAll(this._modalGroupSelector).forEach(modals => {
       if (modals.style.display === 'block') {
         modals.style.display = "none";
       }
@@ -2424,20 +2657,16 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
       page = 1
     } = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     super();
-    _defineProperty(this, "_test", e => {
+    _defineProperty(this, "_switchingHandler", e => {
       e.preventDefault();
-
-      // const target = e.target;
-      this._switchPage(e.target);
-
-      // if (target && target.classList.contains('pagination__btn') && target.closest(this.paginationInSelector) || target.parentElement.classList.contains('pagination__btn') && target.closest(this.paginationInSelector)) {
-      //   e.preventDefault()
-      //
-      //   this._switchPage(target)
-      //
-      // }
+      let target = e.target;
+      if (target && target.classList.contains('pagination__btn') || target && target.parentElement.classList.contains('pagination__btn')) {
+        if (target.parentElement.classList.contains('pagination__btn')) {
+          target = target.parentElement;
+        }
+        this._switchPage(target);
+      }
     });
-    this.paginationInSelector = paginationInSelector;
     this.$paginationInElement = document.querySelector(paginationInSelector);
     this.$resultInElement = document.querySelector(resultInSelector);
     this._listElements = listElements;
@@ -2458,28 +2687,18 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    */
   _init() {
     this._switchPage();
-
-    // if(this._pagesCount > 1) {
-    //   this._switchingHandler()
-    // }
   }
 
   /**
    * Обработчик события клика по элементу который переключает страницы
    * @return {void}
    */
-  _switchingHandler() {
 
-    // this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
-    //   elem.addEventListener('click', this._test)
-    // })
-  }
   /**
    * Переключить страницу
    * @return {void}
    */
   _switchPage() {
-    var _this$$paginationInEl;
     let btn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
     if (btn) {
       this._page = +btn.dataset.page;
@@ -2487,13 +2706,9 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
     let start = (this._page - 1) * this._perpage,
       end = start + this._perpage;
     let resSlice = this._listElements.slice(start, end);
-    console.log(resSlice);
     this.$resultInElement.innerHTML = '';
     this.$resultInElement.insertAdjacentHTML('beforeend', resSlice.join(''));
-    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(elem => {
-      elem.removeEventListener('click', this._test);
-    });
-    (_this$$paginationInEl = this.$paginationInElement.querySelector('.pagination')) === null || _this$$paginationInEl === void 0 ? void 0 : _this$$paginationInEl.remove();
+    this._removeEventListenerClick();
     if (this._pagesCount > 1) {
       this._paginationCreate();
     }
@@ -2518,10 +2733,30 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
       page1right = this._page + 1 <= this._pagesCount ? `<button type="button" class="pagination__btn" data-page="${this._page + 1}">${this._page + 1}</button>` : '',
       pageActive = `<button type="button" class="pagination__btn pagination__btn--active">${this._page}</button>`;
     pagination.innerHTML = startPage + page4left + page3left + page2left + page1left + pageActive + page1right + page2right + page3right + page4right + endPage;
-    pagination.querySelectorAll('.pagination__btn').forEach(elem => {
-      elem.addEventListener('click', this._test);
-    });
     this.$paginationInElement.append(pagination);
+    this._addEventListenerClick();
+  }
+
+  /**
+   * Добавить слушатель
+   * @return {void}
+   */
+  _addEventListenerClick() {
+    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(btn => {
+      btn.addEventListener('click', this._switchingHandler);
+    });
+  }
+
+  /**
+   * Удалить слушатель
+   * @return {void}
+   */
+  _removeEventListenerClick() {
+    var _this$$paginationInEl;
+    this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(btn => {
+      btn.removeEventListener('click', this._switchingHandler);
+    });
+    (_this$$paginationInEl = this.$paginationInElement.querySelector('.pagination')) === null || _this$$paginationInEl === void 0 ? void 0 : _this$$paginationInEl.remove();
   }
 }
 
@@ -2566,15 +2801,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modalDynamics */ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js");
 /* harmony import */ var _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./library/sumbiot/modules/accordion/components/accordion */ "./src/js/library/sumbiot/modules/accordion/components/accordion.js");
 /* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdownSelect */ "./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js");
-/* harmony import */ var _components_add_user_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/add-user.component */ "./src/js/components/add-user.component.js");
-/* harmony import */ var _components_filter_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/filter.component */ "./src/js/components/filter.component.js");
-/* harmony import */ var _components_edit_user_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/edit-user.component */ "./src/js/components/edit-user.component.js");
-/* harmony import */ var _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/delete-user-or-card.component */ "./src/js/components/delete-user-or-card.component.js");
-/* harmony import */ var _components_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/add-or-edit-card.component */ "./src/js/components/add-or-edit-card.component.js");
-/* harmony import */ var _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/add-or-edit-hse.component */ "./src/js/components/add-or-edit-hse.component.js");
-/* harmony import */ var _components_search_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/search.component */ "./src/js/components/search.component.js");
-/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
-/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
+/* harmony import */ var _library_sumbiot_modules_dropdown_components_dropdownInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./library/sumbiot/modules/dropdown/components/dropdownInput */ "./src/js/library/sumbiot/modules/dropdown/components/dropdownInput.js");
+/* harmony import */ var _components_add_user_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/add-user.component */ "./src/js/components/add-user.component.js");
+/* harmony import */ var _components_filter_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/filter.component */ "./src/js/components/filter.component.js");
+/* harmony import */ var _components_edit_user_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/edit-user.component */ "./src/js/components/edit-user.component.js");
+/* harmony import */ var _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/delete-user-or-card.component */ "./src/js/components/delete-user-or-card.component.js");
+/* harmony import */ var _components_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/add-or-edit-card.component */ "./src/js/components/add-or-edit-card.component.js");
+/* harmony import */ var _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/add-or-edit-hse.component */ "./src/js/components/add-or-edit-hse.component.js");
+/* harmony import */ var _components_search_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/search.component */ "./src/js/components/search.component.js");
+/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
+
 
 
 
@@ -2596,95 +2833,102 @@ window.addEventListener('DOMContentLoaded', () => {
   //   }
   // }
 
-  // выподающий список
-  const dropDown = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown', {
+  // выподающий список select
+  const dropDownSelect = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown--select', {
     dropdownToggleSelector: '.dropdown__toggle',
-    dropdownOptionsWrapperSelector: '.dropdown__options',
+    dropdownOptionsWrapperSelector: '.dropdown--select .dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
   });
-  dropDown.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].positionMod).upgrade();
+  dropDownSelect.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].positionMod).upgrade();
+
+  // выподающий список поиск
+  const dropDownInput = new _library_sumbiot_modules_dropdown_components_dropdownInput__WEBPACK_IMPORTED_MODULE_4__["default"]('.dropdown--input', {
+    dropdownToggleSelector: '.dropdown__toggle',
+    dropdownOptionsWrapperSelector: '.dropdown--input .dropdown__options',
+    dropdownOptionSelector: '.dropdown__item'
+  });
 
   // панель которая регулирует ширина выподающего списка
-  new _components_stretch__WEBPACK_IMPORTED_MODULE_12__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
+  new _components_stretch__WEBPACK_IMPORTED_MODULE_13__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
 
   // модалка фильтр
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalSelector: '#edit-user-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editUserMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].editUserMod).upgrade();
 
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
     modalSelector: '#delete-user-or-card-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsUnityDeleteMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsUnityDeleteMod).upgrade();
 
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalSelector: '#edit-card-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].modalsUnityMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsUnityMod).upgrade();
 
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     modalSelector: '#add-hse-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].addHseMod).upgrade(dropDown);
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].addHseMod).upgrade(dropDownSelect);
 
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalSelector: '#edit-hse-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].editHseMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].editHseMod).upgrade();
 
   // аккардион
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_11__["default"].accordionParentMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].accordionParentMod).upgrade();
 
   // компонент добавления сотрудника
-  new _components_add_user_component__WEBPACK_IMPORTED_MODULE_4__["default"]('#add-user', {
-    dropDown
+  new _components_add_user_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#add-user', {
+    dropDown: dropDownSelect
   });
   // компонент редактировать сотрудника
-  new _components_edit_user_component__WEBPACK_IMPORTED_MODULE_6__["default"]('#edit-user', {
-    dropDown
+  new _components_edit_user_component__WEBPACK_IMPORTED_MODULE_7__["default"]('#edit-user', {
+    dropDown: dropDownSelect
   });
 
   // компонент добавить / редактировать / продлить удостоверение
-  new _components_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#edit-card');
+  new _components_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#edit-card');
 
   // компонент удалить сотрудника / удостоверение
-  new _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_7__["default"]('#delete-user-or-card');
+  new _components_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#delete-user-or-card');
 
   // компонент добавить должность HSE
-  new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#add-hse');
+  new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_10__["default"]('#add-hse');
 
   // компонент редактировать должность HSE
-  new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#edit-hse');
+  new _components_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_10__["default"]('#edit-hse');
 
   // компонент фильтр
-  new _components_filter_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#filter', {
-    dropDown
+  new _components_filter_component__WEBPACK_IMPORTED_MODULE_6__["default"]('#filter', {
+    dropDown: dropDownSelect
   });
 
   // компонент Поиск
-  new _components_search_component__WEBPACK_IMPORTED_MODULE_10__["default"]('#search');
+  new _components_search_component__WEBPACK_IMPORTED_MODULE_11__["default"]('#search');
 });
 
 /***/ }),
@@ -2719,30 +2963,28 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    return await BX.ajax.runComponentAction(this.componentBx, action, {
-      mode: 'class',
-      data: data
-    });
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
+    // return await BX.ajax.runComponentAction(this.componentBx, action, {
+    //   mode: 'class',
+    //   data: data
     // })
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
   }
 }
-
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),
@@ -3288,7 +3530,7 @@ function userPlugTemplate(text) {
   return `
     <div class="result__row js-result-row">
       <div class="row gx-0 result__empty">
-        <div class="col-12">
+        <div class="col-12 text-align-center d-block">
           ${text}
         </div>
       </div>

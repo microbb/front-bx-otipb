@@ -22,7 +22,6 @@ export default class Pagination extends PaginationCore{
 
     super()
 
-    this.paginationInSelector = paginationInSelector
     this.$paginationInElement = document.querySelector(paginationInSelector)
     this.$resultInElement = document.querySelector(resultInSelector)
 

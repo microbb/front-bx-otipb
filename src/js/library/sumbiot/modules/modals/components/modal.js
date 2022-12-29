@@ -24,6 +24,7 @@ export default class Modal extends ModalCore{
     this.modal = document.querySelector(modalSelector || document.querySelector(triggerSelector).dataset.sumbiotTarget)
     this._close = this.modal.querySelector(closeSelector)
 
+    this._modalGroupSelector = modalGroup
     this._windows = document.querySelectorAll(modalGroup)
     this._closeClickOverlay = closeClickOverlay
 
@@ -126,7 +127,7 @@ export default class Modal extends ModalCore{
    */
   _closeModalEscape(e) {
 
-    document.querySelectorAll('[data-sumbiot-modal]').forEach((modals)=>{
+    document.querySelectorAll(this._modalGroupSelector).forEach((modals)=>{
       if(modals.style.display === 'block'){
         modals.style.display = "none"
       }

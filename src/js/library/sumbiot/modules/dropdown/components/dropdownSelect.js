@@ -57,6 +57,8 @@ export default class DropdownSelect extends Dropdown {
 
   /**
    * Выбирает активный пункт
+   * @param {HTMLElement} dropdown - блок выпадающего списка
+   * @param {HTMLElement} optionActive - пункт выпадающего списка
    * @return {void}
    */
   _select(dropdown,optionActive) {
