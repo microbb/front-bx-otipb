@@ -62,7 +62,7 @@ export default class Modal extends ModalCore{
     document.addEventListener('click', (e) => {
       const target = e.target;
 
-      if (target && target.classList.contains(this._trigger.slice(1)) || target.parentElement.classList.contains(this._trigger.slice(1)) ) {
+      if (target && target.classList.contains(this._trigger.slice(1)) || target && target.parentElement.classList.contains(this._trigger.slice(1)) ) {
         e.preventDefault()
         e.stopPropagation()
 

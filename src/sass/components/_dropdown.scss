@@ -10,6 +10,14 @@ $color3: #e7e7e1;
   background-color: #fff;
 
   user-select: none;
+
+  &--input {
+
+    & .dropdown__toggle {
+      cursor: text;
+    }
+
+  }
 }
 
 .dropdown__toggle{

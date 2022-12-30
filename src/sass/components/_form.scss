@@ -10,7 +10,7 @@ $select: #98948a;
 
   &--search{
 
-    .form__inner{
+    & .form__inner{
       display: flex;
       flex-wrap: wrap;
 
@@ -20,7 +20,7 @@ $select: #98948a;
       grid-row-gap: 0;
     }
 
-    .form__label{
+    & .form__label{
       display: inline-block;
 
       margin-bottom: 0;
@@ -33,19 +33,42 @@ $select: #98948a;
       opacity: 0.7;
     }
 
-    .form__input{
+    & .form__input{
       width: 300px;
 
       margin: 0;
       padding: 11.5px 9px;
     }
 
-    .form__button{
+    & .form__button{
       flex: none;
 
       margin-right: 0;
       margin-left: 8px;
+
+      &--reset_search{
+        position: absolute;
+        top: 50%;
+        right: 8px;
+
+        padding: 10px;
+        margin: 0;
+
+        background-color: $color;
+        background-image: url(../img/close-icon.svg);
+        background-position: center;
+        background-size: 10px;
+        background-repeat: no-repeat;
+
+        border: none;
+
+        transform: translateY(-50%);
+
+        cursor: pointer;
+      }
     }
+
+
   }
 
 }
@@ -172,7 +195,6 @@ $select: #98948a;
     flex: 0 1 auto;
 
     padding: 10px;
-
     margin-right: 0;
   }
 }

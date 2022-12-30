@@ -124,7 +124,14 @@ async function getData() {
 async function submitHandler(e) {
 
   e.preventDefault()
-  e.target.querySelector('.js-button-search-submit').blur()
+
+  let btnSubmit = e.target.querySelector('.js-button-search-submit')
+
+  btnSubmit.disabled = true
+  setTimeout(() => {
+    btnSubmit.blur()
+  },150)
+
 
   if(this.form.isValid()){
 
@@ -136,49 +143,53 @@ async function submitHandler(e) {
 
     try {
 
-        const action = this.$el.getAttribute('action').slice(1),
-              formData = new FormData(this.$el),
-              parentBox = document.querySelector('#search-result')
+      const action = this.$el.getAttribute('action').slice(1),
+            formData = new FormData(this.$el),
+            parentBox = document.querySelector('#search-result')
 
-        this._hideAllBlocks()
+      this._hideAllBlocks()
 
-        parentBox.prepend(loader.loading())
+      this.$el.querySelector('.form__button--reset_search')?.remove()
 
-        parentBox.style.display = 'block'
+      parentBox.prepend(loader.loading())
 
-        const response = await apiService.useRequest(action,formData),
-              result = JSON.parse(response.data.result),
-              count = result.length || 0
+      parentBox.style.display = 'block'
 
-        loader.success(`Найдено: ${count} совпадений`)
+      const response = await apiService.useRequest(action,formData),
+            result = JSON.parse(response.data.result),
+            count = result.length || 0
 
-        if(Array.isArray(result) && result.length) {
+      loader.success(`Найдено: ${count} совпадений`)
 
-          let html = result.map(user => {
-            if(+user.customUser) {
-              return userMainTemplate(user,{build: 1})
-            } else if (+user.idMatrixWorks) {
-              return userMainTemplate(user,{build: 2})
-            } else {
-              return userMainTemplate(user,{build: 0})
-            }
-          })
+      if(Array.isArray(result) && result.length) {
 
-          setTimeout(() => {
-            new Pagination('#search-result','#search-result .result__inner',html)
-          },1000)
-        }
-        else{
+        let html = result.map(user => {
+          if(+user.customUser) {
+            return userMainTemplate(user,{build: 1})
+          } else if (+user.idMatrixWorks) {
+            return userMainTemplate(user,{build: 2})
+          } else {
+            return userMainTemplate(user,{build: 0})
+          }
+        })
 
-          let html = userPlugTemplate(`Ваш запрос не дал результатов`)
+        setTimeout(() => {
+          new Pagination('#search-result','#search-result .result__inner',html)
+        },950)
+      }
+      else{
 
-          setTimeout(() => {
-            parentBox.querySelector('.result__inner')
-              .insertAdjacentHTML('afterbegin',html)
+        let html = userPlugTemplate(`Ваш запрос не дал результатов`)
 
-            parentBox.querySelector('.text-align-center')?.append(nextBtn())
-          },1000)
-        }
+        setTimeout(() => {
+          parentBox.querySelector('.result__inner')
+            .insertAdjacentHTML('afterbegin',html)
+
+          parentBox.querySelector('.text-align-center')?.append(nextBtn.call(this))
+        },950)
+      }
+
+      this.$el.querySelector('.dropdown--input')?.append(resetRender.call(this))
 
     } catch (error) {
 
@@ -212,6 +223,8 @@ async function submitHandler(e) {
 
         loader.removeLoader()
 
+        btnSubmit.disabled = false
+
       }, 900)
 
     }
@@ -221,7 +234,51 @@ async function submitHandler(e) {
 }
 
 /**
- * Назад кнопка
+ * Обработчик сброса поиска
+ * @return {HTMLElement}
+ */
+function resetRender() {
+
+  // btnReset
+  const btnReset = () => {
+    let btn = document.createElement('button')
+
+    btn.classList.add('form__button','form__button--reset_search')
+    btn.setAttribute('type','reset')
+
+    return btn
+  }
+
+  // btnHandler
+  const btnHandler = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    this.form.clear()
+    this.$el.querySelector('.dropdown__toggle').style.paddingRight = ''
+
+    btn.removeEventListener('click', btnHandler)
+    btn.remove()
+
+    this._hideAllBlocks(block => {
+
+      if(block.matches('#main-result')) {
+        block.style.display = 'block'
+      }
+
+    })
+  }
+
+  const btn = btnReset()
+
+  this.$el.querySelector('.dropdown__toggle').style.paddingRight = '30px'
+  btn.addEventListener('click', btnHandler)
+
+  return btn
+}
+
+/**
+ * Назад кнопка, если поиск не дал результатов
  * @return {HTMLElement}
  */
 function nextBtn() {
@@ -233,17 +290,18 @@ function nextBtn() {
   btn.style.marginLeft = '10px'
 
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.result__body').forEach(block => {
-      block.style.display = 'none'
 
-      if(block.matches('#search-result')) {
-        block.querySelector('.result__inner').innerHTML = ''
-        block.querySelector('.pagination')?.remove()
-      }
+    if(this.$el.querySelector('.dropdown__toggle'))
+      this.$el.querySelector('.dropdown__toggle').style.paddingRight = ''
+
+    this.$el.querySelector('.form__button--reset_search')?.remove()
+
+    this._hideAllBlocks(block => {
 
       if(block.matches('#main-result')) {
         block.style.display = 'block'
       }
+
     })
   })
 
