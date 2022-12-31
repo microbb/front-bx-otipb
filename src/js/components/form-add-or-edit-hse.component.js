@@ -7,13 +7,13 @@ import Support from "../core/support";
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
 
-import {userInfoTemplate} from "../templates/user/userInfo.template";
 import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
+import {workNameTemplate} from "../templates/workName.template";
 
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class EditUserComponent extends Component {
+export default class FormAddOrEditHseComponent extends Component {
 
   /**
    * Конструктор
@@ -24,7 +24,6 @@ export default class EditUserComponent extends Component {
 
     super(id,options);
 
-    this.instanceDropDown = options.dropDown || {}
   }
 
   /**
@@ -34,28 +33,28 @@ export default class EditUserComponent extends Component {
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this))
 
-    document.addEventListener('click', (e) => {
-      let target = e.target;
+    if(this.$el.getAttribute('id') === 'edit-hse') {
 
-      if (target && target.classList.contains('js-edit-user-modal') || target.parentElement.classList.contains('js-edit-user-modal') ) {
-        e.preventDefault()
+      document.addEventListener('click', (e) => {
+        let target = e.target;
 
-        if (target.parentElement.classList.contains('js-edit-user-modal')){
-          target = target.parentElement
+        if (target && target.classList.contains('js-edit-hse-modal') || target.parentElement.classList.contains('js-edit-hse-modal') ) {
+          e.preventDefault()
+
+          if (target.parentElement.classList.contains('js-edit-hse-modal')){
+            target = target.parentElement
+          }
+
+          getData.call(this,target)
+
         }
+      })
 
-        getData.call(this,target)
-
-      }
-    })
+    }
 
     this.form = new Form(this.$el, {
       ID: [],
-      E_FIO: [],
-      ID_DIVISION: [Validators.required],
-      ID_DEPARTMENT: [Validators.required],
-      ID_MATRIX_WORKS: [Validators.required],
-      E_EMPLOYEE_STATUS: [Validators.required]
+      ID_MATRIX_WORKS: [Validators.required]
     })
 
   }
@@ -77,7 +76,6 @@ async function getData(target) {
   try {
 
     const formData = new FormData(),
-          fioInput = this.$el.querySelector('.js-edit-fio'),
           options = this.$el.querySelectorAll('.dropdown__item')
 
     formData.append('ID',target.dataset.id)
@@ -86,18 +84,12 @@ async function getData(target) {
       this.$el.append(loader.loading())
     },400)
 
-    const response = await apiService.useRequest('getUserInfo',formData),
-          result = JSON.parse(response.data.result)
+    const response = await apiService.useRequest('getIdHse',formData)
 
-    fioInput.value = result.fio
-
-    delete result.fio
-    const optionsKey = Object.values(result)
     options.forEach(option => {
-      if(optionsKey.includes(option.dataset.selectOption)) {
+      if(+option.dataset.selectOption === +response.data.result) {
 
         option.click()
-
       }
     })
 
@@ -113,12 +105,11 @@ async function getData(target) {
         })
 
         console.groupEnd();
-
       console.groupEnd();
 
     } else {
 
-      console.group('In file EditUserComponent, in function getData error')
+      console.group('In file FormAddOrEditHseComponent, in function getData error')
         console.error(`${error.stack}`)
       console.groupEnd();
 
@@ -142,9 +133,9 @@ async function submitHandler(e) {
   if(this.form.isValid()){
 
     const loader = new Loader({
-      loading: 'Идет добавления сотрудника',
-      success: 'Сотрудник добавлен',
-      failure: 'Сотрудник не добавлен'
+      loading: 'Добавление должности',
+      success: 'Должность добавлена',
+      failure: 'Должность не добавлена'
     })
 
     try {
@@ -152,24 +143,27 @@ async function submitHandler(e) {
       const action = this.$el.getAttribute('action').slice(1),
             formData = new FormData(this.$el)
 
+      this.$el.querySelector('button').blur()
       this.$el.append(loader.loading())
 
       const response = await apiService.useRequest(action,formData),
             result = JSON.parse(response.data.result)
 
-      const htmlUserInfo = userInfoTemplate(result,{build: 1}),
-            htmlCardInfo = userCardInfoTemplate(result,{build: 1})
+      const htmlCardInfo = userCardInfoTemplate(result,{build: 2}),
+            htmlUserWork = workNameTemplate(result.work)
 
       loader.success()
 
       setTimeout(() => {
         const parent = this.$el.closest('.result__row'),
-              user = parent.querySelector('.js-user-info'),
-              info = parent.querySelector('.result__info')
+              info = parent.querySelector('.result__info'),
+              work = parent.querySelector('.js-matrix-work-hse')
 
-        user.innerHTML = htmlUserInfo
         info.innerHTML = htmlCardInfo
 
+        work.classList.add('g-justify-items-left')
+        work.setAttribute('title',result.work)
+        work.innerHTML = htmlUserWork
       },900)
 
     } catch (error) {
@@ -192,7 +186,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file EditUserComponent, in function submitHandler error')
+        console.group('In file FormAddOrEditHseComponent, in function submitHandler error')
           console.error(`${error.stack}`)
         console.groupEnd();
 
@@ -201,9 +195,6 @@ async function submitHandler(e) {
     } finally {
 
       setTimeout(() => {
-        this.form.clear()
-        this.instanceDropDown.reset(this.form.form)
-
         this.$el.closest('.modal').style.display = 'none'
 
         Support.removeClass('.js-wrapper-modal',

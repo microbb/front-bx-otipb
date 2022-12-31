@@ -10,7 +10,7 @@ import Loader from "./loader";
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class AddUserComponent extends Component {
+export default class FormAddUserComponent extends Component {
 
   /**
    * Конструктор
@@ -93,7 +93,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file AddUserComponent error')
+        console.group('In file FormAddUserComponent error')
           console.error(`${error.stack}`)
         console.groupEnd();
 

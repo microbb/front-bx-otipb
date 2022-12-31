@@ -9,7 +9,7 @@ import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class DeleteUserOrCardComponent extends Component {
+export default class FormDeleteUserOrCardComponent extends Component {
 
   /**
    * Конструктор
@@ -76,8 +76,8 @@ async function submitHandler(e) {
         const result = JSON.parse(response.data.result)
 
         const htmlCardInfo = (+result.customUser) ? userCardInfoTemplate(result,{build: 1}) :
-          (+result.idMatrixWorks) ? userCardInfoTemplate(result,{build: 2}) :
-            userCardInfoTemplate(result,{build: 0})
+              (+result.idMatrixWorks) ? userCardInfoTemplate(result,{build: 2}) :
+              userCardInfoTemplate(result,{build: 0})
 
         loader.success()
 
@@ -109,7 +109,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file DeleteUserOrCardComponent, in function submitHandler error')
+        console.group('In file FormDeleteUserOrCardComponent, in function submitHandler error')
           console.error(`${error.stack}`)
         console.groupEnd();
 

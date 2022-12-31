@@ -1,17 +1,19 @@
 import Component from "../core/component"
 
 import Form from "../core/form";
+import {Validators} from "../core/validators";
 import Support from "../core/support";
 
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
 
+import {userInfoTemplate} from "../templates/user/userInfo.template";
 import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
 
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class AddOrEditCardComponent extends Component {
+export default class FormEditUserComponent extends Component {
 
   /**
    * Конструктор
@@ -21,6 +23,8 @@ export default class AddOrEditCardComponent extends Component {
   constructor(id,options) {
 
     super(id,options);
+
+    this.instanceDropDown = options.dropDown || {}
   }
 
   /**
@@ -31,37 +35,29 @@ export default class AddOrEditCardComponent extends Component {
     this.$el.addEventListener('submit', submitHandler.bind(this))
 
     document.addEventListener('click', (e) => {
-
       let target = e.target;
 
-      if (target && target.classList.contains('js-edit-card-modal') || target.parentElement.classList.contains('js-edit-card-modal') ) {
+      if (target && target.classList.contains('js-edit-user-modal') || target.parentElement.classList.contains('js-edit-user-modal') ) {
         e.preventDefault()
 
-        if (target.parentElement.classList.contains('js-edit-card-modal')){
-          target = target.parentElement
-        }
-
-        this.form.clear()
-      }
-
-      if (target && target.classList.contains('js-edit-card') || target.parentElement.classList.contains('js-edit-card') ) {
-        e.preventDefault()
-
-        if (target.parentElement.classList.contains('js-edit-card')){
+        if (target.parentElement.classList.contains('js-edit-user-modal')){
           target = target.parentElement
         }
 
         getData.call(this,target)
-      }
 
+      }
     })
 
     this.form = new Form(this.$el, {
       ID: [],
-      C_ATTESTATION_DATE: [],
-      C_NEXT_ATTESTATION_DATE: [],
-      C_CARD_NUMBER: [],
+      E_FIO: [],
+      ID_DIVISION: [Validators.required],
+      ID_DEPARTMENT: [Validators.required],
+      ID_MATRIX_WORKS: [Validators.required],
+      E_EMPLOYEE_STATUS: [Validators.required]
     })
+
   }
 
 }
@@ -75,15 +71,14 @@ async function getData(target) {
   let idTimeout;
 
   const loader = new Loader({
-    loading: 'Идет сбор данных, об удостоверение',
+    loading: 'Идет сбор данных, о сотруднике',
   })
 
   try {
 
     const formData = new FormData(),
-          attDateInput = this.$el.querySelector('.js-edit-att-date'),
-          nextAttDateInput = this.$el.querySelector('.js-edit-next-att-date'),
-          cardNumberInput = this.$el.querySelector('.js-edit-card-number')
+          fioInput = this.$el.querySelector('.js-edit-fio'),
+          options = this.$el.querySelectorAll('.dropdown__item')
 
     formData.append('ID',target.dataset.id)
 
@@ -91,12 +86,20 @@ async function getData(target) {
       this.$el.append(loader.loading())
     },400)
 
-    const response = await apiService.useRequest('getCard',formData),
-      result = JSON.parse(response.data.result)
+    const response = await apiService.useRequest('getUserInfo',formData),
+          result = JSON.parse(response.data.result)
 
-    attDateInput.value = result.attestationDate
-    nextAttDateInput.value = result.nextAttestationDate
-    cardNumberInput.value = result.cardNumber
+    fioInput.value = result.fio
+
+    delete result.fio
+    const optionsKey = Object.values(result)
+    options.forEach(option => {
+      if(optionsKey.includes(option.dataset.selectOption)) {
+
+        option.click()
+
+      }
+    })
 
   } catch (error) {
     if(error.status === 'error') {
@@ -115,7 +118,7 @@ async function getData(target) {
 
     } else {
 
-      console.group('In file EditCardComponent, in function getData error')
+      console.group('In file FormEditUserComponent, in function getData error')
         console.error(`${error.stack}`)
       console.groupEnd();
 
@@ -138,26 +141,11 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    let loader;
-
-    if (this.$el.getAttribute('action').slice(1) === 'addCard') {
-
-      loader = new Loader({
-        loading: 'Добавление удостоверения',
-        success: 'Удостоверение добавлено',
-        failure: 'Удостоверение не добавлено'
-      })
-
-    }
-    else if (this.$el.getAttribute('action').slice(1) === 'editCard') {
-
-      loader = new Loader({
-        loading: 'Редактирование удостоверения',
-        success: 'Удостоверение отредактировано',
-        failure: 'Удостоверение не отредактировано'
-      })
-
-    }
+    const loader = new Loader({
+      loading: 'Идет добавления сотрудника',
+      success: 'Сотрудник добавлен',
+      failure: 'Сотрудник не добавлен'
+    })
 
     try {
 
@@ -169,16 +157,17 @@ async function submitHandler(e) {
       const response = await apiService.useRequest(action,formData),
             result = JSON.parse(response.data.result)
 
-      const htmlCardInfo = (+result.customUser) ? userCardInfoTemplate(result,{build: 1}) :
-            (+result.idMatrixWorks) ? userCardInfoTemplate(result,{build: 2}) :
-              userCardInfoTemplate(result,{build: 0})
+      const htmlUserInfo = userInfoTemplate(result,{build: 1}),
+            htmlCardInfo = userCardInfoTemplate(result,{build: 1})
 
       loader.success()
 
       setTimeout(() => {
         const parent = this.$el.closest('.result__row'),
+              user = parent.querySelector('.js-user-info'),
               info = parent.querySelector('.result__info')
 
+        user.innerHTML = htmlUserInfo
         info.innerHTML = htmlCardInfo
 
       },900)
@@ -203,7 +192,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file AddOrEditCardComponent, in function submitHandler error')
+        console.group('In file FormEditUserComponent, in function submitHandler error')
           console.error(`${error.stack}`)
         console.groupEnd();
 
@@ -213,6 +202,7 @@ async function submitHandler(e) {
 
       setTimeout(() => {
         this.form.clear()
+        this.instanceDropDown.reset(this.form.form)
 
         this.$el.closest('.modal').style.display = 'none'
 

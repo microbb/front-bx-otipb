@@ -7,8 +7,8 @@ export default class Pagination extends PaginationCore{
 
   /**
    * Конструктор
-   * @param {string} paginationInSelector - куда на странице вставить навигацию.
-   * @param {string} resultInSelector - куда на странице вставить результат выборку.
+   * @param {string | HTMLElement} paginationInSelector - куда на странице вставить навигацию.
+   * @param {string | HTMLElement} resultInSelector - куда на странице вставить результат выборку.
    * @param {Array} listElements - список элементов.
    * @param {Object=} options - конфигурация.
    * @param {number} [options.perpage] - количество элементов на странице
@@ -22,8 +22,8 @@ export default class Pagination extends PaginationCore{
 
     super()
 
-    this.$paginationInElement = document.querySelector(paginationInSelector)
-    this.$resultInElement = document.querySelector(resultInSelector)
+    this.$paginationInElement = paginationInSelector.tagName ? paginationInSelector : document.querySelector(paginationInSelector)
+    this.$resultInElement = resultInSelector.tagName ? resultInSelector : document.querySelector(resultInSelector)
 
     this._listElements = listElements
     this._countListElements = this._listElements.length || 0 // сколько всего элементов

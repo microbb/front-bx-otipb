@@ -26,7 +26,7 @@ export default class Component {
    * @return {void}
    */
   hide() {
-    this.$el.classList.add('hide')
+    this.$el.style.display = 'none'
 
     this._onHide() // -> после скрытия компонента вызываем метод
   }
@@ -36,7 +36,7 @@ export default class Component {
    * @return {void}
    */
   show() {
-    this.$el.classList.remove('hide')
+    this.$el.style.display = 'block'
 
     this._onShow() // -> после показа компонента вызываем метод
   }

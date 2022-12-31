@@ -155,29 +155,29 @@ $select: #98948a;
     background: $select; /* Цвет фона */
   }
 
-  &[type="date"]::-webkit-calendar-picker-indicator{
-    // кастомизировал календарь, поменял иконку и вызов календаря происходит по клику во всей области input
-    width: auto;
-    height: auto;
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    color: transparent;
-
-    background-color: transparent;
-    background-image: url(../img/calendar-icon.svg);
-    background-position: right 10px center;
-    background-size: 15px;
-    background-repeat: no-repeat;
-
-    opacity: 0.9;
-
-    cursor: pointer;
-  }
+  //&[type="date"]::-webkit-calendar-picker-indicator{
+  //  // кастомизировал календарь, поменял иконку и вызов календаря происходит по клику во всей области input
+  //  width: auto;
+  //  height: auto;
+  //
+  //  position: absolute;
+  //  top: 0;
+  //  bottom: 0;
+  //  left: 0;
+  //  right: 0;
+  //
+  //  color: transparent;
+  //
+  //  background-color: transparent;
+  //  background-image: url(../img/calendar-icon.svg);
+  //  background-position: right 10px center;
+  //  background-size: 15px;
+  //  background-repeat: no-repeat;
+  //
+  //  opacity: 0.9;
+  //
+  //  cursor: pointer;
+  //}
 }
 
 .form__checkbox{

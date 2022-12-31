@@ -1,19 +1,17 @@
 import Component from "../core/component"
 
 import Form from "../core/form";
-import {Validators} from "../core/validators";
 import Support from "../core/support";
 
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
 
 import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
-import {workNameTemplate} from "../templates/workName.template";
 
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class AddOrEditHseComponent extends Component {
+export default class FormAddOrEditCardComponent extends Component {
 
   /**
    * Конструктор
@@ -23,7 +21,6 @@ export default class AddOrEditHseComponent extends Component {
   constructor(id,options) {
 
     super(id,options);
-
   }
 
   /**
@@ -33,30 +30,38 @@ export default class AddOrEditHseComponent extends Component {
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this))
 
-    if(this.$el.getAttribute('id') === 'edit-hse') {
+    document.addEventListener('click', (e) => {
 
-      document.addEventListener('click', (e) => {
-        let target = e.target;
+      let target = e.target;
 
-        if (target && target.classList.contains('js-edit-hse-modal') || target.parentElement.classList.contains('js-edit-hse-modal') ) {
-          e.preventDefault()
+      if (target && target.classList.contains('js-edit-card-modal') || target.parentElement.classList.contains('js-edit-card-modal') ) {
+        e.preventDefault()
 
-          if (target.parentElement.classList.contains('js-edit-hse-modal')){
-            target = target.parentElement
-          }
-
-          getData.call(this,target)
-
+        if (target.parentElement.classList.contains('js-edit-card-modal')){
+          target = target.parentElement
         }
-      })
 
-    }
+        this.form.clear()
+      }
+
+      if (target && target.classList.contains('js-edit-card') || target.parentElement.classList.contains('js-edit-card') ) {
+        e.preventDefault()
+
+        if (target.parentElement.classList.contains('js-edit-card')){
+          target = target.parentElement
+        }
+
+        getData.call(this,target)
+      }
+
+    })
 
     this.form = new Form(this.$el, {
       ID: [],
-      ID_MATRIX_WORKS: [Validators.required]
+      C_ATTESTATION_DATE: [],
+      C_NEXT_ATTESTATION_DATE: [],
+      C_CARD_NUMBER: [],
     })
-
   }
 
 }
@@ -70,13 +75,15 @@ async function getData(target) {
   let idTimeout;
 
   const loader = new Loader({
-    loading: 'Идет сбор данных, о сотруднике',
+    loading: 'Идет сбор данных, об удостоверение',
   })
 
   try {
 
     const formData = new FormData(),
-          options = this.$el.querySelectorAll('.dropdown__item')
+          attDateInput = this.$el.querySelector('.js-edit-att-date'),
+          nextAttDateInput = this.$el.querySelector('.js-edit-next-att-date'),
+          cardNumberInput = this.$el.querySelector('.js-edit-card-number')
 
     formData.append('ID',target.dataset.id)
 
@@ -84,14 +91,12 @@ async function getData(target) {
       this.$el.append(loader.loading())
     },400)
 
-    const response = await apiService.useRequest('getIdHse',formData)
+    const response = await apiService.useRequest('getCard',formData),
+      result = JSON.parse(response.data.result)
 
-    options.forEach(option => {
-      if(+option.dataset.selectOption === +response.data.result) {
-
-        option.click()
-      }
-    })
+    attDateInput.value = result.attestationDate
+    nextAttDateInput.value = result.nextAttestationDate
+    cardNumberInput.value = result.cardNumber
 
   } catch (error) {
     if(error.status === 'error') {
@@ -105,11 +110,12 @@ async function getData(target) {
         })
 
         console.groupEnd();
+
       console.groupEnd();
 
     } else {
 
-      console.group('In file AddOrEditHseComponent, in function getData error')
+      console.group('In file FormAddOrEditCardComponent, in function getData error')
         console.error(`${error.stack}`)
       console.groupEnd();
 
@@ -132,38 +138,49 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    const loader = new Loader({
-      loading: 'Добавление должности',
-      success: 'Должность добавлена',
-      failure: 'Должность не добавлена'
-    })
+    let loader;
+
+    if (this.$el.getAttribute('action').slice(1) === 'addCard') {
+
+      loader = new Loader({
+        loading: 'Добавление удостоверения',
+        success: 'Удостоверение добавлено',
+        failure: 'Удостоверение не добавлено'
+      })
+
+    }
+    else if (this.$el.getAttribute('action').slice(1) === 'editCard') {
+
+      loader = new Loader({
+        loading: 'Редактирование удостоверения',
+        success: 'Удостоверение отредактировано',
+        failure: 'Удостоверение не отредактировано'
+      })
+
+    }
 
     try {
 
       const action = this.$el.getAttribute('action').slice(1),
             formData = new FormData(this.$el)
 
-      this.$el.querySelector('button').blur()
       this.$el.append(loader.loading())
 
       const response = await apiService.useRequest(action,formData),
             result = JSON.parse(response.data.result)
 
-      const htmlCardInfo = userCardInfoTemplate(result,{build: 2}),
-            htmlUserWork = workNameTemplate(result.work)
+      const htmlCardInfo = (+result.customUser) ? userCardInfoTemplate(result,{build: 1}) :
+            (+result.idMatrixWorks) ? userCardInfoTemplate(result,{build: 2}) :
+              userCardInfoTemplate(result,{build: 0})
 
       loader.success()
 
       setTimeout(() => {
         const parent = this.$el.closest('.result__row'),
-              info = parent.querySelector('.result__info'),
-              work = parent.querySelector('.js-matrix-work-hse')
+              info = parent.querySelector('.result__info')
 
         info.innerHTML = htmlCardInfo
 
-        work.classList.add('g-justify-items-left')
-        work.setAttribute('title',result.work)
-        work.innerHTML = htmlUserWork
       },900)
 
     } catch (error) {
@@ -186,7 +203,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file AddOrEditHseComponent, in function submitHandler error')
+        console.group('In file FormAddOrEditCardComponent, in function submitHandler error')
           console.error(`${error.stack}`)
         console.groupEnd();
 
@@ -195,6 +212,8 @@ async function submitHandler(e) {
     } finally {
 
       setTimeout(() => {
+        this.form.clear()
+
         this.$el.closest('.modal').style.display = 'none'
 
         Support.removeClass('.js-wrapper-modal',

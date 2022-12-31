@@ -1,28 +1,26 @@
 import Component from "../core/component"
 
-import Pagination from "../library/sumbiot/modules/pagination/components/pagination";
-
 import Form from "../core/form";
 
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
 
-import {userMainTemplate} from "../templates/user/userMain.template";
-import {userPlugTemplate} from "../templates/user/userPlug.template";
-
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class SearchComponent extends Component {
+export default class FormSearchComponent extends Component {
 
   /**
    * Конструктор
    * @param {string} id         - находит компонент.
    * @param {Object=} options   - конфигурация.
+   * @param {Array=} [options.partners] - партнерские компоненты, которые помогают этому
    */
   constructor(id,options) {
 
     super(id,options);
+
+    this.partners = options.partners || []
   }
 
   /**
@@ -39,26 +37,6 @@ export default class SearchComponent extends Component {
 
     getData.call(this)
 
-  }
-
-  /**
-   * Скрывает не нужные блоки и отрисовывает блок поиска
-   * @param {function} cb - callback функция
-   * @return {void}
-   */
-  _hideAllBlocks(cb = null) {
-    document.querySelectorAll('.result__body').forEach(block => {
-      block.style.display = 'none'
-
-      if(block.matches('#search-result')) {
-        block.querySelector('.result__inner').innerHTML = ''
-        block.querySelector('.pagination')?.remove()
-      }
-
-      if(typeof cb === 'function') {
-        cb(block)
-      }
-    })
   }
 
 }
@@ -145,49 +123,24 @@ async function submitHandler(e) {
 
       const action = this.$el.getAttribute('action').slice(1),
             formData = new FormData(this.$el),
-            parentBox = document.querySelector('#search-result')
-
-      this._hideAllBlocks()
+            searchResult = this.partners.find(partner => partner.name === 'searchResult')
 
       this.$el.querySelector('.form__button--reset_search')?.remove()
 
-      parentBox.prepend(loader.loading())
+      this.partners.forEach(partner => partner.component.hide())
 
-      parentBox.style.display = 'block'
+      document.querySelector('.result').append(loader.loading())
 
       const response = await apiService.useRequest(action,formData),
             result = JSON.parse(response.data.result),
-            count = result.length || 0
+            count = result.length || 0,
+            bntNext = nextBtn.call(this)
 
       loader.success(`Найдено: ${count} совпадений`)
 
-      if(Array.isArray(result) && result.length) {
-
-        let html = result.map(user => {
-          if(+user.customUser) {
-            return userMainTemplate(user,{build: 1})
-          } else if (+user.idMatrixWorks) {
-            return userMainTemplate(user,{build: 2})
-          } else {
-            return userMainTemplate(user,{build: 0})
-          }
-        })
-
-        setTimeout(() => {
-          new Pagination('#search-result','#search-result .result__inner',html)
-        },950)
-      }
-      else{
-
-        let html = userPlugTemplate(`Ваш запрос не дал результатов`)
-
-        setTimeout(() => {
-          parentBox.querySelector('.result__inner')
-            .insertAdjacentHTML('afterbegin',html)
-
-          parentBox.querySelector('.text-align-center')?.append(nextBtn.call(this))
-        },950)
-      }
+      count ?
+        searchResult.component.show(result) :
+        searchResult.component.show(result,{bntNext})
 
       this.$el.querySelector('.dropdown--input')?.append(resetRender.call(this))
 
@@ -211,7 +164,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file SearchComponent error')
+        console.group('In file FormSearchComponent error')
           console.error(`${error.stack}`)
         console.groupEnd();
 
@@ -260,13 +213,10 @@ function resetRender() {
     btn.removeEventListener('click', btnHandler)
     btn.remove()
 
-    this._hideAllBlocks(block => {
+    this.partners.forEach(partner => partner.component.hide())
 
-      if(block.matches('#main-result')) {
-        block.style.display = 'block'
-      }
-
-    })
+    this.partners.find(partner => partner.name === 'mainResult')
+      .component.show()
   }
 
   const btn = btnReset()
@@ -296,13 +246,10 @@ function nextBtn() {
 
     this.$el.querySelector('.form__button--reset_search')?.remove()
 
-    this._hideAllBlocks(block => {
+    this.partners.forEach(partner => partner.component.hide())
 
-      if(block.matches('#main-result')) {
-        block.style.display = 'block'
-      }
-
-    })
+    this.partners.find(partner => partner.name === 'mainResult')
+      .component.show()
   })
 
   return btn

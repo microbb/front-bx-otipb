@@ -4,16 +4,19 @@ import Accordion from './library/sumbiot/modules/accordion/components/accordion'
 import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdownSelect'
 import DropdownInput from "./library/sumbiot/modules/dropdown/components/dropdownInput";
 
-import AddUserComponent from "./components/add-user.component";
-import FilterComponent from "./components/filter.component";
-import EditUserComponent from "./components/edit-user.component";
-import DeleteUserOrCardComponent from "./components/delete-user-or-card.component";
-import AddOrEditCardComponent from "./components/add-or-edit-card.component";
-import AddOrEditHseComponent from "./components/add-or-edit-hse.component";
-import SearchComponent from "./components/search.component";
+import FormAddUserComponent from "./components/form-add-user.component";
+import FormFilterComponent from "./components/form-filter.component";
+import FormEditUserComponent from "./components/form-edit-user.component";
+import FormDeleteUserOrCardComponent from "./components/form-delete-user-or-card.component";
+import FormAddOrEditCardComponent from "./components/form-add-or-edit-card.component";
+import FormAddOrEditHseComponent from "./components/form-add-or-edit-hse.component";
+import FormSearchComponent from "./components/form-search.component";
 
 import Visitor from "./components/visitor"
 import Stretch from "./components/stretch";
+import ResultFilterComponent from "./components/result-filter.component";
+import ResultMainComponent from "./components/result-main.component";
+import ResultSearchComponent from "./components/result-search.component";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
           .upgrade()
 
   // выподающий список поиск
-  const dropDownInput = new DropdownInput('.dropdown--input',{
+  new DropdownInput('.dropdown--input',{
     dropdownToggleSelector: '.dropdown__toggle',
     dropdownOptionsWrapperSelector: '.dropdown--input .dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
@@ -90,34 +93,52 @@ window.addEventListener('DOMContentLoaded', () => {
                 .upgrade()
 
 
+  // компонент вывод всех сотрудников на главной
+  const mainResult = new ResultMainComponent('#main-result')
+  // компонент вывод результатов работы фильтра
+  const filterResult = new ResultFilterComponent('#filter-result')
+  // компонент вывод результатов работы поиска
+  const searchResult = new ResultSearchComponent('#search-result')
+
   // компонент добавления сотрудника
-  new AddUserComponent('#add-user', {
+  new FormAddUserComponent('#add-user', {
     dropDown: dropDownSelect
   })
   // компонент редактировать сотрудника
-  new EditUserComponent('#edit-user', {
+  new FormEditUserComponent('#edit-user', {
     dropDown: dropDownSelect
   })
 
   // компонент добавить / редактировать / продлить удостоверение
-  new AddOrEditCardComponent('#edit-card')
+  new FormAddOrEditCardComponent('#edit-card')
 
   // компонент удалить сотрудника / удостоверение
-  new DeleteUserOrCardComponent('#delete-user-or-card')
+  new FormDeleteUserOrCardComponent('#delete-user-or-card')
 
   // компонент добавить должность HSE
-  new AddOrEditHseComponent('#add-hse')
+  new FormAddOrEditHseComponent('#add-hse')
 
   // компонент редактировать должность HSE
-  new AddOrEditHseComponent('#edit-hse')
+  new FormAddOrEditHseComponent('#edit-hse')
 
   // компонент фильтр
-  new FilterComponent('#filter', {
-    dropDown: dropDownSelect
+  new FormFilterComponent('#filter', {
+    dropDown: dropDownSelect,
+    partners: [
+      {name: 'mainResult', component: mainResult},
+      {name: 'filterResult', component: filterResult},
+      {name: 'searchResult', component: searchResult}
+    ]
   })
 
   // компонент Поиск
-  new SearchComponent('#search-otipb')
+  new FormSearchComponent('#search-otipb', {
+    partners: [
+      {name: 'mainResult', component: mainResult},
+      {name: 'filterResult', component: filterResult},
+      {name: 'searchResult', component: searchResult}
+    ]
+  })
 
 })
 

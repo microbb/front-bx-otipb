@@ -1,30 +1,28 @@
 import Component from "../core/component"
 
-import Pagination from "../library/sumbiot/modules/pagination/components/pagination";
-
 import Form from "../core/form";
 
 import {apiService} from "../services/api.service";
 import Loader from "./loader";
 
-import {userMainTemplate} from "../templates/user/userMain.template";
-import {userPlugTemplate} from "../templates/user/userPlug.template";
-
 /**
  *  Компонент добавить кастомного сотрудника
  * */
-export default class FilterComponent extends Component {
+export default class FormFilterComponent extends Component {
 
   /**
    * Конструктор
    * @param {string} id         - находит компонент.
    * @param {Object=} options   - конфигурация.
+   * @param {Object=} [options.instanceDropDown] - экземпляр класса кастомных селектов
+   * @param {Array=} [options.partners] - партнерские компоненты, которые помогают этому
    */
   constructor(id,options) {
 
     super(id,options);
 
     this.instanceDropDown = options.dropDown || {}
+    this.partners = options.partners || []
   }
 
   /**
@@ -44,26 +42,6 @@ export default class FilterComponent extends Component {
       ID_PROGRAM: []
     })
 
-  }
-
-  /**
-   * Скрывает не нужные блоки и отрисовывает блок фильтра
-   * @param {function} cb - callback функция
-   * @return {void}
-   */
-  _hideAllBlocks(cb = null) {
-    document.querySelectorAll('.result__body').forEach(block => {
-      block.style.display = 'none'
-
-      if(block.matches('#filter-result')) {
-        block.querySelector('.result__inner').innerHTML = ''
-        block.querySelector('.pagination')?.remove()
-      }
-
-      if(typeof cb === 'function') {
-        cb(block)
-      }
-    })
   }
 
 }
@@ -87,7 +65,8 @@ async function submitHandler(e) {
     try {
 
       const action = this.$el.getAttribute('action').slice(1),
-            formData = new FormData(this.$el)
+            formData = new FormData(this.$el),
+            filterResult = this.partners.find(partner => partner.name === 'filterResult')
 
       this.$el.append(loader.loading())
 
@@ -97,30 +76,9 @@ async function submitHandler(e) {
 
       loader.success(`Найдено: ${count} совпадений`)
 
-      this._hideAllBlocks()
+      this.partners.forEach(partner => partner.component.hide())
 
-      if(Array.isArray(result) && result.length) {
-
-        let html = result.map(user => {
-          if(+user.customUser) {
-            return userMainTemplate(user,{build: 1})
-          } else if (+user.idMatrixWorks) {
-            return userMainTemplate(user,{build: 2})
-          } else {
-            return userMainTemplate(user,{build: 0})
-          }
-        })
-
-        new Pagination('#filter-result','#filter-result .result__inner',html)
-      }
-      else{
-        let html = userPlugTemplate(`Найдено: ${count} совпадений`)
-
-        document.querySelector('#filter-result .result__inner')
-          .insertAdjacentHTML('afterbegin',html)
-      }
-
-      document.querySelector('#filter-result').style.display = 'block'
+      filterResult.component.show(result)
 
     } catch (error) {
 
@@ -142,7 +100,7 @@ async function submitHandler(e) {
 
       } else {
 
-        console.group('In file FilterComponent error')
+        console.group('In file FormFilterComponent error')
           console.error(`${error.stack}`)
         console.groupEnd();
 
@@ -174,12 +132,8 @@ function resetHandler(e) {
 
   this.instanceDropDown.reset(this.form.form)
 
-  this._hideAllBlocks(block => {
+  this.partners.forEach(partner => partner.component.hide())
 
-    if(block.matches('#main-result')) {
-      block.style.display = 'block'
-    }
-
-  })
-
+  this.partners.find(partner => partner.name === 'mainResult')
+    .component.show()
 }
