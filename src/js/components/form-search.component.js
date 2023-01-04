@@ -48,15 +48,13 @@ export default class FormSearchComponent extends Component {
 async function getData() {
   try {
 
-    const formData = new FormData(),
-          optionsWrap = this.$el.querySelector('.js-options-search')
+    const optionsWrap = this.$el.querySelector('.js-options-search')
 
-    const response = await apiService.useRequest('getUsers',formData),
-          result = JSON.parse(response.data.result)
+    const response = await apiService.getUsers()
 
-    if(Array.isArray(result)) {
+    if(Array.isArray(response)) {
 
-      let html = result.map(name => {
+      let html = response.map(name => {
         return `
             <div class="dropdown__item" title="${name}" style="display: none">
               ${name}
@@ -72,7 +70,7 @@ async function getData() {
   } catch (error) {
     if(error.status === 'error') {
 
-      console.group('In file ApiService, in function useRequest, promise return reject')
+      console.group('In file ApiService, in function getUsers, promise return reject')
 
         console.group('List of errors')
 
@@ -139,8 +137,8 @@ async function submitHandler(e) {
       loader.success(`Найдено: ${count} совпадений`)
 
       count ?
-        searchResult.component.show(result) :
-        searchResult.component.show(result,{bntNext})
+        searchResult.component.register(result).show() :
+        searchResult.component.register(result,{bntNext}).show()
 
       this.$el.querySelector('.dropdown--input')?.append(resetRender.call(this))
 

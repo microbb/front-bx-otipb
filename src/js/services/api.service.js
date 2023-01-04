@@ -13,7 +13,7 @@ class ApiService{
   }
 
   /**
-   * Запрос на сервер
+   * Запрос на сервер с параметрами
    * @param {string} action   - метод на сервере который будет обрабатывать запрос
    * @param {Object} data     - объект с данными которые будут передаваться на сервер
    * @return {Promise}
@@ -43,6 +43,36 @@ class ApiService{
       },2000)
     })
 
+  }
+
+  /**
+   * Запрос на сервер для получения всех сотрудников
+   * @return {Promise}
+   */
+  async getUsers() {
+    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
+    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+    //   mode: 'class'
+    // })
+    //
+    // return JSON.parse(response.data.result)
+
+    return new Promise((resolve,reject) => {
+
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        })
+      },2000)
+    })
   }
 
 }

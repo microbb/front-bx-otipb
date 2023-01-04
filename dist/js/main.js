@@ -908,7 +908,7 @@ async function submitHandler(e) {
         count = result.length || 0;
       loader.success(`Найдено: ${count} совпадений`);
       this.partners.forEach(partner => partner.component.hide());
-      filterResult.component.show(result);
+      filterResult.component.register(result).show();
     } catch (error) {
       loader.failure();
       if (error.status === 'error') {
@@ -1001,12 +1001,10 @@ class FormSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
  */
 async function getData() {
   try {
-    const formData = new FormData(),
-      optionsWrap = this.$el.querySelector('.js-options-search');
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest('getUsers', formData),
-      result = JSON.parse(response.data.result);
-    if (Array.isArray(result)) {
-      let html = result.map(name => {
+    const optionsWrap = this.$el.querySelector('.js-options-search');
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].getUsers();
+    if (Array.isArray(response)) {
+      let html = response.map(name => {
         return `
             <div class="dropdown__item" title="${name}" style="display: none">
               ${name}
@@ -1018,7 +1016,7 @@ async function getData() {
     }
   } catch (error) {
     if (error.status === 'error') {
-      console.group('In file ApiService, in function useRequest, promise return reject');
+      console.group('In file ApiService, in function getUsers, promise return reject');
       console.group('List of errors');
       error.errors.forEach(error => {
         console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
@@ -1063,9 +1061,9 @@ async function submitHandler(e) {
         count = result.length || 0,
         bntNext = nextBtn.call(this);
       loader.success(`Найдено: ${count} совпадений`);
-      count ? searchResult.component.show(result) : searchResult.component.show(result, {
+      count ? searchResult.component.register(result).show() : searchResult.component.register(result, {
         bntNext
-      });
+      }).show();
       (_this$$el$querySelect2 = this.$el.querySelector('.dropdown--input')) === null || _this$$el$querySelect2 === void 0 ? void 0 : _this$$el$querySelect2.append(resetRender.call(this));
     } catch (error) {
       loader.failure();
@@ -1273,6 +1271,22 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
   constructor(id, options) {
     super(id, options);
     this.$pasteInElement = this.$el.querySelector('.result__inner');
+    this.data = null;
+  }
+
+  /**
+   * Зарегистрировать данные для показа
+   * @param {Array} result - данные для показа
+   * @param {Object=} options - дополнительные данные и настройки
+   * @return {this}
+   */
+  register(result) {
+    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    this.data = {
+      result,
+      ...options
+    };
+    return this;
   }
 
   /**
@@ -1280,36 +1294,39 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
    * @param {Array} result - какой результат показать
    * @return {void}
    */
-  show(result) {
+  show() {
     this.$el.style.display = 'block';
-    this._onShow(result);
+    this._onShow();
   }
 
   /**
    * Действия после показа компонента (хук)
    * @return {void}
    */
-  _onShow(result) {
-    if (Array.isArray(result) && result.length) {
-      let html = result.map(user => {
-        if (+user.customUser) {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
-            build: 1
-          });
-        } else if (+user.idMatrixWorks) {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
-            build: 2
-          });
-        } else {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
-            build: 0
-          });
-        }
-      });
-      new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html);
-    } else {
-      let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Найдено: 0 совпадений`);
-      this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+  _onShow() {
+    if (this.data) {
+      if (Array.isArray(this.data.result) && this.data.result.length) {
+        let html = this.data.result.map(user => {
+          if (+user.customUser) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+              build: 1
+            });
+          } else if (+user.idMatrixWorks) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+              build: 2
+            });
+          } else {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+              build: 0
+            });
+          }
+        });
+        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html);
+      } else {
+        let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Найдено: 0 совпадений`);
+        this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+      }
+      this.data = null;
     }
   }
 
@@ -1389,51 +1406,67 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
   }
 
   /**
+   * Зарегистрировать данные для показа
+   * @param {Array} result - данные для показа
+   * @param {Object=} options - дополнительные данные и настройки
+   * @return {this}
+   */
+  register(result) {
+    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    this.data = {
+      result,
+      ...options
+    };
+    return this;
+  }
+
+  /**
    * Показать компонент
    * @param {Array} result - какой результат показать
    * @param {Object=} options - настройки
    * @return {void}
    */
-  show(result) {
-    let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  show() {
     this.$el.style.display = 'block';
-    this._onShow(result, options);
+    this._onShow();
   }
 
   /**
    * Действия после показа компонента (хук)
    * @return {void}
    */
-  _onShow(result) {
-    let {
-      bntNext
-    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    if (Array.isArray(result) && result.length) {
-      let html = result.map(user => {
-        if (+user.customUser) {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
-            build: 1
-          });
-        } else if (+user.idMatrixWorks) {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
-            build: 2
-          });
-        } else {
-          return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
-            build: 0
-          });
-        }
-      });
+  _onShow() {
+    if (this.data) {
+      if (Array.isArray(this.data.result) && this.data.result.length) {
+        let html = this.data.result.map(user => {
+          if (+user.customUser) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+              build: 1
+            });
+          } else if (+user.idMatrixWorks) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+              build: 2
+            });
+          } else {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+              build: 0
+            });
+          }
+        });
+        setTimeout(() => {
+          new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html);
+        }, 950);
+      } else {
+        let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Ваш запрос не дал результатов`);
+        setTimeout(() => {
+          var _this$$el$querySelect;
+          this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+          (_this$$el$querySelect = this.$el.querySelector('.text-align-center')) === null || _this$$el$querySelect === void 0 ? void 0 : _this$$el$querySelect.append(this.data.bntNext);
+        }, 950);
+      }
       setTimeout(() => {
-        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html);
-      }, 950);
-    } else {
-      let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Ваш запрос не дал результатов`);
-      setTimeout(() => {
-        var _this$$el$querySelect;
-        this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
-        (_this$$el$querySelect = this.$el.querySelector('.text-align-center')) === null || _this$$el$querySelect === void 0 ? void 0 : _this$$el$querySelect.append(bntNext);
-      }, 950);
+        this.data = null;
+      }, 1000);
     }
   }
 
@@ -3191,7 +3224,7 @@ class ApiService {
   }
 
   /**
-   * Запрос на сервер
+   * Запрос на сервер с параметрами
    * @param {string} action   - метод на сервере который будет обрабатывать запрос
    * @param {Object} data     - объект с данными которые будут передаваться на сервер
    * @return {Promise}
@@ -3202,6 +3235,35 @@ class ApiService {
     //   mode: 'class',
     //   data: data
     // })
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
+  }
+
+  /**
+   * Запрос на сервер для получения всех сотрудников
+   * @return {Promise}
+   */
+  async getUsers() {
+    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
+    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+    //   mode: 'class'
+    // })
+    //
+    // return JSON.parse(response.data.result)
 
     return new Promise((resolve, reject) => {
       setTimeout(() => {

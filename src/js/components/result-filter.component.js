@@ -20,7 +20,24 @@ export default class ResultFilterComponent extends Component {
     super(id,options);
 
     this.$pasteInElement =  this.$el.querySelector('.result__inner')
+    this.data = null
 
+  }
+
+  /**
+   * Зарегистрировать данные для показа
+   * @param {Array} result - данные для показа
+   * @param {Object=} options - дополнительные данные и настройки
+   * @return {this}
+   */
+  register(result,options= {}) {
+
+    this.data = {
+      result,
+      ...options
+    }
+
+    return this
   }
 
   /**
@@ -28,38 +45,43 @@ export default class ResultFilterComponent extends Component {
    * @param {Array} result - какой результат показать
    * @return {void}
    */
-  show(result) {
+  show() {
     this.$el.style.display = 'block'
 
-    this._onShow(result)
+    this._onShow()
   }
 
   /**
    * Действия после показа компонента (хук)
    * @return {void}
    */
-  _onShow(result) {
+  _onShow() {
 
-    if(Array.isArray(result) && result.length) {
+    if(this.data) {
 
-      let html = result.map(user => {
-        if(+user.customUser) {
-          return userMainTemplate(user,{build: 1})
-        } else if (+user.idMatrixWorks) {
-          return userMainTemplate(user,{build: 2})
-        } else {
-          return userMainTemplate(user,{build: 0})
-        }
-      })
+      if(Array.isArray(this.data.result) && this.data.result.length) {
 
-      new Pagination(this.$el,this.$pasteInElement,html)
+        let html = this.data.result.map(user => {
+          if(+user.customUser) {
+            return userMainTemplate(user,{build: 1})
+          } else if (+user.idMatrixWorks) {
+            return userMainTemplate(user,{build: 2})
+          } else {
+            return userMainTemplate(user,{build: 0})
+          }
+        })
+
+        new Pagination(this.$el,this.$pasteInElement,html)
+      }
+      else{
+        let html = userPlugTemplate(`Найдено: 0 совпадений`)
+
+        this.$pasteInElement.insertAdjacentHTML('afterbegin',html)
+      }
+
+      this.data = null
+
     }
-    else{
-      let html = userPlugTemplate(`Найдено: 0 совпадений`)
-
-      this.$pasteInElement.insertAdjacentHTML('afterbegin',html)
-    }
-
   }
 
   /**

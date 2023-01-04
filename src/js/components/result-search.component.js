@@ -24,50 +24,72 @@ export default class ResultSearchComponent extends Component {
   }
 
   /**
+   * Зарегистрировать данные для показа
+   * @param {Array} result - данные для показа
+   * @param {Object=} options - дополнительные данные и настройки
+   * @return {this}
+   */
+  register(result,options= {}) {
+
+    this.data = {
+      result,
+      ...options
+    }
+
+    return this
+  }
+
+  /**
    * Показать компонент
    * @param {Array} result - какой результат показать
    * @param {Object=} options - настройки
    * @return {void}
    */
-  show(result,options= {}) {
+  show() {
     this.$el.style.display = 'block'
 
-    this._onShow(result,options)
+    this._onShow()
   }
 
   /**
    * Действия после показа компонента (хук)
    * @return {void}
    */
-  _onShow(result,{bntNext} = {}) {
+  _onShow() {
 
-    if(Array.isArray(result) && result.length) {
+    if(this.data) {
 
-      let html = result.map(user => {
-        if(+user.customUser) {
-          return userMainTemplate(user,{build: 1})
-        } else if (+user.idMatrixWorks) {
-          return userMainTemplate(user,{build: 2})
-        } else {
-          return userMainTemplate(user,{build: 0})
-        }
-      })
+      if (Array.isArray(this.data.result) && this.data.result.length) {
+
+        let html = this.data.result.map(user => {
+          if (+user.customUser) {
+            return userMainTemplate(user, {build: 1})
+          } else if (+user.idMatrixWorks) {
+            return userMainTemplate(user, {build: 2})
+          } else {
+            return userMainTemplate(user, {build: 0})
+          }
+        })
+
+        setTimeout(() => {
+          new Pagination(this.$el, this.$pasteInElement, html)
+        }, 950)
+      } else {
+
+        let html = userPlugTemplate(`Ваш запрос не дал результатов`)
+
+        setTimeout(() => {
+          this.$pasteInElement.insertAdjacentHTML('afterbegin', html)
+
+          this.$el.querySelector('.text-align-center')?.append(this.data.bntNext)
+        }, 950)
+      }
 
       setTimeout(() => {
-        new Pagination(this.$el,this.$pasteInElement,html)
-      },950)
+        this.data = null
+      },1000)
+
     }
-    else{
-
-      let html = userPlugTemplate(`Ваш запрос не дал результатов`)
-
-      setTimeout(() => {
-        this.$pasteInElement.insertAdjacentHTML('afterbegin',html)
-
-        this.$el.querySelector('.text-align-center')?.append(bntNext)
-      },950)
-    }
-
   }
 
   /**

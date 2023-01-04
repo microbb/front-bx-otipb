@@ -78,7 +78,7 @@ async function submitHandler(e) {
 
       this.partners.forEach(partner => partner.component.hide())
 
-      filterResult.component.show(result)
+      filterResult.component.register(result).show()
 
     } catch (error) {
 
