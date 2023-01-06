@@ -89,7 +89,7 @@ export default class DropdownInput extends Dropdown {
       options.forEach(option => {
 
         if(option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
-          option.style.display = 'block';
+          option.style.display = this._display;
 
           flag = true
         } else {
@@ -98,7 +98,7 @@ export default class DropdownInput extends Dropdown {
       })
 
       flag ?
-        input.nextElementSibling.style.display = 'block' :
+        input.nextElementSibling.style.display = this._display :
         input.nextElementSibling.style.display = 'none'
 
     } else {

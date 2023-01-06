@@ -1,7 +1,7 @@
-import Modal from './library/sumbiot/modules/modals/components/modal'
-import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics'
-import Accordion from './library/sumbiot/modules/accordion/components/accordion'
-import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdownSelect'
+import Modal from './library/sumbiot/modules/modals/components/modal';
+import ModalDynamics from './library/sumbiot/modules/modals/components/modalDynamics';
+import Accordion from './library/sumbiot/modules/accordion/components/accordion';
+import DropdownSelect from './library/sumbiot/modules/dropdown/components/dropdownSelect';
 import DropdownInput from "./library/sumbiot/modules/dropdown/components/dropdownInput";
 
 import FormAddUserComponent from "./components/form-add-user.component";
@@ -11,13 +11,13 @@ import FormDeleteUserOrCardComponent from "./components/form-delete-user-or-card
 import FormAddOrEditCardComponent from "./components/form-add-or-edit-card.component";
 import FormAddOrEditHseComponent from "./components/form-add-or-edit-hse.component";
 import FormSearchComponent from "./components/form-search.component";
-
-import Visitor from "./components/visitor"
-import Stretch from "./components/stretch";
 import ResultFilterComponent from "./components/result-filter.component";
 import ResultMainComponent from "./components/result-main.component";
 import ResultSearchComponent from "./components/result-search.component";
 
+import Visitor from "./components/visitor";
+import Stretch from "./components/stretch";
+import SearchSelect from "./components/search-select";
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -49,6 +49,8 @@ window.addEventListener('DOMContentLoaded', () => {
     '.dropdown__options',
     'dropdown__options--stretch')
 
+  // панель которая реализует поиск выподающего списка
+  new SearchSelect('.js-option-panel','.dropdown__search-box')
 
   // модалка фильтр
   new Modal('.js-filter-modal',

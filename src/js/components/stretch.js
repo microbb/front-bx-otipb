@@ -35,7 +35,7 @@ export default class Stretch {
     this._panelsElements.forEach(panel => {
       let stretchBtn = panel.querySelector('.option-panel__item--stretch')
 
-      stretchBtn.addEventListener('click', (e) => {
+      stretchBtn?.addEventListener('click', (e) => {
         e.preventDefault()
 
         this._toggle(panel,stretchBtn)

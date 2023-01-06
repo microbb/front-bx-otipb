@@ -1483,6 +1483,137 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
 
 /***/ }),
 
+/***/ "./src/js/components/search-select.js":
+/*!********************************************!*\
+  !*** ./src/js/components/search-select.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchSelect; });
+/**
+ *  Панель для выпадающего списка, для поиска по списку
+ * */
+
+class SearchSelect {
+  /**
+   * Конструктор
+   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
+   * @param {string} searchSelector   - селектор блока поиска.
+   */
+  constructor(panelsSelector, searchSelector) {
+    this._panelsElements = document.querySelectorAll(panelsSelector);
+    this._searchSelector = searchSelector;
+    this._init();
+  }
+
+  /**
+   * Инициализация
+   * @return {void}
+   */
+  _init() {
+    this._searchHandler();
+  }
+
+  /**
+   * Обработчик событий по поиску
+   * @return {void}
+   */
+  _searchHandler() {
+    this._panelsElements.forEach(panel => {
+      let parentElement = panel.parentElement,
+        searchBtn = panel.querySelector('.option-panel__item--search'),
+        searchInput = parentElement.querySelector('.dropdown__search'),
+        resetBtn = parentElement.querySelector('.dropdown__search-reset'),
+        options = parentElement.querySelectorAll('.dropdown__item');
+      searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', e => {
+        e.preventDefault();
+        this._toggleSearch(parentElement, searchInput, options);
+      });
+      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('input', e => {
+        e.preventDefault();
+        this._searchOptions(searchInput, options);
+      });
+      resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener('click', e => {
+        e.preventDefault();
+        this._reset(searchInput, options);
+      });
+      options.forEach(option => {
+        option.addEventListener('click', e => {
+          this._reset(searchInput, options);
+        });
+      });
+    });
+  }
+
+  /**
+   * Показаль или скрыть поиск
+   * @return {void}
+   */
+  _toggleSearch(parentElement, searchInput, options) {
+    let searchBox = parentElement.querySelector(this._searchSelector),
+      plug = searchInput.nextElementSibling;
+    if (!!searchBox.hidden) {
+      searchBox.hidden = false;
+    } else {
+      searchBox.hidden = true;
+      searchInput.innerText = '';
+      options.forEach(option => {
+        option.style.display = 'block';
+      });
+      plug.hidden = true;
+      plug.nextElementSibling.hidden = true;
+    }
+  }
+
+  /**
+   * Поиск по пунктам выподающего списка
+   * @return {void}
+   */
+  _searchOptions(searchInput, options) {
+    let flag = false,
+      valueInput = searchInput.innerText.trim(),
+      plug = searchInput.nextElementSibling;
+    plug.hidden = true;
+    if (valueInput) {
+      plug.nextElementSibling.hidden = false;
+      options.forEach(option => {
+        if (option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
+          option.style.display = 'block';
+          flag = true;
+        } else {
+          option.style.display = 'none';
+        }
+      });
+      if (!flag) {
+        plug.hidden = false;
+      }
+    } else {
+      plug.nextElementSibling.hidden = true;
+      options.forEach(option => {
+        option.style.display = 'block';
+      });
+    }
+  }
+
+  /**
+   * Сброс поиска до настроек по умолчанию
+   * @return {void}
+   */
+  _reset(searchInput, options) {
+    options.forEach(option => {
+      option.style.display = 'block';
+    });
+    searchInput.innerText = '';
+    searchInput.nextElementSibling.hidden = true;
+    searchInput.nextElementSibling.nextElementSibling.hidden = true;
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/components/stretch.js":
 /*!**************************************!*\
   !*** ./src/js/components/stretch.js ***!
@@ -1525,7 +1656,7 @@ class Stretch {
   _stretchHandler() {
     this._panelsElements.forEach(panel => {
       let stretchBtn = panel.querySelector('.option-panel__item--stretch');
-      stretchBtn.addEventListener('click', e => {
+      stretchBtn === null || stretchBtn === void 0 ? void 0 : stretchBtn.addEventListener('click', e => {
         e.preventDefault();
         this._toggle(panel, stretchBtn);
       });
@@ -2253,13 +2384,16 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
     let {
       dropdownToggleSelector = '.dropdown-sumbiot__toggle',
       // - активный пункт
-      dropdownOptionsWrapperSelector = '.dropdown-sumbiot__options' // - выпадающий список
+      dropdownOptionsWrapperSelector = '.dropdown-sumbiot__options',
+      // - выпадающий список
+      display = 'block' // - тип отображения элемента
     } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     super();
     this._dropdownSelector = dropdownSelector;
     this._dropdownToggleSelector = dropdownToggleSelector;
     this._listDropdowns = document.querySelectorAll(dropdownSelector);
     this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsWrapperSelector);
+    this._display = display;
     this._init();
   }
 
@@ -2310,7 +2444,7 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
    */
   _toggleOptions() {
     this.hideAllDropdowns();
-    this._target.nextElementSibling.style.display = this._target.nextElementSibling.style.display === 'none' ? 'block' : 'none';
+    this._target.nextElementSibling.style.display = this._target.nextElementSibling.style.display === 'none' ? this._display : 'none';
   }
 }
 
@@ -2401,13 +2535,13 @@ class DropdownInput extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
       let options = Array.from(document.querySelectorAll(`${this._dropdownSelector} ${this._dropdownOptionSelector}`));
       options.forEach(option => {
         if (option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
-          option.style.display = 'block';
+          option.style.display = this._display;
           flag = true;
         } else {
           option.style.display = 'none';
         }
       });
-      flag ? input.nextElementSibling.style.display = 'block' : input.nextElementSibling.style.display = 'none';
+      flag ? input.nextElementSibling.style.display = this._display : input.nextElementSibling.style.display = 'none';
     } else {
       input.nextElementSibling.style.display = 'none';
     }
@@ -3043,11 +3177,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_form_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/form-add-or-edit-card.component */ "./src/js/components/form-add-or-edit-card.component.js");
 /* harmony import */ var _components_form_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/form-add-or-edit-hse.component */ "./src/js/components/form-add-or-edit-hse.component.js");
 /* harmony import */ var _components_form_search_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/form-search.component */ "./src/js/components/form-search.component.js");
-/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
-/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
-/* harmony import */ var _components_result_filter_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/result-filter.component */ "./src/js/components/result-filter.component.js");
-/* harmony import */ var _components_result_main_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/result-main.component */ "./src/js/components/result-main.component.js");
-/* harmony import */ var _components_result_search_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/result-search.component */ "./src/js/components/result-search.component.js");
+/* harmony import */ var _components_result_filter_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/result-filter.component */ "./src/js/components/result-filter.component.js");
+/* harmony import */ var _components_result_main_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/result-main.component */ "./src/js/components/result-main.component.js");
+/* harmony import */ var _components_result_search_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/result-search.component */ "./src/js/components/result-search.component.js");
+/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
+/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
+/* harmony import */ var _components_search_select__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/search-select */ "./src/js/components/search-select.js");
+
 
 
 
@@ -3079,7 +3215,7 @@ window.addEventListener('DOMContentLoaded', () => {
     dropdownOptionsWrapperSelector: '.dropdown--select .dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
   });
-  dropDownSelect.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].positionMod).upgrade();
+  dropDownSelect.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].positionMod).upgrade();
 
   // выподающий список поиск
   new _library_sumbiot_modules_dropdown_components_dropdownInput__WEBPACK_IMPORTED_MODULE_4__["default"]('.dropdown--input', {
@@ -3089,64 +3225,67 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // панель которая регулирует ширина выподающего списка
-  new _components_stretch__WEBPACK_IMPORTED_MODULE_13__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
+  new _components_stretch__WEBPACK_IMPORTED_MODULE_16__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
+
+  // панель которая реализует поиск выподающего списка
+  new _components_search_select__WEBPACK_IMPORTED_MODULE_17__["default"]('.js-option-panel', '.dropdown__search-box');
 
   // модалка фильтр
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalSelector: '#edit-user-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].editUserMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].editUserMod).upgrade();
 
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
     modalSelector: '#delete-user-or-card-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsUnityDeleteMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityDeleteMod).upgrade();
 
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalSelector: '#edit-card-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].modalsUnityMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityMod).upgrade();
 
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     modalSelector: '#add-hse-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].addHseMod).upgrade(dropDownSelect);
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].addHseMod).upgrade(dropDownSelect);
 
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalSelector: '#edit-hse-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].editHseMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].editHseMod).upgrade();
 
   // аккардион
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_12__["default"].accordionParentMod).upgrade();
+  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].accordionParentMod).upgrade();
 
   // компонент вывод всех сотрудников на главной
-  const mainResult = new _components_result_main_component__WEBPACK_IMPORTED_MODULE_15__["default"]('#main-result');
+  const mainResult = new _components_result_main_component__WEBPACK_IMPORTED_MODULE_13__["default"]('#main-result');
   // компонент вывод результатов работы фильтра
-  const filterResult = new _components_result_filter_component__WEBPACK_IMPORTED_MODULE_14__["default"]('#filter-result');
+  const filterResult = new _components_result_filter_component__WEBPACK_IMPORTED_MODULE_12__["default"]('#filter-result');
   // компонент вывод результатов работы поиска
-  const searchResult = new _components_result_search_component__WEBPACK_IMPORTED_MODULE_16__["default"]('#search-result');
+  const searchResult = new _components_result_search_component__WEBPACK_IMPORTED_MODULE_14__["default"]('#search-result');
 
   // компонент добавления сотрудника
   new _components_form_add_user_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#add-user', {

@@ -76,7 +76,7 @@ $color3: #e7e7e1;
 
 .dropdown__options{
   width: 100%;
-  max-height: 372px;
+  max-height: 421px;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -137,7 +137,7 @@ $color3: #e7e7e1;
   }
 
   &--stretch{
-    width: 207%;
+    width: 207.2%;
   }
 
   &--top-position{
@@ -180,4 +180,75 @@ $color3: #e7e7e1;
   position: sticky;
 
   bottom: 0;
+}
+
+.dropdown__search-box{
+  order: -1;
+
+  position: sticky;
+  top: 0;
+
+  background-color: color.scale($color, $lightness: 60%);
+
+  &:after{
+    content: '';
+
+    width: calc(100%);
+    height: 1px;
+
+    position: absolute;
+    top: 42px;
+    left: 0;
+
+    background-color: color.scale($color2, $lightness: 75%);
+
+    box-shadow: 0 3px 4px color.scale($color, $lightness: -15%);
+  }
+}
+
+.dropdown__search{
+
+  margin: 0 30px 0 9px;
+  padding: 7px 0;
+
+  color: $color2;
+
+  white-space: nowrap; /* Запрещаем перенос строк */
+  overflow-x: hidden; /* Обрезаем все, что не помещается в область */
+
+  //border-bottom: 1px solid color.scale($color2, $lightness: 75%);
+  outline: 0;
+
+  &:empty:not(:focus):before{
+    content:attr(data-ph);
+  }
+
+}
+
+.dropdown__search-plug{
+  padding: 5px 8px;
+
+  font-size: 15px;
+  line-height: 28px;
+
+  opacity: 0.7;
+}
+
+.dropdown__search-reset{
+  position: absolute;
+  top: 11px;
+  right: 8px;
+
+  padding: 10px;
+  margin: 0;
+
+  background-color: $color;
+  background-image: url(../img/close-icon.svg);
+  background-position: center;
+  background-size: 10px;
+  background-repeat: no-repeat;
+
+  border: none;
+
+  cursor: pointer;
 }

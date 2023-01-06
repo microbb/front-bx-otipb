@@ -13,7 +13,8 @@ export default class Dropdown extends DropdownCore {
   constructor(dropdownSelector ,
               {
                 dropdownToggleSelector = '.dropdown-sumbiot__toggle',        // - активный пункт
-                dropdownOptionsWrapperSelector = '.dropdown-sumbiot__options' // - выпадающий список
+                dropdownOptionsWrapperSelector = '.dropdown-sumbiot__options', // - выпадающий список
+                display = 'block'  // - тип отображения элемента
               } = {}) {
 
     super()
@@ -22,6 +23,8 @@ export default class Dropdown extends DropdownCore {
     this._dropdownToggleSelector = dropdownToggleSelector
     this._listDropdowns = document.querySelectorAll(dropdownSelector)
     this._listDropdownsOptions = document.querySelectorAll(dropdownOptionsWrapperSelector)
+
+    this._display = display
 
     this._init()
   }
@@ -84,6 +87,6 @@ export default class Dropdown extends DropdownCore {
   _toggleOptions() {
     this.hideAllDropdowns()
 
-    this._target.nextElementSibling.style.display = this._target.nextElementSibling.style.display === 'none' ? 'block' : 'none'
+    this._target.nextElementSibling.style.display = this._target.nextElementSibling.style.display === 'none' ? this._display : 'none'
   }
 }

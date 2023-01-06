@@ -15,6 +15,12 @@
             <div class="dropdown__toggle js-dropdown__toggle"></div>
 
             <div class="dropdown__options dropdown__options--center">
+              <div class="dropdown__search-box" hidden>
+                <div class="dropdown__search" data-ph="Поиск" contenteditable></div>
+                <div class="dropdown__search-plug" hidden>Пусто</div>
+                <button class="dropdown__search-reset" type="button" hidden></button>
+              </div><!--./dropdown__search-box-->
+
               {{#repeat 10}}
               <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
                 Директор (начальник) вычислительного (информационно-вычислительного) центра
@@ -23,6 +29,7 @@
 
               <div class="dropdown__option-panel option-panel js-option-panel">
                 <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item--search" title="Поиск"></li>
                   <li class="option-panel__item option-panel__item--stretch" title="Развернуть"></li>
                 </ul>
               </div>

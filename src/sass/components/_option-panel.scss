@@ -56,4 +56,11 @@ $color3: #e7e7e1;
   &--stretch-off{
     background-image: url(../img/arrow-divider-horizontal-off-icon.svg);
   }
+
+  &--search{
+    background-image: url(../img/search-icon.svg);
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+  }
 }
