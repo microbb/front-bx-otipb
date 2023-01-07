@@ -104,7 +104,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // компонент добавления сотрудника
   new FormAddUserComponent('#add-user', {
-    dropDown: dropDownSelect
+    dropDown: dropDownSelect,
+    partners: [
+      {name: 'mainResult', component: mainResult},
+      {name: 'filterResult', component: filterResult},
+      {name: 'searchResult', component: searchResult}
+    ]
   })
   // компонент редактировать сотрудника
   new FormEditUserComponent('#edit-user', {

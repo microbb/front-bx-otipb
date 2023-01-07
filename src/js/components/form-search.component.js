@@ -50,15 +50,15 @@ async function getData() {
 
     const optionsWrap = this.$el.querySelector('.js-options-search')
 
-    const response = await apiService.getUsers()
+    const response = await apiService.getFio()
 
     if(Array.isArray(response)) {
 
       let html = response.map(name => {
         return `
-            <div class="dropdown__item" title="${name}" style="display: none">
-              ${name}
-            </div>
+          <div class="dropdown__item" title="${name}" style="display: none">
+            ${name}
+          </div>
         `
       })
 

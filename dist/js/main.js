@@ -465,6 +465,7 @@ class FormAddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[
   constructor(id, options) {
     super(id, options);
     this.instanceDropDown = options.dropDown || {};
+    this.partners = options.partners || [];
   }
 
   /**
@@ -498,11 +499,14 @@ async function submitHandler(e) {
     try {
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el),
+        mainResult = this.partners.find(partner => partner.name === 'mainResult'),
         options = document.querySelector('.js-options-search');
       this.$el.append(loader.loading());
       const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData);
       loader.success();
-      options.append(optionsUser(response.data.result));
+      this.partners.forEach(partner => partner.component.hide());
+      mainResult.component.unshift(response).show();
+      options.append(optionsUser(response.data.result.fio));
     } catch (error) {
       loader.failure();
       if (error.status === 'error') {
@@ -1002,13 +1006,13 @@ class FormSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
 async function getData() {
   try {
     const optionsWrap = this.$el.querySelector('.js-options-search');
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].getUsers();
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].getFio();
     if (Array.isArray(response)) {
       let html = response.map(name => {
         return `
-            <div class="dropdown__item" title="${name}" style="display: none">
-              ${name}
-            </div>
+          <div class="dropdown__item" title="${name}" style="display: none">
+            ${name}
+          </div>
         `;
       });
       optionsWrap.innerHTML = '';
@@ -1291,7 +1295,6 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
 
   /**
    * Показать компонент
-   * @param {Array} result - какой результат показать
    * @return {void}
    */
   show() {
@@ -1354,6 +1357,8 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResultMainComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
+/* harmony import */ var _templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/user/userMain.template */ "./src/js/templates/user/userMain.template.js");
+
 
 
 /**
@@ -1367,6 +1372,20 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
    */
   constructor(id, options) {
     super(id, options);
+    this.$pasteInElement = this.$el.querySelector('.result__inner');
+  }
+
+  /**
+   * добавить сотрудника в начало
+   * @param {Object} user - сотрудник
+   * @return {this}
+   */
+  unshift(user) {
+    let html = Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__["userMainTemplate"])(user, {
+      build: 1
+    });
+    this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+    return this;
   }
 }
 
@@ -3289,7 +3308,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // компонент добавления сотрудника
   new _components_form_add_user_component__WEBPACK_IMPORTED_MODULE_5__["default"]('#add-user', {
-    dropDown: dropDownSelect
+    dropDown: dropDownSelect,
+    partners: [{
+      name: 'mainResult',
+      component: mainResult
+    }, {
+      name: 'filterResult',
+      component: filterResult
+    }, {
+      name: 'searchResult',
+      component: searchResult
+    }]
   });
   // компонент редактировать сотрудника
   new _components_form_edit_user_component__WEBPACK_IMPORTED_MODULE_7__["default"]('#edit-user', {
@@ -3370,57 +3399,59 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    // return await BX.ajax.runComponentAction(this.componentBx, action, {
-    //   mode: 'class',
-    //   data: data
-    // })
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
     });
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 
   /**
    * Запрос на сервер для получения всех сотрудников
    * @return {Promise}
    */
-  async getUsers() {
+  async getFio() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
-    //   mode: 'class'
-    // })
-    //
-    // return JSON.parse(response.data.result)
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+      mode: 'class'
     });
+    return JSON.parse(response.data.result);
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 }
+
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),

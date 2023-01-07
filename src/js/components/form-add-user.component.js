@@ -22,6 +22,7 @@ export default class FormAddUserComponent extends Component {
     super(id,options);
 
     this.instanceDropDown = options.dropDown || {}
+    this.partners = options.partners || []
   }
 
   /**
@@ -63,6 +64,7 @@ async function submitHandler(e) {
 
       const action = this.$el.getAttribute('action').slice(1),
             formData = new FormData(this.$el),
+            mainResult = this.partners.find(partner => partner.name === 'mainResult'),
             options = document.querySelector('.js-options-search')
 
       this.$el.append(loader.loading())
@@ -71,7 +73,11 @@ async function submitHandler(e) {
 
       loader.success()
 
-      options.append(optionsUser(response.data.result))
+      this.partners.forEach(partner => partner.component.hide())
+
+      mainResult.component.unshift(response).show()
+
+      options.append(optionsUser(response.data.result.fio))
 
     } catch (error) {
 

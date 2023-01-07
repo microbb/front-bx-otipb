@@ -42,7 +42,6 @@ export default class ResultFilterComponent extends Component {
 
   /**
    * Показать компонент
-   * @param {Array} result - какой результат показать
    * @return {void}
    */
   show() {
