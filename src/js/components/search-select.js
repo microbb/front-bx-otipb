@@ -79,6 +79,7 @@ export default class SearchSelect {
     if(!!searchBox.hidden) {
 
       searchBox.hidden = false
+      searchInput.focus()
 
     } else {
       searchBox.hidden = true

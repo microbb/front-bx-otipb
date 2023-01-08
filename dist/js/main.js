@@ -502,11 +502,12 @@ async function submitHandler(e) {
         mainResult = this.partners.find(partner => partner.name === 'mainResult'),
         options = document.querySelector('.js-options-search');
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData);
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+        result = JSON.parse(response.data.result);
       loader.success();
       this.partners.forEach(partner => partner.component.hide());
-      mainResult.component.unshift(response).show();
-      options.append(optionsUser(response.data.result.fio));
+      mainResult.component.unshift(result).show();
+      options.append(optionsUser(result.fio));
     } catch (error) {
       loader.failure();
       if (error.status === 'error') {
@@ -1576,6 +1577,7 @@ class SearchSelect {
       plug = searchInput.nextElementSibling;
     if (!!searchBox.hidden) {
       searchBox.hidden = false;
+      searchInput.focus();
     } else {
       searchBox.hidden = true;
       searchInput.innerText = '';
@@ -3428,7 +3430,7 @@ class ApiService {
    */
   async getFio() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
       mode: 'class'
     });
     return JSON.parse(response.data.result);

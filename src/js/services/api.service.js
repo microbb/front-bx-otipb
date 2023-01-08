@@ -51,7 +51,7 @@ class ApiService{
    */
   async getFio() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
       mode: 'class'
     })
 

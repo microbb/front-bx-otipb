@@ -69,15 +69,16 @@ async function submitHandler(e) {
 
       this.$el.append(loader.loading())
 
-      const response = await apiService.useRequest(action,formData)
+      const response = await apiService.useRequest(action,formData),
+            result = JSON.parse(response.data.result)
 
       loader.success()
 
       this.partners.forEach(partner => partner.component.hide())
 
-      mainResult.component.unshift(response).show()
+      mainResult.component.unshift(result).show()
 
-      options.append(optionsUser(response.data.result.fio))
+      options.append(optionsUser(result.fio))
 
     } catch (error) {
 
