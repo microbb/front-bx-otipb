@@ -16,7 +16,7 @@ export default class Pagination extends PaginationCore{
    */
   constructor(paginationInSelector,resultInSelector,listElements,
               {
-                perpage = 16,
+                perpage = 25,
                 page = 1
               } = {}) {
 
@@ -34,7 +34,7 @@ export default class Pagination extends PaginationCore{
 
     this._page = page // активная страница
 
-    this._init() // если больше 1 страницы инициализируем постраничную навигацию
+    this._init()
   }
 
   /**
@@ -87,6 +87,21 @@ export default class Pagination extends PaginationCore{
     if(this._pagesCount > 1){
       this._paginationCreate()
     }
+  }
+
+  /**
+   * Показать нужную страницу
+   * @param {number} number - номер страницы которую надо показать
+   * @return {void}
+   */
+  showPage(number) {
+    this._countListElements = this._listElements.length || 0 // сколько всего элементов
+    this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
+
+    this._page = number
+
+
+    this._switchPage()
   }
 
   /**

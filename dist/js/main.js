@@ -1359,6 +1359,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResultMainComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/user/userMain.template */ "./src/js/templates/user/userMain.template.js");
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../library/sumbiot/modules/pagination/components/pagination */ "./src/js/library/sumbiot/modules/pagination/components/pagination.js");
+
+
+
 
 
 
@@ -1374,6 +1380,71 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
   constructor(id, options) {
     super(id, options);
     this.$pasteInElement = this.$el.querySelector('.result__inner');
+  }
+
+  /**
+   * Интерфейс компонента
+   * @return {void}
+   */
+  _init() {
+    this.getAllUsers();
+  }
+
+  /**
+   * Отрисовать всех сотрудниуов на главной страницы ком
+   * @return {void}
+   */
+  async getAllUsers() {
+    const loader = new _loader__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      loading: 'Приложение загружается, подождите',
+      success: 'Приложение загружено, приятной работы',
+      failure: 'Приложение не загружено, что то пошло не так',
+      activeClass: 'loader--min-height'
+    });
+    try {
+      document.querySelector('.result').append(loader.loading());
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].getUsers();
+      if (Array.isArray(response) && response.length) {
+        this.html = response.map(user => {
+          if (+user.customUser) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__["userMainTemplate"])(user, {
+              build: 1
+            });
+          } else if (+user.idMatrixWorks) {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__["userMainTemplate"])(user, {
+              build: 2
+            });
+          } else {
+            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__["userMainTemplate"])(user, {
+              build: 0
+            });
+          }
+        });
+        loader.success();
+        setTimeout(() => {
+          this.pagination = new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_4__["default"](this.$el, this.$pasteInElement, this.html);
+        }, 950);
+      }
+    } catch (error) {
+      loader.failure();
+      if (error.status === 'error') {
+        console.group('In file ApiService, in function getUsers, promise return reject');
+        console.group('List of errors');
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+        });
+        console.groupEnd();
+        console.groupEnd();
+      } else {
+        console.group('In file ResultMainComponent, in function getAllUsers error');
+        console.error(`${error.stack}`);
+        console.groupEnd();
+      }
+    } finally {
+      setTimeout(() => {
+        loader.removeLoader();
+      }, 900);
+    }
   }
 
   /**
@@ -3042,7 +3113,7 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    */
   constructor(paginationInSelector, resultInSelector, listElements) {
     let {
-      perpage = 16,
+      perpage = 25,
       page = 1
     } = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     super();
@@ -3067,7 +3138,7 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
 
     this._page = page; // активная страница
 
-    this._init(); // если больше 1 страницы инициализируем постраничную навигацию
+    this._init();
   }
 
   /**
@@ -3101,6 +3172,19 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
     if (this._pagesCount > 1) {
       this._paginationCreate();
     }
+  }
+
+  /**
+   * Показать нужную страницу
+   * @param {number} number - номер страницы которую надо показать
+   * @return {void}
+   */
+  showPage(number) {
+    this._countListElements = this._listElements.length || 0; // сколько всего элементов
+    this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
+
+    this._page = number;
+    this._switchPage();
   }
 
   /**
@@ -3401,27 +3485,55 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    return await BX.ajax.runComponentAction(this.componentBx, action, {
-      mode: 'class',
-      data: data
-    });
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
+    // return await BX.ajax.runComponentAction(this.componentBx, action, {
+    //   mode: 'class',
+    //   data: data
     // })
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
+  }
+
+  /**
+   * Запрос на сервер для получения всех сотрудников
+   * @return {Promise}
+   */
+  async getUsers() {
+    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
+    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+    //   mode: 'class'
+    // })
+    //
+    // return JSON.parse(response.data.result)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
   }
 
   /**
@@ -3430,30 +3542,29 @@ class ApiService {
    */
   async getFio() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
-      mode: 'class'
-    });
-    return JSON.parse(response.data.result);
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
+    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
+    //   mode: 'class'
     // })
+    //
+    // return JSON.parse(response.data.result)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
   }
 }
-
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),
