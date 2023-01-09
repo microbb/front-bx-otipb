@@ -30,7 +30,7 @@ export default class Pagination extends PaginationCore{
 
     this._perpage = perpage // сколько показывать на странице
 
-    this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
+    this._pagesCount = Math.ceil(this._countListElements / this._perpage) || 1; // кол-во страниц
 
     this._page = page // активная страница
 
@@ -94,12 +94,13 @@ export default class Pagination extends PaginationCore{
    * @param {number} number - номер страницы которую надо показать
    * @return {void}
    */
-  showPage(number) {
+  showPage(number= 1) {
     this._countListElements = this._listElements.length || 0 // сколько всего элементов
-    this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
+    this._pagesCount = Math.ceil(this._countListElements / this._perpage) || 0; // кол-во страниц
 
-    this._page = number
-
+    (this._pagesCount < number || number < 1) ?
+      this._page = 1 :
+      this._page = number
 
     this._switchPage()
   }

@@ -1424,6 +1424,8 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
         setTimeout(() => {
           this.pagination = new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_4__["default"](this.$el, this.$pasteInElement, this.html);
         }, 950);
+      } else {
+        console.error('In file ResultMainComponent, in function getAllUsers, response is either not an array or an empty array');
       }
     } catch (error) {
       loader.failure();
@@ -1453,10 +1455,17 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
    * @return {this}
    */
   unshift(user) {
-    let html = Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__["userMainTemplate"])(user, {
-      build: 1
-    });
-    this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+    if (user) {
+      let html = Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__["userMainTemplate"])(user, {
+        build: 1
+      });
+      if (this.html) {
+        this.html.unshift(html);
+        this.pagination.showPage(1);
+      } else {
+        this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+      }
+    }
     return this;
   }
 }
@@ -3134,7 +3143,7 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
 
     this._perpage = perpage; // сколько показывать на странице
 
-    this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
+    this._pagesCount = Math.ceil(this._countListElements / this._perpage) || 1; // кол-во страниц
 
     this._page = page; // активная страница
 
@@ -3179,11 +3188,12 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * @param {number} number - номер страницы которую надо показать
    * @return {void}
    */
-  showPage(number) {
+  showPage() {
+    let number = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
     this._countListElements = this._listElements.length || 0; // сколько всего элементов
-    this._pagesCount = Math.ceil(this._countListElements / this._perpage); // кол-во страниц
+    this._pagesCount = Math.ceil(this._countListElements / this._perpage) || 0; // кол-во страниц
 
-    this._page = number;
+    this._pagesCount < number || number < 1 ? this._page = 1 : this._page = number;
     this._switchPage();
   }
 
@@ -3307,12 +3317,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  // window.BX = {
-  //   TemplateFolder: '',
-  //   message: function (path) {
-  //     return this[path]
-  //   }
-  // }
+  window.BX = {
+    TemplateFolder: '',
+    message: function (path) {
+      return this[path];
+    }
+  };
 
   // выподающий список select
   const dropDownSelect = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown--select', {
