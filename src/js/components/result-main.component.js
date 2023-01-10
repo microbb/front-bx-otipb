@@ -70,6 +70,10 @@ export default class ResultMainComponent extends Component {
           this.pagination = new Pagination(this.$el, this.$pasteInElement, this.html)
         }, 950)
 
+      } else {
+
+        console.error('In file ResultMainComponent, in function getAllUsers, response is either not an array or an empty array')
+
       }
 
     } catch (error) {
@@ -114,13 +118,25 @@ export default class ResultMainComponent extends Component {
    * @return {this}
    */
   unshift(user) {
-    let html =  userMainTemplate(user,{build: 1})
 
-    this.$pasteInElement.insertAdjacentHTML('afterbegin', html)
+    if(user) {
+      let html =  userMainTemplate(user,{build: 1})
+
+      if(this.html) {
+
+        this.html.unshift(html)
+
+        this.pagination.showPage(1)
+
+      } else {
+
+        this.$pasteInElement.insertAdjacentHTML('afterbegin', html)
+
+      }
+
+    }
 
     return this
   }
-
-
 
 }
