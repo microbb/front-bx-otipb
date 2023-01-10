@@ -3330,12 +3330,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  window.BX = {
-    TemplateFolder: '',
-    message: function (path) {
-      return this[path];
-    }
-  };
+  // window.BX = {
+  //   TemplateFolder: '',
+  //   message: function (path) {
+  //     return this[path]
+  //   }
+  // }
 
   // выподающий список select
   const dropDownSelect = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown--select', {
@@ -3508,26 +3508,27 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    // return await BX.ajax.runComponentAction(this.componentBx, action, {
-    //   mode: 'class',
-    //   data: data
-    // })
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
     });
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 
   /**
@@ -3536,27 +3537,27 @@ class ApiService {
    */
   async getUsers() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
-    //   mode: 'class'
-    // })
-    //
-    // return JSON.parse(response.data.result)
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+      mode: 'class'
     });
+    return JSON.parse(response.data.result);
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 
   /**
@@ -3565,29 +3566,30 @@ class ApiService {
    */
   async getFio() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
-    //   mode: 'class'
-    // })
-    //
-    // return JSON.parse(response.data.result)
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
+      mode: 'class'
     });
+    return JSON.parse(response.data.result);
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 }
+
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),

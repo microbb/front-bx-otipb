@@ -228,6 +228,10 @@ $select: #98948a;
     background: $select; /* Цвет фона */
   }
 
+  br {
+    display: none;
+  }
+
 }
 
 .dropdown__search-plug{
