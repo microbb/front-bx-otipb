@@ -1617,24 +1617,37 @@ class SearchSelect {
       let parentElement = panel.parentElement,
         searchBtn = panel.querySelector('.option-panel__item--search'),
         searchInput = parentElement.querySelector('.dropdown__search'),
-        resetBtn = parentElement.querySelector('.dropdown__search-reset'),
-        options = parentElement.querySelectorAll('.dropdown__item');
+        resetBtn = parentElement.querySelector('.dropdown__search-reset');
+      // options = parentElement.querySelectorAll('.dropdown__item')
+
       searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', e => {
         e.preventDefault();
-        this._toggleSearch(parentElement, searchInput, options);
+        this._toggleSearch(parentElement, searchInput);
       });
       searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('input', e => {
         e.preventDefault();
-        this._searchOptions(searchInput, options);
+        this._searchOptions(parentElement, searchInput);
+      });
+      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('keydown', e => {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+        }
+      });
+      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('paste', e => {
+        e.preventDefault();
+        searchInput.innerText = e.clipboardData.getData('text/plain');
+        this._searchOptions(parentElement, searchInput);
       });
       resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener('click', e => {
         e.preventDefault();
-        this._reset(searchInput, options);
+        this._reset(parentElement, searchInput);
       });
-      options.forEach(option => {
-        option.addEventListener('click', e => {
-          this._reset(searchInput, options);
-        });
+      parentElement.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.classList.contains('dropdown__item') || target && target.parentElement.classList.contains('dropdown__item')) {
+          console.log(target);
+          this._reset(parentElement, searchInput);
+        }
       });
     });
   }
@@ -1643,8 +1656,9 @@ class SearchSelect {
    * Показаль или скрыть поиск
    * @return {void}
    */
-  _toggleSearch(parentElement, searchInput, options) {
+  _toggleSearch(parentElement, searchInput) {
     let searchBox = parentElement.querySelector(this._searchSelector),
+      options = parentElement.querySelectorAll('.dropdown__item'),
       plug = searchInput.nextElementSibling;
     if (!!searchBox.hidden) {
       searchBox.hidden = false;
@@ -1664,9 +1678,10 @@ class SearchSelect {
    * Поиск по пунктам выподающего списка
    * @return {void}
    */
-  _searchOptions(searchInput, options) {
+  _searchOptions(parentElement, searchInput) {
     let flag = false,
       valueInput = searchInput.innerText.trim(),
+      options = parentElement.querySelectorAll('.dropdown__item'),
       plug = searchInput.nextElementSibling;
     plug.hidden = true;
     if (valueInput) {
@@ -1694,7 +1709,8 @@ class SearchSelect {
    * Сброс поиска до настроек по умолчанию
    * @return {void}
    */
-  _reset(searchInput, options) {
+  _reset(parentElement, searchInput) {
+    let options = parentElement.querySelectorAll('.dropdown__item');
     options.forEach(option => {
       option.style.display = 'block';
     });
