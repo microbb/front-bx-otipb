@@ -1627,8 +1627,6 @@ class SearchSelect {
         searchBtn = panel.querySelector('.option-panel__item--search'),
         searchInput = parentElement.querySelector('.dropdown__search'),
         resetBtn = parentElement.querySelector('.dropdown__search-reset');
-      // options = parentElement.querySelectorAll('.dropdown__item')
-
       searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', e => {
         e.preventDefault();
         this._toggleSearch(parentElement, searchInput);
@@ -1654,7 +1652,6 @@ class SearchSelect {
       parentElement.addEventListener('click', e => {
         const target = e.target;
         if (target && target.classList.contains('dropdown__item') || target && target.parentElement.classList.contains('dropdown__item')) {
-          console.log(target);
           this._reset(parentElement, searchInput);
         }
       });

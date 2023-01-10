@@ -36,7 +36,6 @@ export default class SearchSelect {
           searchBtn = panel.querySelector('.option-panel__item--search'),
           searchInput = parentElement.querySelector('.dropdown__search'),
           resetBtn = parentElement.querySelector('.dropdown__search-reset')
-          // options = parentElement.querySelectorAll('.dropdown__item')
 
       searchBtn?.addEventListener('click', (e) => {
         e.preventDefault()
@@ -76,7 +75,6 @@ export default class SearchSelect {
 
         if (target && target.classList.contains('dropdown__item') || target && target.parentElement.classList.contains('dropdown__item')) {
 
-          console.log(target)
           this._reset(parentElement,searchInput)
         }
 
