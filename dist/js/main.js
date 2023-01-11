@@ -97,10 +97,10 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormAddOrEditCardComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 /* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
 
 
@@ -145,7 +145,7 @@ class FormAddOrEditCardComponent extends _core_component__WEBPACK_IMPORTED_MODUL
         getData.call(this, target);
       }
     });
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
       C_ATTESTATION_DATE: [],
       C_NEXT_ATTESTATION_DATE: [],
@@ -160,7 +160,7 @@ class FormAddOrEditCardComponent extends _core_component__WEBPACK_IMPORTED_MODUL
  */
 async function getData(target) {
   let idTimeout;
-  const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+  const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_4__["default"]({
     loading: 'Идет сбор данных, об удостоверение'
   });
   try {
@@ -206,13 +206,13 @@ async function submitHandler(e) {
   if (this.form.isValid()) {
     let loader;
     if (this.$el.getAttribute('action').slice(1) === 'addCard') {
-      loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      loader = new _loader_component__WEBPACK_IMPORTED_MODULE_4__["default"]({
         loading: 'Добавление удостоверения',
         success: 'Удостоверение добавлено',
         failure: 'Удостоверение не добавлено'
       });
     } else if (this.$el.getAttribute('action').slice(1) === 'editCard') {
-      loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      loader = new _loader_component__WEBPACK_IMPORTED_MODULE_4__["default"]({
         loading: 'Редактирование удостоверения',
         success: 'Удостоверение отредактировано',
         failure: 'Удостоверение не отредактировано'
@@ -276,11 +276,11 @@ async function submitHandler(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormAddOrEditHseComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
-/* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
+/* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
+/* harmony import */ var _plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugin/form-validator/validators */ "./src/js/plugin/form-validator/validators.js");
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 /* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
 /* harmony import */ var _templates_workName_template__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../templates/workName.template */ "./src/js/templates/workName.template.js");
 
@@ -323,9 +323,9 @@ class FormAddOrEditHseComponent extends _core_component__WEBPACK_IMPORTED_MODULE
         }
       });
     }
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
-      ID_MATRIX_WORKS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
     });
   }
 }
@@ -336,7 +336,7 @@ class FormAddOrEditHseComponent extends _core_component__WEBPACK_IMPORTED_MODULE
  */
 async function getData(target) {
   let idTimeout;
-  const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
+  const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_5__["default"]({
     loading: 'Идет сбор данных, о сотруднике'
   });
   try {
@@ -379,7 +379,7 @@ async function getData(target) {
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_5__["default"]({
       loading: 'Добавление должности',
       success: 'Должность добавлена',
       failure: 'Должность не добавлена'
@@ -443,10 +443,10 @@ async function submitHandler(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormAddUserComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
-/* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
+/* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
+/* harmony import */ var _plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugin/form-validator/validators */ "./src/js/plugin/form-validator/validators.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 
 
 
@@ -474,12 +474,12 @@ class FormAddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       E_FIO: [],
-      ID_DIVISION: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_DEPARTMENT: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_MATRIX_WORKS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      E_EMPLOYEE_STATUS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+      ID_DIVISION: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_DEPARTMENT: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
     });
   }
 }
@@ -491,7 +491,7 @@ class FormAddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_4__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_4__["default"]({
       loading: 'Идет добавления сотрудника',
       success: 'Сотрудник добавлен',
       failure: 'Сотрудник не добавлен'
@@ -560,9 +560,9 @@ function optionsUser(fio) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormDeleteUserOrCardComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 /* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
 
 
@@ -589,7 +589,7 @@ class FormDeleteUserOrCardComponent extends _core_component__WEBPACK_IMPORTED_MO
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: []
     });
   }
@@ -602,7 +602,7 @@ class FormDeleteUserOrCardComponent extends _core_component__WEBPACK_IMPORTED_MO
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_3__["default"]({
       loading: 'Удаление',
       success: 'Удален',
       failure: 'Неудача',
@@ -673,11 +673,11 @@ async function submitHandler(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormEditUserComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
-/* harmony import */ var _core_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/validators */ "./src/js/core/validators.js");
+/* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
+/* harmony import */ var _plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugin/form-validator/validators */ "./src/js/plugin/form-validator/validators.js");
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 /* harmony import */ var _templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userInfo.template */ "./src/js/templates/user/userInfo.template.js");
 /* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
 
@@ -719,13 +719,13 @@ class FormEditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
         getData.call(this, target);
       }
     });
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
       E_FIO: [],
-      ID_DIVISION: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_DEPARTMENT: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_MATRIX_WORKS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      E_EMPLOYEE_STATUS: [_core_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+      ID_DIVISION: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_DEPARTMENT: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+      E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
     });
   }
 }
@@ -736,7 +736,7 @@ class FormEditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
  */
 async function getData(target) {
   let idTimeout;
-  const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
+  const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_5__["default"]({
     loading: 'Идет сбор данных, о сотруднике'
   });
   try {
@@ -784,7 +784,7 @@ async function getData(target) {
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_5__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_5__["default"]({
       loading: 'Идет добавления сотрудника',
       success: 'Сотрудник добавлен',
       failure: 'Сотрудник не добавлен'
@@ -849,9 +849,9 @@ async function submitHandler(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormFilterComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 
 
 
@@ -881,7 +881,7 @@ class FormFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
     this.$el.addEventListener('reset', resetHandler.bind(this));
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       DATE_BEGIN: [],
       DATE_END: [],
       ID_DIVISION: [],
@@ -899,7 +899,7 @@ async function submitHandler(e) {
   e.preventDefault();
   e.target.querySelector('.form__button--submit').blur();
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_3__["default"]({
       loading: 'Идет фильтрация данных',
       failure: 'Ошибка'
     });
@@ -963,9 +963,9 @@ function resetHandler(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormSearchComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
-/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/form */ "./src/js/core/form.js");
+/* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 
 
 
@@ -992,7 +992,7 @@ class FormSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
    */
   _init() {
     this.$el.addEventListener('submit', submitHandler.bind(this));
-    this.form = new _core_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
+    this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       SEARCH: [],
       STATUS: []
     });
@@ -1048,7 +1048,7 @@ async function submitHandler(e) {
     btnSubmit.blur();
   }, 150);
   if (this.form.isValid()) {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_3__["default"]({
       loading: 'Идет поиск сотрудника',
       failure: 'Ошибка',
       activeClass: 'loader--min-height'
@@ -1146,20 +1146,20 @@ function nextBtn() {
 
 /***/ }),
 
-/***/ "./src/js/components/loader.js":
-/*!*************************************!*\
-  !*** ./src/js/components/loader.js ***!
-  \*************************************/
+/***/ "./src/js/components/loader.component.js":
+/*!***********************************************!*\
+  !*** ./src/js/components/loader.component.js ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Loader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LoaderComponent; });
 /**
  *  Погрузчик
  * */
-class Loader {
+class LoaderComponent {
   /**
    * Конструктор
    * @param {Object=} message - объект с настройками
@@ -1359,7 +1359,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResultMainComponent; });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../templates/user/userMain.template */ "./src/js/templates/user/userMain.template.js");
-/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loader */ "./src/js/components/loader.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
 /* harmony import */ var _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../library/sumbiot/modules/pagination/components/pagination */ "./src/js/library/sumbiot/modules/pagination/components/pagination.js");
 
@@ -1395,7 +1395,7 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
    * @return {void}
    */
   async getAllUsers() {
-    const loader = new _loader__WEBPACK_IMPORTED_MODULE_2__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_2__["default"]({
       loading: 'Приложение загружается, подождите',
       success: 'Приложение загружено, приятной работы',
       failure: 'Приложение не загружено, что то пошло не так',
@@ -1583,230 +1583,23 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
 
 /***/ }),
 
-/***/ "./src/js/components/search-select.js":
-/*!********************************************!*\
-  !*** ./src/js/components/search-select.js ***!
-  \********************************************/
+/***/ "./src/js/components/visitor.pattern.js":
+/*!**********************************************!*\
+  !*** ./src/js/components/visitor.pattern.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchSelect; });
-/**
- *  Панель для выпадающего списка, для поиска по списку
- * */
-
-class SearchSelect {
-  /**
-   * Конструктор
-   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
-   * @param {string} searchSelector   - селектор блока поиска.
-   */
-  constructor(panelsSelector, searchSelector) {
-    this._panelsElements = document.querySelectorAll(panelsSelector);
-    this._searchSelector = searchSelector;
-    this._init();
-  }
-
-  /**
-   * Инициализация
-   * @return {void}
-   */
-  _init() {
-    this._searchHandler();
-  }
-
-  /**
-   * Обработчик событий по поиску
-   * @return {void}
-   */
-  _searchHandler() {
-    this._panelsElements.forEach(panel => {
-      let parentElement = panel.parentElement,
-        searchBtn = panel.querySelector('.option-panel__item--search'),
-        searchInput = parentElement.querySelector('.dropdown__search'),
-        resetBtn = parentElement.querySelector('.dropdown__search-reset');
-      searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', e => {
-        e.preventDefault();
-        this._toggleSearch(parentElement, searchInput);
-      });
-      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('input', e => {
-        e.preventDefault();
-        this._searchOptions(parentElement, searchInput);
-      });
-      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('keydown', e => {
-        if (e.keyCode === 13) {
-          e.preventDefault();
-        }
-      });
-      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('paste', e => {
-        e.preventDefault();
-        searchInput.innerText = e.clipboardData.getData('text/plain');
-        this._searchOptions(parentElement, searchInput);
-      });
-      resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener('click', e => {
-        e.preventDefault();
-        this._reset(parentElement, searchInput);
-      });
-      parentElement.addEventListener('click', e => {
-        const target = e.target;
-        if (target && target.classList.contains('dropdown__item') || target && target.parentElement.classList.contains('dropdown__item')) {
-          this._reset(parentElement, searchInput);
-        }
-      });
-    });
-  }
-
-  /**
-   * Показаль или скрыть поиск
-   * @return {void}
-   */
-  _toggleSearch(parentElement, searchInput) {
-    let searchBox = parentElement.querySelector(this._searchSelector),
-      options = parentElement.querySelectorAll('.dropdown__item'),
-      plug = searchInput.nextElementSibling;
-    if (!!searchBox.hidden) {
-      searchBox.hidden = false;
-      searchInput.focus();
-    } else {
-      searchBox.hidden = true;
-      searchInput.innerText = '';
-      options.forEach(option => {
-        option.style.display = 'block';
-      });
-      plug.hidden = true;
-      plug.nextElementSibling.hidden = true;
-    }
-  }
-
-  /**
-   * Поиск по пунктам выподающего списка
-   * @return {void}
-   */
-  _searchOptions(parentElement, searchInput) {
-    let flag = false,
-      valueInput = searchInput.innerText.trim(),
-      options = parentElement.querySelectorAll('.dropdown__item'),
-      plug = searchInput.nextElementSibling;
-    plug.hidden = true;
-    if (valueInput) {
-      plug.nextElementSibling.hidden = false;
-      options.forEach(option => {
-        if (option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
-          option.style.display = 'block';
-          flag = true;
-        } else {
-          option.style.display = 'none';
-        }
-      });
-      if (!flag) {
-        plug.hidden = false;
-      }
-    } else {
-      plug.nextElementSibling.hidden = true;
-      options.forEach(option => {
-        option.style.display = 'block';
-      });
-    }
-  }
-
-  /**
-   * Сброс поиска до настроек по умолчанию
-   * @return {void}
-   */
-  _reset(parentElement, searchInput) {
-    let options = parentElement.querySelectorAll('.dropdown__item');
-    options.forEach(option => {
-      option.style.display = 'block';
-    });
-    searchInput.innerText = '';
-    searchInput.nextElementSibling.hidden = true;
-    searchInput.nextElementSibling.nextElementSibling.hidden = true;
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/components/stretch.js":
-/*!**************************************!*\
-  !*** ./src/js/components/stretch.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Stretch; });
-/**
- *  Панель для выпадающего списка, для раскрытия списка по горизонтали
- * */
-class Stretch {
-  /**
-   * Конструктор
-   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
-   * @param {string} stretchSelector  - селектор элемента над которым будет проводится модификация.
-   * @param {string} activeClass      - класс модификатор для элемента над которым будет проводится модификация.
-   */
-  constructor(panelsSelector, stretchSelector, activeClass) {
-    this._panelsElements = document.querySelectorAll(panelsSelector);
-    this._stretchSelector = stretchSelector;
-    this._activeClass = activeClass;
-    this._init();
-  }
-
-  /**
-   * Инициализация
-   * @return {void}
-   */
-  _init() {
-    this._stretchHandler();
-  }
-
-  /**
-   * Обработчик события клика по панели
-   * @return {void}
-   */
-  _stretchHandler() {
-    this._panelsElements.forEach(panel => {
-      let stretchBtn = panel.querySelector('.option-panel__item--stretch');
-      stretchBtn === null || stretchBtn === void 0 ? void 0 : stretchBtn.addEventListener('click', e => {
-        e.preventDefault();
-        this._toggle(panel, stretchBtn);
-      });
-    });
-  }
-
-  /**
-   * Развернуть или свернуть список по горизонтали
-   * @return {void}
-   */
-  _toggle(panelElement, stretchBtnElement) {
-    panelElement.closest(this._stretchSelector).classList.toggle(this._activeClass);
-    stretchBtnElement.classList.toggle('option-panel__item--stretch-off');
-    stretchBtnElement.title.toLowerCase() === 'развернуть' ? stretchBtnElement.setAttribute('title', 'Свернуть') : stretchBtnElement.setAttribute('title', 'Развернуть');
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/components/visitor.js":
-/*!**************************************!*\
-  !*** ./src/js/components/visitor.js ***!
-  \**************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Visitor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return VisitorPattern; });
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
 
 
 /**
  *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
  * */
-class Visitor {
+class VisitorPattern {
   /**
    * Посититель для экземпляра модального окна которое реализует
    * редактировать / добавить / продлить
@@ -2161,109 +1954,6 @@ class Component {
 
 /***/ }),
 
-/***/ "./src/js/core/form.js":
-/*!*****************************!*\
-  !*** ./src/js/core/form.js ***!
-  \*****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Form; });
-/**
- *  Базовый класс для работы с формами
- * */
-class Form {
-  /**
-   * Конструктор
-   * @param {Element} form      - форма.
-   * @param {Object=} controls  - поля формы.
-   */
-  constructor(form) {
-    let controls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    this.form = form;
-    this.controls = controls;
-  }
-
-  /**
-   * Вытаскивает значения из полей формы
-   * @return {Object}
-   */
-  value() {
-    const value = {};
-    Object.keys(this.controls).forEach(control => {
-      value[control] = this.form[control].value;
-    });
-    return value;
-  }
-
-  /**
-   * Проверка на валидацию
-   * @return {boolean}
-   */
-  isValid() {
-    let isFormValid = true; // Флаг
-
-    Object.keys(this.controls).forEach(control => {
-      if (this.controls[control].length) {
-        const validators = this.controls[control]; // массив с валидаторами
-
-        let isValid = true; // Флаг
-
-        validators.forEach(validator => {
-          isValid = validator(this.form[control].value) && isValid; // запускаем валидаторы по цепочки
-        });
-
-        //если элемент формы валиден
-        isValid ? clearError(this.form[control]) : setError(this.form[control]);
-        //если элемент формы невалиден
-
-        isFormValid = isFormValid && isValid; // переключаем Флаг
-      }
-    });
-
-    return isFormValid;
-  }
-
-  /**
-   * Очищаем форму
-   * @return {void}
-   */
-  clear() {
-    this.form.reset();
-  }
-}
-
-/**
- * Сформировать и отправить ошибку
- * @return {void}
- */
-function setError($control) {
-  clearError($control); // удаляет сообщения об ошибки
-
-  const error = '<span class="form__validation-error">Введите значение</span>'; // формируем сообшения об ошибки
-
-  $control.nextElementSibling.firstElementChild.style.backgroundColor = '#fff5f5'; // подсветить не валидный элемент красным цветом
-
-  $control.previousElementSibling.insertAdjacentHTML('beforeend', error); // добавляем сообщения от ошибки для невалидного элемента
-}
-
-/**
- * Удалить сообщения об ошибки
- * @return {void}
- */
-function clearError($control) {
-  $control.nextElementSibling.firstElementChild.style.backgroundColor = ''; // удалить подсветку
-
-  // элемент с ошибкой сушествует
-  if ($control.previousElementSibling.querySelector('.form__validation-error')) {
-    $control.previousElementSibling.querySelector('.form__validation-error').remove(); // удаляет ошибку
-  }
-}
-
-/***/ }),
-
 /***/ "./src/js/core/support.js":
 /*!********************************!*\
   !*** ./src/js/core/support.js ***!
@@ -2310,42 +2000,6 @@ class Support {
    */
   static removeClosestClass(element, searchSelector, arrayClasses) {
     element.closest(searchSelector).classList.remove(...arrayClasses);
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/core/validators.js":
-/*!***********************************!*\
-  !*** ./src/js/core/validators.js ***!
-  \***********************************/
-/*! exports provided: Validators */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Validators", function() { return Validators; });
-/**
- *  Вылидаторы для форм
- * */
-class Validators {
-  /**
-   * Валидатор: вы незаполнили поле
-   * @return {string}
-   */
-  static required() {
-    let value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return value && value.trim();
-  }
-
-  /**
-   * Валидатор: минимальное число симаолов
-   * @return {function}
-   */
-  static minLength(length) {
-    return value => {
-      return value.length >= length;
-    };
   }
 }
 
@@ -3308,9 +2962,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_result_filter_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/result-filter.component */ "./src/js/components/result-filter.component.js");
 /* harmony import */ var _components_result_main_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/result-main.component */ "./src/js/components/result-main.component.js");
 /* harmony import */ var _components_result_search_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/result-search.component */ "./src/js/components/result-search.component.js");
-/* harmony import */ var _components_visitor__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/visitor */ "./src/js/components/visitor.js");
-/* harmony import */ var _components_stretch__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/stretch */ "./src/js/components/stretch.js");
-/* harmony import */ var _components_search_select__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/search-select */ "./src/js/components/search-select.js");
+/* harmony import */ var _components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/visitor.pattern */ "./src/js/components/visitor.pattern.js");
+/* harmony import */ var _plugin_stretch_in_select_plugin__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./plugin/stretch-in-select.plugin */ "./src/js/plugin/stretch-in-select.plugin.js");
+/* harmony import */ var _plugin_search_in_select_plugin__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./plugin/search-in-select.plugin */ "./src/js/plugin/search-in-select.plugin.js");
 
 
 
@@ -3330,12 +2984,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  // window.BX = {
-  //   TemplateFolder: '',
-  //   message: function (path) {
-  //     return this[path]
-  //   }
-  // }
+  window.BX = {
+    TemplateFolder: '',
+    message: function (path) {
+      return this[path];
+    }
+  };
 
   // выподающий список select
   const dropDownSelect = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown--select', {
@@ -3343,7 +2997,7 @@ window.addEventListener('DOMContentLoaded', () => {
     dropdownOptionsWrapperSelector: '.dropdown--select .dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
   });
-  dropDownSelect.accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].positionMod).upgrade();
+  dropDownSelect.accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].positionMod).upgrade();
 
   // выподающий список поиск
   new _library_sumbiot_modules_dropdown_components_dropdownInput__WEBPACK_IMPORTED_MODULE_4__["default"]('.dropdown--input', {
@@ -3353,60 +3007,60 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // панель которая регулирует ширина выподающего списка
-  new _components_stretch__WEBPACK_IMPORTED_MODULE_16__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
+  new _plugin_stretch_in_select_plugin__WEBPACK_IMPORTED_MODULE_16__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
 
   // панель которая реализует поиск выподающего списка
-  new _components_search_select__WEBPACK_IMPORTED_MODULE_17__["default"]('.js-option-panel', '.dropdown__search-box');
+  new _plugin_search_in_select_plugin__WEBPACK_IMPORTED_MODULE_17__["default"]('.js-option-panel', '.dropdown__search-box');
 
   // модалка фильтр
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalSelector: '#edit-user-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].editUserMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].editUserMod).upgrade();
 
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
     modalSelector: '#delete-user-or-card-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityDeleteMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityDeleteMod).upgrade();
 
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalSelector: '#edit-card-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityMod).upgrade();
 
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     modalSelector: '#add-hse-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].addHseMod).upgrade(dropDownSelect);
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].addHseMod).upgrade(dropDownSelect);
 
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalSelector: '#edit-hse-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].editHseMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].editHseMod).upgrade();
 
   // аккардион
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
-  }).accept(_components_visitor__WEBPACK_IMPORTED_MODULE_15__["default"].accordionParentMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].accordionParentMod).upgrade();
 
   // компонент вывод всех сотрудников на главной
   const mainResult = new _components_result_main_component__WEBPACK_IMPORTED_MODULE_13__["default"]('#main-result');
@@ -3478,6 +3132,352 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /***/ }),
 
+/***/ "./src/js/plugin/form-validator/form.js":
+/*!**********************************************!*\
+  !*** ./src/js/plugin/form-validator/form.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Form; });
+/**
+ *  Базовый класс для работы с формами
+ * */
+class Form {
+  /**
+   * Конструктор
+   * @param {Element} form      - форма.
+   * @param {Object=} controls  - поля формы.
+   */
+  constructor(form) {
+    let controls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    this.form = form;
+    this.controls = controls;
+  }
+
+  /**
+   * Вытаскивает значения из полей формы
+   * @return {Object}
+   */
+  value() {
+    const value = {};
+    Object.keys(this.controls).forEach(control => {
+      value[control] = this.form[control].value;
+    });
+    return value;
+  }
+
+  /**
+   * Проверка на валидацию
+   * @return {boolean}
+   */
+  isValid() {
+    let isFormValid = true; // Флаг
+
+    Object.keys(this.controls).forEach(control => {
+      if (this.controls[control].length) {
+        const validators = this.controls[control]; // массив с валидаторами
+
+        let isValid = true; // Флаг
+
+        validators.forEach(validator => {
+          isValid = validator(this.form[control].value) && isValid; // запускаем валидаторы по цепочки
+        });
+
+        //если элемент формы валиден
+        isValid ? clearError(this.form[control]) : setError(this.form[control]);
+        //если элемент формы невалиден
+
+        isFormValid = isFormValid && isValid; // переключаем Флаг
+      }
+    });
+
+    return isFormValid;
+  }
+
+  /**
+   * Очищаем форму
+   * @return {void}
+   */
+  clear() {
+    this.form.reset();
+  }
+}
+
+/**
+ * Сформировать и отправить ошибку
+ * @return {void}
+ */
+function setError($control) {
+  clearError($control); // удаляет сообщения об ошибки
+
+  const error = '<span class="form__validation-error">Введите значение</span>'; // формируем сообшения об ошибки
+
+  $control.nextElementSibling.firstElementChild.style.backgroundColor = '#fff5f5'; // подсветить не валидный элемент красным цветом
+
+  $control.previousElementSibling.insertAdjacentHTML('beforeend', error); // добавляем сообщения от ошибки для невалидного элемента
+}
+
+/**
+ * Удалить сообщения об ошибки
+ * @return {void}
+ */
+function clearError($control) {
+  $control.nextElementSibling.firstElementChild.style.backgroundColor = ''; // удалить подсветку
+
+  // элемент с ошибкой сушествует
+  if ($control.previousElementSibling.querySelector('.form__validation-error')) {
+    $control.previousElementSibling.querySelector('.form__validation-error').remove(); // удаляет ошибку
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/plugin/form-validator/validators.js":
+/*!****************************************************!*\
+  !*** ./src/js/plugin/form-validator/validators.js ***!
+  \****************************************************/
+/*! exports provided: Validators */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Validators", function() { return Validators; });
+/**
+ *  Вылидаторы для форм
+ * */
+class Validators {
+  /**
+   * Валидатор: вы незаполнили поле
+   * @return {string}
+   */
+  static required() {
+    let value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    return value && value.trim();
+  }
+
+  /**
+   * Валидатор: минимальное число симаолов
+   * @return {function}
+   */
+  static minLength(length) {
+    return value => {
+      return value.length >= length;
+    };
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/plugin/search-in-select.plugin.js":
+/*!**************************************************!*\
+  !*** ./src/js/plugin/search-in-select.plugin.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchInSelectPlugin; });
+/**
+ *  Панель для выпадающего списка, для поиска по списку
+ * */
+
+class SearchInSelectPlugin {
+  /**
+   * Конструктор
+   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
+   * @param {string} searchSelector   - селектор блока поиска.
+   */
+  constructor(panelsSelector, searchSelector) {
+    this._panelsElements = document.querySelectorAll(panelsSelector);
+    this._searchSelector = searchSelector;
+    this._init();
+  }
+
+  /**
+   * Инициализация
+   * @return {void}
+   */
+  _init() {
+    this._searchHandler();
+  }
+
+  /**
+   * Обработчик событий по поиску
+   * @return {void}
+   */
+  _searchHandler() {
+    this._panelsElements.forEach(panel => {
+      let parentElement = panel.parentElement,
+        searchBtn = panel.querySelector('.option-panel__item--search'),
+        searchInput = parentElement.querySelector('.dropdown__search'),
+        resetBtn = parentElement.querySelector('.dropdown__search-reset');
+      searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', e => {
+        e.preventDefault();
+        this._toggleSearch(parentElement, searchInput);
+      });
+      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('input', e => {
+        e.preventDefault();
+        this._searchOptions(parentElement, searchInput);
+      });
+      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('keydown', e => {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+        }
+      });
+      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('paste', e => {
+        e.preventDefault();
+        searchInput.innerText = e.clipboardData.getData('text/plain');
+        this._searchOptions(parentElement, searchInput);
+      });
+      resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener('click', e => {
+        e.preventDefault();
+        this._reset(parentElement, searchInput);
+      });
+      parentElement.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.classList.contains('dropdown__item') || target && target.parentElement.classList.contains('dropdown__item')) {
+          this._reset(parentElement, searchInput);
+        }
+      });
+    });
+  }
+
+  /**
+   * Показаль или скрыть поиск
+   * @return {void}
+   */
+  _toggleSearch(parentElement, searchInput) {
+    let searchBox = parentElement.querySelector(this._searchSelector),
+      options = parentElement.querySelectorAll('.dropdown__item'),
+      plug = searchInput.nextElementSibling;
+    if (!!searchBox.hidden) {
+      searchBox.hidden = false;
+      searchInput.focus();
+    } else {
+      searchBox.hidden = true;
+      searchInput.innerText = '';
+      options.forEach(option => {
+        option.style.display = 'block';
+      });
+      plug.hidden = true;
+      plug.nextElementSibling.hidden = true;
+    }
+  }
+
+  /**
+   * Поиск по пунктам выподающего списка
+   * @return {void}
+   */
+  _searchOptions(parentElement, searchInput) {
+    let flag = false,
+      valueInput = searchInput.innerText.trim(),
+      options = parentElement.querySelectorAll('.dropdown__item'),
+      plug = searchInput.nextElementSibling;
+    plug.hidden = true;
+    if (valueInput) {
+      plug.nextElementSibling.hidden = false;
+      options.forEach(option => {
+        if (option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
+          option.style.display = 'block';
+          flag = true;
+        } else {
+          option.style.display = 'none';
+        }
+      });
+      if (!flag) {
+        plug.hidden = false;
+      }
+    } else {
+      plug.nextElementSibling.hidden = true;
+      options.forEach(option => {
+        option.style.display = 'block';
+      });
+    }
+  }
+
+  /**
+   * Сброс поиска до настроек по умолчанию
+   * @return {void}
+   */
+  _reset(parentElement, searchInput) {
+    let options = parentElement.querySelectorAll('.dropdown__item');
+    options.forEach(option => {
+      option.style.display = 'block';
+    });
+    searchInput.innerText = '';
+    searchInput.nextElementSibling.hidden = true;
+    searchInput.nextElementSibling.nextElementSibling.hidden = true;
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/plugin/stretch-in-select.plugin.js":
+/*!***************************************************!*\
+  !*** ./src/js/plugin/stretch-in-select.plugin.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StretchInSelectPlugin; });
+/**
+ *  Панель для выпадающего списка, для раскрытия списка по горизонтали
+ * */
+class StretchInSelectPlugin {
+  /**
+   * Конструктор
+   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
+   * @param {string} stretchSelector  - селектор элемента над которым будет проводится модификация.
+   * @param {string} activeClass      - класс модификатор для элемента над которым будет проводится модификация.
+   */
+  constructor(panelsSelector, stretchSelector, activeClass) {
+    this._panelsElements = document.querySelectorAll(panelsSelector);
+    this._stretchSelector = stretchSelector;
+    this._activeClass = activeClass;
+    this._init();
+  }
+
+  /**
+   * Инициализация
+   * @return {void}
+   */
+  _init() {
+    this._stretchHandler();
+  }
+
+  /**
+   * Обработчик события клика по панели
+   * @return {void}
+   */
+  _stretchHandler() {
+    this._panelsElements.forEach(panel => {
+      let stretchBtn = panel.querySelector('.option-panel__item--stretch');
+      stretchBtn === null || stretchBtn === void 0 ? void 0 : stretchBtn.addEventListener('click', e => {
+        e.preventDefault();
+        this._toggle(panel, stretchBtn);
+      });
+    });
+  }
+
+  /**
+   * Развернуть или свернуть список по горизонтали
+   * @return {void}
+   */
+  _toggle(panelElement, stretchBtnElement) {
+    panelElement.closest(this._stretchSelector).classList.toggle(this._activeClass);
+    stretchBtnElement.classList.toggle('option-panel__item--stretch-off');
+    stretchBtnElement.title.toLowerCase() === 'развернуть' ? stretchBtnElement.setAttribute('title', 'Свернуть') : stretchBtnElement.setAttribute('title', 'Развернуть');
+  }
+}
+
+/***/ }),
+
 /***/ "./src/js/services/api.service.js":
 /*!****************************************!*\
   !*** ./src/js/services/api.service.js ***!
@@ -3508,27 +3508,26 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    return await BX.ajax.runComponentAction(this.componentBx, action, {
-      mode: 'class',
-      data: data
-    });
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
+    // return await BX.ajax.runComponentAction(this.componentBx, action, {
+    //   mode: 'class',
+    //   data: data
     // })
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
   }
 
   /**
@@ -3537,27 +3536,27 @@ class ApiService {
    */
   async getUsers() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
-      mode: 'class'
-    });
-    return JSON.parse(response.data.result);
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
+    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+    //   mode: 'class'
     // })
+    //
+    // return JSON.parse(response.data.result)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
   }
 
   /**
@@ -3566,30 +3565,29 @@ class ApiService {
    */
   async getFio() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
-      mode: 'class'
-    });
-    return JSON.parse(response.data.result);
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
+    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
+    //   mode: 'class'
     // })
+    //
+    // return JSON.parse(response.data.result)
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          "status": "error",
+          "data": {
+            "result": "[]"
+          },
+          "errors": [{
+            "message": "Не заполено поле Email",
+            "code": 0,
+            "customData": null
+          }]
+        });
+      }, 2000);
+    });
   }
 }
-
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),

@@ -1,7 +1,7 @@
 import Component from "../core/component";
 
 import {userMainTemplate} from "../templates/user/userMain.template";
-import Loader from "./loader";
+import LoaderComponent from "./loader.component";
 import {apiService} from "../services/api.service";
 import Pagination from "../library/sumbiot/modules/pagination/components/pagination";
 
@@ -39,7 +39,7 @@ export default class ResultMainComponent extends Component {
    */
   async getAllUsers() {
 
-    const loader = new Loader({
+    const loader = new LoaderComponent({
       loading: 'Приложение загружается, подождите',
       success: 'Приложение загружено, приятной работы',
       failure: 'Приложение не загружено, что то пошло не так',

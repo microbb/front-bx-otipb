@@ -15,18 +15,18 @@ import ResultFilterComponent from "./components/result-filter.component";
 import ResultMainComponent from "./components/result-main.component";
 import ResultSearchComponent from "./components/result-search.component";
 
-import Visitor from "./components/visitor";
-import Stretch from "./components/stretch";
-import SearchSelect from "./components/search-select";
+import VisitorPattern from "./components/visitor.pattern";
+import StretchInSelectPlugin from "./plugin/stretch-in-select.plugin";
+import SearchInSelectPlugin from "./plugin/search-in-select.plugin";
 
 window.addEventListener('DOMContentLoaded', () => {
 
-  // window.BX = {
-  //   TemplateFolder: '',
-  //   message: function (path) {
-  //     return this[path]
-  //   }
-  // }
+  window.BX = {
+    TemplateFolder: '',
+    message: function (path) {
+      return this[path]
+    }
+  }
 
   // выподающий список select
   const dropDownSelect = new DropdownSelect('.dropdown--select',{
@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', () => {
     dropdownOptionsWrapperSelector: '.dropdown--select .dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
   })
-  dropDownSelect.accept(Visitor.positionMod)
+  dropDownSelect.accept(VisitorPattern.positionMod)
           .upgrade()
 
   // выподающий список поиск
@@ -45,53 +45,53 @@ window.addEventListener('DOMContentLoaded', () => {
   })
 
   // панель которая регулирует ширина выподающего списка
-  new Stretch('.js-option-panel',
+  new StretchInSelectPlugin('.js-option-panel',
     '.dropdown__options',
     'dropdown__options--stretch')
 
   // панель которая реализует поиск выподающего списка
-  new SearchSelect('.js-option-panel','.dropdown__search-box')
+  new SearchInSelectPlugin('.js-option-panel','.dropdown__search-box')
 
   // модалка фильтр
   new Modal('.js-filter-modal',
     {modalGroup: '[data-sumbiot-modal-top]', closeClickOverlay: false})
-            .accept(Visitor.modalsStandardMod)
+            .accept(VisitorPattern.modalsStandardMod)
             .upgrade()
   // модалка добавить сутрудника
   new Modal('.js-add-user-modal',
     {modalGroup: '[data-sumbiot-modal-top]', closeClickOverlay: false})
-            .accept(Visitor.modalsStandardMod)
+            .accept(VisitorPattern.modalsStandardMod)
             .upgrade()
 
   // модалка редактировать сотрудника
   new ModalDynamics('.js-edit-user-modal',
     {modalSelector:'#edit-user-modal', modalWrapper: '.js-wrapper-modal', closeClickOverlay: false})
-    .accept(Visitor.editUserMod).upgrade()
+    .accept(VisitorPattern.editUserMod).upgrade()
 
   // модалка удалить сотрудника / удостоверение
   new ModalDynamics('.js-delete-user-and-card-modal',
     {modalSelector:'#delete-user-or-card-modal', closeClickOverlay: false})
-    .accept(Visitor.modalsUnityDeleteMod).upgrade()
+    .accept(VisitorPattern.modalsUnityDeleteMod).upgrade()
 
   // модалка добавить / редактировать / продлить удостоверение
   new ModalDynamics('.js-edit-card-modal',
     {modalSelector:'#edit-card-modal', modalWrapper: '.js-wrapper-modal', closeClickOverlay: false})
-    .accept(Visitor.modalsUnityMod).upgrade()
+    .accept(VisitorPattern.modalsUnityMod).upgrade()
 
   // модалка добавление HSE
   new ModalDynamics('.js-add-hse-modal',
     {modalSelector:'#add-hse-modal', closeClickOverlay: false})
-    .accept(Visitor.addHseMod).upgrade(dropDownSelect)
+    .accept(VisitorPattern.addHseMod).upgrade(dropDownSelect)
 
   // модалка редактировать HSE
   new ModalDynamics('.js-edit-hse-modal',
     {modalSelector:'#edit-hse-modal', modalWrapper: '.js-wrapper-modal', closeClickOverlay: false})
-    .accept(Visitor.editHseMod).upgrade()
+    .accept(VisitorPattern.editHseMod).upgrade()
 
 
   // аккардион
   new Accordion('.js-accordion', {contentActive: 'result__info--active', display: 'grid'})
-                .accept(Visitor.accordionParentMod)
+                .accept(VisitorPattern.accordionParentMod)
                 .upgrade()
 
 

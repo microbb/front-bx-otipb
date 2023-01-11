@@ -2,7 +2,7 @@
  *  Панель для выпадающего списка, для поиска по списку
  * */
 
-export default class SearchSelect {
+export default class SearchInSelectPlugin {
 
   /**
    * Конструктор

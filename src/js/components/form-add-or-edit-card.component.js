@@ -1,10 +1,10 @@
 import Component from "../core/component"
 
-import Form from "../core/form";
+import Form from "../plugin/form-validator/form";
 import Support from "../core/support";
 
 import {apiService} from "../services/api.service";
-import Loader from "./loader";
+import LoaderComponent from "./loader.component";
 
 import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
 
@@ -74,7 +74,7 @@ async function getData(target) {
 
   let idTimeout;
 
-  const loader = new Loader({
+  const loader = new LoaderComponent({
     loading: 'Идет сбор данных, об удостоверение',
   })
 
@@ -142,7 +142,7 @@ async function submitHandler(e) {
 
     if (this.$el.getAttribute('action').slice(1) === 'addCard') {
 
-      loader = new Loader({
+      loader = new LoaderComponent({
         loading: 'Добавление удостоверения',
         success: 'Удостоверение добавлено',
         failure: 'Удостоверение не добавлено'
@@ -151,7 +151,7 @@ async function submitHandler(e) {
     }
     else if (this.$el.getAttribute('action').slice(1) === 'editCard') {
 
-      loader = new Loader({
+      loader = new LoaderComponent({
         loading: 'Редактирование удостоверения',
         success: 'Удостоверение отредактировано',
         failure: 'Удостоверение не отредактировано'

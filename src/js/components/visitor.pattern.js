@@ -3,7 +3,7 @@ import Support from '../core/support'
 /**
  *  Добавляет новую функциональность уже существующим классам, не изменяя исходный код класса
  * */
-export default class Visitor {
+export default class VisitorPattern {
 
   /**
    * Посититель для экземпляра модального окна которое реализует

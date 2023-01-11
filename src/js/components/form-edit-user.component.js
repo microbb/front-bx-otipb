@@ -1,11 +1,11 @@
 import Component from "../core/component"
 
-import Form from "../core/form";
-import {Validators} from "../core/validators";
+import Form from "../plugin/form-validator/form";
+import {Validators} from "../plugin/form-validator/validators";
 import Support from "../core/support";
 
 import {apiService} from "../services/api.service";
-import Loader from "./loader";
+import LoaderComponent from "./loader.component";
 
 import {userInfoTemplate} from "../templates/user/userInfo.template";
 import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
@@ -70,7 +70,7 @@ async function getData(target) {
 
   let idTimeout;
 
-  const loader = new Loader({
+  const loader = new LoaderComponent({
     loading: 'Идет сбор данных, о сотруднике',
   })
 
@@ -141,7 +141,7 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    const loader = new Loader({
+    const loader = new LoaderComponent({
       loading: 'Идет добавления сотрудника',
       success: 'Сотрудник добавлен',
       failure: 'Сотрудник не добавлен'

@@ -2,7 +2,7 @@
 /**
  *  Погрузчик
  * */
-export default class Loader{
+export default class LoaderComponent {
 
   /**
    * Конструктор

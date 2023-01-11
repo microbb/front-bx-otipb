@@ -1,9 +1,9 @@
 import Component from "../core/component"
 
-import Form from "../core/form";
+import Form from "../plugin/form-validator/form";
 
 import {apiService} from "../services/api.service";
-import Loader from "./loader";
+import LoaderComponent from "./loader.component";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -57,7 +57,7 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    const loader = new Loader({
+    const loader = new LoaderComponent({
       loading: 'Идет фильтрация данных',
       failure: 'Ошибка'
     })

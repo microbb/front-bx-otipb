@@ -1,9 +1,9 @@
 import Component from "../core/component"
 
-import Form from "../core/form";
+import Form from "../plugin/form-validator/form";
 
 import {apiService} from "../services/api.service";
-import Loader from "./loader";
+import LoaderComponent from "./loader.component";
 import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
 
 /**
@@ -46,7 +46,7 @@ async function submitHandler(e) {
 
   if(this.form.isValid()){
 
-    const loader = new Loader({
+    const loader = new LoaderComponent({
       loading: 'Удаление',
       success: 'Удален',
       failure: 'Неудача',
