@@ -1,7 +1,6 @@
 /**
  *  Панель для выпадающего списка, для поиска по списку
  * */
-
 export default class SearchInSelectPlugin {
 
   /**

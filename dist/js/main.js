@@ -445,8 +445,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugin/form-validator/validators */ "./src/js/plugin/form-validator/validators.js");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
+/* harmony import */ var _plugin_chaining_select_in_form_plugin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../plugin/chaining-select-in-form.plugin */ "./src/js/plugin/chaining-select-in-form.plugin.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+/* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
+
 
 
 
@@ -481,6 +483,7 @@ class FormAddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[
       ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
       E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
     });
+    new _plugin_chaining_select_in_form_plugin__WEBPACK_IMPORTED_MODULE_3__["default"](this.$el, {}, {});
   }
 }
 
@@ -491,7 +494,7 @@ class FormAddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[
 async function submitHandler(e) {
   e.preventDefault();
   if (this.form.isValid()) {
-    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_4__["default"]({
+    const loader = new _loader_component__WEBPACK_IMPORTED_MODULE_5__["default"]({
       loading: 'Идет добавления сотрудника',
       success: 'Сотрудник добавлен',
       failure: 'Сотрудник не добавлен'
@@ -502,7 +505,7 @@ async function submitHandler(e) {
         mainResult = this.partners.find(partner => partner.name === 'mainResult'),
         options = document.querySelector('.js-options-search');
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest(action, formData),
         result = JSON.parse(response.data.result);
       loader.success();
       this.partners.forEach(partner => partner.component.hide());
@@ -2962,9 +2965,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_result_filter_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/result-filter.component */ "./src/js/components/result-filter.component.js");
 /* harmony import */ var _components_result_main_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/result-main.component */ "./src/js/components/result-main.component.js");
 /* harmony import */ var _components_result_search_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/result-search.component */ "./src/js/components/result-search.component.js");
-/* harmony import */ var _components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/visitor.pattern */ "./src/js/components/visitor.pattern.js");
-/* harmony import */ var _plugin_stretch_in_select_plugin__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./plugin/stretch-in-select.plugin */ "./src/js/plugin/stretch-in-select.plugin.js");
-/* harmony import */ var _plugin_search_in_select_plugin__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./plugin/search-in-select.plugin */ "./src/js/plugin/search-in-select.plugin.js");
+/* harmony import */ var _plugin_stretch_in_select_plugin__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./plugin/stretch-in-select.plugin */ "./src/js/plugin/stretch-in-select.plugin.js");
+/* harmony import */ var _plugin_search_in_select_plugin__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./plugin/search-in-select.plugin */ "./src/js/plugin/search-in-select.plugin.js");
+/* harmony import */ var _components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/visitor.pattern */ "./src/js/components/visitor.pattern.js");
 
 
 
@@ -2997,7 +3000,7 @@ window.addEventListener('DOMContentLoaded', () => {
     dropdownOptionsWrapperSelector: '.dropdown--select .dropdown__options',
     dropdownOptionSelector: '.dropdown__item'
   });
-  dropDownSelect.accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].positionMod).upgrade();
+  dropDownSelect.accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].positionMod).upgrade();
 
   // выподающий список поиск
   new _library_sumbiot_modules_dropdown_components_dropdownInput__WEBPACK_IMPORTED_MODULE_4__["default"]('.dropdown--input', {
@@ -3007,60 +3010,60 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // панель которая регулирует ширина выподающего списка
-  new _plugin_stretch_in_select_plugin__WEBPACK_IMPORTED_MODULE_16__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
+  new _plugin_stretch_in_select_plugin__WEBPACK_IMPORTED_MODULE_15__["default"]('.js-option-panel', '.dropdown__options', 'dropdown__options--stretch');
 
   // панель которая реализует поиск выподающего списка
-  new _plugin_search_in_select_plugin__WEBPACK_IMPORTED_MODULE_17__["default"]('.js-option-panel', '.dropdown__search-box');
+  new _plugin_search_in_select_plugin__WEBPACK_IMPORTED_MODULE_16__["default"]('.js-option-panel', '.dropdown__search-box');
 
   // модалка фильтр
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-filter-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].modalsStandardMod).upgrade();
   // модалка добавить сутрудника
   new _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__["default"]('.js-add-user-modal', {
     modalGroup: '[data-sumbiot-modal-top]',
     closeClickOverlay: false
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsStandardMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].modalsStandardMod).upgrade();
 
   // модалка редактировать сотрудника
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-user-modal', {
     modalSelector: '#edit-user-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].editUserMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].editUserMod).upgrade();
 
   // модалка удалить сотрудника / удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-delete-user-and-card-modal', {
     modalSelector: '#delete-user-or-card-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityDeleteMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].modalsUnityDeleteMod).upgrade();
 
   // модалка добавить / редактировать / продлить удостоверение
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-card-modal', {
     modalSelector: '#edit-card-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].modalsUnityMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].modalsUnityMod).upgrade();
 
   // модалка добавление HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-add-hse-modal', {
     modalSelector: '#add-hse-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].addHseMod).upgrade(dropDownSelect);
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].addHseMod).upgrade(dropDownSelect);
 
   // модалка редактировать HSE
   new _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__["default"]('.js-edit-hse-modal', {
     modalSelector: '#edit-hse-modal',
     modalWrapper: '.js-wrapper-modal',
     closeClickOverlay: false
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].editHseMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].editHseMod).upgrade();
 
   // аккардион
   new _library_sumbiot_modules_accordion_components_accordion__WEBPACK_IMPORTED_MODULE_2__["default"]('.js-accordion', {
     contentActive: 'result__info--active',
     display: 'grid'
-  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_15__["default"].accordionParentMod).upgrade();
+  }).accept(_components_visitor_pattern__WEBPACK_IMPORTED_MODULE_17__["default"].accordionParentMod).upgrade();
 
   // компонент вывод всех сотрудников на главной
   const mainResult = new _components_result_main_component__WEBPACK_IMPORTED_MODULE_13__["default"]('#main-result');
@@ -3129,6 +3132,116 @@ window.addEventListener('DOMContentLoaded', () => {
     }]
   });
 });
+
+/***/ }),
+
+/***/ "./src/js/plugin/chaining-select-in-form.plugin.js":
+/*!*********************************************************!*\
+  !*** ./src/js/plugin/chaining-select-in-form.plugin.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ChainingSelectInFormPlugin; });
+/**
+ *  От выбора в A(первом селект), зависит наполнения Б(второго селекте)
+ * */
+class ChainingSelectInFormPlugin {
+  /**
+   * Конструктор
+   * @param {string | Element} form  - форма в корорый надо объединить два выподающий списка.
+   * @param {Object} selectA         - выподающий спосок A
+   * @param {string} [selectA.selectorA] - селектор выподающего списка А
+   * @param {string} [selectA.selectATriggerSelector] - сетектор для запуска действия в выподающим списке А
+   * @param {Object} selectB         - выподающий спосок В
+   * @param {string} [selectB.selectorB]  -  селектор выподающего списка В
+   * @param {Object} [selectB.resetParams]  - элемента для сброса
+   * @param {string} [selectB.resetParams.activeOption]  - активный пункт
+   * @param {string} [selectB.resetParams.options]  - пункты списка
+   * @param {string} [selectB.resetParams.input]  - input для отправки на сервер
+   */
+  constructor(form) {
+    let {
+      selectorA = '[data-sumbiot-selectA]',
+      selectATriggerSelector = '.dropdown__item'
+    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    let {
+      selectorB = '[data-sumbiot-selectB]',
+      resetParams: {
+        activeOption = '.js-dropdown__toggle',
+        options = '.dropdown__item',
+        input = '.sumbiot-input-select'
+      }
+    } = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    this.$form = form.tagName ? form : document.querySelector(form);
+    this.$selectA = this.$form.querySelector(selectorA);
+    this.selectATriggerSelector = selectATriggerSelector;
+    this.$selectB = this.$form.querySelector(selectorB);
+    this.resetParams = resetParams;
+    this._init();
+  }
+
+  /**
+   * Инициализация плагина
+   * @return {void}
+   */
+  _init() {
+    this._handlerEvent();
+  }
+
+  /**
+   * Обработчик событий
+   * @return {void}
+   */
+  _handlerEvent() {
+    this.$selectA.addEventListener('click', e => {
+      let target = e.target;
+      if (target && target.classList.contains(this.selectATriggerSelector.slice(1)) || target && target.parentElement.classList.contains(this.selectATriggerSelector.slice(1))) {
+        e.preventDefault();
+        if (target.parentElement.classList.contains(this.selectATriggerSelector.slice(1))) {
+          target = target.parentElement;
+        }
+        this._fillSelectB(target);
+      }
+    });
+  }
+
+  /**
+   * Заполнить выподающий список B
+   * @param {HTMLElement} option - пункт списка в А селекте
+   * @return {void}
+   */
+  _fillSelectB(option) {
+    let idSelectA = option.dataset.selectOption,
+      formData = new FormData();
+    formData.append('idDivision', idSelectA);
+    this._resetSelectB();
+  }
+
+  /**
+   * Сброс параметров у выподающий списока B
+   * @return {void}
+   */
+  _resetSelectB() {
+    let toggle = this.$selectB.querySelector(this.resetParams.activeOption),
+      options = this.$selectB.querySelectorAll(this.resetParams.options),
+      input = this.$selectB.parentElement.querySelector(this.resetParams.input);
+
+    // активный пункт
+    toggle.innerText = '';
+    toggle.removeAttribute('title');
+
+    // пункты списка
+    options.forEach(option => {
+      option.remove();
+    });
+
+    // input
+    input.setAttribute('value', '');
+  }
+}
 
 /***/ }),
 
@@ -3284,7 +3397,6 @@ __webpack_require__.r(__webpack_exports__);
 /**
  *  Панель для выпадающего списка, для поиска по списку
  * */
-
 class SearchInSelectPlugin {
   /**
    * Конструктор
@@ -4086,7 +4198,6 @@ __webpack_require__.r(__webpack_exports__);
  *  @param {Object} user - сотрудник
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
- *  @return {string}
  *  @return {string}
  * */
 function userMainTemplate(user) {

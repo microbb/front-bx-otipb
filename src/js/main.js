@@ -15,9 +15,10 @@ import ResultFilterComponent from "./components/result-filter.component";
 import ResultMainComponent from "./components/result-main.component";
 import ResultSearchComponent from "./components/result-search.component";
 
-import VisitorPattern from "./components/visitor.pattern";
 import StretchInSelectPlugin from "./plugin/stretch-in-select.plugin";
 import SearchInSelectPlugin from "./plugin/search-in-select.plugin";
+
+import VisitorPattern from "./components/visitor.pattern";
 
 window.addEventListener('DOMContentLoaded', () => {
 

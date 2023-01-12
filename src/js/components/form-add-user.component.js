@@ -2,10 +2,12 @@ import Component from "../core/component";
 
 import Form from "../plugin/form-validator/form";
 import {Validators} from "../plugin/form-validator/validators";
+import ChainingSelectInFormPlugin from "../plugin/chaining-select-in-form.plugin";
 
 import {apiService} from "../services/api.service";
 
 import LoaderComponent from "./loader.component";
+
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -39,6 +41,8 @@ export default class FormAddUserComponent extends Component {
       ID_MATRIX_WORKS: [Validators.required],
       E_EMPLOYEE_STATUS: [Validators.required]
     })
+
+    new ChainingSelectInFormPlugin(this.$el,{},{})
 
   }
 

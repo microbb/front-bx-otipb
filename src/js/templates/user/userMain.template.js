@@ -7,7 +7,6 @@ import {userCardInfoTemplate} from "./userCardInfo.template";
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
  *  @return {string}
- *  @return {string}
  * */
 export function userMainTemplate(user,
   {build = 0} = {}
