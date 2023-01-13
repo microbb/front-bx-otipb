@@ -1,9 +1,11 @@
 import Component from "../core/component";
+import LoaderComponent from "./loader.component";
+
+import Pagination from "../library/sumbiot/modules/pagination/components/pagination";
+
+import {apiService} from "../services/api.service";
 
 import {userMainTemplate} from "../templates/user/userMain.template";
-import LoaderComponent from "./loader.component";
-import {apiService} from "../services/api.service";
-import Pagination from "../library/sumbiot/modules/pagination/components/pagination";
 
 /**
  *  Компонент вывод все сотрудников
@@ -44,6 +46,12 @@ export default class ResultMainComponent extends Component {
       success: 'Приложение загружено, приятной работы',
       failure: 'Приложение не загружено, что то пошло не так',
       activeClass: 'loader--min-height'
+    })
+
+    let btns = document.querySelectorAll('.top-panel__btn, .form__button')
+
+    btns.forEach(btn => {
+      btn.disabled = true
     })
 
     try {
@@ -106,6 +114,10 @@ export default class ResultMainComponent extends Component {
       setTimeout(() => {
 
         loader.removeLoader()
+
+        btns.forEach(btn => {
+          btn.disabled = false
+        })
 
       }, 900)
 

@@ -8,6 +8,8 @@ import {apiService} from "../services/api.service";
 
 import LoaderComponent from "./loader.component";
 
+import {optionSelectTemplate} from "../templates/optionSelect.template";
+
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -42,7 +44,13 @@ export default class FormAddUserComponent extends Component {
       E_EMPLOYEE_STATUS: [Validators.required]
     })
 
-    new ChainingSelectInFormPlugin(this.$el,{},{})
+    this.chainSelect = new ChainingSelectInFormPlugin(this.$el,
+      {
+        callAction: 'getDepartments'
+      },
+      {
+        renderTemplate : optionSelectTemplate
+    })
 
   }
 
@@ -115,6 +123,8 @@ async function submitHandler(e) {
       setTimeout(() => {
         this.form.clear()
         this.instanceDropDown.reset(this.form.form)
+        this.chainSelect.deleteOptions()
+
 
         loader.removeLoader()
       }, 900)

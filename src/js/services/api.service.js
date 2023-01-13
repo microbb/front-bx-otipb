@@ -30,9 +30,9 @@ class ApiService{
 
       setTimeout(() => {
         resolve({
-          "status": "error",
+          "status": "success",
           "data": {
-            "result": "[]"
+            "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
           },
           "errors": [{
             "message": "Не заполено поле Email",

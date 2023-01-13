@@ -84,40 +84,6 @@
         </div>
       </div><!--./top-panel-->
 
-      <!--<div class="top-panel">-->
-      <!--  <div class="row f-justify-content-between">-->
-      <!--    <div class="col-auto">-->
-
-      <!--      <form class="form form&#45;&#45;search" id="search" action="/search" method="post">-->
-
-      <!--        <div class="form__inner">-->
-
-      <!--          <label class="form__item">-->
-      <!--            <input type="text" class="form__input" name="SEARCH" placeholder="Поиск" required>-->
-      <!--          </label>-->
-
-      <!--          <label class="form__item form__item&#45;&#45;order-3">-->
-      <!--            <input type="checkbox" class="form__checkbox" name="STATUS">-->
-      <!--            <span class="form__label">Добавить в результат поиска уволенных сотрудников</span>-->
-      <!--          </label>-->
-
-      <!--          <button type="submit" class="btn btn-primary">Найти</button>-->
-
-      <!--        </div>-->
-
-      <!--      </form>&lt;!&ndash;./search&ndash;&gt;-->
-
-      <!--    </div>-->
-      <!--    <div class="col-auto">-->
-
-      <!--      <button type="button" class="top-panel__btn btn btn-primary js-add-user-modal" data-sumbiot-target="#add-user-modal">Добавить сотрудника</button>-->
-      <!--      <button type="button" class="top-panel__btn btn btn-warning">Заявка на обучение</button>-->
-      <!--      <button type="button" class="top-panel__btn btn btn-success js-filter-modal" data-sumbiot-target="#filter-modal">Фильтр</button>-->
-
-      <!--    </div>-->
-      <!--  </div>-->
-      <!--</div>&lt;!&ndash;./top-panel&ndash;&gt;-->
-
       <section class="modal" id="add-user-modal" data-sumbiot-modal-top>
 
         <h2 class="modal__title">Добавить сотрудника</h2>
@@ -201,6 +167,7 @@
                       <button class="dropdown__search-reset" type="button" hidden></button>
                     </div><!--./dropdown__search-box-->
 
+                    <div class="dropdown__options-inner" data-sumbiot-selectB-paste></div>
                     <!--              -->
                     <!--              <div class="dropdown__item" data-select-option="2" title="отдел кадров (отдел найма и увольнения) отдел кадров">-->
                     <!--                отдел кадров (отдел найма и увольнения) отдел кадров (отдел найма и увольнения)-->
@@ -352,7 +319,7 @@
 
               <div class="form__item">
                 <span class="form__label">Дивизион:</span>
-                <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_DIVISION">
+                <div class="form__dropdown dropdown dropdown--select" data-sumbiot-selectA data-select-name="ID_DIVISION">
                   <div class="dropdown__toggle js-dropdown__toggle">---</div>
                   <div class="dropdown__options">
                     <div class="dropdown__search-box" hidden>
