@@ -9,6 +9,8 @@ import LoaderComponent from "./loader.component";
 
 import {userInfoTemplate} from "../templates/user/userInfo.template";
 import {userCardInfoTemplate} from "../templates/user/userCardInfo.template";
+import ChainingSelectInFormPlugin from "../plugin/chaining-select-in-form.plugin";
+import {optionSelectTemplate} from "../templates/optionSelect.template";
 
 /**
  *  Компонент добавить кастомного сотрудника
@@ -58,6 +60,14 @@ export default class FormEditUserComponent extends Component {
       E_EMPLOYEE_STATUS: [Validators.required]
     })
 
+    this.chainSelect = new ChainingSelectInFormPlugin(this.$el,
+      {
+        callAction: 'getDepartments'
+      },
+      {
+        renderTemplate : optionSelectTemplate
+    })
+
   }
 
 }
@@ -78,7 +88,8 @@ async function getData(target) {
 
     const formData = new FormData(),
           fioInput = this.$el.querySelector('.js-edit-fio'),
-          options = this.$el.querySelectorAll('.dropdown__item')
+          divisionOptions = this.$el.querySelectorAll('[data-sumbiot-selectA] .dropdown__item'),
+          options = this.$el.querySelectorAll('.dropdown__item:not([data-sumbiot-selectA])')
 
     formData.append('ID',target.dataset.id)
 
@@ -87,11 +98,22 @@ async function getData(target) {
     },400)
 
     const response = await apiService.useRequest('getUserInfo',formData),
-          result = JSON.parse(response.data.result)
+          result = JSON.parse(response.data.result),
+          $divisionItem = divisionOptions.find(option => option.dataset.selectOption === result.ID_DIVISION)
 
+    // заполняем выподающий список отделов
+    await this.chainSelect.fillSelectB($divisionItem)
+
+    // делаем активный дивизион
+    this.instanceDropDown.select(this.chainSelect.$selectA,$divisionItem)
+
+    // заполняем ФИО
     fioInput.value = result.fio
 
     delete result.fio
+    delete result.ID_DIVISION
+
+    // делаем активный отдел / должность HSE / статус
     const optionsKey = Object.values(result)
     options.forEach(option => {
       if(optionsKey.includes(option.dataset.selectOption)) {
@@ -203,6 +225,7 @@ async function submitHandler(e) {
       setTimeout(() => {
         this.form.clear()
         this.instanceDropDown.reset(this.form.form)
+        this.chainSelect.deleteOptions()
 
         this.$el.closest('.modal').style.display = 'none'
 

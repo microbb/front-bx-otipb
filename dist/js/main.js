@@ -690,6 +690,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 /* harmony import */ var _templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/user/userInfo.template */ "./src/js/templates/user/userInfo.template.js");
 /* harmony import */ var _templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../templates/user/userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+/* harmony import */ var _plugin_chaining_select_in_form_plugin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../plugin/chaining-select-in-form.plugin */ "./src/js/plugin/chaining-select-in-form.plugin.js");
+/* harmony import */ var _templates_optionSelect_template__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../templates/optionSelect.template */ "./src/js/templates/optionSelect.template.js");
+
+
 
 
 
@@ -737,6 +741,11 @@ class FormEditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
       ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
       E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
     });
+    this.chainSelect = new _plugin_chaining_select_in_form_plugin__WEBPACK_IMPORTED_MODULE_8__["default"](this.$el, {
+      callAction: 'getDepartments'
+    }, {
+      renderTemplate: _templates_optionSelect_template__WEBPACK_IMPORTED_MODULE_9__["optionSelectTemplate"]
+    });
   }
 }
 
@@ -752,15 +761,28 @@ async function getData(target) {
   try {
     const formData = new FormData(),
       fioInput = this.$el.querySelector('.js-edit-fio'),
-      options = this.$el.querySelectorAll('.dropdown__item');
+      divisionOptions = this.$el.querySelectorAll('[data-sumbiot-selectA] .dropdown__item'),
+      options = this.$el.querySelectorAll('.dropdown__item:not([data-sumbiot-selectA])');
     formData.append('ID', target.dataset.id);
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
     }, 400);
     const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest('getUserInfo', formData),
-      result = JSON.parse(response.data.result);
+      result = JSON.parse(response.data.result),
+      $divisionItem = divisionOptions.find(option => option.dataset.selectOption === result.ID_DIVISION);
+
+    // заполняем выподающий список отделов
+    await this.chainSelect.fillSelectB($divisionItem);
+
+    // делаем активный дивизион
+    this.instanceDropDown.select(this.chainSelect.$selectA, $divisionItem);
+
+    // заполняем ФИО
     fioInput.value = result.fio;
     delete result.fio;
+    delete result.ID_DIVISION;
+
+    // делаем активный отдел / должность HSE / статус
     const optionsKey = Object.values(result);
     options.forEach(option => {
       if (optionsKey.includes(option.dataset.selectOption)) {
@@ -838,6 +860,7 @@ async function submitHandler(e) {
       setTimeout(() => {
         this.form.clear();
         this.instanceDropDown.reset(this.form.form);
+        this.chainSelect.deleteOptions();
         this.$el.closest('.modal').style.display = 'none';
         _core_support__WEBPACK_IMPORTED_MODULE_3__["default"].removeClass('.js-wrapper-modal', ['result__info--min_height-380', 'result__info--min_height-442', 'result__info--min_height-265']);
         loader.removeLoader();
@@ -2389,7 +2412,7 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
           this._toggleOptions();
         } else if (e.target && e.target.matches(this._dropdownOptionSelector)) {
           e.preventDefault();
-          this._select(dropdown, e.target);
+          this.select(dropdown, e.target);
         }
       });
     });
@@ -2408,7 +2431,7 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
    * @param {HTMLElement} optionActive - пункт выпадающего списка
    * @return {void}
    */
-  _select(dropdown, optionActive) {
+  select(dropdown, optionActive) {
     const options = dropdown.querySelectorAll(this._dropdownOptionSelector),
       showOption = dropdown.querySelector(this._dropdownToggleSelector);
     options.forEach(option => {
@@ -3001,12 +3024,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  window.BX = {
-    TemplateFolder: '',
-    message: function (path) {
-      return this[path];
-    }
-  };
+  // window.BX = {
+  //   TemplateFolder: '',
+  //   message: function (path) {
+  //     return this[path]
+  //   }
+  // }
 
   // выподающий список select
   const dropDownSelect = new _library_sumbiot_modules_dropdown_components_dropdownSelect__WEBPACK_IMPORTED_MODULE_3__["default"]('.dropdown--select', {
@@ -3229,7 +3252,7 @@ class ChainingSelectInFormPlugin {
         if (target.parentElement.classList.contains(this.selectATriggerSelector.slice(1))) {
           target = target.parentElement;
         }
-        this._fillSelectB(target);
+        this.fillSelectB(target);
       }
     });
   }
@@ -3239,7 +3262,7 @@ class ChainingSelectInFormPlugin {
    * @param {HTMLElement} option - пункт списка в А селекте
    * @return {void}
    */
-  async _fillSelectB(option) {
+  async fillSelectB(option) {
     try {
       let idSelectA = option.dataset.selectOption,
         formData = new FormData();
@@ -3685,26 +3708,27 @@ class ApiService {
    */
   async useRequest(action, data) {
     // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    // return await BX.ajax.runComponentAction(this.componentBx, action, {
-    //   mode: 'class',
-    //   data: data
-    // })
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "success",
-          "data": {
-            "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
     });
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "success",
+    //       "data": {
+    //         "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 
   /**
@@ -3713,27 +3737,27 @@ class ApiService {
    */
   async getUsers() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
-    //   mode: 'class'
-    // })
-    //
-    // return JSON.parse(response.data.result)
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+      mode: 'class'
     });
+    return JSON.parse(response.data.result);
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 
   /**
@@ -3742,29 +3766,30 @@ class ApiService {
    */
   async getFio() {
     // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    // const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
-    //   mode: 'class'
-    // })
-    //
-    // return JSON.parse(response.data.result)
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          "status": "error",
-          "data": {
-            "result": "[]"
-          },
-          "errors": [{
-            "message": "Не заполено поле Email",
-            "code": 0,
-            "customData": null
-          }]
-        });
-      }, 2000);
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
+      mode: 'class'
     });
+    return JSON.parse(response.data.result);
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
   }
 }
+
 const apiService = new ApiService('bizproc:otipb.new');
 
 /***/ }),

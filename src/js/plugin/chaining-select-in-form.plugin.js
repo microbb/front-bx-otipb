@@ -78,7 +78,7 @@ export default class ChainingSelectInFormPlugin {
           target = target.parentElement
         }
 
-        this._fillSelectB(target)
+        this.fillSelectB(target)
       }
     })
 
@@ -89,7 +89,7 @@ export default class ChainingSelectInFormPlugin {
    * @param {HTMLElement} option - пункт списка в А селекте
    * @return {void}
    */
-  async _fillSelectB(option) {
+  async fillSelectB(option) {
 
     try {
 
