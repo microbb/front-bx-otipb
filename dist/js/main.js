@@ -761,8 +761,7 @@ async function getData(target) {
   try {
     const formData = new FormData(),
       fioInput = this.$el.querySelector('.js-edit-fio'),
-      divisionOptions = this.$el.querySelectorAll('[data-sumbiot-selectA] .dropdown__item'),
-      options = this.$el.querySelectorAll('.dropdown__item:not([data-sumbiot-selectA])');
+      divisionOptions = Array.from(this.$el.querySelectorAll('[data-sumbiot-selectA] .dropdown__item'));
     formData.append('ID', target.dataset.id);
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
@@ -783,7 +782,8 @@ async function getData(target) {
     delete result.ID_DIVISION;
 
     // делаем активный отдел / должность HSE / статус
-    const optionsKey = Object.values(result);
+    const optionsKey = Object.values(result),
+      options = this.$el.querySelectorAll('.dropdown__item:not([data-sumbiot-selectA])');
     options.forEach(option => {
       if (optionsKey.includes(option.dataset.selectOption)) {
         option.click();
@@ -3266,7 +3266,7 @@ class ChainingSelectInFormPlugin {
     try {
       let idSelectA = option.dataset.selectOption,
         formData = new FormData();
-      formData.append('idDivision', idSelectA);
+      formData.append('id', idSelectA);
       this._resetSelectB();
       const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_0__["apiService"].useRequest(this.callActionA, formData),
         result = JSON.parse(response.data.result);

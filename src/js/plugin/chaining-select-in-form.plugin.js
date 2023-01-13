@@ -96,7 +96,7 @@ export default class ChainingSelectInFormPlugin {
       let idSelectA = option.dataset.selectOption,
           formData = new FormData()
 
-      formData.append('idDivision',idSelectA)
+      formData.append('id',idSelectA)
 
       this._resetSelectB()
 

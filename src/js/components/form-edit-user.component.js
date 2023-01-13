@@ -88,8 +88,7 @@ async function getData(target) {
 
     const formData = new FormData(),
           fioInput = this.$el.querySelector('.js-edit-fio'),
-          divisionOptions = this.$el.querySelectorAll('[data-sumbiot-selectA] .dropdown__item'),
-          options = this.$el.querySelectorAll('.dropdown__item:not([data-sumbiot-selectA])')
+          divisionOptions = Array.from(this.$el.querySelectorAll('[data-sumbiot-selectA] .dropdown__item'))
 
     formData.append('ID',target.dataset.id)
 
@@ -114,7 +113,9 @@ async function getData(target) {
     delete result.ID_DIVISION
 
     // делаем активный отдел / должность HSE / статус
-    const optionsKey = Object.values(result)
+    const optionsKey = Object.values(result),
+          options = this.$el.querySelectorAll('.dropdown__item:not([data-sumbiot-selectA])')
+
     options.forEach(option => {
       if(optionsKey.includes(option.dataset.selectOption)) {
 
