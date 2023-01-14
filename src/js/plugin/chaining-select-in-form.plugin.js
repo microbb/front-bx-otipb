@@ -29,7 +29,7 @@ export default class ChainingSelectInFormPlugin {
               } = {},
               {
                 selectorB = '[data-sumbiot-selectB]',
-                resetParams= {
+                resetParams = {
                   activeOption : '.js-dropdown__toggle',
                   options: '.dropdown__item',
                   input: '.sumbiot-input-select'

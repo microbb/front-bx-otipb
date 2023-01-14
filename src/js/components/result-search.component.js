@@ -72,7 +72,12 @@ export default class ResultSearchComponent extends Component {
         })
 
         setTimeout(() => {
-          new Pagination(this.$el, this.$pasteInElement, html)
+          new Pagination(this.$el, this.$pasteInElement, html,{
+            counter: {
+              active: true,
+              selectorForInserts: '[data-sumbiot-page-counter]'
+            }
+          })
         }, 950)
       } else {
 

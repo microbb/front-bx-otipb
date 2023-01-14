@@ -57,7 +57,7 @@ export function userInfoTemplate({idUser,fio,division,department,work,status},
   }
 
   return `
-    <div class="col-1" title="ID: ${idUser}"></div>
+    <div class="col-1" title="ID: ${idUser}" data-sumbiot-page-counter></div>
     <div class="col-2" title="Отдел: ${department || 'не заполнено'}">
       <span class="result__clip text-align-center">
         ${division || 'не заполнено'}

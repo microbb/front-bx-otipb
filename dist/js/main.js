@@ -1358,7 +1358,12 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
             });
           }
         });
-        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html);
+        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html, {
+          counter: {
+            active: true,
+            selectorForInserts: '[data-sumbiot-page-counter]'
+          }
+        });
       } else {
         let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Найдено: 0 совпадений`);
         this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
@@ -1459,7 +1464,12 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
         });
         loader.success();
         setTimeout(() => {
-          this.pagination = new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_2__["default"](this.$el, this.$pasteInElement, this.html);
+          this.pagination = new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_2__["default"](this.$el, this.$pasteInElement, this.html, {
+            counter: {
+              active: true,
+              selectorForInserts: '[data-sumbiot-page-counter]'
+            }
+          });
         }, 950);
       } else {
         console.error('In file ResultMainComponent, in function getAllUsers, response is either not an array or an empty array');
@@ -1594,7 +1604,12 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
           }
         });
         setTimeout(() => {
-          new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html);
+          new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html, {
+            counter: {
+              active: true,
+              selectorForInserts: '[data-sumbiot-page-counter]'
+            }
+          });
         }, 950);
       } else {
         let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Ваш запрос не дал результатов`);
@@ -2826,11 +2841,18 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * @param {Object=} options - конфигурация.
    * @param {number} [options.perpage] - количество элементов на странице
    * @param {number} [options.page] - с какой страницы начинать (активная)
+   * @param {Object} [options.counter] - с какой страницы начинать (активная)
+   * @param {Boolean} [options.counter.active] - всклучить нумерацию
+   * @param {string} [options.counter.selectorForInserts] - куда в элементе вставить номер
    */
   constructor(paginationInSelector, resultInSelector, listElements) {
     let {
       perpage = 25,
-      page = 1
+      page = 1,
+      counter = {
+        active: false,
+        selectorForInserts: '[data-sumbiot-page-counter]'
+      }
     } = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     super();
     _defineProperty(this, "_switchingHandler", e => {
@@ -2854,6 +2876,8 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
 
     this._page = page; // активная страница
 
+    // счетчик
+    counter.active ? this._counter = counter : '';
     this._init();
   }
 
@@ -2882,6 +2906,9 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
     let start = (this._page - 1) * this._perpage,
       end = start + this._perpage;
     let resSlice = this._listElements.slice(start, end);
+    if (this._counter) {
+      this._counterPage(start, resSlice);
+    }
     this.$resultInElement.innerHTML = '';
     this.$resultInElement.insertAdjacentHTML('beforeend', resSlice.join(''));
     this._removeEventListenerClick();
@@ -2947,6 +2974,23 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
       btn.removeEventListener('click', this._switchingHandler);
     });
     (_this$$paginationInEl = this.$paginationInElement.querySelector('.pagination')) === null || _this$$paginationInEl === void 0 ? void 0 : _this$$paginationInEl.remove();
+  }
+
+  /**
+   * Нумерация элементов на страницы
+   * @param {number} start - начальная позиция
+   * @param {Array} slice - начальная позиция
+   * @return {void}
+   */
+  _counterPage(start, slice) {
+    let startNumber = start + 1;
+    slice.forEach((element, index, arr) => {
+      let wrapper = document.createElement('div');
+      wrapper.innerHTML = element;
+      wrapper.querySelector(this._counter.selectorForInserts).innerHTML = startNumber;
+      arr[index] = wrapper.innerHTML;
+      startNumber++;
+    });
   }
 }
 
@@ -4276,7 +4320,7 @@ function userInfoTemplate(_ref) {
     }
   };
   return `
-    <div class="col-1" title="ID: ${idUser}"></div>
+    <div class="col-1" title="ID: ${idUser}" data-sumbiot-page-counter></div>
     <div class="col-2" title="Отдел: ${department || 'не заполнено'}">
       <span class="result__clip text-align-center">
         ${division || 'не заполнено'}

@@ -70,7 +70,12 @@ export default class ResultFilterComponent extends Component {
           }
         })
 
-        new Pagination(this.$el,this.$pasteInElement,html)
+        new Pagination(this.$el,this.$pasteInElement,html,{
+          counter: {
+            active: true,
+            selectorForInserts: '[data-sumbiot-page-counter]'
+          }
+        })
       }
       else{
         let html = userPlugTemplate(`Найдено: 0 совпадений`)

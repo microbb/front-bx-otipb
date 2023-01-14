@@ -75,7 +75,12 @@ export default class ResultMainComponent extends Component {
         loader.success()
 
         setTimeout(() => {
-          this.pagination = new Pagination(this.$el, this.$pasteInElement, this.html)
+          this.pagination = new Pagination(this.$el, this.$pasteInElement, this.html, {
+            counter: {
+              active: true,
+              selectorForInserts: '[data-sumbiot-page-counter]'
+            }
+          })
         }, 950)
 
       } else {
