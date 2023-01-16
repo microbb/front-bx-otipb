@@ -1343,7 +1343,7 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
   _onShow() {
     if (this.data) {
       if (Array.isArray(this.data.result) && this.data.result.length) {
-        let html = this.data.result.map(user => {
+        this.html = this.data.result.map(user => {
           if (+user.customUser) {
             return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
               build: 1
@@ -1358,15 +1358,15 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
             });
           }
         });
-        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html, {
+        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, this.html, {
           counter: {
             active: true,
             selectorForInserts: '[data-sumbiot-page-counter]'
           }
         });
       } else {
-        let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Найдено: 0 совпадений`);
-        this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+        this.html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Найдено: 0 совпадений`);
+        this.$pasteInElement.insertAdjacentHTML('afterbegin', this.html);
       }
       this.data = null;
     }
@@ -1513,7 +1513,7 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
         this.html.unshift(html);
         this.pagination.showPage(1);
       } else {
-        this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+        this.$pasteInElement.insertAdjacentElement('afterbegin', html);
       }
     }
     return this;
@@ -1588,7 +1588,7 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
   _onShow() {
     if (this.data) {
       if (Array.isArray(this.data.result) && this.data.result.length) {
-        let html = this.data.result.map(user => {
+        this.html = this.data.result.map(user => {
           if (+user.customUser) {
             return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
               build: 1
@@ -1604,7 +1604,7 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
           }
         });
         setTimeout(() => {
-          new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, html, {
+          new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, this.html, {
             counter: {
               active: true,
               selectorForInserts: '[data-sumbiot-page-counter]'
@@ -1612,10 +1612,10 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
           });
         }, 950);
       } else {
-        let html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Ваш запрос не дал результатов`);
+        this.html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Ваш запрос не дал результатов`);
         setTimeout(() => {
           var _this$$el$querySelect;
-          this.$pasteInElement.insertAdjacentHTML('afterbegin', html);
+          this.$pasteInElement.insertAdjacentHTML('afterbegin', this.html);
           (_this$$el$querySelect = this.$el.querySelector('.text-align-center')) === null || _this$$el$querySelect === void 0 ? void 0 : _this$$el$querySelect.append(this.data.bntNext);
         }, 950);
       }
@@ -2837,7 +2837,7 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * Конструктор
    * @param {string | HTMLElement} paginationInSelector - куда на странице вставить навигацию.
    * @param {string | HTMLElement} resultInSelector - куда на странице вставить результат выборку.
-   * @param {Array} listElements - список элементов.
+   * @param {Array} listElements - список элементов (не как строка, а как Node).
    * @param {Object=} options - конфигурация.
    * @param {number} [options.perpage] - количество элементов на странице
    * @param {number} [options.page] - с какой страницы начинать (активная)
@@ -2910,7 +2910,7 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
       this._counterPage(start, resSlice);
     }
     this.$resultInElement.innerHTML = '';
-    this.$resultInElement.insertAdjacentHTML('beforeend', resSlice.join(''));
+    this.$resultInElement.append(...resSlice);
     this._removeEventListenerClick();
     if (this._pagesCount > 1) {
       this._paginationCreate();
@@ -2984,11 +2984,8 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    */
   _counterPage(start, slice) {
     let startNumber = start + 1;
-    slice.forEach((element, index, arr) => {
-      let wrapper = document.createElement('div');
-      wrapper.innerHTML = element;
-      wrapper.querySelector(this._counter.selectorForInserts).innerHTML = startNumber;
-      arr[index] = wrapper.innerHTML;
+    slice.forEach(element => {
+      element.querySelector(this._counter.selectorForInserts).innerHTML = startNumber;
       startNumber++;
     });
   }
@@ -4361,15 +4358,18 @@ __webpack_require__.r(__webpack_exports__);
  *  @param {Object} user - сотрудник
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
- *  @return {string}
+ *  @return {Element}
  * */
 function userMainTemplate(user) {
   let {
     build = 0
   } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return `
-    <div class="result__row js-result-row">
+  // тело элемента
+  const $user = document.createElement('div');
+  $user.classList.add('result__row', 'js-result-row');
 
+  // внутренности элемента
+  const htmlInUser = `
       <div class="row gx-0 js-accordion js-user-info">
         ${Object(_userInfo_template__WEBPACK_IMPORTED_MODULE_0__["userInfoTemplate"])(user, {
     build
@@ -4381,9 +4381,9 @@ function userMainTemplate(user) {
     build
   })}
       </div><!--./result__info-->
-
-    </div><!--./result__row-->
   `;
+  $user.insertAdjacentHTML('afterbegin', htmlInUser);
+  return $user;
 }
 
 /***/ }),

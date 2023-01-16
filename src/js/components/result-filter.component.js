@@ -60,7 +60,7 @@ export default class ResultFilterComponent extends Component {
 
       if(Array.isArray(this.data.result) && this.data.result.length) {
 
-        let html = this.data.result.map(user => {
+        this.html = this.data.result.map(user => {
           if(+user.customUser) {
             return userMainTemplate(user,{build: 1})
           } else if (+user.idMatrixWorks) {
@@ -70,7 +70,7 @@ export default class ResultFilterComponent extends Component {
           }
         })
 
-        new Pagination(this.$el,this.$pasteInElement,html,{
+        new Pagination(this.$el,this.$pasteInElement,this.html,{
           counter: {
             active: true,
             selectorForInserts: '[data-sumbiot-page-counter]'
@@ -78,9 +78,9 @@ export default class ResultFilterComponent extends Component {
         })
       }
       else{
-        let html = userPlugTemplate(`Найдено: 0 совпадений`)
+        this.html = userPlugTemplate(`Найдено: 0 совпадений`)
 
-        this.$pasteInElement.insertAdjacentHTML('afterbegin',html)
+        this.$pasteInElement.insertAdjacentHTML('afterbegin',this.html)
       }
 
       this.data = null

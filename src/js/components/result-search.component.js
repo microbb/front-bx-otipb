@@ -61,7 +61,7 @@ export default class ResultSearchComponent extends Component {
 
       if (Array.isArray(this.data.result) && this.data.result.length) {
 
-        let html = this.data.result.map(user => {
+        this.html = this.data.result.map(user => {
           if (+user.customUser) {
             return userMainTemplate(user, {build: 1})
           } else if (+user.idMatrixWorks) {
@@ -72,7 +72,7 @@ export default class ResultSearchComponent extends Component {
         })
 
         setTimeout(() => {
-          new Pagination(this.$el, this.$pasteInElement, html,{
+          new Pagination(this.$el, this.$pasteInElement, this.html,{
             counter: {
               active: true,
               selectorForInserts: '[data-sumbiot-page-counter]'
@@ -81,10 +81,10 @@ export default class ResultSearchComponent extends Component {
         }, 950)
       } else {
 
-        let html = userPlugTemplate(`Ваш запрос не дал результатов`)
+        this.html = userPlugTemplate(`Ваш запрос не дал результатов`)
 
         setTimeout(() => {
-          this.$pasteInElement.insertAdjacentHTML('afterbegin', html)
+          this.$pasteInElement.insertAdjacentHTML('afterbegin', this.html)
 
           this.$el.querySelector('.text-align-center')?.append(this.data.bntNext)
         }, 950)

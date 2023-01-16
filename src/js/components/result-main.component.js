@@ -147,7 +147,7 @@ export default class ResultMainComponent extends Component {
 
       } else {
 
-        this.$pasteInElement.insertAdjacentHTML('afterbegin', html)
+        this.$pasteInElement.insertAdjacentElement('afterbegin', html)
 
       }
 

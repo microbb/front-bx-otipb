@@ -9,7 +9,7 @@ export default class Pagination extends PaginationCore{
    * Конструктор
    * @param {string | HTMLElement} paginationInSelector - куда на странице вставить навигацию.
    * @param {string | HTMLElement} resultInSelector - куда на странице вставить результат выборку.
-   * @param {Array} listElements - список элементов.
+   * @param {Array} listElements - список элементов (не как строка, а как Node).
    * @param {Object=} options - конфигурация.
    * @param {number} [options.perpage] - количество элементов на странице
    * @param {number} [options.page] - с какой страницы начинать (активная)
@@ -94,7 +94,7 @@ export default class Pagination extends PaginationCore{
     }
 
     this.$resultInElement.innerHTML = ''
-    this.$resultInElement.insertAdjacentHTML('beforeend', resSlice.join(''))
+    this.$resultInElement.append(...resSlice)
 
     this._removeEventListenerClick()
 
@@ -177,20 +177,13 @@ export default class Pagination extends PaginationCore{
    * @return {void}
    */
   _counterPage(start,slice) {
-
     let startNumber = start + 1;
 
-    slice.forEach((element,index,arr) => {
-      let wrapper = document.createElement('div');
-      wrapper.innerHTML = element
-
-      wrapper.querySelector(this._counter.selectorForInserts).innerHTML = startNumber
-
-      arr[index] = wrapper.innerHTML
+    slice.forEach(element => {
+      element.querySelector(this._counter.selectorForInserts).innerHTML = startNumber
 
       startNumber++
     })
-
   }
 
 }

@@ -6,15 +6,18 @@ import {userCardInfoTemplate} from "./userCardInfo.template";
  *  @param {Object} user - сотрудник
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
- *  @return {string}
+ *  @return {Element}
  * */
 export function userMainTemplate(user,
   {build = 0} = {}
 ) {
 
-  return `
-    <div class="result__row js-result-row">
+  // тело элемента
+  const $user = document.createElement('div')
+  $user.classList.add('result__row','js-result-row')
 
+  // внутренности элемента
+  const htmlInUser = `
       <div class="row gx-0 js-accordion js-user-info">
         ${userInfoTemplate(user,{build})}
       </div><!--/.js-user-info-->
@@ -22,7 +25,9 @@ export function userMainTemplate(user,
       <div class="result__info js-wrapper-modal">
         ${userCardInfoTemplate(user,{build})}
       </div><!--./result__info-->
-
-    </div><!--./result__row-->
   `
+
+  $user.insertAdjacentHTML('afterbegin', htmlInUser)
+
+  return $user
 }
