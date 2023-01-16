@@ -112,9 +112,9 @@ export default class Pagination extends PaginationCore{
     this._countListElements = this._listElements.length || 0 // сколько всего элементов
     this._pagesCount = Math.ceil(this._countListElements / this._perpage) || 0; // кол-во страниц
 
-    (this._pagesCount < number || number < 1) ?
-      this._page = 1 :
-      this._page = number
+    this._page = (this._pagesCount < number) ? this._pagesCount :
+                 (number < 1) ? 1 :
+                 number
 
     this._switchPage()
   }

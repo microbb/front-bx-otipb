@@ -70,7 +70,7 @@ export default class ResultFilterComponent extends Component {
           }
         })
 
-        new Pagination(this.$el,this.$pasteInElement,this.html,{
+        this.pagination = new Pagination(this.$el,this.$pasteInElement,this.html,{
           counter: {
             active: true,
             selectorForInserts: '[data-sumbiot-page-counter]'
@@ -95,6 +95,26 @@ export default class ResultFilterComponent extends Component {
   _onHide() {
     this.$pasteInElement.innerHTML = ''
     this.$el.querySelector('.pagination')?.remove()
+  }
+
+  /**
+   * Удаляем из моссива элемент
+   * @param {string} id - id сотрудника которого надо удалить
+   * @return {this}
+   */
+  removeElementInArray(id) {
+
+    if(Array.isArray(this.html)) {
+      let index = this.html.findIndex(user =>  user.querySelector('[data-sumbiot-page-counter]').dataset.id === id)
+
+      if(index !== -1) {
+        this.html.splice(index,1)
+
+        this.pagination.showPage(this.pagination._page)
+      }
+
+    }
+
   }
 
 }

@@ -121,7 +121,13 @@ window.addEventListener('DOMContentLoaded', () => {
   new FormAddOrEditCardComponent('#edit-card')
 
   // компонент удалить сотрудника / удостоверение
-  new FormDeleteUserOrCardComponent('#delete-user-or-card')
+  new FormDeleteUserOrCardComponent('#delete-user-or-card', {
+    partners: [
+      {name: 'mainResult', component: mainResult},
+      {name: 'filterResult', component: filterResult},
+      {name: 'searchResult', component: searchResult}
+    ]
+  })
 
   // компонент добавить должность HSE
   new FormAddOrEditHseComponent('#add-hse')

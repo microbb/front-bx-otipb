@@ -19,6 +19,8 @@ export default class FormDeleteUserOrCardComponent extends Component {
   constructor(id,options) {
 
     super(id,options);
+
+    this.partners = options.partners || []
   }
 
   /**
@@ -66,9 +68,11 @@ async function submitHandler(e) {
         loader.success()
 
         setTimeout(() => {
-          const parent = this.$el.closest('.result__row')
+          const id =  this.$el.closest('.result__row').querySelector('[data-sumbiot-page-counter]').dataset.id
 
-          parent.remove()
+          // удаляем строку
+          this.partners.forEach(partner => partner.component.removeElementInArray(id))
+
         },900)
       }
 

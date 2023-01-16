@@ -156,4 +156,24 @@ export default class ResultMainComponent extends Component {
     return this
   }
 
+  /**
+   * Удаляем из моссива элемент
+   * @param {string} id - id сотрудника которого надо удалить
+   * @return {this}
+   */
+  removeElementInArray(id) {
+
+    if(Array.isArray(this.html)) {
+      let index = this.html.findIndex(user =>  user.querySelector('[data-sumbiot-page-counter]').dataset.id === id)
+
+      if(index !== -1) {
+        this.html.splice(index,1)
+
+        this.pagination.showPage(this.pagination._page)
+      }
+
+    }
+
+  }
+
 }

@@ -591,6 +591,7 @@ class FormDeleteUserOrCardComponent extends _core_component__WEBPACK_IMPORTED_MO
    */
   constructor(id, options) {
     super(id, options);
+    this.partners = options.partners || [];
   }
 
   /**
@@ -626,8 +627,10 @@ async function submitHandler(e) {
       if (action === 'deleteUser') {
         loader.success();
         setTimeout(() => {
-          const parent = this.$el.closest('.result__row');
-          parent.remove();
+          const id = this.$el.closest('.result__row').querySelector('[data-sumbiot-page-counter]').dataset.id;
+
+          // удаляем строку
+          this.partners.forEach(partner => partner.component.removeElementInArray(id));
         }, 900);
       }
       if (action === 'deleteCard') {
@@ -1358,7 +1361,7 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
             });
           }
         });
-        new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, this.html, {
+        this.pagination = new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, this.html, {
           counter: {
             active: true,
             selectorForInserts: '[data-sumbiot-page-counter]'
@@ -1380,6 +1383,21 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
     var _this$$el$querySelect;
     this.$pasteInElement.innerHTML = '';
     (_this$$el$querySelect = this.$el.querySelector('.pagination')) === null || _this$$el$querySelect === void 0 ? void 0 : _this$$el$querySelect.remove();
+  }
+
+  /**
+   * Удаляем из моссива элемент
+   * @param {string} id - id сотрудника которого надо удалить
+   * @return {this}
+   */
+  removeElementInArray(id) {
+    if (Array.isArray(this.html)) {
+      let index = this.html.findIndex(user => user.querySelector('[data-sumbiot-page-counter]').dataset.id === id);
+      if (index !== -1) {
+        this.html.splice(index, 1);
+        this.pagination.showPage(this.pagination._page);
+      }
+    }
   }
 }
 
@@ -1518,6 +1536,21 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
     }
     return this;
   }
+
+  /**
+   * Удаляем из моссива элемент
+   * @param {string} id - id сотрудника которого надо удалить
+   * @return {this}
+   */
+  removeElementInArray(id) {
+    if (Array.isArray(this.html)) {
+      let index = this.html.findIndex(user => user.querySelector('[data-sumbiot-page-counter]').dataset.id === id);
+      if (index !== -1) {
+        this.html.splice(index, 1);
+        this.pagination.showPage(this.pagination._page);
+      }
+    }
+  }
 }
 
 /***/ }),
@@ -1604,7 +1637,7 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
           }
         });
         setTimeout(() => {
-          new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, this.html, {
+          this.pagination = new _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, this.$pasteInElement, this.html, {
             counter: {
               active: true,
               selectorForInserts: '[data-sumbiot-page-counter]'
@@ -1633,6 +1666,21 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
     var _this$$el$querySelect2;
     this.$pasteInElement.innerHTML = '';
     (_this$$el$querySelect2 = this.$el.querySelector('.pagination')) === null || _this$$el$querySelect2 === void 0 ? void 0 : _this$$el$querySelect2.remove();
+  }
+
+  /**
+   * Удаляем из моссива элемент
+   * @param {string} id - id сотрудника которого надо удалить
+   * @return {this}
+   */
+  removeElementInArray(id) {
+    if (Array.isArray(this.html)) {
+      let index = this.html.findIndex(user => user.querySelector('[data-sumbiot-page-counter]').dataset.id === id);
+      if (index !== -1) {
+        this.html.splice(index, 1);
+        this.pagination.showPage(this.pagination._page);
+      }
+    }
   }
 }
 
@@ -2927,7 +2975,7 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
     this._countListElements = this._listElements.length || 0; // сколько всего элементов
     this._pagesCount = Math.ceil(this._countListElements / this._perpage) || 0; // кол-во страниц
 
-    this._pagesCount < number || number < 1 ? this._page = 1 : this._page = number;
+    this._page = this._pagesCount < number ? this._pagesCount : number < 1 ? 1 : number;
     this._switchPage();
   }
 
@@ -3173,7 +3221,18 @@ window.addEventListener('DOMContentLoaded', () => {
   new _components_form_add_or_edit_card_component__WEBPACK_IMPORTED_MODULE_9__["default"]('#edit-card');
 
   // компонент удалить сотрудника / удостоверение
-  new _components_form_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#delete-user-or-card');
+  new _components_form_delete_user_or_card_component__WEBPACK_IMPORTED_MODULE_8__["default"]('#delete-user-or-card', {
+    partners: [{
+      name: 'mainResult',
+      component: mainResult
+    }, {
+      name: 'filterResult',
+      component: filterResult
+    }, {
+      name: 'searchResult',
+      component: searchResult
+    }]
+  });
 
   // компонент добавить должность HSE
   new _components_form_add_or_edit_hse_component__WEBPACK_IMPORTED_MODULE_10__["default"]('#add-hse');
@@ -4317,7 +4376,7 @@ function userInfoTemplate(_ref) {
     }
   };
   return `
-    <div class="col-1" title="ID: ${idUser}" data-sumbiot-page-counter></div>
+    <div class="col-1" title="ID: ${idUser}" data-id="${idUser}" data-sumbiot-page-counter></div>
     <div class="col-2" title="Отдел: ${department || 'не заполнено'}">
       <span class="result__clip text-align-center">
         ${division || 'не заполнено'}
