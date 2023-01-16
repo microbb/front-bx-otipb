@@ -42,16 +42,16 @@ $select: #98948a;
 
     border-right: 1px solid color.scale($color2, $lightness: 80%);
 
-    &:first-child{
-
-      &::before{
-        counter-increment: list;
-        content: counter(list);
-
-        border-right: none;
-      }
-
-    }
+    //&:first-child{
+    //
+    //  &::before{
+    //    counter-increment: list;
+    //    content: counter(list);
+    //
+    //    border-right: none;
+    //  }
+    //
+    //}
 
     &:last-child{
       border-right: none;

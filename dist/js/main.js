@@ -1391,7 +1391,7 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
    * @return {this}
    */
   removeElementInArray(id) {
-    if (Array.isArray(this.html)) {
+    if (this.html && Array.isArray(this.html)) {
       let index = this.html.findIndex(user => user.querySelector('[data-sumbiot-page-counter]').dataset.id === id);
       if (index !== -1) {
         this.html.splice(index, 1);
@@ -1543,7 +1543,7 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
    * @return {this}
    */
   removeElementInArray(id) {
-    if (Array.isArray(this.html)) {
+    if (this.html && Array.isArray(this.html)) {
       let index = this.html.findIndex(user => user.querySelector('[data-sumbiot-page-counter]').dataset.id === id);
       if (index !== -1) {
         this.html.splice(index, 1);
@@ -1674,7 +1674,7 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
    * @return {this}
    */
   removeElementInArray(id) {
-    if (Array.isArray(this.html)) {
+    if (this.html && Array.isArray(this.html)) {
       let index = this.html.findIndex(user => user.querySelector('[data-sumbiot-page-counter]').dataset.id === id);
       if (index !== -1) {
         this.html.splice(index, 1);

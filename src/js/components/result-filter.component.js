@@ -104,7 +104,7 @@ export default class ResultFilterComponent extends Component {
    */
   removeElementInArray(id) {
 
-    if(Array.isArray(this.html)) {
+    if(this.html && Array.isArray(this.html)) {
       let index = this.html.findIndex(user =>  user.querySelector('[data-sumbiot-page-counter]').dataset.id === id)
 
       if(index !== -1) {
