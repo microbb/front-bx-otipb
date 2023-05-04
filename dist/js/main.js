@@ -1,101 +1,17 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/js/main.js");
-/******/ })
-/************************************************************************/
-/******/ ({
+/******/ (function() { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/js/components/form-add-or-edit-card.component.js":
 /*!**************************************************************!*\
   !*** ./src/js/components/form-add-or-edit-card.component.js ***!
   \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormAddOrEditCardComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FormAddOrEditCardComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
@@ -172,7 +88,7 @@ async function getData(target) {
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
     }, 400);
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest('getCard', formData),
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__.apiService.useRequest('getCard', formData),
       result = JSON.parse(response.data.result);
     attDateInput.value = result.attestationDate;
     nextAttDateInput.value = result.nextAttestationDate;
@@ -222,13 +138,13 @@ async function submitHandler(e) {
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el);
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__.apiService.useRequest(action, formData),
         result = JSON.parse(response.data.result);
-      const htmlCardInfo = +result.customUser ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
+      const htmlCardInfo = +result.customUser ? (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__.userCardInfoTemplate)(result, {
         build: 1
-      }) : +result.idMatrixWorks ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
+      }) : +result.idMatrixWorks ? (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__.userCardInfoTemplate)(result, {
         build: 2
-      }) : Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__["userCardInfoTemplate"])(result, {
+      }) : (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_5__.userCardInfoTemplate)(result, {
         build: 0
       });
       loader.success();
@@ -269,12 +185,12 @@ async function submitHandler(e) {
 /*!*************************************************************!*\
   !*** ./src/js/components/form-add-or-edit-hse.component.js ***!
   \*************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormAddOrEditHseComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FormAddOrEditHseComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugin/form-validator/validators */ "./src/js/plugin/form-validator/validators.js");
@@ -325,7 +241,7 @@ class FormAddOrEditHseComponent extends _core_component__WEBPACK_IMPORTED_MODULE
     }
     this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
-      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required]
     });
   }
 }
@@ -346,7 +262,7 @@ async function getData(target) {
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
     }, 400);
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest('getIdHse', formData);
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__.apiService.useRequest('getIdHse', formData);
     options.forEach(option => {
       if (+option.dataset.selectOption === +response.data.result) {
         option.click();
@@ -389,12 +305,12 @@ async function submitHandler(e) {
         formData = new FormData(this.$el);
       this.$el.querySelector('button').blur();
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__.apiService.useRequest(action, formData),
         result = JSON.parse(response.data.result);
-      const htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__["userCardInfoTemplate"])(result, {
+      const htmlCardInfo = (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_6__.userCardInfoTemplate)(result, {
           build: 2
         }),
-        htmlUserWork = Object(_templates_workName_template__WEBPACK_IMPORTED_MODULE_7__["workNameTemplate"])(result.work);
+        htmlUserWork = (0,_templates_workName_template__WEBPACK_IMPORTED_MODULE_7__.workNameTemplate)(result.work);
       loader.success();
       setTimeout(() => {
         const parent = this.$el.closest('.result__row'),
@@ -436,12 +352,12 @@ async function submitHandler(e) {
 /*!******************************************************!*\
   !*** ./src/js/components/form-add-user.component.js ***!
   \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormAddUserComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FormAddUserComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugin/form-validator/validators */ "./src/js/plugin/form-validator/validators.js");
@@ -480,15 +396,15 @@ class FormAddUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__[
     this.$el.addEventListener('submit', submitHandler.bind(this));
     this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       E_FIO: [],
-      ID_DIVISION: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_DEPARTMENT: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+      ID_DIVISION: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      ID_DEPARTMENT: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required]
     });
     this.chainSelect = new _plugin_chaining_select_in_form_plugin__WEBPACK_IMPORTED_MODULE_3__["default"](this.$el, {
       callAction: 'getDepartments'
     }, {
-      renderTemplate: _templates_optionSelect_template__WEBPACK_IMPORTED_MODULE_6__["optionSelectTemplate"]
+      renderTemplate: _templates_optionSelect_template__WEBPACK_IMPORTED_MODULE_6__.optionSelectTemplate
     });
   }
 }
@@ -511,7 +427,7 @@ async function submitHandler(e) {
         mainResult = this.partners.find(partner => partner.name === 'mainResult'),
         options = document.querySelector('.js-options-search');
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__.apiService.useRequest(action, formData),
         result = JSON.parse(response.data.result);
       loader.success();
       this.partners.forEach(partner => partner.component.hide());
@@ -563,12 +479,12 @@ function optionsUser(fio) {
 /*!*****************************************************************!*\
   !*** ./src/js/components/form-delete-user-or-card.component.js ***!
   \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormDeleteUserOrCardComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FormDeleteUserOrCardComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
@@ -623,7 +539,7 @@ async function submitHandler(e) {
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el);
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest(action, formData);
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__.apiService.useRequest(action, formData);
       if (action === 'deleteUser') {
         loader.success();
         setTimeout(() => {
@@ -635,11 +551,11 @@ async function submitHandler(e) {
       }
       if (action === 'deleteCard') {
         const result = JSON.parse(response.data.result);
-        const htmlCardInfo = +result.customUser ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+        const htmlCardInfo = +result.customUser ? (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__.userCardInfoTemplate)(result, {
           build: 1
-        }) : +result.idMatrixWorks ? Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+        }) : +result.idMatrixWorks ? (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__.userCardInfoTemplate)(result, {
           build: 2
-        }) : Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__["userCardInfoTemplate"])(result, {
+        }) : (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_4__.userCardInfoTemplate)(result, {
           build: 0
         });
         loader.success();
@@ -679,12 +595,12 @@ async function submitHandler(e) {
 /*!*******************************************************!*\
   !*** ./src/js/components/form-edit-user.component.js ***!
   \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormEditUserComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FormEditUserComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugin/form-validator/validators */ "./src/js/plugin/form-validator/validators.js");
@@ -739,15 +655,15 @@ class FormEditUserComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
     this.form = new _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__["default"](this.$el, {
       ID: [],
       E_FIO: [],
-      ID_DIVISION: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_DEPARTMENT: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-      E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+      ID_DIVISION: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      ID_DEPARTMENT: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      ID_MATRIX_WORKS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      E_EMPLOYEE_STATUS: [_plugin_form_validator_validators__WEBPACK_IMPORTED_MODULE_2__.Validators.required]
     });
     this.chainSelect = new _plugin_chaining_select_in_form_plugin__WEBPACK_IMPORTED_MODULE_8__["default"](this.$el, {
       callAction: 'getDepartments'
     }, {
-      renderTemplate: _templates_optionSelect_template__WEBPACK_IMPORTED_MODULE_9__["optionSelectTemplate"]
+      renderTemplate: _templates_optionSelect_template__WEBPACK_IMPORTED_MODULE_9__.optionSelectTemplate
     });
   }
 }
@@ -769,7 +685,7 @@ async function getData(target) {
     idTimeout = setTimeout(() => {
       this.$el.append(loader.loading());
     }, 400);
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest('getUserInfo', formData),
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__.apiService.useRequest('getUserInfo', formData),
       result = JSON.parse(response.data.result),
       $divisionItem = divisionOptions.find(option => option.dataset.selectOption === result.ID_DIVISION);
 
@@ -828,12 +744,12 @@ async function submitHandler(e) {
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el);
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_4__.apiService.useRequest(action, formData),
         result = JSON.parse(response.data.result);
-      const htmlUserInfo = Object(_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_6__["userInfoTemplate"])(result, {
+      const htmlUserInfo = (0,_templates_user_userInfo_template__WEBPACK_IMPORTED_MODULE_6__.userInfoTemplate)(result, {
           build: 1
         }),
-        htmlCardInfo = Object(_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_7__["userCardInfoTemplate"])(result, {
+        htmlCardInfo = (0,_templates_user_userCardInfo_template__WEBPACK_IMPORTED_MODULE_7__.userCardInfoTemplate)(result, {
           build: 1
         });
       loader.success();
@@ -878,12 +794,12 @@ async function submitHandler(e) {
 /*!****************************************************!*\
   !*** ./src/js/components/form-filter.component.js ***!
   \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormFilterComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FormFilterComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
@@ -944,7 +860,7 @@ async function submitHandler(e) {
         formData = new FormData(this.$el),
         filterResult = this.partners.find(partner => partner.name === 'filterResult');
       this.$el.append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__.apiService.useRequest(action, formData),
         result = JSON.parse(response.data.result),
         count = result.length || 0;
       loader.success(`Найдено: ${count} совпадений`);
@@ -992,12 +908,12 @@ function resetHandler(e) {
 /*!****************************************************!*\
   !*** ./src/js/components/form-search.component.js ***!
   \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormSearchComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FormSearchComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _plugin_form_validator_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../plugin/form-validator/form */ "./src/js/plugin/form-validator/form.js");
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
@@ -1043,7 +959,7 @@ class FormSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
 async function getData() {
   try {
     const optionsWrap = this.$el.querySelector('.js-options-search');
-    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].getFio();
+    const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__.apiService.getFio();
     if (Array.isArray(response)) {
       let html = response.map(name => {
         return `
@@ -1090,14 +1006,13 @@ async function submitHandler(e) {
       activeClass: 'loader--min-height'
     });
     try {
-      var _this$$el$querySelect, _this$$el$querySelect2;
       const action = this.$el.getAttribute('action').slice(1),
         formData = new FormData(this.$el),
         searchResult = this.partners.find(partner => partner.name === 'searchResult');
-      (_this$$el$querySelect = this.$el.querySelector('.form__button--reset_search')) === null || _this$$el$querySelect === void 0 ? void 0 : _this$$el$querySelect.remove();
+      this.$el.querySelector('.form__button--reset_search')?.remove();
       this.partners.forEach(partner => partner.component.hide());
       document.querySelector('.result').append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__["apiService"].useRequest(action, formData),
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_2__.apiService.useRequest(action, formData),
         result = JSON.parse(response.data.result),
         count = result.length || 0,
         bntNext = nextBtn.call(this);
@@ -1105,7 +1020,7 @@ async function submitHandler(e) {
       count ? searchResult.component.register(result).show() : searchResult.component.register(result, {
         bntNext
       }).show();
-      (_this$$el$querySelect2 = this.$el.querySelector('.dropdown--input')) === null || _this$$el$querySelect2 === void 0 ? void 0 : _this$$el$querySelect2.append(resetRender.call(this));
+      this.$el.querySelector('.dropdown--input')?.append(resetRender.call(this));
     } catch (error) {
       loader.failure();
       if (error.status === 'error') {
@@ -1171,9 +1086,8 @@ function nextBtn() {
   btn.classList.add('button', 'button--text');
   btn.style.marginLeft = '10px';
   btn.addEventListener('click', () => {
-    var _this$$el$querySelect3;
     if (this.$el.querySelector('.dropdown__toggle')) this.$el.querySelector('.dropdown__toggle').style.paddingRight = '';
-    (_this$$el$querySelect3 = this.$el.querySelector('.form__button--reset_search')) === null || _this$$el$querySelect3 === void 0 ? void 0 : _this$$el$querySelect3.remove();
+    this.$el.querySelector('.form__button--reset_search')?.remove();
     this.partners.forEach(partner => partner.component.hide());
     this.partners.find(partner => partner.name === 'mainResult').component.show();
   });
@@ -1186,12 +1100,12 @@ function nextBtn() {
 /*!***********************************************!*\
   !*** ./src/js/components/loader.component.js ***!
   \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LoaderComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ LoaderComponent; }
+/* harmony export */ });
 /**
  *  Погрузчик
  * */
@@ -1285,12 +1199,12 @@ class LoaderComponent {
 /*!******************************************************!*\
   !*** ./src/js/components/result-filter.component.js ***!
   \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResultFilterComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ ResultFilterComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../library/sumbiot/modules/pagination/components/pagination */ "./src/js/library/sumbiot/modules/pagination/components/pagination.js");
 /* harmony import */ var _templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../templates/user/userMain.template */ "./src/js/templates/user/userMain.template.js");
@@ -1348,15 +1262,15 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
       if (Array.isArray(this.data.result) && this.data.result.length) {
         this.html = this.data.result.map(user => {
           if (+user.customUser) {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__.userMainTemplate)(user, {
               build: 1
             });
           } else if (+user.idMatrixWorks) {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__.userMainTemplate)(user, {
               build: 2
             });
           } else {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__.userMainTemplate)(user, {
               build: 0
             });
           }
@@ -1368,7 +1282,7 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
           }
         });
       } else {
-        this.html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Найдено: 0 совпадений`);
+        this.html = (0,_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__.userPlugTemplate)(`Найдено: 0 совпадений`);
         this.$pasteInElement.insertAdjacentHTML('afterbegin', this.html);
       }
       this.data = null;
@@ -1380,9 +1294,8 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
    * @return {void}
    */
   _onHide() {
-    var _this$$el$querySelect;
     this.$pasteInElement.innerHTML = '';
-    (_this$$el$querySelect = this.$el.querySelector('.pagination')) === null || _this$$el$querySelect === void 0 ? void 0 : _this$$el$querySelect.remove();
+    this.$el.querySelector('.pagination')?.remove();
   }
 
   /**
@@ -1407,12 +1320,12 @@ class ResultFilterComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
 /*!****************************************************!*\
   !*** ./src/js/components/result-main.component.js ***!
   \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResultMainComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ ResultMainComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _loader_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./loader.component */ "./src/js/components/loader.component.js");
 /* harmony import */ var _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../library/sumbiot/modules/pagination/components/pagination */ "./src/js/library/sumbiot/modules/pagination/components/pagination.js");
@@ -1463,19 +1376,19 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
     });
     try {
       document.querySelector('.result').append(loader.loading());
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__["apiService"].getUsers();
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_3__.apiService.getUsers();
       if (Array.isArray(response) && response.length) {
         this.html = response.map(user => {
           if (+user.customUser) {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__.userMainTemplate)(user, {
               build: 1
             });
           } else if (+user.idMatrixWorks) {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__.userMainTemplate)(user, {
               build: 2
             });
           } else {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__.userMainTemplate)(user, {
               build: 0
             });
           }
@@ -1524,7 +1437,7 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
    */
   unshift(user) {
     if (user) {
-      let html = Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__["userMainTemplate"])(user, {
+      let html = (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_4__.userMainTemplate)(user, {
         build: 1
       });
       if (this.html) {
@@ -1559,12 +1472,12 @@ class ResultMainComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__["
 /*!******************************************************!*\
   !*** ./src/js/components/result-search.component.js ***!
   \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ResultSearchComponent; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ ResultSearchComponent; }
+/* harmony export */ });
 /* harmony import */ var _core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/component */ "./src/js/core/component.js");
 /* harmony import */ var _library_sumbiot_modules_pagination_components_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../library/sumbiot/modules/pagination/components/pagination */ "./src/js/library/sumbiot/modules/pagination/components/pagination.js");
 /* harmony import */ var _templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../templates/user/userMain.template */ "./src/js/templates/user/userMain.template.js");
@@ -1623,15 +1536,15 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
       if (Array.isArray(this.data.result) && this.data.result.length) {
         this.html = this.data.result.map(user => {
           if (+user.customUser) {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__.userMainTemplate)(user, {
               build: 1
             });
           } else if (+user.idMatrixWorks) {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__.userMainTemplate)(user, {
               build: 2
             });
           } else {
-            return Object(_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__["userMainTemplate"])(user, {
+            return (0,_templates_user_userMain_template__WEBPACK_IMPORTED_MODULE_2__.userMainTemplate)(user, {
               build: 0
             });
           }
@@ -1645,11 +1558,10 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
           });
         }, 950);
       } else {
-        this.html = Object(_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__["userPlugTemplate"])(`Ваш запрос не дал результатов`);
+        this.html = (0,_templates_user_userPlug_template__WEBPACK_IMPORTED_MODULE_3__.userPlugTemplate)(`Ваш запрос не дал результатов`);
         setTimeout(() => {
-          var _this$$el$querySelect;
           this.$pasteInElement.insertAdjacentHTML('afterbegin', this.html);
-          (_this$$el$querySelect = this.$el.querySelector('.text-align-center')) === null || _this$$el$querySelect === void 0 ? void 0 : _this$$el$querySelect.append(this.data.bntNext);
+          this.$el.querySelector('.text-align-center')?.append(this.data.bntNext);
         }, 950);
       }
       setTimeout(() => {
@@ -1663,9 +1575,8 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
    * @return {void}
    */
   _onHide() {
-    var _this$$el$querySelect2;
     this.$pasteInElement.innerHTML = '';
-    (_this$$el$querySelect2 = this.$el.querySelector('.pagination')) === null || _this$$el$querySelect2 === void 0 ? void 0 : _this$$el$querySelect2.remove();
+    this.$el.querySelector('.pagination')?.remove();
   }
 
   /**
@@ -1690,12 +1601,12 @@ class ResultSearchComponent extends _core_component__WEBPACK_IMPORTED_MODULE_0__
 /*!**********************************************!*\
   !*** ./src/js/components/visitor.pattern.js ***!
   \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return VisitorPattern; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ VisitorPattern; }
+/* harmony export */ });
 /* harmony import */ var _core_support__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/support */ "./src/js/core/support.js");
 
 
@@ -1997,12 +1908,12 @@ class VisitorPattern {
 /*!**********************************!*\
   !*** ./src/js/core/component.js ***!
   \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Component; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Component; }
+/* harmony export */ });
 /**
  *  Базовый класс для компонентов
  * */
@@ -2061,12 +1972,12 @@ class Component {
 /*!********************************!*\
   !*** ./src/js/core/support.js ***!
   \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Support; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Support; }
+/* harmony export */ });
 /**
  *  Базовый набор функций для проекта
  * */
@@ -2112,12 +2023,12 @@ class Support {
 /*!*******************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/accordion/accordionCore.js ***!
   \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AccordionCore; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ AccordionCore; }
+/* harmony export */ });
 /**
  *  Аккардион Ядро
  * */
@@ -2138,12 +2049,12 @@ class AccordionCore {
 /*!**************************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/accordion/components/accordion.js ***!
   \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Accordion; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Accordion; }
+/* harmony export */ });
 /* harmony import */ var _accordionCore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../accordionCore */ "./src/js/library/sumbiot/modules/accordion/accordionCore.js");
 
 
@@ -2233,12 +2144,12 @@ class Accordion extends _accordionCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
 /*!************************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/dropdown/components/dropdown.js ***!
   \************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Dropdown; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Dropdown; }
+/* harmony export */ });
 /* harmony import */ var _dropdownCore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dropdownCore */ "./src/js/library/sumbiot/modules/dropdown/dropdownCore.js");
 
 
@@ -2325,12 +2236,12 @@ class Dropdown extends _dropdownCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
 /*!*****************************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/dropdown/components/dropdownInput.js ***!
   \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DropdownInput; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ DropdownInput; }
+/* harmony export */ });
 /* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown */ "./src/js/library/sumbiot/modules/dropdown/components/dropdown.js");
 
 
@@ -2437,12 +2348,12 @@ class DropdownInput extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
 /*!******************************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/dropdown/components/dropdownSelect.js ***!
   \******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DropdownSelect; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ DropdownSelect; }
+/* harmony export */ });
 /* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dropdown */ "./src/js/library/sumbiot/modules/dropdown/components/dropdown.js");
 
 
@@ -2565,12 +2476,12 @@ class DropdownSelect extends _dropdown__WEBPACK_IMPORTED_MODULE_0__["default"] {
 /*!*****************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/dropdown/dropdownCore.js ***!
   \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DropdownCore; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ DropdownCore; }
+/* harmony export */ });
 /**
  *  Выподающий список Ядро
  * */
@@ -2591,12 +2502,12 @@ class DropdownCore {
 /*!*******************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/modals/components/modal.js ***!
   \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Modal; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Modal; }
+/* harmony export */ });
 /* harmony import */ var _modalCore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modalCore */ "./src/js/library/sumbiot/modules/modals/modalCore.js");
 
 
@@ -2738,12 +2649,12 @@ class Modal extends _modalCore__WEBPACK_IMPORTED_MODULE_0__["default"] {
 /*!***************************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/modals/components/modalDynamics.js ***!
   \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalDynamics; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ ModalDynamics; }
+/* harmony export */ });
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/library/sumbiot/modules/modals/components/modal.js");
 
 
@@ -2839,12 +2750,12 @@ class ModalDynamics extends _modal__WEBPACK_IMPORTED_MODULE_0__["default"] {
 /*!************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/modals/modalCore.js ***!
   \************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModalCore; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ ModalCore; }
+/* harmony export */ });
 /**
  *  Модальное окно Ядро
  * */
@@ -2865,16 +2776,13 @@ class ModalCore {
 /*!****************************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/pagination/components/pagination.js ***!
   \****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Pagination; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Pagination; }
+/* harmony export */ });
 /* harmony import */ var _paginationCore__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../paginationCore */ "./src/js/library/sumbiot/modules/pagination/paginationCore.js");
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 /**
@@ -2903,16 +2811,6 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
       }
     } = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     super();
-    _defineProperty(this, "_switchingHandler", e => {
-      e.preventDefault();
-      let target = e.target;
-      if (target && target.classList.contains('pagination__btn') || target && target.parentElement.classList.contains('pagination__btn')) {
-        if (target.parentElement.classList.contains('pagination__btn')) {
-          target = target.parentElement;
-        }
-        this._switchPage(target);
-      }
-    });
     this.$paginationInElement = paginationInSelector.tagName ? paginationInSelector : document.querySelector(paginationInSelector);
     this.$resultInElement = resultInSelector.tagName ? resultInSelector : document.querySelector(resultInSelector);
     this._listElements = listElements;
@@ -2941,6 +2839,16 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * Обработчик события клика по элементу который переключает страницы
    * @return {void}
    */
+  _switchingHandler = e => {
+    e.preventDefault();
+    let target = e.target;
+    if (target && target.classList.contains('pagination__btn') || target && target.parentElement.classList.contains('pagination__btn')) {
+      if (target.parentElement.classList.contains('pagination__btn')) {
+        target = target.parentElement;
+      }
+      this._switchPage(target);
+    }
+  };
 
   /**
    * Переключить страницу
@@ -3017,11 +2925,10 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
    * @return {void}
    */
   _removeEventListenerClick() {
-    var _this$$paginationInEl;
     this.$paginationInElement.querySelectorAll('.pagination__btn').forEach(btn => {
       btn.removeEventListener('click', this._switchingHandler);
     });
-    (_this$$paginationInEl = this.$paginationInElement.querySelector('.pagination')) === null || _this$$paginationInEl === void 0 ? void 0 : _this$$paginationInEl.remove();
+    this.$paginationInElement.querySelector('.pagination')?.remove();
   }
 
   /**
@@ -3045,12 +2952,12 @@ class Pagination extends _paginationCore__WEBPACK_IMPORTED_MODULE_0__["default"]
 /*!*********************************************************************!*\
   !*** ./src/js/library/sumbiot/modules/pagination/paginationCore.js ***!
   \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PaginationCore; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ PaginationCore; }
+/* harmony export */ });
 /**
  *  Постраничная навигация Ядро
  * */
@@ -3067,14 +2974,1297 @@ class PaginationCore {
 
 /***/ }),
 
-/***/ "./src/js/main.js":
+/***/ "./src/js/plugin/chaining-select-in-form.plugin.js":
+/*!*********************************************************!*\
+  !*** ./src/js/plugin/chaining-select-in-form.plugin.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ ChainingSelectInFormPlugin; }
+/* harmony export */ });
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
+
+
+/**
+ *  От выбора в A(первом селект), зависит наполнения Б(второго селекте)
+ * */
+class ChainingSelectInFormPlugin {
+  /**
+   * Конструктор
+   * @param {string | Element} form  - форма в корорый надо объединить два выподающий списка.
+   * @param {Object} selectA         - выподающий спосок A
+   * @param {string} [selectA.selectorA] - селектор выподающего списка А
+   * @param {string} [selectA.selectATriggerSelector] - сетектор для запуска действия в выподающим списке А
+   * @param {string} [selectA.callAction] - обработчик который вызывает выподающий спосок A для получения данных, которые потом отрисуем в выподающий списки В
+   * @param {Object} selectB         - выподающий спосок В
+   * @param {string} [selectB.selectorB]  -  селектор выподающего списка В
+   * @param {Object} [selectB.resetParams]  - элемента для сброса
+   * @param {string} [selectB.resetParams.activeOption]  - активный пункт
+   * @param {string} [selectB.resetParams.options]  - пункты списка
+   * @param {string} [selectB.resetParams.input]  - input для отправки на сервер
+   * @param {Function} [selectB.renderTemplate]  - шаблон который принемает данные из списка A, с создает html верстку для заполнения списка B
+   * @param {string} [selectB.selectorWherePasteOptions]  - шаблон который принемает данные из списка A, с создает html верстку для заполнения списка B
+   */
+  constructor(form) {
+    let {
+      selectorA = '[data-sumbiot-selectA]',
+      selectATriggerSelector = '.dropdown__item',
+      callAction
+    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    let {
+      selectorB = '[data-sumbiot-selectB]',
+      resetParams = {
+        activeOption: '.js-dropdown__toggle',
+        options: '.dropdown__item',
+        input: '.sumbiot-input-select'
+      },
+      renderTemplate,
+      selectorWherePasteOptions = '[data-sumbiot-selectB-paste]'
+    } = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    this.$form = form.tagName ? form : document.querySelector(form);
+    this.$selectA = this.$form.querySelector(selectorA);
+    this.selectATriggerSelector = selectATriggerSelector;
+    this.callActionA = callAction;
+    this.$selectB = this.$form.querySelector(selectorB);
+    this.$pasteOptions = this.$selectB.querySelector(selectorWherePasteOptions);
+    this.resetParamsB = resetParams;
+    this.renderTemplateB = renderTemplate;
+    this._init();
+  }
+
+  /**
+   * Инициализация плагина
+   * @return {void}
+   */
+  _init() {
+    this._handlerEvent();
+  }
+
+  /**
+   * Обработчик событий
+   * @return {void}
+   */
+  _handlerEvent() {
+    this.$selectA.addEventListener('click', e => {
+      let target = e.target;
+      if (target && target.classList.contains(this.selectATriggerSelector.slice(1)) || target && target.parentElement.classList.contains(this.selectATriggerSelector.slice(1))) {
+        e.preventDefault();
+        if (target.parentElement.classList.contains(this.selectATriggerSelector.slice(1))) {
+          target = target.parentElement;
+        }
+        this.fillSelectB(target);
+      }
+    });
+  }
+
+  /**
+   * Заполнить выподающий список B
+   * @param {HTMLElement} option - пункт списка в А селекте
+   * @return {void}
+   */
+  async fillSelectB(option) {
+    try {
+      let idSelectA = option.dataset.selectOption,
+        formData = new FormData();
+      formData.append('id', idSelectA);
+      this._resetSelectB();
+      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_0__.apiService.useRequest(this.callActionA, formData),
+        result = JSON.parse(response.data.result);
+      if (Array.isArray(result) && result.length) {
+        let html = result.map(option => {
+          return this.renderTemplateB(option);
+        });
+        this.$pasteOptions.insertAdjacentHTML('afterbegin', html.join(''));
+      } else {
+        console.error('In file ChainingSelectInFormPlugin, in function fillSelectB, response is either not an array or an empty array');
+      }
+    } catch (error) {
+      if (error.status === 'error') {
+        console.group(`In file ApiService, in function , ${this.callActionA} promise return reject`);
+        console.group('List of errors');
+        error.errors.forEach(error => {
+          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
+        });
+        console.groupEnd();
+        console.groupEnd();
+      } else {
+        console.group('In file ChainingSelectInFormPlugin, in function fillSelectB error');
+        console.error(`${error.stack}`);
+        console.groupEnd();
+      }
+    }
+  }
+
+  /**
+   * Сброс параметров у выподающий списока B
+   * @return {void}
+   */
+  _resetSelectB() {
+    let toggle = this.$selectB.querySelector(this.resetParamsB.activeOption),
+      options = this.$selectB.querySelectorAll(this.resetParamsB.options),
+      input = this.$selectB.parentElement.querySelector(this.resetParamsB.input);
+
+    // активный пункт
+    toggle.innerText = '';
+    toggle.removeAttribute('title');
+
+    // пункты списка
+    options.forEach(option => {
+      option.remove();
+    });
+
+    // input
+    input.setAttribute('value', '');
+  }
+
+  /**
+   * Удаление пунктов выподающий списока B
+   * @return {void}
+   */
+  deleteOptions() {
+    let options = this.$selectB.querySelectorAll(this.resetParamsB.options);
+
+    // пункты списка
+    options.forEach(option => {
+      option.remove();
+    });
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/plugin/form-validator/form.js":
+/*!**********************************************!*\
+  !*** ./src/js/plugin/form-validator/form.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Form; }
+/* harmony export */ });
+/**
+ *  Базовый класс для работы с формами
+ * */
+class Form {
+  /**
+   * Конструктор
+   * @param {Element} form      - форма.
+   * @param {Object=} controls  - поля формы.
+   */
+  constructor(form) {
+    let controls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    this.form = form;
+    this.controls = controls;
+  }
+
+  /**
+   * Вытаскивает значения из полей формы
+   * @return {Object}
+   */
+  value() {
+    const value = {};
+    Object.keys(this.controls).forEach(control => {
+      value[control] = this.form[control].value;
+    });
+    return value;
+  }
+
+  /**
+   * Проверка на валидацию
+   * @return {boolean}
+   */
+  isValid() {
+    let isFormValid = true; // Флаг
+
+    Object.keys(this.controls).forEach(control => {
+      if (this.controls[control].length) {
+        const validators = this.controls[control]; // массив с валидаторами
+
+        let isValid = true; // Флаг
+
+        validators.forEach(validator => {
+          isValid = validator(this.form[control].value) && isValid; // запускаем валидаторы по цепочки
+        });
+
+        //если элемент формы валиден
+        isValid ? clearError(this.form[control]) : setError(this.form[control]);
+        //если элемент формы невалиден
+
+        isFormValid = isFormValid && isValid; // переключаем Флаг
+      }
+    });
+
+    return isFormValid;
+  }
+
+  /**
+   * Очищаем форму
+   * @return {void}
+   */
+  clear() {
+    this.form.reset();
+  }
+}
+
+/**
+ * Сформировать и отправить ошибку
+ * @return {void}
+ */
+function setError($control) {
+  clearError($control); // удаляет сообщения об ошибки
+
+  const error = '<span class="form__validation-error">Введите значение</span>'; // формируем сообшения об ошибки
+
+  $control.nextElementSibling.firstElementChild.style.backgroundColor = '#fff5f5'; // подсветить не валидный элемент красным цветом
+
+  $control.previousElementSibling.insertAdjacentHTML('beforeend', error); // добавляем сообщения от ошибки для невалидного элемента
+}
+
+/**
+ * Удалить сообщения об ошибки
+ * @return {void}
+ */
+function clearError($control) {
+  $control.nextElementSibling.firstElementChild.style.backgroundColor = ''; // удалить подсветку
+
+  // элемент с ошибкой сушествует
+  if ($control.previousElementSibling.querySelector('.form__validation-error')) {
+    $control.previousElementSibling.querySelector('.form__validation-error').remove(); // удаляет ошибку
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/plugin/form-validator/validators.js":
+/*!****************************************************!*\
+  !*** ./src/js/plugin/form-validator/validators.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Validators": function() { return /* binding */ Validators; }
+/* harmony export */ });
+/**
+ *  Вылидаторы для форм
+ * */
+class Validators {
+  /**
+   * Валидатор: вы незаполнили поле
+   * @return {string}
+   */
+  static required() {
+    let value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    return value && value.trim();
+  }
+
+  /**
+   * Валидатор: минимальное число симаолов
+   * @return {function}
+   */
+  static minLength(length) {
+    return value => {
+      return value.length >= length;
+    };
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/plugin/search-in-select.plugin.js":
+/*!**************************************************!*\
+  !*** ./src/js/plugin/search-in-select.plugin.js ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ SearchInSelectPlugin; }
+/* harmony export */ });
+/**
+ *  Панель для выпадающего списка, для поиска по списку
+ * */
+class SearchInSelectPlugin {
+  /**
+   * Конструктор
+   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
+   * @param {string} searchSelector   - селектор блока поиска.
+   */
+  constructor(panelsSelector, searchSelector) {
+    this._panelsElements = document.querySelectorAll(panelsSelector);
+    this._searchSelector = searchSelector;
+    this._init();
+  }
+
+  /**
+   * Инициализация
+   * @return {void}
+   */
+  _init() {
+    this._searchHandler();
+  }
+
+  /**
+   * Обработчик событий по поиску
+   * @return {void}
+   */
+  _searchHandler() {
+    this._panelsElements.forEach(panel => {
+      let parentElement = panel.parentElement,
+        searchBtn = panel.querySelector('.option-panel__item--search'),
+        searchInput = parentElement.querySelector('.dropdown__search'),
+        resetBtn = parentElement.querySelector('.dropdown__search-reset');
+      searchBtn?.addEventListener('click', e => {
+        e.preventDefault();
+        this._toggleSearch(parentElement, searchInput);
+      });
+      searchInput?.addEventListener('input', e => {
+        e.preventDefault();
+        this._searchOptions(parentElement, searchInput);
+      });
+      searchInput?.addEventListener('keydown', e => {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+        }
+      });
+      searchInput?.addEventListener('paste', e => {
+        e.preventDefault();
+        searchInput.innerText = e.clipboardData.getData('text/plain');
+        this._searchOptions(parentElement, searchInput);
+      });
+      resetBtn?.addEventListener('click', e => {
+        e.preventDefault();
+        this._reset(parentElement, searchInput);
+      });
+      parentElement.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.classList.contains('dropdown__item') || target && target.parentElement.classList.contains('dropdown__item')) {
+          this._reset(parentElement, searchInput);
+        }
+      });
+    });
+  }
+
+  /**
+   * Показаль или скрыть поиск
+   * @return {void}
+   */
+  _toggleSearch(parentElement, searchInput) {
+    let searchBox = parentElement.querySelector(this._searchSelector),
+      options = parentElement.querySelectorAll('.dropdown__item'),
+      plug = searchInput.nextElementSibling;
+    if (!!searchBox.hidden) {
+      searchBox.hidden = false;
+      searchInput.focus();
+    } else {
+      searchBox.hidden = true;
+      searchInput.innerText = '';
+      options.forEach(option => {
+        option.style.display = 'block';
+      });
+      plug.hidden = true;
+      plug.nextElementSibling.hidden = true;
+    }
+  }
+
+  /**
+   * Поиск по пунктам выподающего списка
+   * @return {void}
+   */
+  _searchOptions(parentElement, searchInput) {
+    let flag = false,
+      valueInput = searchInput.innerText.trim(),
+      options = parentElement.querySelectorAll('.dropdown__item'),
+      plug = searchInput.nextElementSibling;
+    plug.hidden = true;
+    if (valueInput) {
+      plug.nextElementSibling.hidden = false;
+      options.forEach(option => {
+        if (option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
+          option.style.display = 'block';
+          flag = true;
+        } else {
+          option.style.display = 'none';
+        }
+      });
+      if (!flag) {
+        plug.hidden = false;
+      }
+    } else {
+      plug.nextElementSibling.hidden = true;
+      options.forEach(option => {
+        option.style.display = 'block';
+      });
+    }
+  }
+
+  /**
+   * Сброс поиска до настроек по умолчанию
+   * @return {void}
+   */
+  _reset(parentElement, searchInput) {
+    let options = parentElement.querySelectorAll('.dropdown__item');
+    options.forEach(option => {
+      option.style.display = 'block';
+    });
+    searchInput.innerText = '';
+    searchInput.nextElementSibling.hidden = true;
+    searchInput.nextElementSibling.nextElementSibling.hidden = true;
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/plugin/stretch-in-select.plugin.js":
+/*!***************************************************!*\
+  !*** ./src/js/plugin/stretch-in-select.plugin.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ StretchInSelectPlugin; }
+/* harmony export */ });
+/**
+ *  Панель для выпадающего списка, для раскрытия списка по горизонтали
+ * */
+class StretchInSelectPlugin {
+  /**
+   * Конструктор
+   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
+   * @param {string} stretchSelector  - селектор элемента над которым будет проводится модификация.
+   * @param {string} activeClass      - класс модификатор для элемента над которым будет проводится модификация.
+   */
+  constructor(panelsSelector, stretchSelector, activeClass) {
+    this._panelsElements = document.querySelectorAll(panelsSelector);
+    this._stretchSelector = stretchSelector;
+    this._activeClass = activeClass;
+    this._init();
+  }
+
+  /**
+   * Инициализация
+   * @return {void}
+   */
+  _init() {
+    this._stretchHandler();
+  }
+
+  /**
+   * Обработчик события клика по панели
+   * @return {void}
+   */
+  _stretchHandler() {
+    this._panelsElements.forEach(panel => {
+      let stretchBtn = panel.querySelector('.option-panel__item--stretch');
+      stretchBtn?.addEventListener('click', e => {
+        e.preventDefault();
+        this._toggle(panel, stretchBtn);
+      });
+    });
+  }
+
+  /**
+   * Развернуть или свернуть список по горизонтали
+   * @return {void}
+   */
+  _toggle(panelElement, stretchBtnElement) {
+    panelElement.closest(this._stretchSelector).classList.toggle(this._activeClass);
+    stretchBtnElement.classList.toggle('option-panel__item--stretch-off');
+    stretchBtnElement.title.toLowerCase() === 'развернуть' ? stretchBtnElement.setAttribute('title', 'Свернуть') : stretchBtnElement.setAttribute('title', 'Развернуть');
+  }
+}
+
+/***/ }),
+
+/***/ "./src/js/services/api.service.js":
+/*!****************************************!*\
+  !*** ./src/js/services/api.service.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "apiService": function() { return /* binding */ apiService; }
+/* harmony export */ });
+/**
+ *  API Сервисы
+ * */
+class ApiService {
+  /**
+   * Конструктор
+   * @param {string} componentBx - компонент на сервере к которому будем делать запросы
+   */
+  constructor(componentBx) {
+    this.componentBx = componentBx;
+  }
+
+  /**
+   * Запрос на сервер с параметрами
+   * @param {string} action   - метод на сервере который будет обрабатывать запрос
+   * @param {Object} data     - объект с данными которые будут передаваться на сервер
+   * @return {Promise}
+   */
+  async useRequest(action, data) {
+    // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
+    return await BX.ajax.runComponentAction(this.componentBx, action, {
+      mode: 'class',
+      data: data
+    });
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "success",
+    //       "data": {
+    //         "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
+  }
+
+  /**
+   * Запрос на сервер для получения всех сотрудников
+   * @return {Promise}
+   */
+  async getUsers() {
+    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+      mode: 'class'
+    });
+    return JSON.parse(response.data.result);
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
+  }
+
+  /**
+   * Запрос на сервер для получения всех сотрудников
+   * @return {Promise}
+   */
+  async getFio() {
+    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
+      mode: 'class'
+    });
+    return JSON.parse(response.data.result);
+
+    // return new Promise((resolve,reject) => {
+    //
+    //   setTimeout(() => {
+    //     resolve({
+    //       "status": "error",
+    //       "data": {
+    //         "result": "[]"
+    //       },
+    //       "errors": [{
+    //         "message": "Не заполено поле Email",
+    //         "code": 0,
+    //         "customData": null
+    //       }]
+    //     })
+    //   },2000)
+    // })
+  }
+}
+
+const apiService = new ApiService('bizproc:otipb.new');
+
+/***/ }),
+
+/***/ "./src/js/templates/card/cardPlug.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/card/cardPlug.template.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cardPlugTemplate": function() { return /* binding */ cardPlugTemplate; }
+/* harmony export */ });
+/**
+ *  Заглушка для удостовенений
+ *  @param {string} text - текст заглушки
+ *  @return {string}
+ * */
+function cardPlugTemplate(text) {
+  return `
+    <div class="result__row result__row--inner">
+      <div class="row gx-0">
+        <div class="col-12">
+              ${text}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/card/cardRecertification.template.js":
+/*!***************************************************************!*\
+  !*** ./src/js/templates/card/cardRecertification.template.js ***!
+  \***************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cardRecertificationTemplate": function() { return /* binding */ cardRecertificationTemplate; }
+/* harmony export */ });
+/**
+ *  Шаблон удостоверения на переаттестации
+ *  @param {Object} card - удостоверение
+ *  @param {number} [card.idCard] - id
+ *  @param {string} [card.programName] - название удостоверения
+ *  @param {string} [card.cardNumber] - номер документа
+ *  @param {string} [card.nextAttestationDate] - дата следующий аттестации
+ *  @param {Object} options - настройки
+ *  @param {?number} [options.idUser] - id сотрудника
+ *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
+ *  @return {string}
+ * */
+function cardRecertificationTemplate(_ref, _ref2) {
+  let {
+    idCard,
+    programName,
+    cardNumber,
+    nextAttestationDate
+  } = _ref;
+  let {
+    idUser = null,
+    customUser = null
+  } = _ref2;
+  return `
+    <div class="result__row result__row--inner">
+      <div class="row gx-0">
+        <div class="col-9 g-justify-items-left" title="${programName || 'не заполнено'}.&#10Номер документа: ${cardNumber || 'не заполнено'}&#10Аттестация закончилась: ${nextAttestationDate || 'не заполнено'}">
+          <span class="result__clip">
+            ${programName || 'не заполнено'}
+          </span>
+        </div>
+        <div class="col-3">
+          <span class="result__options-card">
+            <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Продлить</button>
+            <span class="p-relative d-inline-block">
+              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение"></button>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/card/training.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/card/training.template.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "trainingTemplate": function() { return /* binding */ trainingTemplate; }
+/* harmony export */ });
+/**
+ *  Шаблон доступные обучения
+ *  @param {Object} card - обучение
+ *  @param {number} [card.ID] - id
+ *  @param {string} [card.NAME] - название обучение
+ *  @param {Object} options - настройки
+ *  @param {?number} [options.idUser] - id сотрудника
+ *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
+ *  @return {string}
+ * */
+function trainingTemplate(_ref, _ref2) {
+  let {
+    ID,
+    NAME
+  } = _ref;
+  let {
+    idUser = null,
+    customUser = null
+  } = _ref2;
+  return `
+    <div class="result__row result__row--inner">
+      <div class="row gx-0">
+        <div class="col g-justify-items-left" title="${NAME || 'не заполнено'}">
+          <span class="result__clip">
+            ${NAME || 'не заполнено'}
+          </span>
+        </div>
+        <div class="col-3">
+          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/addCard">Добавить</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/card/сard.template.js":
+/*!************************************************!*\
+  !*** ./src/js/templates/card/сard.template.js ***!
+  \************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cardTemplate": function() { return /* binding */ cardTemplate; }
+/* harmony export */ });
+/**
+ *  Шаблон действующие удостоверение
+ *  @param {Object} card - удостоверение
+ *  @param {number} [card.idCard] - id
+ *  @param {string} [card.programName] - название удостоверения
+ *  @param {string} [card.cardNumber] - номер документа
+ *  @param {string} [card.attestationDate] - дата аттестации
+ *  @param {string} [card.nextAttestationDate] - дата следующий аттестации
+ *  @param {Object} options - настройки
+ *  @param {?number} [options.idUser] - id сотрудника
+ *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
+ *  @return {string}
+ * */
+function cardTemplate(_ref, _ref2) {
+  let {
+    idCard,
+    programName,
+    cardNumber,
+    attestationDate,
+    nextAttestationDate
+  } = _ref;
+  let {
+    idUser = null,
+    customUser = null
+  } = _ref2;
+  return `
+    <div class="result__row result__row--inner">
+      <div class="row gx-0">
+        <div class="col-5 g-justify-items-left" title="${programName || 'не заполнено'}">
+          <span class="result__clip">
+            ${programName || 'не заполнено'}
+          </span>
+        </div>
+        <div class="col-3" title="Номер документа: ${cardNumber || 'не заполнено'}&#10Дата аттестации: ${attestationDate || 'не заполнено'}">
+          <span class="result__clip text-align-center">
+            ${cardNumber || 'не заполнено'}
+          </span>
+        </div>
+        <div class="col-2">${nextAttestationDate || 'не заполнено'}</div>
+        <div class="col-2">
+          <span class="result__options-card">
+            <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>
+            <span class="p-relative d-inline-block">
+              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение"></button>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/optionSelect.template.js":
+/*!***************************************************!*\
+  !*** ./src/js/templates/optionSelect.template.js ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "optionSelectTemplate": function() { return /* binding */ optionSelectTemplate; }
+/* harmony export */ });
+/**
+ *  Шаблон пункт выподающего списка
+ *  @param {Object} option - пункт выподающего списка
+ *  @return {string}
+ * */
+function optionSelectTemplate(_ref) {
+  let {
+    ID,
+    NAME
+  } = _ref;
+  return `
+    <div class="dropdown__item" data-select-option="${ID}" title="${NAME}">
+      ${NAME}
+    </div>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/user/userCardInfo.template.js":
+/*!********************************************************!*\
+  !*** ./src/js/templates/user/userCardInfo.template.js ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "userCardInfoTemplate": function() { return /* binding */ userCardInfoTemplate; }
+/* harmony export */ });
+/* harmony import */ var _card_ard_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card/сard.template */ "./src/js/templates/card/сard.template.js");
+/* harmony import */ var _card_training_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/training.template */ "./src/js/templates/card/training.template.js");
+/* harmony import */ var _card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../card/cardRecertification.template */ "./src/js/templates/card/cardRecertification.template.js");
+/* harmony import */ var _card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../card/cardPlug.template */ "./src/js/templates/card/cardPlug.template.js");
+
+
+
+
+
+/**
+ *  Шаблон информация о удостоверениях пользователя
+ *  @param {Object} user - сотрудник
+ *  @param {number} [user.idUser] - id
+ *  @param {Object} [user.cards] - обьект с действующими ['NORMAL_DATE'] и просрочеными ['OVER_DATE'] удостоверениями
+ *  @param {Array} [user.training] - обучения
+ *  @param {number} [user.customUser] - обучения
+ *  @param {Object} options - настройки
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
+ *  @return {string}
+ * */
+function userCardInfoTemplate(_ref) {
+  let {
+    idUser,
+    cards,
+    training,
+    customUser
+  } = _ref;
+  let {
+    build = 0
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  /**
+   * список действующих удостоверений
+   * @return {string}
+   */
+  const renderCard = () => {
+    if (cards && cards['NORMAL_DATE']) {
+      return cards['NORMAL_DATE'].map(card => (0,_card_ard_template__WEBPACK_IMPORTED_MODULE_0__.cardTemplate)(card, {
+        idUser,
+        customUser
+      })).join(' ');
+    } else {
+      return (0,_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__.cardPlugTemplate)('Нет удостоверений');
+    }
+  };
+
+  /**
+   * список обучений
+   * @return {string}
+   */
+  const renderTraining = () => {
+    if (training && training.length) {
+      return training.map(training => (0,_card_training_template__WEBPACK_IMPORTED_MODULE_1__.trainingTemplate)(training, {
+        idUser,
+        customUser
+      })).join(' ');
+    } else {
+      return (0,_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__.cardPlugTemplate)('Нет обучений');
+    }
+  };
+
+  /**
+   * список удостоверения на переаттестации
+   * @return {string}
+   */
+  const renderRecertification = () => {
+    if (cards && cards['OVER_DATE']) {
+      return cards['OVER_DATE'].map(card => (0,_card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__.cardRecertificationTemplate)(card, {
+        idUser,
+        customUser
+      })).join(' ');
+    } else {
+      return (0,_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__.cardPlugTemplate)('Нет удостоверений');
+    }
+  };
+
+  /**
+   * Конфигурация пользователя
+   * @return {string}
+   */
+  const renderUserConfig = () => {
+    // кастомный пользователь
+    if (build === 1) {
+      return `
+        <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="${idUser}" title="Редактировать сотрудника">
+          <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-user-icon.svg" width="22" height="22" alt="">
+        </button>
+        <span class="p-relative d-inline-block">
+          <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idUser}" data-action="/deleteUser" title="Удалить сотрудника">
+            <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/remove-user-icon.svg" width="22" height="22" alt="">
+          </button>
+        </span>
+      `;
+    }
+    // существующий пользователь из BX
+    else if (build === 2) {
+      return `
+        <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="${idUser}" title="Изменить должность HSE">
+          <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-document-icon.svg" width="22" height="22" alt="">
+        </button>
+      `;
+    }
+    // существующий пользователь из BX без HSE
+    else {
+      return ``;
+    }
+  };
+  return `
+    <div class="result__info-box">
+      <div class="result__info-title">
+        Удостоверение действующие
+
+        <div class="result__info-options">
+          ${renderUserConfig()}
+        </div>
+      </div>
+
+      <div class="result__info-box-inner">
+
+        <div class="result__row result__row--inner result__row--inner-header">
+          <div class="row gx-0">
+            <div class="col-5">Программа обучения</div>
+            <div class="col-3">Номер документа</div>
+            <div class="col-2">Дата след. аттестации</div>
+            <div class="col-2">Опции</div>
+          </div>
+        </div>
+
+        ${renderCard()}
+
+      </div><!--.result__info-box-inner-->
+
+    </div><!--./result__info-box-->
+
+    <div class="result__info-box">
+      <div class="result__info-title">Доступные обучения</div>
+
+      <div class="result__info-box-inner">
+
+        <div class="result__row result__row--inner result__row--inner-header">
+          <div class="row gx-0">
+            <div class="col-9">Программа обучения</div>
+            <div class="col-3">Опции</div>
+          </div>
+        </div>
+
+        ${renderTraining()}
+
+      </div><!--.result__info-box-inner-->
+
+    </div><!--./result__info-box-->
+
+    <div class="result__info-box">
+      <div class="result__info-title">Удостоверение на переаттестации</div>
+
+      <div class="result__info-box-inner">
+
+        <div class="result__row result__row--inner result__row--inner-header">
+          <div class="row gx-0">
+            <div class="col-9">Программа обучения</div>
+            <div class="col-3">Опции</div>
+          </div>
+        </div>
+
+        ${renderRecertification()}
+
+      </div><!--.result__info-box-inner-->
+
+    </div><!--./result__info-box-->
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/user/userInfo.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/user/userInfo.template.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "userInfoTemplate": function() { return /* binding */ userInfoTemplate; }
+/* harmony export */ });
+/**
+ *  Шаблон информация о пользователе
+ *  @param {Object} user - сотрудник
+ *  @param {number} [user.idUser] - id
+ *  @param {string} [user.fio] - ФИО
+ *  @param {string} [user.division] - дивизион
+ *  @param {string} [user.department] - отдел
+ *  @param {string} [user.work] - названия должности
+ *  @param {string} [user.status] - названия должности
+ *  @param {Object} options - настройки
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
+ *  @return {string}
+ * */
+function userInfoTemplate(_ref) {
+  let {
+    idUser,
+    fio,
+    division,
+    department,
+    work,
+    status
+  } = _ref;
+  let {
+    build = 0
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  /**
+   * Конфигурация пользователя
+   * @return {string}
+   */
+  const renderUserConfig = () => {
+    // кастомный пользователь
+    if (build === 1) {
+      return `
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
+          <span class="result__clip">
+            ${work || 'не заполнено'}
+          </span>
+        </div>
+      `;
+    }
+    // существующий пользователь из BX
+    else if (build === 2) {
+      return `
+        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
+          <span class="result__clip">
+            ${work || 'не заполнено'}
+          </span>
+        </div>
+      `;
+    }
+    // существующий пользователь из BX без HSE
+    else {
+      return `
+        <div class="col-4 js-matrix-work-hse">
+          <span class="p-relative d-inline-block">
+            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="${idUser}" title="Добавить должность HSE">
+              <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/add-document-icon.svg" width="18" height="18" alt="">
+            </button>
+          </span>
+        </div>
+      `;
+    }
+  };
+  return `
+    <div class="col-1" title="ID: ${idUser}" data-id="${idUser}" data-sumbiot-page-counter></div>
+    <div class="col-2" title="Отдел: ${department || 'не заполнено'}">
+      <span class="result__clip text-align-center">
+        ${division || 'не заполнено'}
+      </span>
+    </div>
+    <div class="col-3 g-justify-items-left" title="${fio || 'не заполнено'}">
+      <span class="result__clip">
+        ${fio || 'не заполнено'}
+      </span>
+    </div>
+    ${renderUserConfig()}
+    <div class="col-1">${status || 'не заполнено'}</div>
+    <div class="col-1">
+      <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
+    </div>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/user/userMain.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/user/userMain.template.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "userMainTemplate": function() { return /* binding */ userMainTemplate; }
+/* harmony export */ });
+/* harmony import */ var _userInfo_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./userInfo.template */ "./src/js/templates/user/userInfo.template.js");
+/* harmony import */ var _userCardInfo_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
+
+
+
+/**
+ *  Шаблон сотрудник
+ *  @param {Object} user - сотрудник
+ *  @param {Object} options - настройки
+ *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
+ *  @return {Element}
+ * */
+function userMainTemplate(user) {
+  let {
+    build = 0
+  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  // тело элемента
+  const $user = document.createElement('div');
+  $user.classList.add('result__row', 'js-result-row');
+
+  // внутренности элемента
+  const htmlInUser = `
+      <div class="row gx-0 js-accordion js-user-info">
+        ${(0,_userInfo_template__WEBPACK_IMPORTED_MODULE_0__.userInfoTemplate)(user, {
+    build
+  })}
+      </div><!--/.js-user-info-->
+
+      <div class="result__info js-wrapper-modal">
+        ${(0,_userCardInfo_template__WEBPACK_IMPORTED_MODULE_1__.userCardInfoTemplate)(user, {
+    build
+  })}
+      </div><!--./result__info-->
+  `;
+  $user.insertAdjacentHTML('afterbegin', htmlInUser);
+  return $user;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/user/userPlug.template.js":
+/*!****************************************************!*\
+  !*** ./src/js/templates/user/userPlug.template.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "userPlugTemplate": function() { return /* binding */ userPlugTemplate; }
+/* harmony export */ });
+/**
+ *  Заглушка для сотрудников
+ *  @param {string} text - текст заглушки
+ *  @return {string}
+ * */
+function userPlugTemplate(text) {
+  return `
+    <div class="result__row js-result-row">
+      <div class="row gx-0 result__empty">
+        <div class="col-12 text-align-center d-block">
+          ${text}
+        </div>
+      </div>
+    </div><!--./result__row-->
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/js/templates/workName.template.js":
+/*!***********************************************!*\
+  !*** ./src/js/templates/workName.template.js ***!
+  \***********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "workNameTemplate": function() { return /* binding */ workNameTemplate; }
+/* harmony export */ });
+/**
+ *  Шаблон должность HSE
+ *  @param {string} title - название должности
+ *  @return {string}
+ * */
+function workNameTemplate(title) {
+  return `
+    <span class="result__clip">
+      ${title}
+    </span>
+  `;
+}
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	!function() {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = function(exports) {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+!function() {
 /*!************************!*\
   !*** ./src/js/main.js ***!
   \************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _library_sumbiot_modules_modals_components_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modal */ "./src/js/library/sumbiot/modules/modals/components/modal.js");
 /* harmony import */ var _library_sumbiot_modules_modals_components_modalDynamics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/sumbiot/modules/modals/components/modalDynamics */ "./src/js/library/sumbiot/modules/modals/components/modalDynamics.js");
@@ -3269,1237 +4459,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }]
   });
 });
-
-/***/ }),
-
-/***/ "./src/js/plugin/chaining-select-in-form.plugin.js":
-/*!*********************************************************!*\
-  !*** ./src/js/plugin/chaining-select-in-form.plugin.js ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ChainingSelectInFormPlugin; });
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/api.service */ "./src/js/services/api.service.js");
-
-
-/**
- *  От выбора в A(первом селект), зависит наполнения Б(второго селекте)
- * */
-class ChainingSelectInFormPlugin {
-  /**
-   * Конструктор
-   * @param {string | Element} form  - форма в корорый надо объединить два выподающий списка.
-   * @param {Object} selectA         - выподающий спосок A
-   * @param {string} [selectA.selectorA] - селектор выподающего списка А
-   * @param {string} [selectA.selectATriggerSelector] - сетектор для запуска действия в выподающим списке А
-   * @param {string} [selectA.callAction] - обработчик который вызывает выподающий спосок A для получения данных, которые потом отрисуем в выподающий списки В
-   * @param {Object} selectB         - выподающий спосок В
-   * @param {string} [selectB.selectorB]  -  селектор выподающего списка В
-   * @param {Object} [selectB.resetParams]  - элемента для сброса
-   * @param {string} [selectB.resetParams.activeOption]  - активный пункт
-   * @param {string} [selectB.resetParams.options]  - пункты списка
-   * @param {string} [selectB.resetParams.input]  - input для отправки на сервер
-   * @param {Function} [selectB.renderTemplate]  - шаблон который принемает данные из списка A, с создает html верстку для заполнения списка B
-   * @param {string} [selectB.selectorWherePasteOptions]  - шаблон который принемает данные из списка A, с создает html верстку для заполнения списка B
-   */
-  constructor(form) {
-    let {
-      selectorA = '[data-sumbiot-selectA]',
-      selectATriggerSelector = '.dropdown__item',
-      callAction
-    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    let {
-      selectorB = '[data-sumbiot-selectB]',
-      resetParams = {
-        activeOption: '.js-dropdown__toggle',
-        options: '.dropdown__item',
-        input: '.sumbiot-input-select'
-      },
-      renderTemplate,
-      selectorWherePasteOptions = '[data-sumbiot-selectB-paste]'
-    } = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    this.$form = form.tagName ? form : document.querySelector(form);
-    this.$selectA = this.$form.querySelector(selectorA);
-    this.selectATriggerSelector = selectATriggerSelector;
-    this.callActionA = callAction;
-    this.$selectB = this.$form.querySelector(selectorB);
-    this.$pasteOptions = this.$selectB.querySelector(selectorWherePasteOptions);
-    this.resetParamsB = resetParams;
-    this.renderTemplateB = renderTemplate;
-    this._init();
-  }
-
-  /**
-   * Инициализация плагина
-   * @return {void}
-   */
-  _init() {
-    this._handlerEvent();
-  }
-
-  /**
-   * Обработчик событий
-   * @return {void}
-   */
-  _handlerEvent() {
-    this.$selectA.addEventListener('click', e => {
-      let target = e.target;
-      if (target && target.classList.contains(this.selectATriggerSelector.slice(1)) || target && target.parentElement.classList.contains(this.selectATriggerSelector.slice(1))) {
-        e.preventDefault();
-        if (target.parentElement.classList.contains(this.selectATriggerSelector.slice(1))) {
-          target = target.parentElement;
-        }
-        this.fillSelectB(target);
-      }
-    });
-  }
-
-  /**
-   * Заполнить выподающий список B
-   * @param {HTMLElement} option - пункт списка в А селекте
-   * @return {void}
-   */
-  async fillSelectB(option) {
-    try {
-      let idSelectA = option.dataset.selectOption,
-        formData = new FormData();
-      formData.append('id', idSelectA);
-      this._resetSelectB();
-      const response = await _services_api_service__WEBPACK_IMPORTED_MODULE_0__["apiService"].useRequest(this.callActionA, formData),
-        result = JSON.parse(response.data.result);
-      if (Array.isArray(result) && result.length) {
-        let html = result.map(option => {
-          return this.renderTemplateB(option);
-        });
-        this.$pasteOptions.insertAdjacentHTML('afterbegin', html.join(''));
-      } else {
-        console.error('In file ChainingSelectInFormPlugin, in function fillSelectB, response is either not an array or an empty array');
-      }
-    } catch (error) {
-      if (error.status === 'error') {
-        console.group(`In file ApiService, in function , ${this.callActionA} promise return reject`);
-        console.group('List of errors');
-        error.errors.forEach(error => {
-          console.error(`Name: ${error.message}\n Code: ${error.code}\n customData: ${error.customData}`);
-        });
-        console.groupEnd();
-        console.groupEnd();
-      } else {
-        console.group('In file ChainingSelectInFormPlugin, in function fillSelectB error');
-        console.error(`${error.stack}`);
-        console.groupEnd();
-      }
-    }
-  }
-
-  /**
-   * Сброс параметров у выподающий списока B
-   * @return {void}
-   */
-  _resetSelectB() {
-    let toggle = this.$selectB.querySelector(this.resetParamsB.activeOption),
-      options = this.$selectB.querySelectorAll(this.resetParamsB.options),
-      input = this.$selectB.parentElement.querySelector(this.resetParamsB.input);
-
-    // активный пункт
-    toggle.innerText = '';
-    toggle.removeAttribute('title');
-
-    // пункты списка
-    options.forEach(option => {
-      option.remove();
-    });
-
-    // input
-    input.setAttribute('value', '');
-  }
-
-  /**
-   * Удаление пунктов выподающий списока B
-   * @return {void}
-   */
-  deleteOptions() {
-    let options = this.$selectB.querySelectorAll(this.resetParamsB.options);
-
-    // пункты списка
-    options.forEach(option => {
-      option.remove();
-    });
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/plugin/form-validator/form.js":
-/*!**********************************************!*\
-  !*** ./src/js/plugin/form-validator/form.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Form; });
-/**
- *  Базовый класс для работы с формами
- * */
-class Form {
-  /**
-   * Конструктор
-   * @param {Element} form      - форма.
-   * @param {Object=} controls  - поля формы.
-   */
-  constructor(form) {
-    let controls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    this.form = form;
-    this.controls = controls;
-  }
-
-  /**
-   * Вытаскивает значения из полей формы
-   * @return {Object}
-   */
-  value() {
-    const value = {};
-    Object.keys(this.controls).forEach(control => {
-      value[control] = this.form[control].value;
-    });
-    return value;
-  }
-
-  /**
-   * Проверка на валидацию
-   * @return {boolean}
-   */
-  isValid() {
-    let isFormValid = true; // Флаг
-
-    Object.keys(this.controls).forEach(control => {
-      if (this.controls[control].length) {
-        const validators = this.controls[control]; // массив с валидаторами
-
-        let isValid = true; // Флаг
-
-        validators.forEach(validator => {
-          isValid = validator(this.form[control].value) && isValid; // запускаем валидаторы по цепочки
-        });
-
-        //если элемент формы валиден
-        isValid ? clearError(this.form[control]) : setError(this.form[control]);
-        //если элемент формы невалиден
-
-        isFormValid = isFormValid && isValid; // переключаем Флаг
-      }
-    });
-
-    return isFormValid;
-  }
-
-  /**
-   * Очищаем форму
-   * @return {void}
-   */
-  clear() {
-    this.form.reset();
-  }
-}
-
-/**
- * Сформировать и отправить ошибку
- * @return {void}
- */
-function setError($control) {
-  clearError($control); // удаляет сообщения об ошибки
-
-  const error = '<span class="form__validation-error">Введите значение</span>'; // формируем сообшения об ошибки
-
-  $control.nextElementSibling.firstElementChild.style.backgroundColor = '#fff5f5'; // подсветить не валидный элемент красным цветом
-
-  $control.previousElementSibling.insertAdjacentHTML('beforeend', error); // добавляем сообщения от ошибки для невалидного элемента
-}
-
-/**
- * Удалить сообщения об ошибки
- * @return {void}
- */
-function clearError($control) {
-  $control.nextElementSibling.firstElementChild.style.backgroundColor = ''; // удалить подсветку
-
-  // элемент с ошибкой сушествует
-  if ($control.previousElementSibling.querySelector('.form__validation-error')) {
-    $control.previousElementSibling.querySelector('.form__validation-error').remove(); // удаляет ошибку
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/plugin/form-validator/validators.js":
-/*!****************************************************!*\
-  !*** ./src/js/plugin/form-validator/validators.js ***!
-  \****************************************************/
-/*! exports provided: Validators */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Validators", function() { return Validators; });
-/**
- *  Вылидаторы для форм
- * */
-class Validators {
-  /**
-   * Валидатор: вы незаполнили поле
-   * @return {string}
-   */
-  static required() {
-    let value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    return value && value.trim();
-  }
-
-  /**
-   * Валидатор: минимальное число симаолов
-   * @return {function}
-   */
-  static minLength(length) {
-    return value => {
-      return value.length >= length;
-    };
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/plugin/search-in-select.plugin.js":
-/*!**************************************************!*\
-  !*** ./src/js/plugin/search-in-select.plugin.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchInSelectPlugin; });
-/**
- *  Панель для выпадающего списка, для поиска по списку
- * */
-class SearchInSelectPlugin {
-  /**
-   * Конструктор
-   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
-   * @param {string} searchSelector   - селектор блока поиска.
-   */
-  constructor(panelsSelector, searchSelector) {
-    this._panelsElements = document.querySelectorAll(panelsSelector);
-    this._searchSelector = searchSelector;
-    this._init();
-  }
-
-  /**
-   * Инициализация
-   * @return {void}
-   */
-  _init() {
-    this._searchHandler();
-  }
-
-  /**
-   * Обработчик событий по поиску
-   * @return {void}
-   */
-  _searchHandler() {
-    this._panelsElements.forEach(panel => {
-      let parentElement = panel.parentElement,
-        searchBtn = panel.querySelector('.option-panel__item--search'),
-        searchInput = parentElement.querySelector('.dropdown__search'),
-        resetBtn = parentElement.querySelector('.dropdown__search-reset');
-      searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', e => {
-        e.preventDefault();
-        this._toggleSearch(parentElement, searchInput);
-      });
-      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('input', e => {
-        e.preventDefault();
-        this._searchOptions(parentElement, searchInput);
-      });
-      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('keydown', e => {
-        if (e.keyCode === 13) {
-          e.preventDefault();
-        }
-      });
-      searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('paste', e => {
-        e.preventDefault();
-        searchInput.innerText = e.clipboardData.getData('text/plain');
-        this._searchOptions(parentElement, searchInput);
-      });
-      resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener('click', e => {
-        e.preventDefault();
-        this._reset(parentElement, searchInput);
-      });
-      parentElement.addEventListener('click', e => {
-        const target = e.target;
-        if (target && target.classList.contains('dropdown__item') || target && target.parentElement.classList.contains('dropdown__item')) {
-          this._reset(parentElement, searchInput);
-        }
-      });
-    });
-  }
-
-  /**
-   * Показаль или скрыть поиск
-   * @return {void}
-   */
-  _toggleSearch(parentElement, searchInput) {
-    let searchBox = parentElement.querySelector(this._searchSelector),
-      options = parentElement.querySelectorAll('.dropdown__item'),
-      plug = searchInput.nextElementSibling;
-    if (!!searchBox.hidden) {
-      searchBox.hidden = false;
-      searchInput.focus();
-    } else {
-      searchBox.hidden = true;
-      searchInput.innerText = '';
-      options.forEach(option => {
-        option.style.display = 'block';
-      });
-      plug.hidden = true;
-      plug.nextElementSibling.hidden = true;
-    }
-  }
-
-  /**
-   * Поиск по пунктам выподающего списка
-   * @return {void}
-   */
-  _searchOptions(parentElement, searchInput) {
-    let flag = false,
-      valueInput = searchInput.innerText.trim(),
-      options = parentElement.querySelectorAll('.dropdown__item'),
-      plug = searchInput.nextElementSibling;
-    plug.hidden = true;
-    if (valueInput) {
-      plug.nextElementSibling.hidden = false;
-      options.forEach(option => {
-        if (option.innerText.toUpperCase().includes(valueInput.toUpperCase())) {
-          option.style.display = 'block';
-          flag = true;
-        } else {
-          option.style.display = 'none';
-        }
-      });
-      if (!flag) {
-        plug.hidden = false;
-      }
-    } else {
-      plug.nextElementSibling.hidden = true;
-      options.forEach(option => {
-        option.style.display = 'block';
-      });
-    }
-  }
-
-  /**
-   * Сброс поиска до настроек по умолчанию
-   * @return {void}
-   */
-  _reset(parentElement, searchInput) {
-    let options = parentElement.querySelectorAll('.dropdown__item');
-    options.forEach(option => {
-      option.style.display = 'block';
-    });
-    searchInput.innerText = '';
-    searchInput.nextElementSibling.hidden = true;
-    searchInput.nextElementSibling.nextElementSibling.hidden = true;
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/plugin/stretch-in-select.plugin.js":
-/*!***************************************************!*\
-  !*** ./src/js/plugin/stretch-in-select.plugin.js ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StretchInSelectPlugin; });
-/**
- *  Панель для выпадающего списка, для раскрытия списка по горизонтали
- * */
-class StretchInSelectPlugin {
-  /**
-   * Конструктор
-   * @param {string} panelsSelector   - селектор панелей для выпадающего списка.
-   * @param {string} stretchSelector  - селектор элемента над которым будет проводится модификация.
-   * @param {string} activeClass      - класс модификатор для элемента над которым будет проводится модификация.
-   */
-  constructor(panelsSelector, stretchSelector, activeClass) {
-    this._panelsElements = document.querySelectorAll(panelsSelector);
-    this._stretchSelector = stretchSelector;
-    this._activeClass = activeClass;
-    this._init();
-  }
-
-  /**
-   * Инициализация
-   * @return {void}
-   */
-  _init() {
-    this._stretchHandler();
-  }
-
-  /**
-   * Обработчик события клика по панели
-   * @return {void}
-   */
-  _stretchHandler() {
-    this._panelsElements.forEach(panel => {
-      let stretchBtn = panel.querySelector('.option-panel__item--stretch');
-      stretchBtn === null || stretchBtn === void 0 ? void 0 : stretchBtn.addEventListener('click', e => {
-        e.preventDefault();
-        this._toggle(panel, stretchBtn);
-      });
-    });
-  }
-
-  /**
-   * Развернуть или свернуть список по горизонтали
-   * @return {void}
-   */
-  _toggle(panelElement, stretchBtnElement) {
-    panelElement.closest(this._stretchSelector).classList.toggle(this._activeClass);
-    stretchBtnElement.classList.toggle('option-panel__item--stretch-off');
-    stretchBtnElement.title.toLowerCase() === 'развернуть' ? stretchBtnElement.setAttribute('title', 'Свернуть') : stretchBtnElement.setAttribute('title', 'Развернуть');
-  }
-}
-
-/***/ }),
-
-/***/ "./src/js/services/api.service.js":
-/*!****************************************!*\
-  !*** ./src/js/services/api.service.js ***!
-  \****************************************/
-/*! exports provided: apiService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiService", function() { return apiService; });
-/**
- *  API Сервисы
- * */
-class ApiService {
-  /**
-   * Конструктор
-   * @param {string} componentBx - компонент на сервере к которому будем делать запросы
-   */
-  constructor(componentBx) {
-    this.componentBx = componentBx;
-  }
-
-  /**
-   * Запрос на сервер с параметрами
-   * @param {string} action   - метод на сервере который будет обрабатывать запрос
-   * @param {Object} data     - объект с данными которые будут передаваться на сервер
-   * @return {Promise}
-   */
-  async useRequest(action, data) {
-    // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    return await BX.ajax.runComponentAction(this.componentBx, action, {
-      mode: 'class',
-      data: data
-    });
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "success",
-    //       "data": {
-    //         "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
-    // })
-  }
-
-  /**
-   * Запрос на сервер для получения всех сотрудников
-   * @return {Promise}
-   */
-  async getUsers() {
-    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
-      mode: 'class'
-    });
-    return JSON.parse(response.data.result);
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
-    // })
-  }
-
-  /**
-   * Запрос на сервер для получения всех сотрудников
-   * @return {Promise}
-   */
-  async getFio() {
-    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
-      mode: 'class'
-    });
-    return JSON.parse(response.data.result);
-
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
-    // })
-  }
-}
-
-const apiService = new ApiService('bizproc:otipb.new');
-
-/***/ }),
-
-/***/ "./src/js/templates/card/cardPlug.template.js":
-/*!****************************************************!*\
-  !*** ./src/js/templates/card/cardPlug.template.js ***!
-  \****************************************************/
-/*! exports provided: cardPlugTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cardPlugTemplate", function() { return cardPlugTemplate; });
-/**
- *  Заглушка для удостовенений
- *  @param {string} text - текст заглушки
- *  @return {string}
- * */
-function cardPlugTemplate(text) {
-  return `
-    <div class="result__row result__row--inner">
-      <div class="row gx-0">
-        <div class="col-12">
-              ${text}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/card/cardRecertification.template.js":
-/*!***************************************************************!*\
-  !*** ./src/js/templates/card/cardRecertification.template.js ***!
-  \***************************************************************/
-/*! exports provided: cardRecertificationTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cardRecertificationTemplate", function() { return cardRecertificationTemplate; });
-/**
- *  Шаблон удостоверения на переаттестации
- *  @param {Object} card - удостоверение
- *  @param {number} [card.idCard] - id
- *  @param {string} [card.programName] - название удостоверения
- *  @param {string} [card.cardNumber] - номер документа
- *  @param {string} [card.nextAttestationDate] - дата следующий аттестации
- *  @param {Object} options - настройки
- *  @param {?number} [options.idUser] - id сотрудника
- *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
- *  @return {string}
- * */
-function cardRecertificationTemplate(_ref, _ref2) {
-  let {
-    idCard,
-    programName,
-    cardNumber,
-    nextAttestationDate
-  } = _ref;
-  let {
-    idUser = null,
-    customUser = null
-  } = _ref2;
-  return `
-    <div class="result__row result__row--inner">
-      <div class="row gx-0">
-        <div class="col-9 g-justify-items-left" title="${programName || 'не заполнено'}.&#10Номер документа: ${cardNumber || 'не заполнено'}&#10Аттестация закончилась: ${nextAttestationDate || 'не заполнено'}">
-          <span class="result__clip">
-            ${programName || 'не заполнено'}
-          </span>
-        </div>
-        <div class="col-3">
-          <span class="result__options-card">
-            <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Продлить</button>
-            <span class="p-relative d-inline-block">
-              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение"></button>
-            </span>
-          </span>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/card/training.template.js":
-/*!****************************************************!*\
-  !*** ./src/js/templates/card/training.template.js ***!
-  \****************************************************/
-/*! exports provided: trainingTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "trainingTemplate", function() { return trainingTemplate; });
-/**
- *  Шаблон доступные обучения
- *  @param {Object} card - обучение
- *  @param {number} [card.ID] - id
- *  @param {string} [card.NAME] - название обучение
- *  @param {Object} options - настройки
- *  @param {?number} [options.idUser] - id сотрудника
- *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
- *  @return {string}
- * */
-function trainingTemplate(_ref, _ref2) {
-  let {
-    ID,
-    NAME
-  } = _ref;
-  let {
-    idUser = null,
-    customUser = null
-  } = _ref2;
-  return `
-    <div class="result__row result__row--inner">
-      <div class="row gx-0">
-        <div class="col g-justify-items-left" title="${NAME || 'не заполнено'}">
-          <span class="result__clip">
-            ${NAME || 'не заполнено'}
-          </span>
-        </div>
-        <div class="col-3">
-          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/addCard">Добавить</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/card/сard.template.js":
-/*!************************************************!*\
-  !*** ./src/js/templates/card/сard.template.js ***!
-  \************************************************/
-/*! exports provided: cardTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cardTemplate", function() { return cardTemplate; });
-/**
- *  Шаблон действующие удостоверение
- *  @param {Object} card - удостоверение
- *  @param {number} [card.idCard] - id
- *  @param {string} [card.programName] - название удостоверения
- *  @param {string} [card.cardNumber] - номер документа
- *  @param {string} [card.attestationDate] - дата аттестации
- *  @param {string} [card.nextAttestationDate] - дата следующий аттестации
- *  @param {Object} options - настройки
- *  @param {?number} [options.idUser] - id сотрудника
- *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
- *  @return {string}
- * */
-function cardTemplate(_ref, _ref2) {
-  let {
-    idCard,
-    programName,
-    cardNumber,
-    attestationDate,
-    nextAttestationDate
-  } = _ref;
-  let {
-    idUser = null,
-    customUser = null
-  } = _ref2;
-  return `
-    <div class="result__row result__row--inner">
-      <div class="row gx-0">
-        <div class="col-5 g-justify-items-left" title="${programName || 'не заполнено'}">
-          <span class="result__clip">
-            ${programName || 'не заполнено'}
-          </span>
-        </div>
-        <div class="col-3" title="Номер документа: ${cardNumber || 'не заполнено'}&#10Дата аттестации: ${attestationDate || 'не заполнено'}">
-          <span class="result__clip text-align-center">
-            ${cardNumber || 'не заполнено'}
-          </span>
-        </div>
-        <div class="col-2">${nextAttestationDate || 'не заполнено'}</div>
-        <div class="col-2">
-          <span class="result__options-card">
-            <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>
-            <span class="p-relative d-inline-block">
-              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение"></button>
-            </span>
-          </span>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/optionSelect.template.js":
-/*!***************************************************!*\
-  !*** ./src/js/templates/optionSelect.template.js ***!
-  \***************************************************/
-/*! exports provided: optionSelectTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "optionSelectTemplate", function() { return optionSelectTemplate; });
-/**
- *  Шаблон пункт выподающего списка
- *  @param {Object} option - пункт выподающего списка
- *  @return {string}
- * */
-function optionSelectTemplate(_ref) {
-  let {
-    ID,
-    NAME
-  } = _ref;
-  return `
-    <div class="dropdown__item" data-select-option="${ID}" title="${NAME}">
-      ${NAME}
-    </div>
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/user/userCardInfo.template.js":
-/*!********************************************************!*\
-  !*** ./src/js/templates/user/userCardInfo.template.js ***!
-  \********************************************************/
-/*! exports provided: userCardInfoTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userCardInfoTemplate", function() { return userCardInfoTemplate; });
-/* harmony import */ var _card_ard_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card/сard.template */ "./src/js/templates/card/сard.template.js");
-/* harmony import */ var _card_training_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../card/training.template */ "./src/js/templates/card/training.template.js");
-/* harmony import */ var _card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../card/cardRecertification.template */ "./src/js/templates/card/cardRecertification.template.js");
-/* harmony import */ var _card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../card/cardPlug.template */ "./src/js/templates/card/cardPlug.template.js");
-
-
-
-
-
-/**
- *  Шаблон информация о удостоверениях пользователя
- *  @param {Object} user - сотрудник
- *  @param {number} [user.idUser] - id
- *  @param {Object} [user.cards] - обьект с действующими ['NORMAL_DATE'] и просрочеными ['OVER_DATE'] удостоверениями
- *  @param {Array} [user.training] - обучения
- *  @param {number} [user.customUser] - обучения
- *  @param {Object} options - настройки
- *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
- *  @return {string}
- * */
-function userCardInfoTemplate(_ref) {
-  let {
-    idUser,
-    cards,
-    training,
-    customUser
-  } = _ref;
-  let {
-    build = 0
-  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  /**
-   * список действующих удостоверений
-   * @return {string}
-   */
-  const renderCard = () => {
-    if (cards && cards['NORMAL_DATE']) {
-      return cards['NORMAL_DATE'].map(card => Object(_card_ard_template__WEBPACK_IMPORTED_MODULE_0__["cardTemplate"])(card, {
-        idUser,
-        customUser
-      })).join(' ');
-    } else {
-      return Object(_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__["cardPlugTemplate"])('Нет удостоверений');
-    }
-  };
-
-  /**
-   * список обучений
-   * @return {string}
-   */
-  const renderTraining = () => {
-    if (training && training.length) {
-      return training.map(training => Object(_card_training_template__WEBPACK_IMPORTED_MODULE_1__["trainingTemplate"])(training, {
-        idUser,
-        customUser
-      })).join(' ');
-    } else {
-      return Object(_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__["cardPlugTemplate"])('Нет обучений');
-    }
-  };
-
-  /**
-   * список удостоверения на переаттестации
-   * @return {string}
-   */
-  const renderRecertification = () => {
-    if (cards && cards['OVER_DATE']) {
-      return cards['OVER_DATE'].map(card => Object(_card_cardRecertification_template__WEBPACK_IMPORTED_MODULE_2__["cardRecertificationTemplate"])(card, {
-        idUser,
-        customUser
-      })).join(' ');
-    } else {
-      return Object(_card_cardPlug_template__WEBPACK_IMPORTED_MODULE_3__["cardPlugTemplate"])('Нет удостоверений');
-    }
-  };
-
-  /**
-   * Конфигурация пользователя
-   * @return {string}
-   */
-  const renderUserConfig = () => {
-    // кастомный пользователь
-    if (build === 1) {
-      return `
-        <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="${idUser}" title="Редактировать сотрудника">
-          <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-user-icon.svg" width="22" height="22" alt="">
-        </button>
-        <span class="p-relative d-inline-block">
-          <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idUser}" data-action="/deleteUser" title="Удалить сотрудника">
-            <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/remove-user-icon.svg" width="22" height="22" alt="">
-          </button>
-        </span>
-      `;
-    }
-    // существующий пользователь из BX
-    else if (build === 2) {
-      return `
-        <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="${idUser}" title="Изменить должность HSE">
-          <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-document-icon.svg" width="22" height="22" alt="">
-        </button>
-      `;
-    }
-    // существующий пользователь из BX без HSE
-    else {
-      return ``;
-    }
-  };
-  return `
-    <div class="result__info-box">
-      <div class="result__info-title">
-        Удостоверение действующие
-
-        <div class="result__info-options">
-          ${renderUserConfig()}
-        </div>
-      </div>
-
-      <div class="result__info-box-inner">
-
-        <div class="result__row result__row--inner result__row--inner-header">
-          <div class="row gx-0">
-            <div class="col-5">Программа обучения</div>
-            <div class="col-3">Номер документа</div>
-            <div class="col-2">Дата след. аттестации</div>
-            <div class="col-2">Опции</div>
-          </div>
-        </div>
-
-        ${renderCard()}
-
-      </div><!--.result__info-box-inner-->
-
-    </div><!--./result__info-box-->
-
-    <div class="result__info-box">
-      <div class="result__info-title">Доступные обучения</div>
-
-      <div class="result__info-box-inner">
-
-        <div class="result__row result__row--inner result__row--inner-header">
-          <div class="row gx-0">
-            <div class="col-9">Программа обучения</div>
-            <div class="col-3">Опции</div>
-          </div>
-        </div>
-
-        ${renderTraining()}
-
-      </div><!--.result__info-box-inner-->
-
-    </div><!--./result__info-box-->
-
-    <div class="result__info-box">
-      <div class="result__info-title">Удостоверение на переаттестации</div>
-
-      <div class="result__info-box-inner">
-
-        <div class="result__row result__row--inner result__row--inner-header">
-          <div class="row gx-0">
-            <div class="col-9">Программа обучения</div>
-            <div class="col-3">Опции</div>
-          </div>
-        </div>
-
-        ${renderRecertification()}
-
-      </div><!--.result__info-box-inner-->
-
-    </div><!--./result__info-box-->
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/user/userInfo.template.js":
-/*!****************************************************!*\
-  !*** ./src/js/templates/user/userInfo.template.js ***!
-  \****************************************************/
-/*! exports provided: userInfoTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userInfoTemplate", function() { return userInfoTemplate; });
-/**
- *  Шаблон информация о пользователе
- *  @param {Object} user - сотрудник
- *  @param {number} [user.idUser] - id
- *  @param {string} [user.fio] - ФИО
- *  @param {string} [user.division] - дивизион
- *  @param {string} [user.department] - отдел
- *  @param {string} [user.work] - названия должности
- *  @param {string} [user.status] - названия должности
- *  @param {Object} options - настройки
- *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
- *  @return {string}
- * */
-function userInfoTemplate(_ref) {
-  let {
-    idUser,
-    fio,
-    division,
-    department,
-    work,
-    status
-  } = _ref;
-  let {
-    build = 0
-  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  /**
-   * Конфигурация пользователя
-   * @return {string}
-   */
-  const renderUserConfig = () => {
-    // кастомный пользователь
-    if (build === 1) {
-      return `
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
-          <span class="result__clip">
-            ${work || 'не заполнено'}
-          </span>
-        </div>
-      `;
-    }
-    // существующий пользователь из BX
-    else if (build === 2) {
-      return `
-        <div class="col-4 g-justify-items-left js-matrix-work-hse" title="${work || 'не заполнено'}">
-          <span class="result__clip">
-            ${work || 'не заполнено'}
-          </span>
-        </div>
-      `;
-    }
-    // существующий пользователь из BX без HSE
-    else {
-      return `
-        <div class="col-4 js-matrix-work-hse">
-          <span class="p-relative d-inline-block">
-            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="${idUser}" title="Добавить должность HSE">
-              <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/add-document-icon.svg" width="18" height="18" alt="">
-            </button>
-          </span>
-        </div>
-      `;
-    }
-  };
-  return `
-    <div class="col-1" title="ID: ${idUser}" data-id="${idUser}" data-sumbiot-page-counter></div>
-    <div class="col-2" title="Отдел: ${department || 'не заполнено'}">
-      <span class="result__clip text-align-center">
-        ${division || 'не заполнено'}
-      </span>
-    </div>
-    <div class="col-3 g-justify-items-left" title="${fio || 'не заполнено'}">
-      <span class="result__clip">
-        ${fio || 'не заполнено'}
-      </span>
-    </div>
-    ${renderUserConfig()}
-    <div class="col-1">${status || 'не заполнено'}</div>
-    <div class="col-1">
-      <button class="result__options-arrow button button--arrow" type="button" title="Подробно"></button>
-    </div>
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/user/userMain.template.js":
-/*!****************************************************!*\
-  !*** ./src/js/templates/user/userMain.template.js ***!
-  \****************************************************/
-/*! exports provided: userMainTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userMainTemplate", function() { return userMainTemplate; });
-/* harmony import */ var _userInfo_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./userInfo.template */ "./src/js/templates/user/userInfo.template.js");
-/* harmony import */ var _userCardInfo_template__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./userCardInfo.template */ "./src/js/templates/user/userCardInfo.template.js");
-
-
-
-/**
- *  Шаблон сотрудник
- *  @param {Object} user - сотрудник
- *  @param {Object} options - настройки
- *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
- *  @return {Element}
- * */
-function userMainTemplate(user) {
-  let {
-    build = 0
-  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  // тело элемента
-  const $user = document.createElement('div');
-  $user.classList.add('result__row', 'js-result-row');
-
-  // внутренности элемента
-  const htmlInUser = `
-      <div class="row gx-0 js-accordion js-user-info">
-        ${Object(_userInfo_template__WEBPACK_IMPORTED_MODULE_0__["userInfoTemplate"])(user, {
-    build
-  })}
-      </div><!--/.js-user-info-->
-
-      <div class="result__info js-wrapper-modal">
-        ${Object(_userCardInfo_template__WEBPACK_IMPORTED_MODULE_1__["userCardInfoTemplate"])(user, {
-    build
-  })}
-      </div><!--./result__info-->
-  `;
-  $user.insertAdjacentHTML('afterbegin', htmlInUser);
-  return $user;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/user/userPlug.template.js":
-/*!****************************************************!*\
-  !*** ./src/js/templates/user/userPlug.template.js ***!
-  \****************************************************/
-/*! exports provided: userPlugTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userPlugTemplate", function() { return userPlugTemplate; });
-/**
- *  Заглушка для сотрудников
- *  @param {string} text - текст заглушки
- *  @return {string}
- * */
-function userPlugTemplate(text) {
-  return `
-    <div class="result__row js-result-row">
-      <div class="row gx-0 result__empty">
-        <div class="col-12 text-align-center d-block">
-          ${text}
-        </div>
-      </div>
-    </div><!--./result__row-->
-  `;
-}
-
-/***/ }),
-
-/***/ "./src/js/templates/workName.template.js":
-/*!***********************************************!*\
-  !*** ./src/js/templates/workName.template.js ***!
-  \***********************************************/
-/*! exports provided: workNameTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "workNameTemplate", function() { return workNameTemplate; });
-/**
- *  Шаблон должность HSE
- *  @param {string} title - название должности
- *  @return {string}
- * */
-function workNameTemplate(title) {
-  return `
-    <span class="result__clip">
-      ${title}
-    </span>
-  `;
-}
-
-/***/ })
-
-/******/ });
+}();
+/******/ })()
+;
 //# sourceMappingURL=main.js.map
