@@ -11,7 +11,15 @@
   ),'block');
 
   @include m.rulesBreakpoint(v.$container,(
+          display: inline-block,
+  ),'inline-block');
+
+  @include m.rulesBreakpoint(v.$container,(
           display: flex
   ),'flex');
+
+  @include m.rulesBreakpoint(v.$container,(
+          display: grid
+  ),'grid');
 }
 

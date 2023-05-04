@@ -1,0 +1,59 @@
+
+<div class="top-panel">
+  <div class="row f-justify-content-between">
+      <div class="col-auto">
+
+        <form class="form form--search" id="search-otipb" action="/search" method="post" autocomplete="off">
+
+          <div class="form__inner">
+
+            <div class="form__item">
+              <div class="form__dropdown dropdown dropdown--input">
+                <input type="text" class="dropdown__toggle form__input" name="SEARCH" placeholder="Поиск" required>
+                <div class="dropdown__options js-options-search">
+                  <div class="dropdown__item" title="Вася Пупкин Иванович">
+                    Куприянов Дмитрий Георгиевич
+                  </div>
+                  <div class="dropdown__item" title="Вася Пупкин Иванович">
+                    Кузнецов Николай Сергеевич
+                  </div>
+                  <div class="dropdown__item" title="Вася Пупкин Иванович">
+                    Григорьев Иван Богданович
+                  </div>
+                  <div class="dropdown__item" title="Вася Пупкин Иванович">
+                    Ершов Илья Данилович
+                  </div>
+                  <div class="dropdown__item" title="Вася Пупкин Иванович">
+                    Олейникова Полина Тимофеевна
+                  </div>
+                  <div class="dropdown__item" title="Вася Пупкин Иванович">
+                    Лаптев Матвей Эмильевич
+                  </div>
+                  <div class="dropdown__item" title="Вася Пупкин Иванович">
+                    Фролова Екатерина Михайловна
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <label class="form__item form__item--order-3">
+              <input type="checkbox" class="form__checkbox" name="STATUS" value="0">
+              <span class="form__label">Добавить в результат поиска уволенных сотрудников</span>
+            </label>
+
+            <button type="submit" class="form__button btn btn-primary js-button-search-submit">Найти</button>
+
+          </div>
+
+        </form><!--./search-->
+
+      </div>
+      <div class="col-auto">
+
+        <button type="button" class="top-panel__btn btn btn-primary js-add-user-modal" data-sumbiot-target="#add-user-modal">Добавить сотрудника</button>
+        <button type="button" class="top-panel__btn btn btn-warning">Заявка на обучение</button>
+        <button type="button" class="top-panel__btn btn btn-success js-filter-modal" data-sumbiot-target="#filter-modal">Фильтр</button>
+
+      </div>
+  </div>
+</div><!--./top-panel-->

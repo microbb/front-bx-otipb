@@ -1,0 +1,36 @@
+
+<section class="modal modal--position_absolute" id="edit-card-modal" data-sumbiot-modal>
+
+  <h2 class="modal__title">Редактировать удостовенерие</h2>
+
+  <div class="modal__inner">
+
+    <form class="form" id="edit-card" action="" method="post" data-sumbiot-wrapper>
+
+      <div class="form__inner">
+
+        <label class="form__item">
+          <span class="form__label">Дата аттестации:</span>
+          <input class="form__input js-edit-att-date" type="date" name="C_ATTESTATION_DATE" required>
+        </label>
+
+        <label class="form__item">
+          <span class="form__label">Дата следующий аттестации:</span>
+          <input class="form__input js-edit-next-att-date" type="date" name="C_NEXT_ATTESTATION_DATE" required>
+        </label>
+
+        <label class="form__item form__item--column2">
+          <span class="form__label">Номер документа:</span>
+          <input class="form__input js-edit-card-number" type="text" name="C_CARD_NUMBER" required>
+        </label>
+
+        <button class="btn btn-primary h-50px form__item--column2" type="submit" name="btn_edit_card">Изменить</button>
+
+      </div><!--./form__inner-->
+
+    </form><!--./form-->
+
+  </div><!--./modal__inner-->
+
+  <button type="button" class="modal__close button button--icon" data-sumbiot-modal-close title="Закрыть окно"></button>
+</section><!--./form-->

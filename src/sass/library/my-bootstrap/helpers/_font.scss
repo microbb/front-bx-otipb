@@ -5,6 +5,14 @@
 
 .fz {
   @include m.rulesBreakpoint(v.$container,(
+    font-size: 14px
+  ),'14');
+
+  @include m.rulesBreakpoint(v.$container,(
+    font-size: 15px
+  ),'15');
+
+  @include m.rulesBreakpoint(v.$container,(
           font-size: 16px
   ),'16');
 

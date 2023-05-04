@@ -1,0 +1,122 @@
+
+<section class="modal modal--position_absolute" id="edit-user-modal" data-sumbiot-modal>
+
+  <h2 class="modal__title">Редактировать сотрудника</h2>
+
+  <div class="modal__inner">
+
+    <form class="form" id="edit-user" action="/editUser" method="post" data-sumbiot-wrapper>
+
+      <div class="form__inner">
+
+        <label class="form__item form__item--column2">
+          <input class="form__input js-edit-fio" type="text" name="E_FIO" placeholder="Фамилия Имя Отчество" required>
+        </label>
+
+        <div class="form__item">
+          <span class="form__label">Дивизион:</span>
+          <div class="form__dropdown dropdown dropdown--select" data-sumbiot-selectA data-select-name="ID_DIVISION">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+            <div class="dropdown__options">
+              <div class="dropdown__search-box" hidden>
+                <div class="dropdown__search" data-ph="Поиск" contenteditable></div>
+                <div class="dropdown__search-plug" hidden>Пусто</div>
+                <button class="dropdown__search-reset" type="button" hidden></button>
+              </div>
+
+              {{#repeat 12}}
+              <div class="dropdown__item" data-select-option="1">
+                АК ОЗНА
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item--search" title="Поиск"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div><!--./form__item-->
+
+        <div class="form__item">
+          <span class="form__label">Отдел:</span>
+          <div class="form__dropdown dropdown dropdown--select" data-sumbiot-selectB data-select-name="ID_DEPARTMENT">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+
+            <div class="dropdown__options dropdown__options--right">
+              <div class="dropdown__search-box" hidden>
+                <div class="dropdown__search" data-ph="Поиск" contenteditable></div>
+                <div class="dropdown__search-plug" hidden>Пусто</div>
+                <button class="dropdown__search-reset" type="button" hidden></button>
+              </div><!--./dropdown__search-box-->
+
+              <div class="dropdown__options-inner" data-sumbiot-selectB-paste></div>
+
+<!--              {{#repeat 10}}-->
+<!--              <div class="dropdown__item" data-select-option="2" title="отдел кадров (отдел найма и увольнения) отдел кадров">-->
+<!--                отдел кадров (отдел найма и увольнения) отдел кадров (отдел найма и увольнения)-->
+<!--              </div>-->
+<!--              {{/repeat}}-->
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item--search" title="Поиск"></li>
+                  <li class="option-panel__item option-panel__item--stretch" title="Развернуть"></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div><!--./form__item-->
+
+        <div class="form__item">
+          <span class="form__label">Должность HSE:</span>
+          <div class="form__dropdown dropdown dropdown--select" data-select-name="ID_MATRIX_WORKS">
+            <div class="dropdown__toggle js-dropdown__toggle"></div>
+
+            <div class="dropdown__options">
+              <div class="dropdown__search-box" hidden>
+                <div class="dropdown__search" data-ph="Поиск" contenteditable></div>
+                <div class="dropdown__search-plug" hidden>Пусто</div>
+                <button class="dropdown__search-reset" type="button" hidden></button>
+              </div><!--./dropdown__search-box-->
+
+              {{#repeat 10}}
+              <div class="dropdown__item" data-select-option="3" title="Директор (начальник) вычислительного (информационно-вычислительного) центра">
+                Директор (начальник) вычислительного (информационно-вычислительного) центра
+              </div>
+              {{/repeat}}
+
+              <div class="dropdown__option-panel option-panel js-option-panel">
+                <ul class="option-panel__list">
+                  <li class="option-panel__item option-panel__item--search" title="Поиск"></li>
+                  <li class="option-panel__item option-panel__item--stretch" title="Развернуть"></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div><!--./form__item-->
+
+        <div class="form__item">
+          <span class="form__label">Статус:</span>
+          <div class="form__dropdown dropdown dropdown--select" data-select-name="E_EMPLOYEE_STATUS">
+            <div class="dropdown__toggle"></div>
+            <div class="dropdown__options">
+              <div class="dropdown__item" data-select-option="1">работает</div>
+              <div class="dropdown__item" data-select-option="0">уволен</div>
+            </div>
+          </div>
+        </div><!--./form__item-->
+
+        <button class="btn btn-primary h-50px form__item--column2" type="submit" name="btn_edit_user">Редактировать</button>
+
+      </div><!--./form__inner-->
+
+    </form><!--./form-->
+
+  </div><!--./modal__inner-->
+
+  <button type="button" class="modal__close button button--icon" data-sumbiot-modal-close title="Закрыть окно"></button>
+</section><!--./form-->

@@ -1,0 +1,214 @@
+@use "sass:color";
+
+$color: #fbfbfb;
+$color2: #181818;
+$color3: #e7e7e1;
+
+$select: #98948a;
+
+.form{
+
+  &--search{
+
+    & .form__inner{
+      display: flex;
+      flex-wrap: wrap;
+
+      max-width: 400px;
+
+      grid-column-gap: 0;
+      grid-row-gap: 0;
+    }
+
+    & .form__label{
+      display: inline-block;
+
+      margin-bottom: 0;
+
+      font-size: 11px;
+      line-height: 14px;
+
+      text-transform: none;
+
+      opacity: 0.7;
+    }
+
+    & .form__input{
+      width: 300px;
+
+      margin: 0;
+      padding: 11.5px 9px;
+    }
+
+    & .form__button{
+      flex: none;
+
+      margin-right: 0;
+      margin-left: 8px;
+
+      &--reset_search{
+        position: absolute;
+        top: 50%;
+        right: 8px;
+
+        padding: 10px;
+        margin: 0;
+
+        background-color: $color;
+        background-image: url(../img/close-icon.svg);
+        background-position: center;
+        background-size: 10px;
+        background-repeat: no-repeat;
+
+        border: none;
+
+        transform: translateY(-50%);
+
+        cursor: pointer;
+      }
+    }
+
+
+  }
+
+}
+
+.form__inner{
+  display: grid;
+  grid-template-columns: repeat(2,calc(50% - 12px));
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+
+  &--grid-row-gap-12 {
+    grid-row-gap: 12px;
+  }
+}
+
+.form__item{
+
+  &--column2{
+    grid-column: span 2;
+  }
+
+  &--order-3{
+    order: 3;
+  }
+}
+
+.form__label{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-left: 1px;
+  margin-bottom: 2px;
+
+  font-weight: 500;
+  font-size: 13px;
+
+  text-transform: uppercase;
+
+  opacity: 0.8;
+}
+
+.form__input{
+  width: 100%;
+
+  position: relative;
+
+  margin: 0;
+  padding: 12px 9px;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+
+  line-height: 18px;
+
+  color: $color2;
+
+  border: 1px solid color.scale($color2, $lightness: 70%);
+  border-radius: 2px;
+
+  outline: none;
+  box-shadow: none;
+
+  transition: box-shadow 0.3s ease;
+
+  &::placeholder{
+    color: color.scale($color2, $lightness: 70%);
+
+    transition: color 0.3s ease;
+  }
+
+  &:focus{
+    box-shadow: 0 0 0 2px color.scale($color2, $lightness: 85%);
+
+    &::placeholder{
+      color: color.scale($color2, $lightness: 0%);
+    }
+  }
+
+  &::selection {
+    color: #fff; /* Цвет текста */
+    background: $select; /* Цвет фона */
+  }
+
+  //&[type="date"]::-webkit-calendar-picker-indicator{
+  //  // кастомизировал календарь, поменял иконку и вызов календаря происходит по клику во всей области input
+  //  width: auto;
+  //  height: auto;
+  //
+  //  position: absolute;
+  //  top: 0;
+  //  bottom: 0;
+  //  left: 0;
+  //  right: 0;
+  //
+  //  color: transparent;
+  //
+  //  background-color: transparent;
+  //  background-image: url(../img/calendar-icon.svg);
+  //  background-position: right 10px center;
+  //  background-size: 15px;
+  //  background-repeat: no-repeat;
+  //
+  //  opacity: 0.9;
+  //
+  //  cursor: pointer;
+  //}
+}
+
+.form__checkbox{
+  vertical-align: middle;
+
+  cursor: pointer;
+}
+
+.form__button{
+  flex: 1 0 auto;
+
+  margin-right: 16px;
+
+  &--reset_filter{
+    flex: 0 1 auto;
+
+    padding: 10px;
+    margin-right: 0;
+  }
+}
+
+.form__validation-error{
+  padding: 0 8px 0 20px;
+
+  background-image: url(../img/error-icon.svg);
+  background-position: left top;
+  background-size: 14px;
+  background-repeat: no-repeat;
+
+  font-weight: 400;
+  font-size: 11px;
+
+  text-transform: none;
+}

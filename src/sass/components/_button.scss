@@ -1,0 +1,163 @@
+@use "sass:color";
+
+$color: #fbfbfb;
+$color2: #181818;
+$color3: #e7e7e1;
+
+.button{
+  user-select: none;
+
+  vertical-align: middle;
+
+  position: relative;
+
+  padding: 6px;
+  margin: 0;
+
+  background-color: color.scale($color, $lightness: 10%);
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+
+  border: 1px solid color.scale($color2, $lightness: 70%);
+  border-radius: 2px;
+
+  box-shadow: inset 0 0 5px color.scale($color2, $lightness: 85%);
+
+  transition: background-color 0.2s ease;
+
+  cursor: pointer;
+
+  &:hover{
+    background-color: color.scale($color, $lightness: -10%);
+  }
+
+  &:active{
+    background-color: color.scale($color, $lightness: 0%);
+  }
+
+  .result__row > .row:hover & {
+    background-color: color.scale($color, $lightness: -15%);
+  }
+
+  .result__row > .row:active & {
+    background-color: color.scale($color, $lightness: 0%);
+  }
+
+  .result__row--active > .row:hover & {
+    background-color: color.scale($color, $lightness: -10%);
+  }
+
+  .result__row--active > .row:active & {
+    background-color: color.scale($color, $lightness: 0%);
+  }
+
+  .result__row--inner > .row:hover & {
+    background-color: color.scale($color, $lightness: 10%);
+  }
+
+  .result__row--inner > .row:active & {
+    background-color: color.scale($color, $lightness: 10%);
+  }
+
+  &--arrow {
+
+    &::before{
+      content: '';
+
+      width: 10px;
+      height: 10px;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      background-image: url(../img/downarrow-icon.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+
+      transform: translate(-50%,-50%);
+      transition: transform 0.1s ease;
+    }
+
+    .result__row--active &{
+
+      &::before{
+        transform: translate(-50%,-50%) rotateX(180deg);
+      }
+
+    }
+
+  }
+
+  &--icon{
+    padding: 3px 4px;
+
+    box-shadow: none;
+
+    transition: box-shadow 0.2s ease;
+
+    &:hover{
+      background-color: color.scale($color, $lightness: 10%);
+      box-shadow: inset 0 0 3px 1px color.scale(#efefef, $lightness: -13%);
+    }
+
+    &:active {
+      background-color: color.scale($color, $lightness: 10%);
+      box-shadow: none;
+    }
+
+    .result__row > .row:hover & {
+      background-color: color.scale($color, $lightness: 10%);
+    }
+
+    .result__row > .row:active & {
+      background-color: color.scale($color, $lightness: 10%);
+    }
+
+    .result__row--active > .row:hover & {
+      background-color: color.scale($color, $lightness: 10%);
+    }
+
+    .result__row--active > .row:active & {
+      background-color: color.scale($color, $lightness: 10%);
+    }
+  }
+
+  &--text {
+    padding: 1px 5px;
+
+    font-size: 14px;
+
+    border: 1px solid color.scale($color2, $lightness: 55%);
+
+    box-shadow: none;
+
+    transition: box-shadow 0.2s ease;
+
+    &:hover{
+      background-color: color.scale($color, $lightness: 10%);
+      box-shadow: inset 0 0 5px 0 color.scale(#efefef, $lightness: -13%);
+    }
+
+    &:active {
+      background-color: color.scale($color, $lightness: 10%);
+      box-shadow: none;
+    }
+  }
+
+  &--img-delete {
+    width: 20px;
+    height: 20px;
+
+    padding: 5px;
+
+    background-image: url(../img/basket.svg);
+    background-position: center;
+    background-size: 12px;
+    background-repeat: no-repeat;
+  }
+
+}

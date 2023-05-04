@@ -62,7 +62,10 @@ $.config.src.forEach(function (path) {
 const build = $.gulp.series('clean', $.gulp.parallel('html','styles','scripts','fonts','images','sprite','copy'));
 const watch = $.gulp.series(build, $.gulp.parallel('serve', 'watcher'));
 
+const bx_watch = $.gulp.series(build, 'copyTopLevel', $.gulp.parallel('watcher','watcher_dist'));
+
 exports.build = build;
 exports.watch = watch;
+exports.bx_watch = bx_watch;
 
 exports.default = watch;
