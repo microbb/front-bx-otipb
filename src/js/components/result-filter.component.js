@@ -62,11 +62,11 @@ export default class ResultFilterComponent extends Component {
 
         this.html = this.data.result.map(user => {
           if(+user.customUser) {
-            return userMainTemplate(user,{build: 1})
+            return userMainTemplate(user,{build: 1, isAccess: this.data.isAccess})
           } else if (+user.idMatrixWorks) {
-            return userMainTemplate(user,{build: 2})
+            return userMainTemplate(user,{build: 2, isAccess: this.data.isAccess})
           } else {
-            return userMainTemplate(user,{build: 0})
+            return userMainTemplate(user,{build: 0, isAccess: this.data.isAccess})
           }
         })
 

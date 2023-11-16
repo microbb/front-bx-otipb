@@ -1,3 +1,4 @@
+import {attributeTemplate} from "../attribute.template";
 
 /**
  *  Шаблон доступные обучения
@@ -7,12 +8,14 @@
  *  @param {Object} options - настройки
  *  @param {?number} [options.idUser] - id сотрудника
  *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
+ *  @param {boolean} [options.isAccess] - в какой конфигурации собирать обучение true - администратор | false - редовой
  *  @return {string}
  * */
 export function trainingTemplate({ID,NAME},
   {
     idUser = null,
-    customUser = null
+    customUser = null,
+    isAccess= true
   }
 ) {
 
@@ -25,7 +28,7 @@ export function trainingTemplate({ID,NAME},
           </span>
         </div>
         <div class="col-3">
-          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/addCard">Добавить</button>
+          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="${ID}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/addCard" title="${attributeTemplate(isAccess,'Нет прав доступа')}" ${attributeTemplate(isAccess,'disabled')}>Добавить</button>
         </div>
       </div>
     </div>

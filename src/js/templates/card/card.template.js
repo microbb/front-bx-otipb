@@ -1,3 +1,4 @@
+import {attributeTemplate} from "../attribute.template";
 
 /**
  *  Шаблон действующие удостоверение
@@ -10,12 +11,14 @@
  *  @param {Object} options - настройки
  *  @param {?number} [options.idUser] - id сотрудника
  *  @param {?number} [options.customUser] - кастомный или существующий сотрудник
+ *  @param {boolean} [options.isAccess] - в какой конфигурации собирать удостоверение true - администратор | false - редовой
  *  @return {string}
  * */
 export function cardTemplate({idCard,programName,cardNumber,attestationDate,nextAttestationDate},
  {
    idUser = null,
-   customUser = null
+   customUser = null,
+   isAccess= true
  })
 {
 
@@ -35,9 +38,9 @@ export function cardTemplate({idCard,programName,cardNumber,attestationDate,next
         <div class="col-2">${nextAttestationDate || 'не заполнено'}</div>
         <div class="col-2">
           <span class="result__options-card">
-            <button class="button button--text js-edit-card-modal js-edit-card"" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard">Редактировать</button>
+            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/editCard" title="${attributeTemplate(isAccess,'Нет прав доступа')}" ${attributeTemplate(isAccess,'disabled')}>Редактировать</button>
             <span class="p-relative d-inline-block">
-              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="Удалить удостоверение"></button>
+              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idCard}" data-id-user="${idUser}" data-custom-user="${customUser}" data-action="/deleteCard" title="${attributeTemplate(isAccess,'Нет прав доступа','Удалить удостоверение')}" ${attributeTemplate(isAccess,'disabled')}></button>
             </span>
           </span>
         </div>

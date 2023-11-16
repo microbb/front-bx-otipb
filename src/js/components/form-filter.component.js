@@ -70,7 +70,8 @@ async function submitHandler(e) {
 
       this.$el.append(loader.loading())
 
-      const response = await apiService.useRequest(action,formData),
+      const isAccess = await apiService.getAccessAdmin(),
+            response = await apiService.useRequest(action,formData),
             result = JSON.parse(response.data.result),
             count = result.length || 0
 
@@ -78,7 +79,7 @@ async function submitHandler(e) {
 
       this.partners.forEach(partner => partner.component.hide())
 
-      filterResult.component.register(result).show()
+      filterResult.component.register(result,{isAccess}).show()
 
     } catch (error) {
 
@@ -86,7 +87,7 @@ async function submitHandler(e) {
 
       if(error.status === 'error') {
 
-        console.group('In file ApiService, in function useRequest, promise return reject')
+        console.group(`In file ApiService, in function ${error.functionName}, promise return reject`)
 
           console.group('List of errors')
 

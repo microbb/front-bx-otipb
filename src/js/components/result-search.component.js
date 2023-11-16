@@ -41,8 +41,6 @@ export default class ResultSearchComponent extends Component {
 
   /**
    * Показать компонент
-   * @param {Array} result - какой результат показать
-   * @param {Object=} options - настройки
    * @return {void}
    */
   show() {
@@ -63,11 +61,11 @@ export default class ResultSearchComponent extends Component {
 
         this.html = this.data.result.map(user => {
           if (+user.customUser) {
-            return userMainTemplate(user, {build: 1})
+            return userMainTemplate(user, {build: 1, isAccess: this.data.isAccess})
           } else if (+user.idMatrixWorks) {
-            return userMainTemplate(user, {build: 2})
+            return userMainTemplate(user, {build: 2, isAccess: this.data.isAccess})
           } else {
-            return userMainTemplate(user, {build: 0})
+            return userMainTemplate(user, {build: 0, isAccess: this.data.isAccess})
           }
         })
 

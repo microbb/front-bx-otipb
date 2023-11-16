@@ -76,8 +76,8 @@
           </div>
           <div class="col-auto">
 
-            <button type="button" class="top-panel__btn btn btn-primary js-add-user-modal" data-sumbiot-target="#add-user-modal">Добавить сотрудника</button>
-            <button type="button" class="top-panel__btn btn btn-warning">Заявка на обучение</button>
+            <button type="button" class="top-panel__btn btn btn-primary js-add-user-modal js-isAccess" data-sumbiot-target="#add-user-modal">Добавить сотрудника</button>
+            <a class="top-panel__btn btn btn-warning js-isAccess" href="#">Заявка на обучение</a>
             <button type="button" class="top-panel__btn btn btn-success js-filter-modal" data-sumbiot-target="#filter-modal">Фильтр</button>
 
           </div>
@@ -550,11 +550,11 @@
                     Удостоверение действующие
 
                     <div class="result__info-options">
-                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника">
+                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника" disabled>
                         <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                       </button>
                       <span class="p-relative d-inline-block">
-                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника">
+                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника" disabled>
                           <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                         </button>
                       </span>
@@ -587,9 +587,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -611,9 +611,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -635,9 +635,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -659,9 +659,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -692,7 +692,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -705,7 +705,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -718,7 +718,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -731,7 +731,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -761,9 +761,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -779,9 +779,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -797,9 +797,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -815,9 +815,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -863,11 +863,11 @@
                     Удостоверение действующие
 
                     <div class="result__info-options">
-                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника">
+                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника" disabled>
                         <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                       </button>
                       <span class="p-relative d-inline-block">
-                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника">
+                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника" disabled>
                           <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                         </button>
                       </span>
@@ -900,9 +900,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -924,9 +924,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -948,9 +948,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -972,9 +972,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1005,7 +1005,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1018,7 +1018,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1031,7 +1031,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1044,7 +1044,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1074,9 +1074,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1092,9 +1092,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1110,9 +1110,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1128,9 +1128,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1176,11 +1176,11 @@
                     Удостоверение действующие
 
                     <div class="result__info-options">
-                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника">
+                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника" disabled>
                         <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                       </button>
                       <span class="p-relative d-inline-block">
-                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника">
+                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника" disabled>
                           <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                         </button>
                       </span>
@@ -1213,9 +1213,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1237,9 +1237,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1261,9 +1261,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1285,9 +1285,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1318,7 +1318,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1331,7 +1331,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1344,7 +1344,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1357,7 +1357,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1387,9 +1387,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1405,9 +1405,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1423,9 +1423,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1441,9 +1441,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1489,11 +1489,11 @@
                     Удостоверение действующие
 
                     <div class="result__info-options">
-                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника">
+                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника" disabled>
                         <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                       </button>
                       <span class="p-relative d-inline-block">
-                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника">
+                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника" disabled>
                           <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                         </button>
                       </span>
@@ -1526,9 +1526,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1550,9 +1550,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1574,9 +1574,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1598,9 +1598,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1631,7 +1631,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1644,7 +1644,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1657,7 +1657,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1670,7 +1670,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1700,9 +1700,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1718,9 +1718,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1736,9 +1736,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1754,9 +1754,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1802,11 +1802,11 @@
                     Удостоверение действующие
 
                     <div class="result__info-options">
-                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника">
+                      <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="1" title="Редактировать сотрудника" disabled>
                         <img class="result__img" src="assets/img/edit-user-icon.svg" width="22" height="22" alt="">
                       </button>
                       <span class="p-relative d-inline-block">
-                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника">
+                        <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-action="/deleteUser" title="Удалить сотрудника" disabled>
                           <img class="result__img" src="assets/img/remove-user-icon.svg" width="22" height="22" alt="">
                         </button>
                       </span>
@@ -1839,9 +1839,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1863,9 +1863,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1887,9 +1887,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1911,9 +1911,9 @@
                         <div class="col-2">03.12.2022</div>
                         <div class="col-2">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Редактировать</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Редактировать</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -1944,7 +1944,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1957,7 +1957,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1970,7 +1970,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -1983,7 +1983,7 @@
                           </span>
                         </div>
                         <div class="col-3">
-                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard">Добавить</button>
+                          <button class="button button--text js-edit-card-modal" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/addCard" disabled>Добавить</button>
                         </div>
                       </div>
                     </div>
@@ -2013,9 +2013,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -2031,9 +2031,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -2049,9 +2049,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>
@@ -2067,9 +2067,9 @@
                         </div>
                         <div class="col-3">
                           <span class="result__options-card">
-                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard">Продлить</button>
+                            <button class="button button--text js-edit-card-modal js-edit-card" type="button" data-sumbiot-target="#edit-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/editCard" disabled>Продлить</button>
                             <span class="p-relative d-inline-block">
-                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение"></button>
+                              <button class="button button--text button--img-delete js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="1" data-id-user="2" data-custom-user="1" data-action="/deleteCard" title="Удалить удостоверение" disabled></button>
                             </span>
                           </span>
                         </div>

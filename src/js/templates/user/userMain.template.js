@@ -6,10 +6,14 @@ import {userCardInfoTemplate} from "./userCardInfo.template";
  *  @param {Object} user - сотрудник
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
+ *  @param {boolean} [options.isAccess] - в какой конфигурации собирать сотрудника true - администратор | false - редовой
  *  @return {Element}
  * */
 export function userMainTemplate(user,
-  {build = 0} = {}
+  {
+    build = 0,
+    isAccess = true
+  } = {}
 ) {
 
   // тело элемента
@@ -19,11 +23,11 @@ export function userMainTemplate(user,
   // внутренности элемента
   const htmlInUser = `
       <div class="row gx-0 js-accordion js-user-info">
-        ${userInfoTemplate(user,{build})}
+        ${userInfoTemplate(user,{build, isAccess})}
       </div><!--/.js-user-info-->
 
       <div class="result__info js-wrapper-modal">
-        ${userCardInfoTemplate(user,{build})}
+        ${userCardInfoTemplate(user,{build, isAccess})}
       </div><!--./result__info-->
   `
 

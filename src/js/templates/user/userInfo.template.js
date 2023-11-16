@@ -1,3 +1,4 @@
+import {attributeTemplate} from "../attribute.template";
 
 /**
  *  Шаблон информация о пользователе
@@ -10,10 +11,14 @@
  *  @param {string} [user.status] - названия должности
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
+ *  @param {boolean} [options.isAccess] - в какой конфигурации собирать сотрудника true - администратор | false - редовой
  *  @return {string}
  * */
 export function userInfoTemplate({idUser,fio,division,department,work,status},
-                                 {build = 0} = {}
+                                 {
+                                   build = 0,
+                                   isAccess = true
+                                 } = {}
 ) {
 
   /**
@@ -47,7 +52,7 @@ export function userInfoTemplate({idUser,fio,division,department,work,status},
       return `
         <div class="col-4 js-matrix-work-hse">
           <span class="p-relative d-inline-block">
-            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="${idUser}" title="Добавить должность HSE">
+            <button class="button button--icon js-add-hse-modal" type="button" data-sumbiot-target="#add-hse-modal" data-id="${idUser}" title="${attributeTemplate(isAccess,'Нет прав доступа','Добавить должность HSE')}" ${attributeTemplate(isAccess,'disabled')}>
               <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/add-document-icon.svg" width="18" height="18" alt="">
             </button>
           </span>

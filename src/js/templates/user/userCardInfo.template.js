@@ -1,6 +1,7 @@
-import {cardTemplate} from "../card/сard.template";
+import {cardTemplate} from "../card/card.template";
 import {trainingTemplate} from "../card/training.template";
 import {cardRecertificationTemplate} from "../card/cardRecertification.template";
+import {attributeTemplate} from "../attribute.template";
 
 import {cardPlugTemplate} from "../card/cardPlug.template";
 
@@ -13,10 +14,14 @@ import {cardPlugTemplate} from "../card/cardPlug.template";
  *  @param {number} [user.customUser] - обучения
  *  @param {Object} options - настройки
  *  @param {number} [options.build] - в какой конфигурации собирать сотрудника 1-кастомный, 2-из БХ, 0-из БХ без Hse
+ *  @param {boolean} [options.isAccess] - в какой конфигурации собирать сотрудника true - администратор | false - редовой
  *  @return {string}
  * */
 export function userCardInfoTemplate({idUser,cards,training,customUser},
-                                     {build = 0} = {}
+                                     {
+                                       build = 0,
+                                       isAccess = true
+                                     } = {}
 ) {
 
   /**
@@ -25,7 +30,7 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
    */
   const renderCard = () => {
     if(cards && cards['NORMAL_DATE']){
-      return cards['NORMAL_DATE'].map(card => cardTemplate(card,{idUser,customUser})).join(' ')
+      return cards['NORMAL_DATE'].map(card => cardTemplate(card,{idUser,customUser,isAccess})).join(' ')
     }else {
       return cardPlugTemplate('Нет удостоверений')
     }
@@ -37,7 +42,7 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
    */
   const renderTraining = () => {
     if(training && training.length){
-      return training.map(training => trainingTemplate(training,{idUser,customUser})).join(' ')
+      return training.map(training => trainingTemplate(training,{idUser,customUser,isAccess})).join(' ')
     }else {
       return cardPlugTemplate('Нет обучений')
     }
@@ -49,7 +54,7 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
    */
   const renderRecertification = () => {
     if(cards && cards['OVER_DATE']){
-      return cards['OVER_DATE'].map(card => cardRecertificationTemplate(card,{idUser,customUser})).join(' ')
+      return cards['OVER_DATE'].map(card => cardRecertificationTemplate(card,{idUser,customUser,isAccess})).join(' ')
     }else {
       return cardPlugTemplate('Нет удостоверений')
     }
@@ -64,11 +69,11 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
     // кастомный пользователь
     if(build === 1){
       return  `
-        <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="${idUser}" title="Редактировать сотрудника">
+        <button class="result__info-options-btn button button--icon js-edit-user-modal" type="button" data-sumbiot-target="#edit-user-modal" data-id="${idUser}" title="${attributeTemplate(isAccess,'Нет прав доступа','Редактировать сотрудника')}" ${attributeTemplate(isAccess,'disabled')}>
           <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-user-icon.svg" width="22" height="22" alt="">
         </button>
         <span class="p-relative d-inline-block">
-          <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idUser}" data-action="/deleteUser" title="Удалить сотрудника">
+          <button class="result__info-options-btn button button--icon js-delete-user-and-card-modal" type="button" data-sumbiot-target="#delete-user-or-card-modal" data-id="${idUser}" data-action="/deleteUser" title="${attributeTemplate(isAccess,'Нет прав доступа','Удалить сотрудника')}" ${attributeTemplate(isAccess,'disabled')}>
             <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/remove-user-icon.svg" width="22" height="22" alt="">
           </button>
         </span>
@@ -77,7 +82,7 @@ export function userCardInfoTemplate({idUser,cards,training,customUser},
     // существующий пользователь из BX
     else if (build === 2) {
       return  `
-        <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="${idUser}" title="Изменить должность HSE">
+        <button class="result__info-options-btn button button--icon js-edit-hse-modal" type="button" data-sumbiot-target="#edit-hse-modal" data-id="${idUser}" title="${attributeTemplate(isAccess,'Нет прав доступа','Изменить должность HSE')}" ${attributeTemplate(isAccess,'disabled')}>
           <img class="result__img" src="${BX.message('TemplateFolder')}/assets/img/edit-document-icon.svg" width="22" height="22" alt="">
         </button>
       `

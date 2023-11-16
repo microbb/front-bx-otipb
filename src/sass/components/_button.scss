@@ -38,6 +38,16 @@ $color3: #e7e7e1;
     background-color: color.scale($color, $lightness: 0%);
   }
 
+  &:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
   .result__row > .row:hover & {
     background-color: color.scale($color, $lightness: -15%);
   }
@@ -146,6 +156,12 @@ $color3: #e7e7e1;
       background-color: color.scale($color, $lightness: 10%);
       box-shadow: none;
     }
+
+    &:disabled {
+      border-color: color.scale($color2, $lightness: 80%);
+
+      opacity: 0.8;
+    }
   }
 
   &--img-delete {
@@ -158,6 +174,25 @@ $color3: #e7e7e1;
     background-position: center;
     background-size: 12px;
     background-repeat: no-repeat;
+
+    &:disabled {
+      opacity: 0.45;
+    }
+
   }
+
+  //&--disabled {
+  //  cursor: not-allowed;
+  //
+  //  &:hover {
+  //    background-color: color.scale($color, $lightness: 10%);
+  //    box-shadow: none;
+  //  }
+  //
+  //  &:active {
+  //    background-color: color.scale($color, $lightness: 10%);
+  //    box-shadow: none;
+  //  }
+  //}
 
 }

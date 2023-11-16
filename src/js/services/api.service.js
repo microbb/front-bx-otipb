@@ -20,29 +20,40 @@ class ApiService{
    */
   async useRequest(action,data) {
 
-    // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
-    return await BX.ajax.runComponentAction(this.componentBx, action, {
-      mode: 'class',
-      data: data
-    })
+    try {
+      // делаем ajax запрос в компонент my_components:ajax к методу action(Action())
+      return await BX.ajax.runComponentAction(this.componentBx, action, {
+        mode: 'class',
+        data: data
+      })
 
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "success",
-    //       "data": {
-    //         "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
-    // })
+      // return await new Promise((resolve,reject) => {
+      //
+      //   setTimeout(() => {
+      //     reject({
+      //       "status": "error",
+      //       "data": {
+      //         "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
+      //       },
+      //       "errors": [{
+      //         "message": "Не заполено поле Email1",
+      //         "code": 0,
+      //         "customData": null
+      //       }]
+      //     })
+      //   },2000)
+      // })
+    } catch (error) {
 
+      if(error.status === 'error') {
+        throw {
+          functionName : 'useRequest',
+          ...error
+        }
+      }
+
+      throw error
+    }
   }
 
   /**
@@ -50,14 +61,59 @@ class ApiService{
    * @return {Promise}
    */
   async getUsers() {
-    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+
+    try{
+      // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
+      const response = await BX.ajax.runComponentAction(this.componentBx, 'getUsers', {
+        mode: 'class'
+      })
+
+      return JSON.parse(response.data.result)
+
+      // let response = await new Promise((resolve,reject) => {
+      //
+      //   setTimeout(() => {
+      //     reject({
+      //       "status": "error",
+      //       "data": {
+      //         "result": '[{"ID":1,"NAME":"Вася"},{"ID":2,"NAME":"Петя"},{"ID":"3","NAME":"Юра"}]'
+      //       },
+      //       "errors": [{
+      //         "message": "Не заполено поле Email",
+      //         "code": 0,
+      //         "customData": null
+      //       }]
+      //     })
+      //   },2000)
+      // })
+      //
+      // return JSON.parse(response.data.result)
+    } catch (error) {
+
+      if(error.status === 'error') {
+        throw {
+          functionName : 'getUsers',
+          ...error
+        }
+      }
+
+      throw error
+    }
+  }
+
+  /**
+   * Запрос на сервер для получения всех сотрудников
+   * @return {Promise}
+   */
+  async getFio() {
+    // делаем ajax запрос в компонент bizproc:otipb.new к методу getFioAction()
+    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
       mode: 'class'
     })
 
     return JSON.parse(response.data.result)
 
-    // return new Promise((resolve,reject) => {
+    // return await new Promise((resolve,reject) => {
     //
     //   setTimeout(() => {
     //     resolve({
@@ -79,32 +135,46 @@ class ApiService{
    * Запрос на сервер для получения всех сотрудников
    * @return {Promise}
    */
-  async getFio() {
-    // делаем ajax запрос в компонент bizproc:otipb.new к методу getUsersAction()
-    const response = await BX.ajax.runComponentAction(this.componentBx, 'getFio', {
-      mode: 'class'
-    })
+  async getAccessAdmin() {
+    try {
+      // делаем ajax запрос в компонент bizproc:otipb.new к методу getAccessRight()
+      const response = await BX.ajax.runComponentAction(this.componentBx, 'getAccessAdmin', {
+        mode: 'class'
+      })
 
-    return JSON.parse(response.data.result)
+      return JSON.parse(response.data.result)
 
-    // return new Promise((resolve,reject) => {
-    //
-    //   setTimeout(() => {
-    //     resolve({
-    //       "status": "error",
-    //       "data": {
-    //         "result": "[]"
-    //       },
-    //       "errors": [{
-    //         "message": "Не заполено поле Email",
-    //         "code": 0,
-    //         "customData": null
-    //       }]
-    //     })
-    //   },2000)
-    // })
+      // let response = await new Promise((resolve,reject) => {
+      //
+      //   setTimeout(() => {
+      //     resolve({
+      //       "status": "error",
+      //       "data": {
+      //         "result": false
+      //       },
+      //       "errors": [{
+      //         "message": "Не заполено поле Email",
+      //         "code": 0,
+      //         "customData": null
+      //       }]
+      //     })
+      //   },2000)
+      // })
+      //
+      // return response.data.result
+    } catch (error) {
+
+      if(error.status === 'error') {
+        throw {
+          functionName : 'getAccessAdmin',
+          ...error
+        }
+      }
+
+      throw error
+    }
+
   }
-
 }
 
 export const apiService = new ApiService('bizproc:otipb.new')

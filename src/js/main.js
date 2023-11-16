@@ -22,12 +22,12 @@ import VisitorPattern from "./components/visitor.pattern";
 
 window.addEventListener('DOMContentLoaded', () => {
 
-  // window.BX = {
-  //   TemplateFolder: '',
-  //   message: function (path) {
-  //     return this[path]
-  //   }
-  // }
+  window.BX = {
+    TemplateFolder: '',
+    message: function (path) {
+      return this[path]
+    }
+  }
 
   // выподающий список select
   const dropDownSelect = new DropdownSelect('.dropdown--select',{

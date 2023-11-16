@@ -14,7 +14,7 @@ global.$ = {
     src: require('./gulp/config'),
 
     toggle: {
-      mode: 'development', // development / production
+      mode: 'production', // development / production
       minHtml: false,      // true / false
       fullCss: false,      // true / false
       resizeImg: false,    // true / false

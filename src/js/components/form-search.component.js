@@ -129,7 +129,8 @@ async function submitHandler(e) {
 
       document.querySelector('.result').append(loader.loading())
 
-      const response = await apiService.useRequest(action,formData),
+      const isAccess = await apiService.getAccessAdmin(),
+            response = await apiService.useRequest(action,formData),
             result = JSON.parse(response.data.result),
             count = result.length || 0,
             bntNext = nextBtn.call(this)
@@ -137,8 +138,8 @@ async function submitHandler(e) {
       loader.success(`Найдено: ${count} совпадений`)
 
       count ?
-        searchResult.component.register(result).show() :
-        searchResult.component.register(result,{bntNext}).show()
+        searchResult.component.register(result, {isAccess}).show() :
+        searchResult.component.register(result, {bntNext, isAccess}).show()
 
       this.$el.querySelector('.dropdown--input')?.append(resetRender.call(this))
 
@@ -148,7 +149,7 @@ async function submitHandler(e) {
 
       if(error.status === 'error') {
 
-        console.group('In file ApiService, in function useRequest, promise return reject')
+        console.group(`In file ApiService, in function ${error.functionName}, promise return reject`)
 
           console.group('List of errors')
 

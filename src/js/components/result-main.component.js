@@ -54,9 +54,13 @@ export default class ResultMainComponent extends Component {
       btn.disabled = true
     })
 
+    let isAccess;
+
     try {
 
       document.querySelector('.result').append(loader.loading())
+
+      isAccess = await apiService.getAccessAdmin()
 
       const response = await apiService.getUsers()
 
@@ -64,11 +68,11 @@ export default class ResultMainComponent extends Component {
 
         this.html = response.map(user => {
           if(+user.customUser) {
-            return userMainTemplate(user,{build: 1})
+            return userMainTemplate(user,{build: 1, isAccess})
           } else if (+user.idMatrixWorks) {
-            return userMainTemplate(user,{build: 2})
+            return userMainTemplate(user,{build: 2, isAccess})
           } else {
-            return userMainTemplate(user,{build: 0})
+            return userMainTemplate(user,{build: 0, isAccess})
           }
         })
 
@@ -95,7 +99,7 @@ export default class ResultMainComponent extends Component {
 
       if(error.status === 'error') {
 
-        console.group('In file ApiService, in function getUsers, promise return reject')
+        console.group(`In file ApiService, in function ${error.functionName}, promise return reject`)
 
           console.group('List of errors')
 
@@ -121,7 +125,23 @@ export default class ResultMainComponent extends Component {
         loader.removeLoader()
 
         btns.forEach(btn => {
-          btn.disabled = false
+
+          if(isAccess) {
+            btn.disabled = false
+          }
+
+          if(!isAccess && !btn.classList.contains('js-isAccess')) {
+            btn.disabled = false
+          }
+
+          if(!isAccess && btn.classList.contains('js-isAccess')) {
+            btn.classList.add('btn--disabled')
+            btn.setAttribute('title', 'Нет прав доступа')
+
+            if(btn.href) {
+              btn.removeAttribute('href')
+            }
+          }
         })
 
       }, 900)
