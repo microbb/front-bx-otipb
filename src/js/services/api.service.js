@@ -68,7 +68,7 @@ class ApiService{
         mode: 'class'
       })
 
-      return JSON.parse(response.data.result)
+      return response.data.result
 
       // let response = await new Promise((resolve,reject) => {
       //
@@ -142,7 +142,7 @@ class ApiService{
         mode: 'class'
       })
 
-      return JSON.parse(response.data.result)
+      return response.data.result
 
       // let response = await new Promise((resolve,reject) => {
       //

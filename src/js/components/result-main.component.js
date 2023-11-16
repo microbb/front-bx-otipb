@@ -60,11 +60,26 @@ export default class ResultMainComponent extends Component {
 
       document.querySelector('.result').append(loader.loading())
 
+      let startTime1 = performance.now()
+
       isAccess = await apiService.getAccessAdmin()
+
+      let endTime1 = performance.now()
+
+      console.log(`Запросы1 ${endTime1 - startTime1} milliseconds`)
+
+
+      let startTime2 = performance.now()
 
       const response = await apiService.getUsers()
 
+      let endTime2 = performance.now()
+
+      console.log(`Запросы2 ${startTime2 - endTime2} milliseconds`)
+
       if(Array.isArray(response) && response.length) {
+
+        let startTime = performance.now()
 
         this.html = response.map(user => {
           if(+user.customUser) {
@@ -77,6 +92,10 @@ export default class ResultMainComponent extends Component {
         })
 
         loader.success()
+
+        let endTime = performance.now()
+
+        console.log(`Массив ${endTime - startTime} milliseconds`)
 
         setTimeout(() => {
           this.pagination = new Pagination(this.$el, this.$pasteInElement, this.html, {
